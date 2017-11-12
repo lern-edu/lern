@@ -1,0 +1,32 @@
+{
+  "name": "lern",
+  "description": "Lern - Solucoes Educacionais",
+  "private": true,
+  "main": "init.js",
+  "scripts": {
+    "start": "UNIVERSE_I18N_LOCALES=all VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 METEOR_PROFILE=1 meteor run --settings settings.json",
+    "prestart": "meteor=$(meteor --version); if [ \"$meteor\" != \"Meteor 1.6\" ]; then meteor update --release METEOR@1.6; fi;"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://deleuterio@bitbucket.org/deleuterio/lern@app.git"
+  },
+  "keywords": [
+    "education"
+  ],
+  "author": "deleuterio",
+  "license": "ISC",
+  "homepage": "https://lern.com.br",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "draft-js": "^0.10.4",
+    "lodash": "^4.17.4",
+    "material-ui": "^0.19.4",
+    "meteor-node-stubs": "^0.3.2",
+    "moment": "^2.19.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
+    "react-tap-event-plugin": "^3.0.2"
+  }
+}

@@ -1,0 +1,1 @@
+DocHead.setTitle('Lern');
