@@ -1,11 +1,21 @@
+import { Validator } from 'meteor/jagi:astronomy';
+import _ from 'lodash';
+
 _.forEach(Regex, (v, k) => {
-  Astro.createValidator({
+
+  Validator.create({
     name: k,
-    validate(value) {
+
+    isValid({ value, param }) {
       return (
         !_.isNull(value) &&
         v.test(value)
       );
     },
+
+    // resolveError({ name, param }) {
+    //   return `Length of "${name}" has to be at most ${param}`;
+    // },
+
   });
 });

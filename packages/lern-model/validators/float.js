@@ -1,4 +1,7 @@
-Astro.createValidator({
+import { Validator } from 'meteor/jagi:astronomy';
+import _ from 'lodash';
+
+Validator.create({
   name: 'Float',
   validate(value, name, { min=0, max=1 }) {
     return (

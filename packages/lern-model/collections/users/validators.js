@@ -1,4 +1,6 @@
-Astro.createValidator({
+import { Validator } from 'meteor/jagi:astronomy';
+
+Validator.create({
   name: 'UserName',
   validate(value) {
     return (
@@ -9,7 +11,7 @@ Astro.createValidator({
   },
 });
 
-Astro.createValidator({
+Validator.create({
   name: 'UserRoles',
   validate(value, name, { roles, validator }) {
     const hasRole = _.includes(roles, this.role);

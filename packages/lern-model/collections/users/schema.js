@@ -1,182 +1,74 @@
-Meteor.users.ProfileSchema = Astro.Class({
+import { Class, Validator } from 'meteor/jagi:astronomy';
+
+Meteor.users.ProfileSchema = Class.create({
   name: 'UserProfile',
   fields: {
     name: {
-      type: 'string',
-      validator: Validators.UserName(),
+      type: String,
+      validators: [
+        { type: 'minLength', param: 3 },
+        { type: 'maxLength', param: 1024 },
+      ],
     },
     profilePic: {
-      type: 'string',
+      type: String,
       optional: true,
     },
     gender: {
-      type: 'string',
+      type: String,
       optional: true,
     },
     firstName: {
-      type: 'string',
+      type: String,
       optional: true,
     },
     lastName: {
-      type: 'string',
-      optional: true,
-    },
-    schoolType: {
-      type: 'string',
-      validator: Validators.OneOf(SchoolTypes.all('keys')),
+      type: String,
       optional: true,
     },
     cnpj: {
-      type: 'string',
-      validator: Validators.cnpj(),
-      optional: true,
-    },
-    cpf: {
-      type: 'string',
-      validator: Validators.cpf(),
+      type: String,
+      validators: [{ type: 'cnpj' }],
       optional: true,
     },
     school: {
-      type: 'string',
-      validator: Validators.Reference(),
+      type: String,
+      validators: [{ type: 'Reference' }],
       optional: true,
     },
     schools: {
-      type: 'array',
-      validator: Validators.References(),
+      type: [Object],
       optional: true,
       default: () => [],
     },
-    setup: {
-      type: 'boolean',
-      validator: Validators.boolean(),
-      default: false,
-    },
     role: {
-      type: 'string',
-      validator: Validators.OneOf(UserRoles.all('keys')),
+      type: String,
+      validators: [{ type: 'OneOf', param: UserRoles.all('keys') }],
       optional: true,
     },
   },
 });
 
-Meteor.users.PlanProfileSchema = Astro.Class({
-  name: 'UserPlanProfile',
-  fields: {
-    plan: {
-      type: 'string',
-      validator: Validators.Reference(),
-      optional: true,
-    },
-    focusSubjects: {
-      type: 'array',
-      validator: Validators.References(),
-      default: () => [],
-    },
-    getDaily: {
-      type: 'boolean',
-      default: true,
-      immutable: true,
-    },
-    getFocus: {
-      type: 'boolean',
-      default: true,
-      immutable: true,
-    },
-    getMock: {
-      type: 'boolean',
-      default: true,
-      immutable: true,
-    },
-    getMisses: {
-      type: 'boolean',
-      default: true,
-      immutable: true,
-    },
-  },
-});
-
-Meteor.users.FormSchema = Astro.Class({
-  name: 'UserForm',
-  fields: {
-    email: {
-      type: 'string',
-      validator: Validators.and([Validators.required(), Validators.email()]),
-    },
-    role: {
-      type: 'string',
-      validator: Validators.OneOf(UserRoles.all('keys')),
-    },
-    name: {
-      type: 'string',
-      validator: Validators.UserName(),
-    },
-    schoolType: {
-      type: 'string',
-      validator: Validators.UserRoles({
-        roles: ['school'],
-        validator: Validators.OneOf(SchoolTypes.all('keys')),
-      }),
-    },
-    cnpj: {
-      type: 'string',
-      validator: Validators.UserRoles({ roles: ['school'], validator: Validators.cnpj() }),
-      optional: true,
-    },
-    cpf: {
-      type: 'string',
-      validator: Validators.UserRoles({
-        roles: ['student', 'teacher'],
-        validator: Validators.cpf(),
-      }),
-      optional: true,
-    },
-    school: {
-      type: 'string',
-      validator: Validators.UserRoles({
-        roles: ['student', 'teacher'],
-        validator: Validators.Reference(),
-      }),
-      optional: true,
-    },
-    schools: {
-      type: 'array',
-      validator: Validators.UserRoles({
-        roles: ['student', 'teacher'],
-        validator: Validators.References(),
-      }),
-      optional: true,
-    },
-  },
-});
-
-Meteor.users.Schema = Astro.Class({
+Meteor.users.Schema = Class.create({
   name: 'User',
   collection: Meteor.users,
   fields: {
-    emails: 'array',
-    services: 'object',
-    preferences: 'object',
-    createdAt: 'string',
+    emails: [Object],
+    services: Object,
+    preferences: Object,
+    createdAt: String,
 
     roles: {
-      type: 'array',
-      validator: Validators.and([
-        Validators.SomeOf(UserRoles.all('keys')),
-        Validators.maxLength(4),
-      ]),
+      type: [String],
+      validators: [
+        { type: 'OneOf', param: UserRoles.all('keys') },
+        { type: 'maxLength', param: 4 },
+      ],
     },
 
     profile: {
-      type: 'object',
-      nested: 'UserProfile',
-      validator: Validators.required(),
+      type: Meteor.users.ProfileSchema,
     },
 
-    planProfile: {
-      type: 'object',
-      nested: 'UserPlanProfile',
-      default: () => {},
-    },
   },
 });

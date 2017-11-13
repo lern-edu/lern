@@ -1,4 +1,7 @@
-Astro.createValidator({
+import { Validator } from 'meteor/jagi:astronomy';
+import _ from 'lodash';
+
+Validator.create({
   name: 'Date',
   validate(value, name, { before, after }={}) {
     if (_.isString(before)) before = this[before];
