@@ -8,7 +8,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // Components
 import Navigation from './components/Navigation.jsx';
 import Snackbar from './components/Snackbar.jsx';
-import Footer from './components/Footer.jsx';
 import Safe from './components/Safe.jsx';
 
 const muiTheme = getMuiTheme({

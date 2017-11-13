@@ -9,6 +9,7 @@ Package.onUse(function (api) {
   api.use([
     'ecmascript',
     'universe:i18n',
+    'react-meteor-data',
   ], 'client');
 
   api.addFiles([
