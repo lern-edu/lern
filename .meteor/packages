@@ -23,3 +23,9 @@ accounts-password
 accounts-google
 email
 universe:i18n
+service-configuration
+duckdodgerbrasl:lern-head
+duckdodgerbrasl:lern-layouts
+duckdodgerbrasl:lern-router
+react-meteor-data
+duckdodgerbrasl:lern-model
