@@ -1,6 +1,5 @@
 import i18n from 'meteor/universe:i18n';
 import moment from 'moment';
-_ = lodash;
 moment.locale('pt-br');
 i18n.setLocale('pt-BR');
 
@@ -108,15 +107,15 @@ Meteor.startup(() => {
       Meteor.users.update(userId, { $set: { roles: ['admin'] }, profile: { name: 'admin' } });
     };
 
-    const subjectToCreate = Meteor.settings.public.subject || {};
-    const tagToCreate = Meteor.settings.public.tag || {};
-
-    if (!Subjects.findOne(subjectToCreate._id)) {
-      const subject = new Subjects.Schema(subjectToCreate);
-      const tag = new Tags.Schema(tagToCreate);
-      subject.save();
-      tag.save();
-    };
+    // const subjectToCreate = Meteor.settings.public.subject || {};
+    // const tagToCreate = Meteor.settings.public.tag || {};
+    //
+    // if (!Subjects.findOne(subjectToCreate._id)) {
+    //   const subject = new Subjects.Schema(subjectToCreate);
+    //   const tag = new Tags.Schema(tagToCreate);
+    //   subject.save();
+    //   tag.save();
+    // };
 
   };
 });
