@@ -16,6 +16,7 @@ Meteor.users.ProfileSchema = Class.create({
     },
     gender: {
       type: String,
+      validators: [{ type: 'choice', param: ['male', 'female'] }],
       optional: true,
     },
     firstName: {
@@ -43,7 +44,7 @@ Meteor.users.ProfileSchema = Class.create({
     },
     role: {
       type: String,
-      validators: [{ type: 'OneOf', param: UserRoles.all('keys') }],
+      validators: [{ type: 'OneOf', param: StaticCollections.UserRoles }],
       optional: true,
     },
   },
@@ -53,15 +54,19 @@ Meteor.users.Schema = Class.create({
   name: 'User',
   collection: Meteor.users,
   fields: {
-    emails: [Object],
-    services: Object,
-    preferences: Object,
-    createdAt: String,
+    emails: {
+      type: [Object],
+      optional: true,
+    },
+    services: {
+      type: Object,
+      optional: true,
+    },
 
     roles: {
       type: [String],
       validators: [
-        { type: 'OneOf', param: UserRoles.all('keys') },
+        { type: 'OneOf', param: StaticCollections.UserRoles },
         { type: 'maxLength', param: 4 },
       ],
     },
@@ -69,6 +74,14 @@ Meteor.users.Schema = Class.create({
     profile: {
       type: Meteor.users.ProfileSchema,
     },
+  },
 
+  behaviors: {
+    timestamp: {
+      hasCreatedField: true,
+      createdFieldName: 'createdAt',
+      hasUpdatedField: true,
+      updatedFieldName: 'updatedAt',
+    },
   },
 });

@@ -55,5 +55,5 @@ Package.onTest((api) => {
     'duckdodgerbrasl:lern-model',
   ]);
 
-  api.mainModule('tests.js');
+  api.mainModule('users-tests.js');
 });

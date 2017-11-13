@@ -1,8 +1,7 @@
+import _ from 'lodash';
+
 Meteor.users.Schema.extend({
   helpers: {
-    getName() {
-      return this.get('profile.name');
-    },
 
     getRole() {
       return this.get('profile.role') || _.first(this.get('roles'));
