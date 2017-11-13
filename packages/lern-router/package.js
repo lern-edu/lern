@@ -9,8 +9,7 @@ Package.onUse(function(api) {
   api.use([
     'ecmascript',
     'kadira:flow-router',
-
-    'lsunsi:se-layouts',
+    'duckdodgerbrasl:lern-layouts',
   ]);
 
   api.addFiles([
