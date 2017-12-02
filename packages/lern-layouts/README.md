@@ -17,6 +17,4 @@
       return (something);
     },
   })
-
-  teste
 ~~~
