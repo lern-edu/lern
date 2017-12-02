@@ -1,0 +1,14 @@
+{
+  "_locale": "en-US",
+  "_namespace": "PublicLoginForgot",
+  "title": "English",
+  "forgotPasswordSuccess": "Mensagem enviada",
+  "forgotPasswordEmailNotFound" : "A Lern não encontrou o email",
+  "forgotPasswordEmailError": "Email inválido",
+  "DialogTitle": "Recuperar senha",
+  "DialogText": "Nos diga seu email para enviar o link de recuperação.",
+  "SendButton": "Enviar",
+  "CancelButton": "Cancelar",
+  "TextFieldEmailLabel": "Email",
+  "TextFieldEmailError": "Email inválido"
+}
