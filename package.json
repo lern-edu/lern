@@ -4,7 +4,7 @@
   "private": true,
   "main": "init.js",
   "scripts": {
-    "start": "UNIVERSE_I18N_LOCALES=all VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 METEOR_PROFILE=1 meteor run --settings settings.json",
+    "start": "UNIVERSE_I18N_LOCALES=all VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 METEOR_PROFILE=1 meteor run --settings settings.json --port 3002",
     "prestart": "meteor=$(meteor --version); if [ \"$meteor\" != \"Meteor 1.6\" ]; then meteor update --release METEOR@1.6; fi;",
     "test": "MOCHA_RUN_ORDER=serial meteor test-packages --once --driver-package dispatch:mocha-phantomjs --port 3100",
     "test-watch": "MOCHA_RUN_ORDER=serial meteor test-packages --driver-package practicalmeteor:mocha --port 3100"
@@ -23,16 +23,27 @@
     "babel-runtime": "^6.26.0",
     "draft-js": "^0.10.4",
     "lodash": "^4.17.4",
-    "material-ui": "^0.19.4",
+    "material-ui": "^1.0.0-beta.21",
     "meteor-node-stubs": "^0.3.2",
     "moment": "^2.19.2",
     "prop-types": "^15.6.0",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-mounter": "^1.2.0",
-    "react-tap-event-plugin": "^3.0.2"
+    "react-tap-event-plugin": "^3.0.2",
+    "semantic-ui-react": "^0.76.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "autoprefixer": "^6.3.1"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      }
+    }
   }
 }
