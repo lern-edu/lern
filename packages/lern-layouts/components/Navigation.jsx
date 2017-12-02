@@ -2,7 +2,7 @@ import React from 'react';
 import { Drawer, CardMedia, ListItem, DropDownMenu } from 'material-ui';
 import { RaisedButton, IconButton, Avatar, MenuItem } from 'material-ui';
 import { Divider, LinearProgress, FontIcon, Styles } from 'material-ui';
-import { grey300, grey400 } from 'material-ui/styles/colors';
+import { grey300, grey400 } from 'material-ui/colors';
 
 export default class Navigation extends React.Component {
 

@@ -1,4 +1,5 @@
 import { mount } from 'react-mounter';
+import _ from 'lodash';
 
 Setup = (args1) => {
   return {
