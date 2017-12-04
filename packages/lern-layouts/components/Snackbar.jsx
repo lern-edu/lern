@@ -1,5 +1,8 @@
 import React from 'react';
-import { Snackbar } from 'material-ui';
+import _ from 'lodash';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/Icon';
 
 export default class LayoutSnackbar extends React.Component {
 
@@ -11,16 +14,21 @@ export default class LayoutSnackbar extends React.Component {
 
     const template = {
       static: {
-        className: null,
-        style: null,
-        bodyStyle: null,
         onRequestClose: () => this.setState({ open: false }),
         open: true,
       },
       dynamic: {
-        action: '',
+        action: [
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              onClick={() => this.setState({ open: false })}
+            >
+              <Icon color='accent'>close</Icon>
+            </IconButton>,
+        ],
         message: '',
-        onActionTouchTap: null,
         autoHideDuration: 4000,
       },
     };
