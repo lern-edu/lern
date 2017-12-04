@@ -1,5 +1,6 @@
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
+import { User } from 'meteor/duckdodgerbrasl:lern-model';
 import _ from 'lodash';
 
 Meteor.startup(() => {
@@ -23,11 +24,19 @@ Meteor.startup(() => {
           profilePic: _.get(google, 'picture'),
           gender: _.get(google, 'gender'),
         };
-      } else user.profile = options.profile;
+      } else if (options.profile) user.profile = options.profile;
 
       if (!user.roles) user.roles = ['student'];
 
-      return user;
+      const newUser = new User(user);
+
+      newUser._isNew = false;
+
+      newUser.save();
+
+      console.log(newUser);
+
+      return newUser;
     });
   };
 });
