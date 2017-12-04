@@ -2,6 +2,7 @@ import i18n from 'meteor/universe:i18n';
 import moment from 'moment';
 moment.locale('pt-br');
 i18n.setLocale('pt-BR');
+import { User } from 'meteor/duckdodgerbrasl:lern-model';
 
 // Material events
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -103,8 +104,15 @@ Meteor.startup(() => {
   if (Meteor.isServer) {
     if (!Meteor.users.findOne()) {
       const { admin } = Meteor.settings.credentials;
+      admin.profile = {
+        name: 'Lern Admin',
+        firstName: 'Lern',
+        lastName: 'Admin',
+      };
       const userId = Accounts.createUser(admin);
-      Meteor.users.update(userId, { $set: { roles: ['admin'] }, profile: { name: 'admin' } });
+      const user = User.findOne(userId);
+      user.roles = ['admin'];
+      user.save();
     };
 
     // const subjectToCreate = Meteor.settings.public.subject || {};
