@@ -38,8 +38,9 @@ Package.onUse((api) => {
 
     'collections/users/validators.js',
     'collections/users/schema.js',
-    'collections/users/helpers.js',
   ]);
+
+  api.mainModule('./exporter.js');
 
 });
 

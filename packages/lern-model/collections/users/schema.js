@@ -1,6 +1,7 @@
 import { Class, Validator } from 'meteor/jagi:astronomy';
+import _ from 'lodash';
 
-Meteor.users.ProfileSchema = Class.create({
+const UserProfileSchema = Class.create({
   name: 'UserProfile',
   fields: {
     name: {
@@ -50,7 +51,7 @@ Meteor.users.ProfileSchema = Class.create({
   },
 });
 
-Meteor.users.Schema = Class.create({
+const User = Class.create({
   name: 'User',
   collection: Meteor.users,
   fields: {
@@ -72,7 +73,7 @@ Meteor.users.Schema = Class.create({
     },
 
     profile: {
-      type: Meteor.users.ProfileSchema,
+      type: UserProfileSchema,
     },
   },
 
@@ -84,4 +85,41 @@ Meteor.users.Schema = Class.create({
       updatedFieldName: 'updatedAt',
     },
   },
+
+  helpers: {
+
+    getRole() {
+      return this.get('profile.role') || _.first(this.get('roles'));
+    },
+
+    getRoles() {
+      return this.get('roles');
+    },
+
+    getEmail() {
+      return _.get(_.first(this.emails), 'address');
+    },
+
+    getSocialEmail() {
+      return _.get(this, 'services.facebook.email')
+        || _.get(this, 'services.google.email');
+    },
+
+    hasRole(r) {
+      const role = this.getRoles();
+      return _.includes(role, r);
+    },
+
+    getSettingsRoute() {
+      const role = this.getRole();
+      return _.capitalize(role) + 'Settings';
+    },
+
+    getHomeRoute() {
+      const role = this.getRole();
+      return _.capitalize(role) + 'Home';
+    },
+  },
 });
+
+export default User;
