@@ -1,5 +1,6 @@
 // Libs
 import React from 'react';
+import _ from 'lodash';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -44,12 +45,53 @@ class PublicLogin extends React.Component {
     this.state = { password: '', email: '' };
   }
 
+  clear() {
+    this.setState({ password: '', email: '' });
+  }
+
   // Handlers
 
   handleInput({ currentTarget, target: { value } }) {
-    console.log(currentTarget, value);
     const name = currentTarget.getAttribute('name');
     this.setState({ [name]: value });
+  }
+
+  handleLogin(event) {
+    const { email, password } = this.state;
+    if (email && password) {
+      Meteor.loginWithPassword(email, password, (err, res) => {
+        if (err) {
+          snack(err.reason.includes('password')
+          ? 'Senha incorreta'
+          : 'Usuário não encontrado');
+          this.clear();
+        } else this.handleRedirect().bind(this);
+      });
+    } else snack('Preencha todos os campos');
+  }
+
+  handleFacebookLogin() {
+    Meteor.loginWithFacebook({ requestPermissions: ['public_profile', 'email'] },
+    (err) => {
+      if (err) snack('Problemas ao cadastrar');
+      else this.handleRedirect();
+    });
+  }
+
+  handleGoogleLogin() {
+    Meteor.loginWithGoogle({}, (err) => {
+      if (err) snack('Problemas ao cadastrar');
+      else this.handleRedirect();
+    });
+  }
+
+  handleRedirect() {
+    snack('Bem vindo!');
+
+    // console.log(user);
+    // if (_.get(this, 'props.query.alias'))
+    //   FlowRouter.go(user.getSetupRoute(), {}, { ...this.props.query });
+    // else FlowRouter.go(user.getHomeRoute(), {}, { ...this.props.query });
   }
 
   // Render
@@ -58,7 +100,10 @@ class PublicLogin extends React.Component {
 
     const { email, password } = this.state;
 
-    const handleInput = this.handleInput.bind(this);
+    const handleInput         = this.handleInput.bind(this);
+    const handleLogin         = this.handleLogin.bind(this);
+    const handleFacebookLogin = this.handleFacebookLogin.bind(this);
+    const handleGoogleLogin   = this.handleGoogleLogin.bind(this);
 
     return (
       <div className='ui middle aligned center aligned grid' >
@@ -71,7 +116,7 @@ class PublicLogin extends React.Component {
             <div className='ui center aligned grid'>
 
               <div {...styles.column}>
-                <a href={FlowRouter.path('PublicHome')} >
+                <a>
                   <img
                     style={{ display: 'inline-block' }}
                     className='ui medium image'
@@ -81,9 +126,9 @@ class PublicLogin extends React.Component {
 
               </div>
 
-              <Card elevation={4} {...styles.column} style={{ backgroundColor: 'transparent' }}>
+              <Card elevation={4} {...styles.column} >
                 <CardContent>
-                  <Typography style={{ color: 'white' }} type='headline' component='h2'>
+                  <Typography type='headline' component='h2'>
                     Login
                   </Typography>
 
@@ -95,19 +140,6 @@ class PublicLogin extends React.Component {
                     margin='normal'
                     value={email}
                     onChange={handleInput}
-                    InputLabelProps={{
-                      inputLabelFocused: {
-                        color: '#FFF',
-                      },
-                    }}
-                    inputProps={{
-                      inputInkbar: {
-                        backgroundColor: '#FFF',
-                        '&:after': {
-                          backgroundColor: '#FFF',
-                        },
-                      },
-                    }}
                   />
 
                   <br/>
@@ -122,14 +154,26 @@ class PublicLogin extends React.Component {
                     onChange={handleInput}
                   />
 
+                  <br/>
+
+                  <Button color='primary' onTouchTap={handleLogin}>
+                    Entrar
+                  </Button>
+
                 </CardContent>
                 <CardActions>
-                  <Button style={{ color: '#3954A1' }} >
+                  <Button
+                    style={{ color: '#3954A1' }}
+                    onTouchTap={handleFacebookLogin}
+                  >
                     <Icon style={{ lineHeight: '1em' }} name='facebook f' />
                     Facebook
                   </Button>
 
-                  <Button style={{ color: '#DC4A38' }}>
+                  <Button
+                    style={{ color: '#DC4A38' }}
+                    onTouchTap={handleGoogleLogin}
+                  >
                     <Icon style={{ lineHeight: '1em', marginRight: 8 }} name='google plus' />
                     Google
                   </Button>
