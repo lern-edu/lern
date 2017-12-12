@@ -119,6 +119,11 @@ const User = Class.create({
       const role = this.getRole();
       return _.capitalize(role) + 'Home';
     },
+
+    getSetupRoute() {
+      const role = this.getRole();
+      return _.capitalize(role) + 'Setup';
+    },
   },
 });
 
