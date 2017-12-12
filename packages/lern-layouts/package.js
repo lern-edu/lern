@@ -30,5 +30,4 @@ Package.onUse(function (api) {
   ], 'client');
 
   api.mainModule('./exporter.js', 'client');
-  api.export('Layout');
 });

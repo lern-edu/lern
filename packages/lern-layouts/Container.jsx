@@ -7,7 +7,7 @@ import { User } from 'meteor/duckdodgerbrasl:lern-model';
 // Views
 import LayoutView from './Layout.jsx';
 
-Layout = withTracker(({ params }) => {
+const Layout = withTracker(({ params }) => {
   if (Meteor.userId()) Meteor.subscribe('UserData');
 
   return {
@@ -16,3 +16,5 @@ Layout = withTracker(({ params }) => {
     logging: Meteor.loggingIn(),
   };
 })(LayoutView);
+
+export default Layout;

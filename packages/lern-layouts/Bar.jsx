@@ -73,4 +73,4 @@ Bar.propTypes = {
   ),
 };
 
-Layout.Bar = Bar;
+export default Bar;

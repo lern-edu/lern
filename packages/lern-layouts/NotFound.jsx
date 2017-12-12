@@ -32,4 +32,4 @@ class NotFound extends React.Component {
   }
 };
 
-Layout.NotFound = NotFound;
+export default NotFound;

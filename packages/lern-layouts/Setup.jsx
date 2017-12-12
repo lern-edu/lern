@@ -1,7 +1,8 @@
 import { mount } from 'react-mounter';
+import Layout from './Container.jsx';
 import _ from 'lodash';
 
-Setup = (args1) => {
+const Setup = (args1) => {
   return {
     render(args2) {
       const props = _.assign({}, args1, args2);
@@ -9,3 +10,5 @@ Setup = (args1) => {
     },
   };
 };
+
+export default Setup;
