@@ -34,8 +34,6 @@ Meteor.startup(() => {
 
       newUser.save();
 
-      console.log(newUser);
-
       return newUser;
     });
   };
