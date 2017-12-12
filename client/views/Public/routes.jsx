@@ -11,7 +11,6 @@ FlowRouter.route('/', {
   name: 'PublicLogin',
   action(params, query) {
     render({
-      bar: false,
       main: <PublicLogin />,
     });
   },

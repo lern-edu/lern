@@ -65,7 +65,7 @@ class PublicLogin extends React.Component {
           ? 'Senha incorreta'
           : 'Usuário não encontrado');
           this.clear();
-        } else this.handleRedirect().bind(this);
+        } else this.handleRedirect.bind(this)();
       });
     } else snack('Preencha todos os campos');
   }
@@ -74,24 +74,26 @@ class PublicLogin extends React.Component {
     Meteor.loginWithFacebook({ requestPermissions: ['public_profile', 'email'] },
     (err) => {
       if (err) snack('Problemas ao cadastrar');
-      else this.handleRedirect();
+      else this.handleRedirect.bind(this);
     });
   }
 
   handleGoogleLogin() {
     Meteor.loginWithGoogle({}, (err) => {
       if (err) snack('Problemas ao cadastrar');
-      else this.handleRedirect();
+      else this.handleRedirect.bind(this);
     });
   }
 
   handleRedirect() {
     snack('Bem vindo!');
-
-    // console.log(user);
-    // if (_.get(this, 'props.query.alias'))
-    //   FlowRouter.go(user.getSetupRoute(), {}, { ...this.props.query });
-    // else FlowRouter.go(user.getHomeRoute(), {}, { ...this.props.query });
+    Meteor.call(
+      'UserGetInitialRoute',
+      _.get(this, 'props.query.alias') ? 'setup' : 'home',
+      (err, route) => {
+        FlowRouter.go(route, {}, { ...this.props.query });
+      }
+    );
   }
 
   // Render
