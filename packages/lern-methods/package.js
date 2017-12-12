@@ -4,28 +4,25 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('1.2.1');
+  api.versionsFrom('1.6');
 
   api.use([
     'ecmascript',
-    'erasaur:meteor-lodash',
-    'renaldo:youtube-api',
-
-    'lsunsi:se-fetch',
-    'lsunsi:se-check',
+    'duckdodgerbrasl:lern-model',
   ]);
 
   api.addFiles([
     'helpers.js',
 
-    'server/admin/admin.js',
-    'server/school/school.js',
+    // 'server/admin/admin.js',
+    // 'server/school/school.js',
     'server/user/user.js',
-    'server/teacher.js',
-    'server/public.js',
-    'server/student/answer.js',
-    'server/student/attempt.js',
-    'server/student/profile.js',
-    'server/student/test.js',
+
+    // 'server/teacher/teacher.js',
+    // 'server/public/public.js',
+    // 'server/student/answer.js',
+    // 'server/student/attempt.js',
+    // 'server/student/profile.js',
+    // 'server/student/test.js',
   ], 'server');
 });

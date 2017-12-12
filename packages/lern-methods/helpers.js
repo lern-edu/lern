@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 Helpers = {
   Function(func) {
     return {
