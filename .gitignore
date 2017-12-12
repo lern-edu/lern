@@ -2,3 +2,4 @@ node_modules/
 settings.json
 .git
 *.log
+*.log.*
