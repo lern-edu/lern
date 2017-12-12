@@ -54,7 +54,6 @@ export default class Safe extends React.Component {
 
   render() {
     const { access } = this.state;
-
     return (
       <div>
         {access === true ? (

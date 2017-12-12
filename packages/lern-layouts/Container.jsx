@@ -1,6 +1,8 @@
 // Libs
+import _ from 'lodash';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
+import { User } from 'meteor/duckdodgerbrasl:lern-model';
 
 // Views
 import LayoutView from './Layout.jsx';
@@ -10,7 +12,7 @@ Layout = withTracker(({ params }) => {
 
   return {
     route: FlowRouter.getRouteName(),
-    user: Meteor.users.findOne(Meteor.userId()),
+    user: _.head(User.find(Meteor.userId()).fetch()),
     logging: Meteor.loggingIn(),
   };
 })(LayoutView);

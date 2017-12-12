@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AppBar, FlatButton, IconButton, FontIcon } from 'material-ui';
-import { Avatar, MenuItem, IconMenu, Divider } from 'material-ui';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/Icon';
 
 class Bar extends React.Component {
 
@@ -45,13 +49,17 @@ class Bar extends React.Component {
     const { crumbs, title, disableActions } = this.props;
 
     return (
-      <AppBar
-        {..._.omit(this.props, ['crumbs', 'disableActions'])}
-        title={this.getTitle({ title, crumbs })}
-        showMenuIconButton={true}
-        onLeftIconButtonTouchTap={disableActions ? () => false : window.nav}
-        style={{ position: 'fixed', top: 0, left: 0 }}
-      />
+      <AppBar position="fixed">
+        <Toolbar>
+          <IconButton onTouchTap={disableActions ? () => false : window.nav} color="contrast" aria-label="Menu">
+             <Icon color="contrast">menu</Icon>
+          </IconButton>
+          <Typography type="title" color="inherit">
+            {this.getTitle({ title, crumbs })}
+          </Typography>
+          <Button color="contrast">Login</Button>
+        </Toolbar>
+      </AppBar>
     );
   }
 };

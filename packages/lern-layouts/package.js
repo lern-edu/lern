@@ -4,12 +4,15 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('1.2.1');
+  api.versionsFrom('1.6');
 
   api.use([
     'ecmascript',
     'universe:i18n',
     'react-meteor-data',
+
+    'duckdodgerbrasl:lern-model',
+    'duckdodgerbrasl:lern-publications',
   ], 'client');
 
   api.addFiles([
@@ -21,9 +24,9 @@ Package.onUse(function (api) {
 
     'Layout.jsx',
     'Container.jsx',
-    'Setup.jsx',
     'NotFound.jsx',
     'Bar.jsx',
+    'Setup.jsx',
   ], 'client');
 
   api.mainModule('./exporter.js', 'client');
