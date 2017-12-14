@@ -52,3 +52,15 @@ _Linter: JSCS_
 - Only top level view should fetch data
 - Route name should match top level component name
 - File name should match component name
+
+## NPM run
+- _start:_ Start meteor with settings on port 3000 with configured locales
+- _debug:_ Start meteor with settings on port 3000 with configured locales with debug console
+- _test:_ Run test once for selected package, results on console
+  - **Example:** `npm run test packages/lern-check`
+- _test-watch:_ Run test live for selected package on web view in `localhost:3100`
+  - **Example:** `npm run test packages/lern-check`
+- _jsdoc:_ Create documentation using jsdoc.json configuration
+
+## Private packages
+- [lern-check](https://lern-edu.github.io/lern/Check.html)
