@@ -31,8 +31,17 @@ Package.onUse((api) => {
 });
 
 Package.onTest((api) => {
-  api.use('ecmascript');
-  api.use('tinytest');
-  api.use('duckdodgerbrasl:lern-check');
-  api.mainModule('lern-check-tests.js');
+
+  api.use([
+    'ecmascript',
+    'accounts-base@1.4.0',
+    'coffeescript@1.12.7_3',
+    'practicalmeteor:mocha@2.4.5_6',
+    'dispatch:phantomjs-tests@=0.0.5',
+    'dispatch:mocha-phantomjs',
+    'duckdodgerbrasl:lern-model',
+    'duckdodgerbrasl:lern-check',
+  ]);
+
+  api.mainModule('tests.js');
 });

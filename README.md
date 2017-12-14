@@ -20,8 +20,9 @@
 - Misc
   - [Lodash](https://lodash.com/)
   - [Moment](https://momentjs.com/)
-- Tests
+- [Tests](https://guide.meteor.com/testing.html)
   - [Chai](http://chaijs.com/)
+  - [Mocha](https://github.com/practicalmeteor/meteor-mocha)
 
 ## Languages
 - ES6 Javascript (.js)
