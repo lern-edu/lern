@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Cursor from './Cursor.js';
 import { User as UserCollection } from 'meteor/duckdodgerbrasl:lern-model';
 
