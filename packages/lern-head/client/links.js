@@ -1,3 +1,7 @@
+/**
+ * @memberof LernHead
+ * @desc Import all head links tags
+ */
 const links = [
   { rel: 'stylesheet', href: '/iconfont/material-icons.css' },
   { rel: 'stylesheet', type: 'text/css', href: '/fonts/fonts.css' },
