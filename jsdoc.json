@@ -1,0 +1,19 @@
+{
+  "plugins" : ["plugins/markdown"],
+  "source": {
+    "include": [
+      "init.js",
+      "packages/lern-check",
+      "packages/lern-check/lib",
+      "client"
+    ],
+    "exlude": ["node_modules", ".git", ".meteor"]
+  },
+  "sourceType": "module",
+  "opts": {
+    "encoding": "utf8",
+    "destination": "./docs",
+    "readme": "README.md",
+    "package": "package.json"
+  }
+}
