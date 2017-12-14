@@ -10,10 +10,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Input, { InputLabel } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl } from 'material-ui/Form';
-
-import { DropDownMenu } from 'material-ui';
-import { FontIcon } from 'material-ui';
-import { grey300, grey400 } from 'material-ui/colors';
+import Icon from 'material-ui/Icon';
 
 class Navigation extends React.Component {
 
@@ -24,7 +21,7 @@ class Navigation extends React.Component {
         admin: {
           AdminHome: {
             label: 'Home',
-            icon: null,
+            icon: 'home',
           },
         },
       },
@@ -37,13 +34,7 @@ class Navigation extends React.Component {
   updateState({ screen }) {
     const { routes } = this.state;
 
-    this.setState({ routes,
-      docked: false,
-      open: false,
-      style: {
-        backgroundColor: '#F9F9F9',
-      },
-    });
+    this.setState({ routes, open: false });
   }
 
   /* Lifecycle
@@ -94,7 +85,7 @@ class Navigation extends React.Component {
       <Drawer
         {..._.omit(this.state, ['open'])}
         open={!open ? false : true}
-        onRequestChange={open => this.setState({ open })}
+        onRequestClose={() => this.setState({ open: !open })}
       >
 
         {
@@ -116,7 +107,7 @@ class Navigation extends React.Component {
             <div style={
               {
                 background:
-                  '#ffffff url("/images/layout/material-background.png") no-repeat right top',
+                  '#ffffff url("/backgrounds/material-background.png") no-repeat right top',
               }
             } >
               <List>
@@ -135,7 +126,7 @@ class Navigation extends React.Component {
                 roles && roles.length <= 1
                 ? undefined
                 : <FormControl>
-                  <InputLabel htmlFor="age-simple">Age</InputLabel>
+                  <InputLabel htmlFor='age-simple'>Role</InputLabel>
                   <Select
                     value={_.get(user, 'profile.role')}
                     onChange={this.handleRoleChange}
@@ -153,31 +144,35 @@ class Navigation extends React.Component {
 
             </div>
 
-            {/* <Divider />
+            <Divider />
 
-            {_.map(routes[user.getRole()], ({ label, icon }, _route) =>
-              <ListItem
-                leftIcon={_.isNull(icon) ? undefined :
-                  <FontIcon className='material-icons'>{icon}</FontIcon>}
-                style={_route === route ? { backgroundColor: grey300 }
-                  : undefined}
-                key={_route}
-                primaryText={label}
-                href={FlowRouter.path(_route)}
-              />
-            )}
+            <List>
+
+              {
+                _.map(routes[user.getRole()], ({ label, icon }, _route) =>
+                  <ListItem button component='a' key={_route} href={FlowRouter.path(_route)}>
+                    <Icon>{icon}</Icon>
+                    <ListItemText primary={label} />
+                  </ListItem>
+                )
+              }
+
+            </List>
+
             <Divider/>
-            <div>
-              <ListItem
-                primaryText="Configurações"
-                href={FlowRouter.path(user.getSettingsRoute())} />
-              <ListItem
-                primaryText="Fale conosco"
-                href={FlowRouter.path('PublicContact')} />
-              <ListItem
-                primaryText="Sair"
-                onClick={logout} />
-            </div> */}
+
+            <List>
+
+              {/* <ListItem button component='a' href={FlowRouter.path(user.getSettingsRoute())} >
+                <ListItemText primary='Configurações' />
+              </ListItem> */}
+
+              <ListItem button onTouchTap={logout} >
+                <ListItemText primary='Sair' />
+              </ListItem>
+
+            </List>
+
           </div>
         }
 
