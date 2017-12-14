@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: User()</title>
+    <title>JSDoc: Namespace: Cursor()</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: User()</h1>
+    <h1 class="page-title">Namespace: Cursor()</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="Check.html">Check</a>.</span>User()</h2>
+            <span class="ancestors"><a href="Check.html">Check</a>.</span>Cursor()</h2>
         
     
 </header>
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Check user roles (Check.Cursor()).</p></div>
+            <div class="description"><p>Check Mongo cursor properties (Check.Cursor()).</p></div>
         
 
         
@@ -73,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="packages_lern-check_lib_User.js.html">packages/lern-check/lib/User.js</a>, <a href="packages_lern-check_lib_User.js.html#line4">line 4</a>
+        <a href="packages_lern-check_lib_Cursor.js.html">packages/lern-check/lib/Cursor.js</a>, <a href="packages_lern-check_lib_Cursor.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -112,176 +112,7 @@
     
 
     
-    <h4 class="name" id=".role"><span class="type-signature">(static) </span>role<span class="signature">(role)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Check Mongo user role match (Check.Cursor().role()).</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>role</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>some role to check [admin, school, student, teacher]</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="packages_lern-check_lib_User.js.html">packages/lern-check/lib/User.js</a>, <a href="packages_lern-check_lib_User.js.html#line35">line 35</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        <p>wrong-role - if user role not garanteed</p>
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Meteor.Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>Check.User('8MZekqrgCkhQqaNty').role('admin')</code></pre>
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".User"><span class="type-signature">(static) </span>User<span class="signature">(userId)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".Cursor"><span class="type-signature">(static) </span>Cursor<span class="signature">(cursor)</span><span class="type-signature"></span></h4>
     
 
     
@@ -325,13 +156,13 @@
 
         <tr>
             
-                <td class="name"><code>userId</code></td>
+                <td class="name"><code>cursor</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Object</span>
 
 
             
@@ -341,7 +172,7 @@
 
             
 
-            <td class="description last"><p>User uniq identification (_id)</p></td>
+            <td class="description last"><p>Mongo Collection cursor</p></td>
         </tr>
 
     
@@ -382,7 +213,98 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="packages_lern-check_lib_User.js.html">packages/lern-check/lib/User.js</a>, <a href="packages_lern-check_lib_User.js.html#line19">line 19</a>
+        <a href="packages_lern-check_lib_Cursor.js.html">packages/lern-check/lib/Cursor.js</a>, <a href="packages_lern-check_lib_Cursor.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const checkCursor = Check.Cursor(User.find())</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".none"><span class="type-signature">(static) </span>none<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Check Mongo cursor has none document (Check.Cursor().none()).</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_lern-check_lib_Cursor.js.html">packages/lern-check/lib/Cursor.js</a>, <a href="packages_lern-check_lib_Cursor.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -410,7 +332,7 @@
 <dl>
     <dt>
         <div class="param-desc">
-        <p>none-cursor - if user not found</p>
+        <p>some-cursor</p>
         </div>
     </dt>
     <dd></dd>
@@ -438,9 +360,119 @@
 
 
 
-    <h5>Example</h5>
+
+        
+            
+
     
-    <pre class="prettyprint"><code>const checkUser = Check.User('8MZekqrgCkhQqaNty')</code></pre>
+
+    
+    <h4 class="name" id=".some"><span class="type-signature">(static) </span>some<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Check Mongo cursor has some document (Check.Cursor().some()).</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="packages_lern-check_lib_Cursor.js.html">packages/lern-check/lib/Cursor.js</a>, <a href="packages_lern-check_lib_Cursor.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        <p>none-cursor</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Meteor.Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+
+
 
 
 
@@ -466,7 +498,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 14 2017 12:35:15 GMT-0200 (-02)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 14 2017 12:37:01 GMT-0200 (-02)
 </footer>
 
 <script> prettyPrint(); </script>
