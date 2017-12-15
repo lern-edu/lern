@@ -9,6 +9,11 @@ import Navigation from './components/Navigation.jsx';
 import Snackbar from './components/Snackbar.jsx';
 import Safe from './components/Safe.jsx';
 
+/**
+ * Define material theme. See more [here]{@link https://material-ui-next.com/customization/themes/}
+ * @memberof LernLayouts
+ * @private
+ */
 const muiTheme = createMuiTheme({
   palette: {
     primary: {
@@ -65,6 +70,17 @@ const muiTheme = createMuiTheme({
   },
 });
 
+/**
+ * @desc Self description
+ * @class
+ * @public
+ * @memberof LernLayouts
+ * @param {string} this.props.route - current route name
+ * @param {bool} this.props.logging - true if a login method in progress
+ * @param {string=} this.props.protect - verify role to protect access to not available views
+ * @param {object=} this.props.user - current logged user
+ * @param {bool=} this.props.nav - true if Drawer is open
+ */
 class LayoutView extends React.Component {
 
   getChildContext() {

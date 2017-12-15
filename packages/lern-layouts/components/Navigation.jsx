@@ -12,8 +12,17 @@ import { MenuItem } from 'material-ui/Menu';
 import { FormControl } from 'material-ui/Form';
 import Icon from 'material-ui/Icon';
 
+/**
+ * Navigation or side Drawer
+ * @private
+ * @memberof LernLayouts.Components
+ */
 class Navigation extends React.Component {
 
+  /**
+   * Define all routes here on this.state
+   * @constructs
+   */
   constructor(props) {
     super(props);
     this.state = {

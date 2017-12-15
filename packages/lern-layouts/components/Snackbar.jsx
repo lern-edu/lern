@@ -1,10 +1,21 @@
 import React from 'react';
 import _ from 'lodash';
-import Snackbar from 'material-ui/Snackbar';
+import SnackbarMaterial from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
 
-export default class LayoutSnackbar extends React.Component {
+/**
+ * Snackbar - can subriscribe all material snackbar props
+ * @desc see more [here]{@link https://material-ui-next.com/demos/snackbars/}
+ * @class
+ * @public
+ * @memberof LernLayouts.Components
+ * @example
+ * import { Snackbar } from 'meteor/duckdodgerbrasl:lern-layouts';
+ * ...
+ * <Snackbar message='hello world' />
+ */
+class Snackbar extends React.Component {
 
   /* Methods
   */
@@ -70,6 +81,8 @@ export default class LayoutSnackbar extends React.Component {
   */
 
   render() {
-    return <Snackbar {...this.state}/>;
+    return <SnackbarMaterial {...this.state}/>;
   }
 };
+
+export default Snackbar;

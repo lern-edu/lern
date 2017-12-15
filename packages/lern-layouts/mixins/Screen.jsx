@@ -1,5 +1,22 @@
 import React from 'react';
 
+/**
+ * Screen - bind on view state heigth and width
+ * @class
+ * @public
+ * @memberof LernLayouts.Mixins
+ * @example
+ * import { Screen } from 'meteor/duckdodgerbrasl:lern-layouts';
+ * ...
+ * class SomeView extends React.Component {
+ * ...
+ *  const { innerWidth, innerHeight } = this.state;
+ * ...
+ * }
+ * ...
+ * export default Screen(SomeView);
+ * @return {object} this.state.innerHeight and this.state.innerWidth
+ */
 const Screen = (WrappedCompenent) => class View extends React.Component {
 
   // Lifecycle
