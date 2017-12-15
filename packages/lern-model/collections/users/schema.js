@@ -1,4 +1,5 @@
 import { Class, Validator } from 'meteor/jagi:astronomy';
+import StaticCollections from '../static.js';
 import _ from 'lodash';
 
 const UserProfileSchema = Class.create({
@@ -67,7 +68,7 @@ const User = Class.create({
     roles: {
       type: [String],
       validators: [
-        { type: 'OneOf', param: StaticCollections.UserRoles },
+        { type: 'UserRolesInRoles' },
         { type: 'maxLength', param: 4 },
       ],
     },
