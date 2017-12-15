@@ -1,7 +1,13 @@
 import React from 'react';
+import Bar from '../Bar.jsx';
 import { FontIcon, RaisedButton, LinearProgress } from 'material-ui';
 
-export default class Safe extends React.Component {
+/**
+ * Safe view render
+ * @private
+ * @memberof LernLayouts.Components
+ */
+class Safe extends React.Component {
 
   /* Methods
   */
@@ -9,12 +15,12 @@ export default class Safe extends React.Component {
   updateAccess({ protect, user, logging }) {
     this.setState({
       access: (
-          !protect ? true
-        : logging ? undefined
-        : !user ? null
-        : !user.roles ? undefined
-        : user.hasRole(protect)
-      ),
+         !protect ? true
+       : logging ? undefined
+       : !user ? null
+       : !user.roles ? undefined
+       : user.hasRole(protect)
+     ),
     });
   }
 
@@ -55,34 +61,36 @@ export default class Safe extends React.Component {
   render() {
     const { access } = this.state;
     return (
-      <div>
-        {access === true ? (
-          this.props.children
-        ) : access === null ? (
-          undefined
-        ) : access === undefined ? (
-          <div className='ui center aligned basic segment'>
-            <LinearProgress size={2}/>
-          </div>
-        ) : access === false ? (<div>
-          <Layout.Bar title='Ops' />
-          <div className='ui center aligned basic segment'>
-            <h1 className='ui icon header'>
-              <FontIcon className='material-icons' style={{ fontSize: 50 }}>mood_bad</FontIcon>
-              <div className='content'>
-                <div className='sub header'>Você não deveria estar aqui</div>
-              </div>
-            </h1>
-            <div>
-              <RaisedButton
-                label='Voltar'
-                primary={true}
-                href={FlowRouter.path('PublicHome')}
-              />
-            </div>
-          </div>
-        </div>) : undefined}
-      </div>
-    );
+       <div>
+         {access === true ? (
+           this.props.children
+         ) : access === null ? (
+           undefined
+         ) : access === undefined ? (
+           <div className='ui center aligned basic segment'>
+             <LinearProgress size={2}/>
+           </div>
+         ) : access === false ? (<div>
+           <Layout.Bar title='Ops' />
+           <div className='ui center aligned basic segment'>
+             <h1 className='ui icon header'>
+               <FontIcon className='material-icons' style={{ fontSize: 50 }}>mood_bad</FontIcon>
+               <div className='content'>
+                 <div className='sub header'>Você não deveria estar aqui</div>
+               </div>
+             </h1>
+             <div>
+               <RaisedButton
+                 label='Voltar'
+                 primary={true}
+                 href={FlowRouter.path('PublicHome')}
+               />
+             </div>
+           </div>
+         </div>) : undefined}
+       </div>
+     );
   }
 };
+
+export default Safe;

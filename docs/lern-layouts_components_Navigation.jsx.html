@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lern-layouts/components/Navigation.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lern-layouts/components/Navigation.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import _ from 'lodash';
+
+import Drawer from 'material-ui/Drawer';
+import Divider from 'material-ui/Divider';
+import Button from 'material-ui/Button';
+import Avatar from 'material-ui/Avatar';
+import Select from 'material-ui/Select';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Input, { InputLabel } from 'material-ui/Input';
+import { MenuItem } from 'material-ui/Menu';
+import { FormControl } from 'material-ui/Form';
+import Icon from 'material-ui/Icon';
+
+/**
+ * Navigation or side Drawer
+ * @memberof LernLayouts.Components
+ */
+class Navigation extends React.Component {
+
+  /**
+   * Define all routes here on state
+   * @constructs
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      routes: {
+        admin: {
+          AdminHome: {
+            label: 'Home',
+            icon: 'home',
+          },
+        },
+      },
+    };
+  }
+
+  /* Methods
+  */
+
+  updateState({ screen }) {
+    const { routes } = this.state;
+
+    this.setState({ routes, open: false });
+  }
+
+  /* Lifecycle
+  */
+
+  componentWillMount() {
+    const updateState = this.updateState.bind(this);
+    updateState(this.props);
+
+    if (window) {
+      if (window.nav) throw new Meteor.Error('Nav already initialized');
+      else window.nav = (open=true) => this.setState({ open });
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    const updateState = this.updateState.bind(this);
+    updateState(this.props);
+  }
+
+  componentWillUnmount() {
+    if (window) {
+      if (window.nav) window.nav = null;
+      else throw new Meteor.Error('Nav already removed');
+    };
+  }
+
+  handleRoleChange(event, index, role) {
+    Meteor.call('UserChangeRole', role, (err, user) => {
+      if (err) snack('Erro');
+      else FlowRouter.go(user.getHomeRoute());
+    });
+  }
+
+  /* Render
+  */
+
+  render() {
+    const { user, logging, route } = this.props;
+    const { routes, open } = this.state;
+    const logout = () => Meteor.logout();
+
+    const profilePic = _.get(user, 'profile.profilePic');
+    const name = _.get(user, 'profile.name');
+    const roles = _.get(user, 'roles');
+
+    return (
+      &lt;Drawer
+        {..._.omit(this.state, ['open'])}
+        open={!open ? false : true}
+        onRequestClose={() => this.setState({ open: !open })}
+      >
+
+        {
+          !user
+          ? &lt;div className='ui center aligned basic segment'>
+              {
+                logging
+                ? &lt;div/>
+                : &lt;div>
+                  &lt;Button raised color='primary' href={FlowRouter.path('PublicLogin')} >
+                    Entrar
+                  &lt;/Button>
+                &lt;/div>
+              }
+          &lt;/div>
+
+          : &lt;div>
+
+            &lt;div style={
+              {
+                background:
+                  '#ffffff url("/backgrounds/material-background.png") no-repeat right top',
+              }
+            } >
+              &lt;List>
+                &lt;ListItem dense >
+                  {
+                    profilePic
+                    ? &lt;Avatar key='image' size={60} src={profilePic} />
+                    : &lt;Avatar key='image' size={60} size={52}>
+                      {_.head(name)}
+                    &lt;/Avatar>
+                  }
+                  &lt;ListItemText primary={name} />
+                &lt;/ListItem>
+              &lt;/List>
+              {
+                roles &amp;&amp; roles.length &lt;= 1
+                ? undefined
+                : &lt;FormControl>
+                  &lt;InputLabel htmlFor='age-simple'>Role&lt;/InputLabel>
+                  &lt;Select
+                    value={_.get(user, 'profile.role')}
+                    onChange={this.handleRoleChange}
+                  >
+                    {
+                      _.map(_.uniq(roles), r =>
+                        &lt;MenuItem key={r} value={r}>
+                          {i18n.__(`UserRoles.${r}`)}
+                        &lt;/MenuItem>
+                      )
+                    }
+                  &lt;/Select>
+                &lt;/FormControl>
+              }
+
+            &lt;/div>
+
+            &lt;Divider />
+
+            &lt;List>
+
+              {
+                _.map(routes[user.getRole()], ({ label, icon }, _route) =>
+                  &lt;ListItem button component='a' key={_route} href={FlowRouter.path(_route)}>
+                    &lt;Icon>{icon}&lt;/Icon>
+                    &lt;ListItemText primary={label} />
+                  &lt;/ListItem>
+                )
+              }
+
+            &lt;/List>
+
+            &lt;Divider/>
+
+            &lt;List>
+
+              {/* &lt;ListItem button component='a' href={FlowRouter.path(user.getSettingsRoute())} >
+                &lt;ListItemText primary='Configurações' />
+              &lt;/ListItem> */}
+
+              &lt;ListItem button onTouchTap={logout} >
+                &lt;ListItemText primary='Sair' />
+              &lt;/ListItem>
+
+            &lt;/List>
+
+          &lt;/div>
+        }
+
+      &lt;/Drawer>
+    );
+  }
+};
+
+export default Navigation;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LernLayouts.Bar.html">Bar</a></li><li><a href="LernLayouts.Components.Navigation.html">Navigation</a></li><li><a href="LernLayouts.LayoutView.html">LayoutView</a></li><li><a href="LernLayouts.NotFound.html">NotFound</a></li><li><a href="Setup.html">Setup</a></li></ul><h3>Namespaces</h3><ul><li><a href="LernCheck.html">LernCheck</a></li><li><a href="LernCheck.Cursor.html">Cursor()</a></li><li><a href="LernCheck.User.html">User()</a></li><li><a href="LernHead.html">LernHead</a></li><li><a href="LernLayouts.html">LernLayouts</a></li><li><a href="LernLayouts.Components.html">Components</a></li><li><a href="LernLayouts.Mixins.html">Mixins</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 14 2017 21:52:35 GMT-0200 (-02)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

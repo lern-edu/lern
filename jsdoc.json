@@ -2,9 +2,16 @@
   "plugins" : ["plugins/markdown"],
   "source": {
     "include": [
-      "init.js",
       "packages/lern-check",
       "packages/lern-check/lib",
+
+      "packages/lern-head",
+      "packages/lern-head/client",
+
+      "packages/lern-layouts",
+      "packages/lern-layouts/mixins",
+      "packages/lern-layouts/components",
+
       "client"
     ],
     "exlude": ["node_modules", ".git", ".meteor"]

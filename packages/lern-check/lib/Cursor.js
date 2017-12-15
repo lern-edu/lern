@@ -1,11 +1,11 @@
 /**
  * Check Mongo cursor properties (Check.Cursor()).
  * @namespace Cursor()
- * @memberof Check
+ * @memberof LernCheck
  */
 
 /**
- * @memberof Check.Cursor()
+ * @memberof LernCheck.Cursor()
  * @desc Self description
  * @example
  * const checkCursor = Check.Cursor(User.find())
@@ -17,7 +17,9 @@ const Cursor = (cursor) => {
 
     /**
      * Check Mongo cursor has some document (Check.Cursor().some()).
-     * @memberof Check.Cursor()
+     * @memberof LernCheck.Cursor()
+     * @example
+     * Check.Cursor(User.find()).some()
      * @public
      * @throws {Meteor.Error} none-cursor
      */
@@ -28,7 +30,9 @@ const Cursor = (cursor) => {
 
     /**
      * Check Mongo cursor has none document (Check.Cursor().none()).
-     * @memberof Check.Cursor()
+     * @memberof LernCheck.Cursor()
+     * @example
+     * Check.Cursor(User.find()).none()
      * @public
      * @throws {Meteor.Error} some-cursor
      */

@@ -44,6 +44,23 @@ const getTitle = ({ title, crumbs }) =>
     <span>{title}</span>
   </div>;
 
+/**
+ * React Component for top bar
+ * @class
+ * @public
+ * @memberof LernLayouts
+ * @param {object=} this.props.crumbs - paths to compose links for crumbs
+ * @param {string} this.props.title - current view title
+ * @param {bool=} this.props.disableActions - prevent actions to exit from view
+ * @example
+ * import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
+ * ...
+ * <Layout.Bar title='Tags' crumbs={[{ path: 'AdminHome', label: 'Home' }]} />
+ * // or
+ * import { Bar } from 'meteor/duckdodgerbrasl:lern-layouts';
+ * ...
+ * <Bar title='Tags' crumbs={[{ path: 'AdminHome', label: 'Home' }]} />
+ */
 const Bar = (props) => {
 
   const { crumbs, title, disableActions, classes } = props;

@@ -5,11 +5,11 @@ import { User as UserCollection } from 'meteor/duckdodgerbrasl:lern-model';
 /**
  * Check user roles (Check.Cursor()).
  * @namespace User()
- * @memberof Check
+ * @memberof LernCheck
  */
 
 /**
- * @memberof Check.User()
+ * @memberof LernCheck.User()
  * @desc Self description
  * @example
  * const checkUser = Check.User('8MZekqrgCkhQqaNty')
@@ -26,7 +26,7 @@ const User = (userId) => {
 
     /**
      * Check Mongo user role match (Check.Cursor().role()).
-     * @memberof Check.User()
+     * @memberof LernCheck.User()
      * @public
      * @example
      * Check.User('8MZekqrgCkhQqaNty').role('admin')
