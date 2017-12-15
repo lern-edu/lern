@@ -1,20 +1,19 @@
-// Import Tinytest from the tinytest Meteor package.
-import { assert } from 'meteor/practicalmeteor:chai';
-import { meteor } from  'meteor/meteor';
+// Imports
+import { Meteor } from 'meteor/meteor';
+import { User } from 'meteor/duckdodgerbrasl:lern-model';
+import chai, { assert, expect } from 'chai';
 import _ from 'lodash';
 
-// Write your tests here!
-// Here is an example.
 describe('User Model', function () {
 
-  it('Class name', function () {
-    assert.equal(Meteor.users.Schema.className, 'User');
+  it('Class name is User', function () {
+    assert.equal(User.className, 'User');
   });
 
   it('Fields', function () {
     assert.include(
       ['_id', 'emails', 'createdAt', 'roles', 'profile'],
-      ..._.get(Meteor.users, 'Schema.schema.fieldsNames'),
+      ...User.getFieldsNames(),
       'All fields set'
     );
   });
@@ -23,57 +22,79 @@ describe('User Model', function () {
 
   if (Meteor.isServer) {
 
-    before(function () {
+    describe('Running helpers', function () {
 
-      user = new Meteor.users.Schema({
-        profile: {
+      beforeEach(function () {
+
+        user = new User();
+        user.roles = ['admin'];
+        user.profile = {
           name: 'Steven Gerrard',
           firstName: 'Steven',
           lastName: 'Gerrard',
           gender: 'male',
-        },
-        roles: ['admin'],
+        };
+
       });
 
-    });
-
-    describe('Create user with minimal info', function () {
-
-      it('Is valid user?', function () {
-        assert.isUndefined(user.validate());
-      });
-
-      it('Can create user?', function () {
-        assert.isString(user.save());
-      });
-
-    });
-
-    describe('Running helpers', function () {
-
-      it('Get current role', function () {
+      it('get current role admin - User.getRole()', function () {
         assert.equal(user.getRole(), 'admin');
       });
 
-      it('Get email', function () {
+      it('get user email - User.getEmail()', function () {
         assert.equal(user.getEmail(), undefined);
       });
 
-      it('Get social email', function () {
+      it('get social email - User.getSocialEmail()', function () {
         assert.equal(user.getSocialEmail(), undefined);
       });
 
-      it('Has role', function () {
+      it('exist role admin - User.hasRole()', function () {
         assert.equal(user.hasRole('admin'), true);
       });
 
-      it('Get settings route', function () {
+      it('not exist role student - User.hasRole()', function () {
+        assert.equal(user.hasRole('student'), false);
+      });
+
+      it('get route AdminSettings - User.getSettingsRoute()', function () {
         assert.equal(user.getSettingsRoute(), 'AdminSettings');
       });
 
-      it('Get home route', function () {
+      it('get route AdminHome - User.getHomeRoute()', function () {
         assert.equal(user.getHomeRoute(), 'AdminHome');
       });
+
+      it('get route AdminSetup - User.getSetupRoute()', function () {
+        assert.equal(user.getSetupRoute(), 'AdminSetup');
+      });
+
+    });
+
+    describe('Testing custom validators', function () {
+
+      beforeEach(function () {
+
+        user = new User();
+        user.profile = {
+          name: 'Steven Gerrard',
+          firstName: 'Steven',
+          lastName: 'Gerrard',
+          gender: 'male',
+        };
+
+      });
+
+      it('with right roles - UserRolesInRoles', function () {
+        user.roles = ['admin'];
+        expect(() => user.validate('roles')).to.not.throw();
+      });
+
+      it('with wrong role - UserRolesInRoles', function () {
+        user.roles = ['admin', 'student', 'mocha'];
+        expect(() => user.validate('roles')).to.throw(/validation-error/);
+      });
+
     });
 
   };
