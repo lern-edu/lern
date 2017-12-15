@@ -3,7 +3,6 @@ import Check from 'meteor/duckdodgerbrasl:lern-check';
 import chai, { assert, expect } from 'chai';
 
 // Write your tests here!
-// Here is an example.
 describe('Check', function () {
 
   it('Is an object', function () {
@@ -79,23 +78,11 @@ describe('Check', function () {
         });
 
         it('Has admin role? Yes, it has!', function () {
-          try {
-            Check.User(user._id).role('admin');
-            assert(true);
-          } catch (err) {
-            assert(false, err.message);
-          };
+          expect(() => Check.User(user._id).role('admin')).to.not.throw();
         });
 
         it('Has student role? no, it hasn\'t!', function () {
-          try {
-            Check.User(user._id).role('student');
-          } catch (err) {
-            assert(true);
-            return;
-          };
-
-          assert(false, 'Role student is not present! Expected [check.user.role: wrong-role]');
+          expect(() => Check.User(user._id).role('student')).to.throw();
         });
 
       });
