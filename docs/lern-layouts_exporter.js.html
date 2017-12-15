@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-head/client/title.js</title>
+    <title>JSDoc: Source: lern-layouts/exporter.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-head/client/title.js</h1>
+    <h1 class="page-title">Source: lern-layouts/exporter.js</h1>
 
     
 
@@ -26,12 +26,41 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @memberof LernHead
- * @desc Set app title
+            <pre class="prettyprint source linenums"><code>import Layout from './Layout.jsx';
+import Bar from './Bar.jsx';
+import Screen from './mixins/Screen.jsx';
+import NotFound from './NotFound.jsx';
+import Setup from './Setup.jsx';
+
+/**
+ * lern-layouts
+ * @namespace
  */
-const title = 'Lern';
-DocHead.setTitle('Lern');
+const LernLayouts = true;
+
+/**
+ * @namespace Components
+ * @memberof LernLayouts
+ */
+const Components = true;
+
+/**
+ * @namespace Mixins
+ * @memberof LernLayouts
+ */
+const Mixins = true;
+
+/**
+ * @memberof LernLayouts
+ * @desc Self description - Layout default Components and Mixins
+ * @return {Object} Components(Bar and NotFound) and Mixins(Screen)
+ */
+Layout = Layout;
+Layout.Bar = Bar;
+Layout.Screen = Screen;
+Layout.NotFound = NotFound;
+
+export { Layout, Setup, Bar, Screen, NotFound };
 </code></pre>
         </article>
     </section>

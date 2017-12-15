@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: LernCheck</title>
+    <title>JSDoc: Class: Screen</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: LernCheck</h1>
+    <h1 class="page-title">Class: Screen</h1>
 
     
 
@@ -28,7 +28,8 @@
 
 <header>
     
-        <h2>LernCheck</h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="LernLayouts.html">LernLayouts</a><a href="LernLayouts.Mixins.html">.Mixins</a>.</span>Screen<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h2>
         
     
 </header>
@@ -37,10 +38,31 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>lern-check package</p></div>
-        
 
-        
+    
+
+    
+    <h4 class="name" id="Screen"><span class="type-signature"></span>new Screen<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Screen - bind on view state heigth and width</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -72,7 +94,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lern-check_exporter.js.html">lern-check/exporter.js</a>, <a href="lern-check_exporter.js.html#line8">line 8</a>
+        <a href="lern-layouts_mixins_Screen.jsx.html">lern-layouts/mixins/Screen.jsx</a>, <a href="lern-layouts_mixins_Screen.jsx.html#line20">line 20</a>
     </li></ul></dd>
     
 
@@ -84,7 +106,57 @@
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
         
+<div class="param-desc">
+    <p>this.state.innerHeight and this.state.innerWidth</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>import { Screen } from 'meteor/duckdodgerbrasl:lern-layouts';
+...
+class SomeView extends React.Component {
+...
+const { innerWidth, innerHeight } = this.state;
+...
+}
+...
+export default Screen(SomeView);</code></pre>
+
+
+
     
     </div>
 
@@ -99,88 +171,7 @@
     
 
     
-        <h3 class="subsection-title">Namespaces</h3>
 
-        <dl>
-            <dt><a href="LernCheck.Cursor.html">Cursor()</a></dt>
-            <dd></dd>
-        
-            <dt><a href="LernCheck.User.html">User()</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id=".Check"><span class="type-signature">(static, constant) </span>Check<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Self description - Description for default exported module called Check</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lern-check_exporter.js.html">lern-check/exporter.js</a>, <a href="lern-check_exporter.js.html#line17">line 17</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import Check from 'meteor/duckdodgerbrasl:lern-check';</code></pre>
-
-
-
-        
     
 
     

@@ -63,4 +63,6 @@ _Linter: JSCS_
 - _jsdoc:_ Create documentation using jsdoc.json configuration
 
 ## Private packages
-- [lern-check](https://lern-edu.github.io/lern/Check.html)
+- [lern-check](https://lern-edu.github.io/lern/LernCheck.html)
+- [lern-head](https://lern-edu.github.io/lern/LernHead.html)
+- [lern-layouts](https://lern-edu.github.io/lern/LernLayouts.html)

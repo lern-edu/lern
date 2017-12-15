@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lern-layouts/Layout.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lern-layouts/Layout.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Libs
+import React from 'react';
+import PropTypes from 'prop-types';
+import i18n from 'meteor/universe:i18n';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+
+// Components
+import Navigation from './components/Navigation.jsx';
+import Snackbar from './components/Snackbar.jsx';
+import Safe from './components/Safe.jsx';
+
+/**
+ * Define material theme. See more [here]{@link https://material-ui-next.com/customization/themes/}
+ * @memberof LernLayouts
+ * @private
+ */
+const muiTheme = createMuiTheme({
+  palette: {
+    primary: {
+      '50': '#e3f2fd',
+      '100': '#bbdefb',
+      '200': '#90caf9',
+      '300': '#64b5f6',
+      '400': '#42a5f5',
+      '500': '#2196f3',
+      '600': '#1e88e5',
+      '700': '#1976d2',
+      '800': '#1565c0',
+      '900': '#0d47a1',
+      'A100': '#82b1ff',
+      'A200': '#448aff',
+      'A400': '#2979ff',
+      'A700': '#2962ff',
+      'contrastDefaultColor': 'light'
+    },
+    'secondary': {
+      '50': '#fff8e1',
+      '100': '#ffecb3',
+      '200': '#ffe082',
+      '300': '#ffd54f',
+      '400': '#ffca28',
+      '500': '#ffc107',
+      '600': '#ffb300',
+      '700': '#ffa000',
+      '800': '#ff8f00',
+      '900': '#ff6f00',
+      'A100': '#ffe57f',
+      'A200': '#ffd740',
+      'A400': '#ffc400',
+      'A700': '#ffab00',
+      'contrastDefaultColor': 'light'
+    },
+    'error': {
+      '50': '#ffebee',
+      '100': '#ffcdd2',
+      '200': '#ef9a9a',
+      '300': '#e57373',
+      '400': '#ef5350',
+      '500': '#f44336',
+      '600': '#e53935',
+      '700': '#d32f2f',
+      '800': '#c62828',
+      '900': '#b71c1c',
+      'A100': '#ff8a80',
+      'A200': '#ff5252',
+      'A400': '#ff1744',
+      'A700': '#d50000',
+      'contrastDefaultColor': 'light'
+    },
+  },
+});
+
+/**
+ * @desc Self description
+ * @class
+ * @public
+ * @memberof LernLayouts
+ * @param {string} this.props.route - current route name
+ * @param {bool} this.props.logging - true if a login method in progress
+ * @param {string=} this.props.protect - verify role to protect access to not available views
+ * @param {object=} this.props.user - current logged user
+ * @param {bool=} this.props.nav - true if Drawer is open
+ */
+class LayoutView extends React.Component {
+
+  getChildContext() {
+    return _.pick(this.props, ['logging', 'route', 'user']);
+  }
+
+  constructor(props) {
+    super(props);
+    i18n.setLocale('pt-BR');
+    this.state = { locale: 'pt-BR' };
+  }
+
+  onLocale(locale) {
+    this.setState({ locale });
+  }
+
+  componentWillMount() {
+    i18n.onChangeLocale(this.onLocale.bind(this));
+  }
+
+  componentWillUnmount() {
+    i18n.offChangeLocale(this.onLocale.bind(this));
+  }
+
+  getLanguage() {
+    return 'pt-BR';
+  }
+
+  /* Render
+  */
+
+  render() {
+    const stuff = {
+      ...this.props,
+      ...this.state,
+    };
+
+    return (
+      &lt;MuiThemeProvider theme={muiTheme}>
+        &lt;div>
+
+          &lt;nav>
+            {!stuff.nav ? undefined : &lt;Navigation {...stuff}/>}
+          &lt;/nav>
+
+          &lt;main style={{ paddingTop: stuff.bar ? 64 : 0 }}>
+            &lt;Safe {...this.props} > {this.props.main} &lt;/Safe>
+          &lt;/main>
+
+          &lt;aside>
+            &lt;Snackbar />
+          &lt;/aside>
+
+        &lt;/div>
+      &lt;/MuiThemeProvider>
+    );
+  }
+};
+
+LayoutView.childContextTypes = {
+  route: PropTypes.string.isRequired,
+  logging: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+};
+
+LayoutView.propTypes = {
+  route: PropTypes.string.isRequired,
+  logging: PropTypes.bool.isRequired,
+  protect: PropTypes.string,
+  user: PropTypes.object,
+  nav: PropTypes.bool,
+};
+
+export default LayoutView;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LernLayouts.Bar.html">Bar</a></li><li><a href="LernLayouts.Components.Snackbar.html">Snackbar</a></li><li><a href="LernLayouts.LayoutView.html">LayoutView</a></li><li><a href="LernLayouts.Mixins.Screen.html">Screen</a></li><li><a href="LernLayouts.NotFound.html">NotFound</a></li><li><a href="Setup.html">Setup</a></li></ul><h3>Namespaces</h3><ul><li><a href="LernCheck.html">LernCheck</a></li><li><a href="LernCheck.Cursor.html">Cursor()</a></li><li><a href="LernCheck.User.html">User()</a></li><li><a href="LernHead.html">LernHead</a></li><li><a href="LernLayouts.html">LernLayouts</a></li><li><a href="LernLayouts.Components.html">Components</a></li><li><a href="LernLayouts.Mixins.html">Mixins</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 14 2017 22:09:15 GMT-0200 (-02)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

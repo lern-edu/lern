@@ -7,6 +7,11 @@
 
       "packages/lern-head",
       "packages/lern-head/client",
+
+      "packages/lern-layouts",
+      "packages/lern-layouts/mixins",
+      "packages/lern-layouts/components",
+
       "client"
     ],
     "exlude": ["node_modules", ".git", ".meteor"]

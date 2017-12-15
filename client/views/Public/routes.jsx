@@ -5,12 +5,12 @@ import { Setup } from 'meteor/duckdodgerbrasl:lern-layouts';
 // Views
 import PublicLogin from './Login/View.jsx';
 
-const { render } = Setup();
+const setup = new Setup();
 
 FlowRouter.route('/', {
   name: 'PublicLogin',
   action(params, query) {
-    render({
+    setup.render({
       main: <PublicLogin />,
     });
   },

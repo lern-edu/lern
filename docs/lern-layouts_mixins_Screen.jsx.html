@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-head/client/title.js</title>
+    <title>JSDoc: Source: lern-layouts/mixins/Screen.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-head/client/title.js</h1>
+    <h1 class="page-title">Source: lern-layouts/mixins/Screen.jsx</h1>
 
     
 
@@ -26,12 +26,58 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @memberof LernHead
- * @desc Set app title
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+
+/**
+ * Screen - bind on view state heigth and width
+ * @class
+ * @public
+ * @memberof LernLayouts.Mixins
+ * @example
+ * import { Screen } from 'meteor/duckdodgerbrasl:lern-layouts';
+ * ...
+ * class SomeView extends React.Component {
+ * ...
+ * const { innerWidth, innerHeight } = this.state;
+ * ...
+ * }
+ * ...
+ * export default Screen(SomeView);
+ * @return {object} this.state.innerHeight and this.state.innerWidth
  */
-const title = 'Lern';
-DocHead.setTitle('Lern');
+const Screen = (WrappedCompenent) => class View extends React.Component {
+
+  // Lifecycle
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      innerHeight: window.innerHeight,
+      innerWidth: window.innerWidth,
+    };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize.bind(this));
+  }
+
+  // handlers
+
+  handleResize(e) {
+    this.setState({ innerHeight: window.innerHeight, innerWidth: window.innerWidth });
+  }
+
+  render() {
+    return &lt;WrappedCompenent {...this.state} />;
+  }
+
+};
+
+export default Screen;
 </code></pre>
         </article>
     </section>
