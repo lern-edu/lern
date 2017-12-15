@@ -28,9 +28,9 @@
 - ES6 Javascript (.js)
 - React Javascript (.jsx)
 <br>
-_Styleguides: [Airbnb](https://github.com/airbnb/javascript)_
+_Styleguides:_ [Airbnb](https://github.com/airbnb/javascript)
 <br>
-_Linter: JSCS_
+_Linter:_ JSCS
 
 ### Recomended editor: [Atom](https://atom.io/)
 - Packages:
