@@ -32,6 +32,10 @@ class Navigation extends React.Component {
             label: 'Home',
             icon: 'home',
           },
+          AdminUsers: {
+            label: 'Usuários',
+            icon: 'person',
+          },
         },
       },
     };
