@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-check/lib/User.js</title>
+    <title>JSDoc: Source: lern-model/collections/users/validators.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-check/lib/User.js</h1>
+    <h1 class="page-title">Source: lern-model/collections/users/validators.js</h1>
 
     
 
@@ -27,48 +27,35 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import _ from 'lodash';
-import Cursor from './Cursor.js';
-import { User as UserCollection } from 'meteor/duckdodgerbrasl:lern-model';
+import { Validator } from 'meteor/jagi:astronomy';
+import StaticCollections from '../static.js';
 
 /**
- * Check user roles (Check.Cursor()).
- * @namespace User()
- * @memberof LernCheck
- */
-
-/**
- * @memberof LernCheck.User()
- * @desc Self description
- * @example
- * const checkUser = Check.User('8MZekqrgCkhQqaNty')
+ * @namespace Validators
+ * @memberof LernModel.User
  * @public
- * @param {String} userId - User uniq identification (_id)
- * @throws {Meteor.Error} none-cursor - if user not found
  */
-const User = (userId) => {
-  let user = UserCollection.find(userId);
-  Cursor(user).some();
-  user = _.first(user.fetch());
 
-  return {
+/**
+ * Verify all user roles are included in UserRoles in [StaticCollections]{@link LernModel}
+ * @func
+ * @memberof LernModel.User.Validators
+ * @public
+ * @return {String|undefined} Error message or undefined
+ */
+const UserRolesInRoles = {
+  name: 'UserRolesInRoles',
 
-    /**
-     * Check Mongo user role match (Check.Cursor().role()).
-     * @memberof LernCheck.User()
-     * @public
-     * @example
-     * Check.User('8MZekqrgCkhQqaNty').role('admin')
-     * @param {String} role - some role to check [admin, school, student, teacher]
-     * @throws {Meteor.Error} wrong-role - if user role not garanteed
-     */
-    role(role) {
-      if (!user.hasRole(role))
-        throw new Meteor.Error('check.user.role: wrong-role');
-    },
-  };
+  isValid({ value: roles }) {
+    return _.every(roles, role => _.includes(StaticCollections.UserRoles, role));
+  },
+
+  resolveError({ name }) {
+    return `The field ${name} contains inappropriate roles`;
+  },
 };
 
-export default User;
+Validator.create(UserRolesInRoles);
 </code></pre>
         </article>
     </section>

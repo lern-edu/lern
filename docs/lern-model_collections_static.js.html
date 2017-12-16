@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-check/lib/User.js</title>
+    <title>JSDoc: Source: lern-model/collections/static.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-check/lib/User.js</h1>
+    <h1 class="page-title">Source: lern-model/collections/static.js</h1>
 
     
 
@@ -26,49 +26,18 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import _ from 'lodash';
-import Cursor from './Cursor.js';
-import { User as UserCollection } from 'meteor/duckdodgerbrasl:lern-model';
-
-/**
- * Check user roles (Check.Cursor()).
- * @namespace User()
- * @memberof LernCheck
- */
-
-/**
- * @memberof LernCheck.User()
- * @desc Self description
- * @example
- * const checkUser = Check.User('8MZekqrgCkhQqaNty')
+            <pre class="prettyprint source linenums"><code>/**
+ * All static collections are here
+ * @memberof LernModel
  * @public
- * @param {String} userId - User uniq identification (_id)
- * @throws {Meteor.Error} none-cursor - if user not found
+ * @example
+ * import { StaticCollections } from 'meteor/duckdodgerbrasl:lern-model'
  */
-const User = (userId) => {
-  let user = UserCollection.find(userId);
-  Cursor(user).some();
-  user = _.first(user.fetch());
-
-  return {
-
-    /**
-     * Check Mongo user role match (Check.Cursor().role()).
-     * @memberof LernCheck.User()
-     * @public
-     * @example
-     * Check.User('8MZekqrgCkhQqaNty').role('admin')
-     * @param {String} role - some role to check [admin, school, student, teacher]
-     * @throws {Meteor.Error} wrong-role - if user role not garanteed
-     */
-    role(role) {
-      if (!user.hasRole(role))
-        throw new Meteor.Error('check.user.role: wrong-role');
-    },
-  };
+const StaticCollections = {
+  UserRoles: ['student', 'teacher', 'school', 'admin'],
 };
 
-export default User;
+export default { ...StaticCollections };
 </code></pre>
         </article>
     </section>
