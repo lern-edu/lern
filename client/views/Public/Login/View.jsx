@@ -6,7 +6,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-import { Icon } from 'semantic-ui-react';
+import SvgIcon from 'material-ui/SvgIcon';
 
 // Styles
 const styles = {
@@ -35,6 +35,19 @@ const styles = {
     style: { paddingBottom: '0px' },
   },
 };
+
+//icons
+const FacebookIcon = props => (
+  <SvgIcon {...props}>
+    <path d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+  </SvgIcon>
+);
+
+const GoogleIcon = props => (
+  <SvgIcon {...props}>
+    <path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
+  </SvgIcon>
+);
 
 const texts = {};
 
@@ -168,7 +181,7 @@ class PublicLogin extends React.Component {
                     style={{ color: '#3954A1' }}
                     onTouchTap={handleFacebookLogin}
                   >
-                    <Icon style={{ lineHeight: '1em' }} name='facebook f' />
+                    <FacebookIcon/>
                     Facebook
                   </Button>
 
@@ -176,7 +189,7 @@ class PublicLogin extends React.Component {
                     style={{ color: '#DC4A38' }}
                     onTouchTap={handleGoogleLogin}
                   >
-                    <Icon style={{ lineHeight: '1em', marginRight: 8 }} name='google plus' />
+                    <GoogleIcon/>
                     Google
                   </Button>
                 </CardActions>
