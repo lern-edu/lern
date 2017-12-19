@@ -1,3 +1,4 @@
+import Check from 'meteor/duckdodgerbrasl:lern-check';
 import _ from 'lodash';
 
 Helpers = {
@@ -24,38 +25,9 @@ Helpers = {
   },
 
   DefaultSave(doc) {
-    Check.Astro(doc).valid();
+    doc.validate();
     doc.save();
     return doc;
   },
 
-  GetQuestions({ subjects, tags, limit }={}) {
-    // Generate Questions
-    let tries = 30;
-    const questions = [];
-
-    let total = Questions.find({ tags: { $in: tags }, type: 'closed' }).count();
-
-    while (total && questions.length < limit && tries) {
-      const question = Questions.findOne({ tags: { $in: tags }, type: 'closed' },
-        { skip: _.random(true) * total, fields: { _id: 1, tags: 1, subject: 1 } });
-      if (!_.includes(questions, _.get(question, '_id')))
-        questions.push(_.get(question, '_id'));
-      tries--;
-    };
-
-    if (questions.length < limit) {
-      total = Questions.find({ subject: { $in: subjects }, type: 'closed' }).count();
-      tries = 30;
-      while (total && questions.length < limit && tries) {
-        const question = Questions.findOne({ subject: { $in: subjects }, type: 'closed' },
-          { skip: _.random(true) * total, fields: { _id: 1, tags: 1, subject: 1 } });
-        if (!_.includes(questions, _.get(question, '_id')))
-          questions.push(_.get(question, '_id'));
-        tries--;
-      };
-    };
-
-    return questions;
-  },
 };

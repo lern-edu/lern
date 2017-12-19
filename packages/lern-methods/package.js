@@ -8,13 +8,14 @@ Package.onUse(function (api) {
 
   api.use([
     'ecmascript',
+    'duckdodgerbrasl:lern-check',
     'duckdodgerbrasl:lern-model',
   ]);
 
   api.addFiles([
     'helpers.js',
 
-    // 'server/admin/admin.js',
+    'server/admin/admin.js',
     // 'server/school/school.js',
     'server/user/user.js',
 
