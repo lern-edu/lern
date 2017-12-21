@@ -3,10 +3,13 @@ import React from 'react';
 import _ from 'lodash';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import SvgIcon from 'material-ui/SvgIcon';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 
 // Styles
 const styles = {
@@ -23,16 +26,12 @@ const styles = {
       zIndex: '-1',
     },
   },
-  form: {
-    className: 'eight wide computer ten wide tablet thirteen wide mobile column',
+  image: {
     style: {
-      marginTop: '3%',
-      padding: '0px',
+      width: '80%',
+      paddingBottom: '48px',
+      margin: 'auto',
     },
-  },
-  column: {
-    className: 'sixteen wide column',
-    style: { paddingBottom: '0px' },
   },
 };
 
@@ -121,89 +120,74 @@ class PublicLogin extends React.Component {
     const handleGoogleLogin   = this.handleGoogleLogin.bind(this);
 
     return (
-      <div className='ui middle aligned center aligned grid' >
+      <Grid container spacing={24} justify="center" style={{ textAlign: 'center' }}>
 
         <div {...styles.background} />
 
-        <div {...styles.form} >
+          <Grid item xs={12} sm={8} lg={6}>
+            <img
+              {...styles.image}
+              src='/images/brain-clear.png'
+            />
+            <Card elevation={4}>
+              <CardContent>
+                <Typography type='headline' component='h2'>
+                  Login
+                </Typography>
 
-          <div className='row' style={{ marginTop: '15px' }}>
-            <div className='ui center aligned grid'>
+                <TextField
+                  label='E-mail'
+                  placeholder='E-mail'
+                  name='email'
+                  type='email'
+                  margin='normal'
+                  value={email}
+                  onChange={handleInput}
+                />
 
-              <div {...styles.column}>
-                <a>
-                  <img
-                    style={{ display: 'inline-block' }}
-                    className='ui medium image'
-                    src='/images/brain-clear.png'
-                  />
-                </a>
+                <br/>
 
-              </div>
+                <TextField
+                  label='Senha'
+                  placeholder='Senha'
+                  name='password'
+                  type='password'
+                  margin='normal'
+                  value={password}
+                  onChange={handleInput}
+                />
 
-              <Card elevation={4} {...styles.column} >
-                <CardContent>
-                  <Typography type='headline' component='h2'>
-                    Login
-                  </Typography>
+                <br/>
 
-                  <TextField
-                    label='E-mail'
-                    placeholder='E-mail'
-                    name='email'
-                    type='email'
-                    margin='normal'
-                    value={email}
-                    onChange={handleInput}
-                  />
+                <Button color='primary' onTouchTap={handleLogin}>
+                  Entrar
+                </Button>
 
-                  <br/>
+              </CardContent>
+              <CardActions>
+                <Button
+                  style={{ color: '#3954A1' }}
+                  onTouchTap={handleFacebookLogin}
+                >
+                  <FacebookIcon/>
+                  Facebook
+                </Button>
 
-                  <TextField
-                    label='Senha'
-                    placeholder='Senha'
-                    name='password'
-                    type='password'
-                    margin='normal'
-                    value={password}
-                    onChange={handleInput}
-                  />
+                <Button
+                  style={{ color: '#DC4A38' }}
+                  onTouchTap={handleGoogleLogin}
+                >
+                  <GoogleIcon/>
+                  Google
+                </Button>
+              </CardActions>
+            </Card>
 
-                  <br/>
-
-                  <Button color='primary' onTouchTap={handleLogin}>
-                    Entrar
-                  </Button>
-
-                </CardContent>
-                <CardActions>
-                  <Button
-                    style={{ color: '#3954A1' }}
-                    onTouchTap={handleFacebookLogin}
-                  >
-                    <FacebookIcon/>
-                    Facebook
-                  </Button>
-
-                  <Button
-                    style={{ color: '#DC4A38' }}
-                    onTouchTap={handleGoogleLogin}
-                  >
-                    <GoogleIcon/>
-                    Google
-                  </Button>
-                </CardActions>
-              </Card>
-
-            </div>
-          </div>
-
-        </div>
-
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 
 };
 
-export default PublicLogin;
+export default withStyles(styles)(PublicLogin);
