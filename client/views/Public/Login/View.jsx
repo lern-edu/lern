@@ -137,7 +137,6 @@ class PublicLogin extends React.Component {
 
                 <TextField
                   label='E-mail'
-                  placeholder='E-mail'
                   name='email'
                   type='email'
                   margin='normal'
@@ -149,7 +148,6 @@ class PublicLogin extends React.Component {
 
                 <TextField
                   label='Senha'
-                  placeholder='Senha'
                   name='password'
                   type='password'
                   margin='normal'
