@@ -120,7 +120,7 @@ class PublicLogin extends React.Component {
     const handleGoogleLogin   = this.handleGoogleLogin.bind(this);
 
     return (
-      <Grid container spacing={24} justify="center" style={{ textAlign: 'center' }}>
+      <Grid container justify="center" style={{ textAlign: 'center' }}>
 
         <div {...styles.background} />
 
