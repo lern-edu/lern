@@ -14,24 +14,20 @@ import { withStyles } from 'material-ui/styles';
 // Styles
 const styles = {
   background: {
-    style: {
-      width: `100%`,
-      height: `100%`,
-      top: 0,
-      left: 0,
-      backgroundSize: 'cover',
-      backgroundImage: 'url(/backgrounds/triangles-login.svg)',
-      backgroundRepeat: 'no-repeat',
-      position: 'fixed',
-      zIndex: '-1',
-    },
+    width: `100%`,
+    height: `100%`,
+    top: 0,
+    left: 0,
+    backgroundSize: 'cover',
+    backgroundImage: 'url(/backgrounds/triangles-login.svg)',
+    backgroundRepeat: 'no-repeat',
+    position: 'fixed',
+    zIndex: '-1',
   },
   image: {
-    style: {
-      width: '80%',
-      paddingBottom: '48px',
-      margin: 'auto',
-    },
+    width: '80%',
+    paddingbottom: '48px',
+    margin: 'auto',
   },
 };
 
@@ -112,6 +108,7 @@ class PublicLogin extends React.Component {
 
   render() {
 
+    const { classes } = this.props;
     const { email, password } = this.state;
 
     const handleInput         = this.handleInput.bind(this);
@@ -122,11 +119,11 @@ class PublicLogin extends React.Component {
     return (
       <Grid container justify="center" style={{ textAlign: 'center' }}>
 
-        <div {...styles.background} />
+        <div className={classes.background} />
 
           <Grid item xs={12} sm={8} lg={6}>
             <img
-              {...styles.image}
+              className={classes.image}
               src='/images/brain-clear.png'
             />
             <Card elevation={4}>
