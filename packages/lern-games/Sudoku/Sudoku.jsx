@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import SudokuDraw from './SudokuDraw.jsx';
 import Timer from './Timer.jsx';
+import Stats from './Stats.jsx';
 
 class Sudoku extends React.Component {
 
@@ -118,6 +119,7 @@ class Sudoku extends React.Component {
           input={input}
           updateAnswer={this.updateAnswer.bind(this)}
         />
+        {!valid ? undefined : <Stats time={this.props.time} attempts={this.props.attempts} />}
       </div>
     );
   }
