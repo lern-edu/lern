@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { Typography, Button } from 'material-ui';
-import { SudokuWrapper } from 'meteor/lern-games';
+import { Sudoku } from 'meteor/lern-games';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 
 const styles = theme => ({
@@ -26,7 +26,7 @@ class PublicGamesSudoku extends React.Component {
       <div>
         <Layout.Bar title='Sudoku' />
         <div className={classes.container}>
-          <SudokuWrapper />
+          <Sudoku />
         </div>
       </div>
     );

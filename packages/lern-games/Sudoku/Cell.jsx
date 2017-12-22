@@ -9,14 +9,29 @@ class SudokuCell extends React.Component {
     const { disabled, value, updateAnswer, row, col } = this.props;
 
     return (
-      <td style={{ borderRight: col == 2 || col == 5 ? '3px black solid' : '1px black solid' }}>
+      <div style={{
+          borderRight: col == 2 || col == 5 ? '3px black solid' : '1px black solid',
+          borderBottom: row == 2 || row == 5 ? '3px black solid' : '1px black solid',
+          boxSizing: 'border-box',
+          flex: 1,
+          position: 'relative',
+        }}
+        key='before'
+      >
         <input
           disabled={disabled}
           onInput={(e) => updateAnswer(e.target.value, row, col)}
           value={value || ''}
-          style={{ width: 35, textAlign: 'center' }}
+          style={{
+            position: 'absolute',
+            left: 0,
+            width: '100%',
+            height: '100%',
+            textAlign: 'center',
+          }}
         />
-      </td>
+        <div key='after' style={{ content: '', display: 'block', paddingBottom: '100%' }}></div>
+      </div>
     );
   }
 }
