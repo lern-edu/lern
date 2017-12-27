@@ -2,6 +2,8 @@ import { Class, Validator } from 'meteor/jagi:astronomy';
 import StaticCollections from '../static.js';
 import _ from 'lodash';
 
+import Templates from './templates.jsx';
+
 /**
  * User profile
  * @memberof LernModel.User
@@ -41,12 +43,12 @@ const UserProfileSchema = Class.create({
       validators: [{ type: 'cnpj' }],
       optional: true,
     },
-    school: {
+    company: {
       type: String,
       validators: [{ type: 'Reference' }],
       optional: true,
     },
-    schools: {
+    companies: {
       type: [Object],
       optional: true,
       default: () => [],
@@ -55,6 +57,19 @@ const UserProfileSchema = Class.create({
       type: String,
       validators: [{ type: 'OneOf', param: StaticCollections.UserRoles }],
       optional: true,
+    },
+  },
+});
+
+const UserEmailsSchema = Class.create({
+  name: 'UserEmails',
+  fields: {
+    address: {
+      type: String,
+      validators: [{ type: 'email' }],
+    },
+    verified: {
+      type: Boolean,
     },
   },
 });
@@ -73,14 +88,12 @@ const User = Class.create({
   collection: Meteor.users,
   fields: {
     emails: {
-      type: [Object],
-      optional: true,
+      type: [UserEmailsSchema],
     },
     services: {
       type: Object,
       optional: true,
     },
-
     roles: {
       type: [String],
       validators: [
@@ -88,7 +101,6 @@ const User = Class.create({
         { type: 'maxLength', param: 4 },
       ],
     },
-
     profile: {
       type: UserProfileSchema,
     },
@@ -181,6 +193,18 @@ const User = Class.create({
     getSetupRoute() {
       const role = this.getRole();
       return _.capitalize(role) + 'Setup';
+    },
+  },
+});
+
+if (Meteor.isClient)
+User.extend({
+  fields: {
+    templates: {
+      type: Object,
+      default() {
+        return Templates;
+      },
     },
   },
 });

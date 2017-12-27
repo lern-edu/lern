@@ -37,6 +37,7 @@ Package.onUse((api) => {
     'validators/tags.js',
 
     'collections/users/validators.js',
+    'collections/users/templates.jsx',
     'collections/users/schema.js',
   ]);
 
