@@ -24,7 +24,7 @@ class AdminUsersList extends React.Component {
 
         {
           _.map(usersFiltered, ({ _id, profile: { profilePic, name }, roles, emails }) =>
-            <ListItem button key={_id}>
+            <ListItem button key={_id} onClick={() => FlowRouter.go('AdminUser', { userId: _id })}>
               <Avatar alt={name} src={profilePic} />
               <ListItemText
                 primary={name}
