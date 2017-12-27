@@ -12,6 +12,7 @@ const adminRoutes = FlowRouter.group({
 // Views
 import AdminHome from './Home/View.jsx';
 import AdminUsers from './Users/View.jsx';
+import AdminUser from './User/View.jsx';
 
 adminRoutes.route('/', {
   name: 'AdminHome',
@@ -27,6 +28,24 @@ adminRoutes.route('/users', {
   action(params, query) {
     setup.render({
       main: <AdminUsers {...query}/>,
+    });
+  },
+});
+
+adminRoutes.route('/user', {
+  name: 'AdminUser',
+  action(params, query) {
+    setup.render({
+      main: <AdminUser {...query} />,
+    });
+  },
+});
+
+adminRoutes.route('/user/:userId', {
+  name: 'AdminUser',
+  action(params, query) {
+    setup.render({
+      main: <AdminUser {...params} {...query} />,
     });
   },
 });
