@@ -50,6 +50,8 @@ const getTitle = ({ title, crumbs }) =>
  * @public
  * @memberof LernLayouts
  * @param {object=} this.props.crumbs - paths to compose links for crumbs
+ * @param {string=} this.props.label - label of path
+ * @param {string=} this.props.path - FlowRouter path
  * @param {string} this.props.title - current view title
  * @param {bool=} this.props.disableActions - prevent actions to exit from view
  * @example
