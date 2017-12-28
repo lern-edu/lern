@@ -6,7 +6,7 @@
  * import { StaticCollections } from 'meteor/duckdodgerbrasl:lern-model'
  */
 const StaticCollections = {
-  UserRoles: ['student', 'teacher', 'school', 'admin'],
+  UserRoles: ['student', 'teacher', 'admin'],
 };
 
 export default { ...StaticCollections };
