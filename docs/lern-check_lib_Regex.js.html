@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-model/collections/static.js</title>
+    <title>JSDoc: Source: lern-check/lib/Regex.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-model/collections/static.js</h1>
+    <h1 class="page-title">Source: lern-check/lib/Regex.js</h1>
 
     
 
@@ -26,18 +26,63 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * All static collections are here
- * @memberof LernModel
- * @public
- * @example
- * import { StaticCollections } from 'meteor/duckdodgerbrasl:lern-model'
- */
-const StaticCollections = {
-  UserRoles: ['student', 'teacher', 'admin'],
+            <pre class="prettyprint source linenums"><code>const patterns = {
+  id: /^[a-zA-Z0-9]{17}$/i,
+  url: /^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/i,
+  cnpj: /^[0-9]{14}$/,
+  cpf: /^[0-9]{11}$/,
+  mail:  /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
+  decimal: /^\d+\.?\d{0,}$/i,
+  password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
 };
 
-export default { ...StaticCollections };
+/**
+* Check Regex expression (Check.Regex()).
+* @namespace Regex()
+* @memberof LernCheck
+*/
+
+/**
+ * @desc Self description
+ * @memberof LernCheck.Regex()
+ * @example
+ * const checkRegex = Check.Regex('id')
+ * @public
+ * @param {String} type - pre defined pattern
+ */
+const Regex = (pattern) => {
+  return {
+
+    /**
+     * Check if regex match string (Check.Cursor().match()).
+     * @memberof LernCheck.Regex()
+     * @example
+     * Check.Regex('email').match('lern@lern.com')
+     * @public
+     * @param {String} str - string to test
+     * @returns {Boolean}
+     */
+    match(str) {
+      return patterns.pattern.test(str);
+    },
+
+    /**
+     * Check if regex match string (Check.Cursor().match()).
+     * @memberof LernCheck.Regex()
+     * @example
+     * Check.Regex('email').check('lern@lern.com')
+     * @public
+     * @param {String} str - string to test
+     * @throws {Meteor.Error} regex-police-alarm
+     */
+    check(str) {
+      if (!patterns.pattern.test(str))
+        throw new Meteor.Error('regex-police-alarm');
+    },
+  };
+};
+
+export default Regex;
 </code></pre>
         </article>
     </section>

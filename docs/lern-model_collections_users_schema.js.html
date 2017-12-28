@@ -30,6 +30,8 @@
 import StaticCollections from '../static.js';
 import _ from 'lodash';
 
+import Templates from './templates.jsx';
+
 /**
  * User profile
  * @memberof LernModel.User
@@ -42,10 +44,6 @@ const UserProfileSchema = Class.create({
   fields: {
     name: {
       type: String,
-      validators: [
-        { type: 'minLength', param: 3 },
-        { type: 'maxLength', param: 1024 },
-      ],
     },
     profilePic: {
       type: String,
@@ -58,23 +56,18 @@ const UserProfileSchema = Class.create({
     },
     firstName: {
       type: String,
-      optional: true,
+      validators: [{ type: 'minLength', param: 1 }],
     },
     lastName: {
       type: String,
-      optional: true,
+      validators: [{ type: 'minLength', param: 1 }],
     },
-    cnpj: {
-      type: String,
-      validators: [{ type: 'cnpj' }],
-      optional: true,
-    },
-    school: {
+    company: {
       type: String,
       validators: [{ type: 'Reference' }],
       optional: true,
     },
-    schools: {
+    companies: {
       type: [Object],
       optional: true,
       default: () => [],
@@ -83,6 +76,20 @@ const UserProfileSchema = Class.create({
       type: String,
       validators: [{ type: 'OneOf', param: StaticCollections.UserRoles }],
       optional: true,
+    },
+  },
+});
+
+const UserEmailsSchema = Class.create({
+  name: 'UserEmails',
+  fields: {
+    address: {
+      type: String,
+      validators: [{ type: 'email' }],
+    },
+    verified: {
+      type: Boolean,
+      default: false,
     },
   },
 });
@@ -102,23 +109,26 @@ const User = Class.create({
   fields: {
     emails: {
       type: [Object],
-      optional: true,
     },
     services: {
       type: Object,
       optional: true,
+      immutable: true,
     },
-
     roles: {
       type: [String],
       validators: [
         { type: 'UserRolesInRoles' },
-        { type: 'maxLength', param: 4 },
+        { type: 'minLength', param: 1 },
+        { type: 'maxLength', param: 3 },
       ],
+      default: () => [],
     },
-
     profile: {
       type: UserProfileSchema,
+      default() {
+        return { firstName: '', lastName: '' };
+      },
     },
   },
 
@@ -210,6 +220,32 @@ const User = Class.create({
       const role = this.getRole();
       return _.capitalize(role) + 'Setup';
     },
+
+    getFullName() {
+      const { firstName, lastName } = this.profile;
+      return firstName + ' ' + lastName;
+    },
+  },
+
+  events: {
+    beforeSave(e) {
+      console.log(e.currentTarget);
+      if (!e.currentTarget.profile.name)
+        e.currentTarget.profile.name = e.currentTarget.getFullName();
+    },
+  },
+
+});
+
+if (Meteor.isClient)
+User.extend({
+  fields: {
+    templates: {
+      type: Object,
+      default() {
+        return Templates;
+      },
+    },
   },
 });
 
@@ -224,13 +260,13 @@ export default User;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LernLayouts.Bar.html">Bar</a></li><li><a href="LernLayouts.Components.Snackbar.html">Snackbar</a></li><li><a href="LernLayouts.LayoutView.html">LayoutView</a></li><li><a href="LernLayouts.Mixins.Screen.html">Screen</a></li><li><a href="LernLayouts.NotFound.html">NotFound</a></li><li><a href="LernModel.User.html">User</a></li><li><a href="LernModel.User.UserProfileSchema.html">UserProfileSchema</a></li><li><a href="Setup.html">Setup</a></li></ul><h3>Namespaces</h3><ul><li><a href="LernCheck.html">LernCheck</a></li><li><a href="LernCheck.Cursor.html">Cursor()</a></li><li><a href="LernCheck.User.html">User()</a></li><li><a href="LernHead.html">LernHead</a></li><li><a href="LernLayouts.html">LernLayouts</a></li><li><a href="LernLayouts.Components.html">Components</a></li><li><a href="LernLayouts.Mixins.html">Mixins</a></li><li><a href="LernModel.html">LernModel</a></li><li><a href="LernModel.User.Validators.html">Validators</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LernLayouts.Bar.html">Bar</a></li><li><a href="LernLayouts.Components.Snackbar.html">Snackbar</a></li><li><a href="LernLayouts.LayoutView.html">LayoutView</a></li><li><a href="LernLayouts.Mixins.Screen.html">Screen</a></li><li><a href="LernLayouts.NotFound.html">NotFound</a></li><li><a href="LernModel.User.html">User</a></li><li><a href="LernModel.User.UserProfileSchema.html">UserProfileSchema</a></li><li><a href="Setup.html">Setup</a></li></ul><h3>Namespaces</h3><ul><li><a href="LernCheck.html">LernCheck</a></li><li><a href="LernCheck.Cursor.html">Cursor()</a></li><li><a href="LernCheck.Regex.html">Regex()</a></li><li><a href="LernCheck.User.html">User()</a></li><li><a href="LernHead.html">LernHead</a></li><li><a href="LernLayouts.html">LernLayouts</a></li><li><a href="LernLayouts.Components.html">Components</a></li><li><a href="LernLayouts.Mixins.html">Mixins</a></li><li><a href="LernModel.html">LernModel</a></li><li><a href="LernModel.User.Validators.html">Validators</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Dec 19 2017 07:16:49 GMT-0200 (-02)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 28 2017 17:55:38 GMT-0200 (-02)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -8,14 +8,47 @@ const patterns = {
   password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
 };
 
+/**
+* Check Regex expression (Check.Regex()).
+* @namespace Regex()
+* @memberof LernCheck
+*/
+
+/**
+ * @desc Self description
+ * @memberof LernCheck.Regex()
+ * @example
+ * const checkRegex = Check.Regex('id')
+ * @public
+ * @param {String} type - pre defined pattern
+ */
 const Regex = (pattern) => {
   return {
+
+    /**
+     * Check if regex match string (Check.Cursor().match()).
+     * @memberof LernCheck.Regex()
+     * @example
+     * Check.Regex('email').match('lern@lern.com')
+     * @public
+     * @param {String} str - string to test
+     * @returns {Boolean}
+     */
     match(str) {
-      return str.test(patterns.pattern);
+      return patterns.pattern.test(str);
     },
 
+    /**
+     * Check if regex match string (Check.Cursor().match()).
+     * @memberof LernCheck.Regex()
+     * @example
+     * Check.Regex('email').check('lern@lern.com')
+     * @public
+     * @param {String} str - string to test
+     * @throws {Meteor.Error} regex-police-alarm
+     */
     check(str) {
-      if (!str.test(patterns.pattern))
+      if (!patterns.pattern.test(str))
         throw new Meteor.Error('regex-police-alarm');
     },
   };

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Setup</title>
+    <title>JSDoc: Namespace: Regex()</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Setup</h1>
+    <h1 class="page-title">Namespace: Regex()</h1>
 
     
 
@@ -28,7 +28,8 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Setup<span class="signature">(config<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2>
+            <span class="ancestors"><a href="LernCheck.html">LernCheck</a>.</span>Regex()</h2>
         
     
 </header>
@@ -37,219 +38,10 @@
     <div class="container-overview">
     
         
-
-    
-
-    
-    <h4 class="name" id="Setup"><span class="type-signature"></span>new Setup<span class="signature">(config<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Arguments before define render</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
+            <div class="description"><p>Check Regex expression (Check.Regex()).</p></div>
         
 
         
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>config</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>configuration for render options</p>
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>protect</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>a user role can access view</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>nav</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">bool</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>enable side Drawer</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>bar</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">bool</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Set padding 64px on top of Layout</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
 
 
 <dl class="details">
@@ -281,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lern-layouts_Setup.jsx.html">lern-layouts/Setup.jsx</a>, <a href="lern-layouts_Setup.jsx.html#line24">line 24</a>
+        <a href="lern-check_lib_Regex.js.html">lern-check/lib/Regex.js</a>, <a href="lern-check_lib_Regex.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -293,29 +85,7 @@
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Setup } from 'meteor/duckdodgerbrasl:lern-layouts';
-// Config
-const setup = new Setup({ protect: 'admin', nav: true, bar: true });</code></pre>
-
-
-
+        
     
     </div>
 
@@ -342,7 +112,7 @@ const setup = new Setup({ protect: 'admin', nav: true, bar: true });</code></pre
     
 
     
-    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">(main)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".check"><span class="type-signature">(static) </span>check<span class="signature">(str)</span><span class="type-signature"></span></h4>
     
 
     
@@ -350,7 +120,7 @@ const setup = new Setup({ protect: 'admin', nav: true, bar: true });</code></pre
 
 
 <div class="description">
-    <p>Render Layout and received component</p>
+    <p>Check if regex match string (Check.Cursor().match()).</p>
 </div>
 
 
@@ -386,13 +156,13 @@ const setup = new Setup({ protect: 'admin', nav: true, bar: true });</code></pre
 
         <tr>
             
-                <td class="name"><code>main</code></td>
+                <td class="name"><code>str</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">class</span>
+<span class="param-type">String</span>
 
 
             
@@ -402,7 +172,7 @@ const setup = new Setup({ protect: 'admin', nav: true, bar: true });</code></pre
 
             
 
-            <td class="description last"><p>Component to be rendered</p></td>
+            <td class="description last"><p>string to test</p></td>
         </tr>
 
     
@@ -443,7 +213,334 @@ const setup = new Setup({ protect: 'admin', nav: true, bar: true });</code></pre
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lern-layouts_Setup.jsx.html">lern-layouts/Setup.jsx</a>, <a href="lern-layouts_Setup.jsx.html#line36">line 36</a>
+        <a href="lern-check_lib_Regex.js.html">lern-check/lib/Regex.js</a>, <a href="lern-check_lib_Regex.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        <p>regex-police-alarm</p>
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Meteor.Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Check.Regex('email').check('lern@lern.com')</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".match"><span class="type-signature">(static) </span>match<span class="signature">(str)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Check if regex match string (Check.Cursor().match()).</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>string to test</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lern-check_lib_Regex.js.html">lern-check/lib/Regex.js</a>, <a href="lern-check_lib_Regex.js.html#line37">line 37</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Check.Regex('email').match('lern@lern.com')</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".Regex"><span class="type-signature">(static) </span>Regex<span class="signature">(type)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Self description</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>pre defined pattern</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lern-check_lib_Regex.js.html">lern-check/lib/Regex.js</a>, <a href="lern-check_lib_Regex.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -472,8 +569,7 @@ const setup = new Setup({ protect: 'admin', nav: true, bar: true });</code></pre
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const setup = new Setup({ protect: 'admin', nav: true, bar: true });
-setup.render({ main: &lt;AdminHome /> });</code></pre>
+    <pre class="prettyprint"><code>const checkRegex = Check.Regex('id')</code></pre>
 
 
 
