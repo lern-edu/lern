@@ -43,7 +43,7 @@ class AdminUsers extends React.Component {
   componentWillMount() {
     const { query, options } = this.state;
 
-    Meteor.call('AdminGetUsers', query, options,  (err, docs) => {
+    Meteor.call('AdminUsersGet', query, options,  (err, docs) => {
       if (err) snack({ message: 'Erro ao encontrar usuários' });
       this.setState({ collections: { users: { handler: false, docs } } });
     });
