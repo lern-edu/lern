@@ -25,7 +25,7 @@ class Snackbar extends React.Component {
 
     const template = {
       static: {
-        onRequestClose: () => this.setState({ open: false }),
+        onClose: () => this.setState({ open: false }),
         open: true,
       },
       dynamic: {
@@ -60,7 +60,7 @@ class Snackbar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { open: false, onRequestClose: _.noop, message: '' };
+    this.state = { open: false, onClose: _.noop, message: '' };
   }
 
   componentWillMount() {

@@ -98,7 +98,7 @@ class Navigation extends React.Component {
       <Drawer
         {..._.omit(this.state, ['open'])}
         open={!open ? false : true}
-        onRequestClose={() => this.setState({ open: !open })}
+        onClose={() => this.setState({ open: !open })}
       >
 
         {
