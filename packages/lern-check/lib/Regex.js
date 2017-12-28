@@ -5,13 +5,20 @@ const patterns = {
   cpf: /^[0-9]{11}$/,
   mail:  /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
   decimal: /^\d+\.?\d{0,}$/i,
+  password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
 };
 
-Check.Regex = function (...args) {
-  return _.mapValues(patterns, p => () => {
-    const valid = _.every(args, a => p.test(a));
-    if (!valid) throw new Meteor.Error('regex-police-alarm');
-  });
+const Regex = (pattern) => {
+  return {
+    match(str) {
+      return str.test(patterns.pattern);
+    },
+
+    check(str) {
+      if (!str.test(patterns.pattern))
+        throw new Meteor.Error('regex-police-alarm');
+    },
+  };
 };
 
-Match.Regex = (...args) => _.mapValues(patterns, p => () => _.every(args, a => p.test(a)));
+export default Regex;
