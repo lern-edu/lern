@@ -16,10 +16,6 @@ const UserProfileSchema = Class.create({
   fields: {
     name: {
       type: String,
-      validators: [
-        { type: 'minLength', param: 3 },
-        { type: 'maxLength', param: 1024 },
-      ],
     },
     profilePic: {
       type: String,
@@ -32,16 +28,11 @@ const UserProfileSchema = Class.create({
     },
     firstName: {
       type: String,
-      optional: true,
+      validators: [{ type: 'minLength', param: 1 }],
     },
     lastName: {
       type: String,
-      optional: true,
-    },
-    cnpj: {
-      type: String,
-      validators: [{ type: 'cnpj' }],
-      optional: true,
+      validators: [{ type: 'minLength', param: 1 }],
     },
     company: {
       type: String,
@@ -70,6 +61,7 @@ const UserEmailsSchema = Class.create({
     },
     verified: {
       type: Boolean,
+      default: false,
     },
   },
 });
@@ -88,21 +80,27 @@ const User = Class.create({
   collection: Meteor.users,
   fields: {
     emails: {
-      type: [UserEmailsSchema],
+      type: [Object],
     },
     services: {
       type: Object,
       optional: true,
+      immutable: true,
     },
     roles: {
       type: [String],
       validators: [
         { type: 'UserRolesInRoles' },
-        { type: 'maxLength', param: 4 },
+        { type: 'minLength', param: 1 },
+        { type: 'maxLength', param: 3 },
       ],
+      default: () => [],
     },
     profile: {
       type: UserProfileSchema,
+      default() {
+        return { firstName: '', lastName: '' };
+      },
     },
   },
 
@@ -194,7 +192,21 @@ const User = Class.create({
       const role = this.getRole();
       return _.capitalize(role) + 'Setup';
     },
+
+    getFullName() {
+      const { firstName, lastName } = this.profile;
+      return firstName + ' ' + lastName;
+    },
   },
+
+  events: {
+    beforeSave(e) {
+      console.log(e.currentTarget);
+      if (!e.currentTarget.profile.name)
+        e.currentTarget.profile.name = e.currentTarget.getFullName();
+    },
+  },
+
 });
 
 if (Meteor.isClient)

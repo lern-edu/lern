@@ -1,7 +1,14 @@
 import React from 'react';
-import Input, { InputLabel } from 'material-ui/Input';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/Icon';
 import _ from 'lodash';
+import Regex from '../../regex.js';
+
+import StaticCollections from '../static.js';
 
 const Templates = {};
 
@@ -15,16 +22,14 @@ if (Meteor.isClient) {
       };
     }
 
-    handlerChange({ target: { value } }) {
+    handleChange({ target: { value } }) {
       const { form, doc, index } = this.props;
       doc.emails[index].address = value;
       form.setState({ collections: { user: { doc } } });
-      doc.validate({ fields: [`emails.${index}.address`] }, (err) => {
-        if (err)
-          this.setState({ message: err.reason, error: true });
-        else
-          this.setState({ message: undefined, error: false });
-      });
+      if (Regex.email.test(value))
+        this.setState({ message: undefined, error: false });
+      else
+        this.setState({ message: 'Email not valid', error: true });
 
     }
 
@@ -33,12 +38,12 @@ if (Meteor.isClient) {
       const { error, message } = this.state;
       return (
         <FormControl error={error}>
-          <InputLabel htmlFor="email">Email</InputLabel>
+          <InputLabel htmlFor='email'>Email</InputLabel>
           <Input
             id='email'
             type='email'
             value={_.get(doc, `emails[${index}].address`)}
-            onChange={this.handlerChange.bind(this)}
+            onChange={this.handleChange.bind(this)}
           />
           {
             !error
@@ -59,7 +64,225 @@ if (Meteor.isClient) {
     }
   };
 
+  class FirstName extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        error: false,
+        message: undefined,
+      };
+    }
+
+    handleChange({ target: { value } }) {
+      const { form, doc } = this.props;
+      doc.profile.firstName = value;
+      form.setState({ collections: { user: { doc } } });
+      doc.validate({ fields: [`profile.firstName`] }, (err) => {
+        if (err)
+          this.setState({ message: err.reason, error: true });
+        else
+          this.setState({ message: undefined, error: false });
+      });
+
+    }
+
+    render() {
+      const { form, doc } = this.props;
+      const { error, message } = this.state;
+      return (
+        <FormControl error={error}>
+          <InputLabel htmlFor='firstName'>First name</InputLabel>
+          <Input
+            value={doc.profile.firstName}
+            onChange={this.handleChange.bind(this)}
+          />
+          {
+            !error
+            ? undefined
+            : <FormHelperText>{message}</FormHelperText>
+          }
+
+        </FormControl>
+      );
+    }
+  };
+
+  class LastName extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        error: false,
+        message: undefined,
+      };
+    }
+
+    handleChange({ target: { value } }) {
+      const { form, doc } = this.props;
+      doc.profile.lastName = value;
+      form.setState({ collections: { user: { doc } } });
+      doc.validate({ fields: [`profile.lastName`] }, (err) => {
+        if (err)
+          this.setState({ message: err.reason, error: true });
+        else
+          this.setState({ message: undefined, error: false });
+      });
+
+    }
+
+    render() {
+      const { form, doc } = this.props;
+      const { error, message } = this.state;
+      return (
+        <FormControl error={error}>
+          <InputLabel htmlFor='lastName'>Last name</InputLabel>
+          <Input
+            value={doc.profile.lastName}
+            onChange={this.handleChange.bind(this)}
+          />
+          {
+            !error
+            ? undefined
+            : <FormHelperText>{message}</FormHelperText>
+          }
+
+        </FormControl>
+      );
+    }
+  };
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+
+  class Roles extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        error: false,
+        message: undefined,
+      };
+    }
+
+    handleChange({ target: { value } }) {
+      const { form, doc } = this.props;
+      doc.roles = value;
+      form.setState({ collections: { user: { doc } } });
+      doc.validate({ fields: [`roles`] }, (err) => {
+        if (err)
+          this.setState({ message: err.reason, error: true });
+        else
+          this.setState({ message: undefined, error: false });
+      });
+
+    }
+
+    render() {
+      const { form, doc } = this.props;
+      const { error, message } = this.state;
+      return (
+        <FormControl error={error}>
+          <InputLabel htmlFor='roles'>Roles</InputLabel>
+          <Select
+            multiple
+            value={doc.roles}
+            onChange={this.handleChange.bind(this)}
+            input={<Input id='roles' />}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                  width: 200,
+                },
+              },
+            }}
+          >
+            {
+              _.map(StaticCollections.UserRoles, role =>
+                <MenuItem
+                  key={role}
+                  value={role}
+                >
+                  {role}
+                </MenuItem>
+              )
+            }
+          </Select>
+
+          {
+            !error
+            ? undefined
+            : <FormHelperText>{message}</FormHelperText>
+          }
+        </FormControl>
+      );
+    }
+  };
+
+  class Password extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        error: false,
+        message: undefined,
+        showPassword: false,
+      };
+    }
+
+    handleChange({ target: { value } }) {
+      const { form, doc } = this.props;
+      doc.services.password = value;
+      form.setState({ collections: { user: { doc } } });
+      if (Regex.password.test(value))
+        this.setState({ message: undefined, error: false });
+      else
+        this.setState({ message: 'Minimum eight characters, at least one letter and one number', error: true });
+
+    }
+
+    handleMouseDownPassword(event) {
+      event.preventDefault();
+    };
+
+    handleClickShowPasssword() {
+      this.setState({ showPassword: !this.state.showPassword });
+    };
+
+    render() {
+      const { form, doc } = this.props;
+      const { error, message } = this.state;
+      return (
+        <FormControl error={error}>
+          <InputLabel htmlFor='password'>Password</InputLabel>
+          <Input
+            id='password'
+            autoComplete='off'
+            type={this.state.showPassword ? 'text' : 'password'}
+            value={_.get(doc, 'services.password')}
+            onChange={this.handleChange.bind(this)}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  onClick={this.handleClickShowPasssword.bind(this)}
+                  onMouseDown={this.handleMouseDownPassword}
+                >
+                  {
+                    this.state.showPassword
+                    ? <Icon>visibility_off</Icon>
+                    : <Icon>visibility</Icon>
+                  }
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+      );
+    }
+  };
+
   Templates.Emails = Emails;
+  Templates.FirstName = FirstName;
+  Templates.LastName = LastName;
+  Templates.Roles = Roles;
+  Templates.Password = Password;
 };
 
 export default Templates;
