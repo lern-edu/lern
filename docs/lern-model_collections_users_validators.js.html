@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-layouts/Setup.jsx</title>
+    <title>JSDoc: Source: lern-model/collections/users/validators.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-layouts/Setup.jsx</h1>
+    <h1 class="page-title">Source: lern-model/collections/users/validators.js</h1>
 
     
 
@@ -26,48 +26,36 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { mount } from 'react-mounter';
-import Layout from './Container.jsx';
-import _ from 'lodash';
+            <pre class="prettyprint source linenums"><code>import _ from 'lodash';
+import { Validator } from 'meteor/jagi:astronomy';
+import StaticCollections from '../static.js';
 
 /**
- * Setup React components render
- * @lends Setup
- * @memberof LernLayouts
+ * @namespace Validators
+ * @memberof LernModel.User
+ * @public
  */
-const Setup = class {
 
-  /**
-   * Arguments before define render
-   * @constructs
-   * @param {object=} config - configuration for render options
-   * @param {string=} config.protect - a user role can access view
-   * @param {bool=} config.nav - enable side Drawer
-   * @param {bool=} config.bar - Set padding 64px on top of Layout
-   * @example
-   * import { Setup } from 'meteor/duckdodgerbrasl:lern-layouts';
-   * // Config
-   * const setup = new Setup({ protect: 'admin', nav: true, bar: true });
-   */
-  constructor(args1) {
-    this.args1 = args1;
-  }
+/**
+ * Verify all user roles are included in UserRoles in [StaticCollections]{@link LernModel}
+ * @func
+ * @memberof LernModel.User.Validators
+ * @public
+ * @return {String|undefined} Error message or undefined
+ */
+const UserRolesInRoles = {
+  name: 'UserRolesInRoles',
 
-  /**
-   * Render Layout and received component
-   * @memberof Setup
-   * @param {class} main - Component to be rendered
-   * @example
-   * const setup = new Setup({ protect: 'admin', nav: true, bar: true });
-   * setup.render({ main: &lt;AdminHome /> });
-   */
-  render(args2) {
-    const props = _.assign({}, this.args1, args2);
-    mount(Layout, props);
-  }
+  isValid({ value: roles }) {
+    return _.every(roles, role => _.includes(StaticCollections.UserRoles, role));
+  },
+
+  resolveError({ name }) {
+    return `The field ${name} contains inappropriate roles`;
+  },
 };
 
-export default Setup;
+Validator.create(UserRolesInRoles);
 </code></pre>
         </article>
     </section>

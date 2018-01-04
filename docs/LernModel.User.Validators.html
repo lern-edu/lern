@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Screen</title>
+    <title>JSDoc: Namespace: Validators</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Screen</h1>
+    <h1 class="page-title">Namespace: Validators</h1>
 
     
 
@@ -28,8 +28,8 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="LernLayouts.html">LernLayouts</a><a href="LernLayouts.Mixins.html">.Mixins</a>.</span>Screen<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h2>
+        <h2>
+            <span class="ancestors"><a href="LernModel.html">LernModel</a><a href="LernModel.User.html">.User</a>.</span>Validators</h2>
         
     
 </header>
@@ -39,10 +39,78 @@
     
         
 
+        
+
+
+<dl class="details">
+
     
 
     
-    <h4 class="name" id="Screen"><span class="type-signature"></span>new Screen<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lern-model_collections_users_validators.js.html">lern-model/collections/users/validators.js</a>, <a href="lern-model_collections_users_validators.js.html#line5">line 5</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".UserRolesInRoles"><span class="type-signature">(static) </span>UserRolesInRoles<span class="signature">()</span><span class="type-signature"> &rarr; {String|undefined}</span></h4>
     
 
     
@@ -50,7 +118,7 @@
 
 
 <div class="description">
-    <p>Screen - bind on view state heigth and width</p>
+    <p>Verify all user roles are included in UserRoles in <a href="LernModel.html">StaticCollections</a></p>
 </div>
 
 
@@ -94,7 +162,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lern-layouts_mixins_Screen.jsx.html">lern-layouts/mixins/Screen.jsx</a>, <a href="lern-layouts_mixins_Screen.jsx.html#line20">line 20</a>
+        <a href="lern-model_collections_users_validators.js.html">lern-model/collections/users/validators.js</a>, <a href="lern-model_collections_users_validators.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -121,7 +189,7 @@
 
         
 <div class="param-desc">
-    <p>this.state.innerHeight and this.state.innerWidth</p>
+    <p>Error message or undefined</p>
 </div>
 
 
@@ -132,7 +200,10 @@
     </dt>
     <dd>
         
-<span class="param-type">object</span>
+<span class="param-type">String</span>
+|
+
+<span class="param-type">undefined</span>
 
 
     </dd>
@@ -143,37 +214,8 @@
 
 
 
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>import { Screen } from 'meteor/duckdodgerbrasl:lern-layouts';
-...
-class SomeView extends React.Component {
-...
- const { innerWidth, innerHeight } = this.state;
-...
-}
-...
-export default Screen(SomeView);</code></pre>
 
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
+        
     
 
     

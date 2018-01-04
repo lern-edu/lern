@@ -18,7 +18,7 @@ class Safe extends React.Component {
          !protect ? true
        : logging ? undefined
        : !user ? null
-       : !user.roles ? undefined
+       : _.isEmpty(user.roles) ? undefined
        : user.hasRole(protect)
      ),
     });

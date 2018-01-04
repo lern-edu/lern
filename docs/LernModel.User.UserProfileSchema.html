@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-layouts/Setup.jsx</title>
+    <title>JSDoc: Class: UserProfileSchema</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,60 +17,158 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-layouts/Setup.jsx</h1>
+    <h1 class="page-title">Class: UserProfileSchema</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import { mount } from 'react-mounter';
-import Layout from './Container.jsx';
-import _ from 'lodash';
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="LernModel.html">LernModel</a><a href="LernModel.User.html">.User</a>.</span>UserProfileSchema<span class="signature">()</span><span class="type-signature"> &rarr; {AstroClass}</span></h2>
+        
+    
+</header>
 
-/**
- * Setup React components render
- * @lends Setup
- * @memberof LernLayouts
- */
-const Setup = class {
+<article>
+    <div class="container-overview">
+    
+        
 
-  /**
-   * Arguments before define render
-   * @constructs
-   * @param {object=} config - configuration for render options
-   * @param {string=} config.protect - a user role can access view
-   * @param {bool=} config.nav - enable side Drawer
-   * @param {bool=} config.bar - Set padding 64px on top of Layout
-   * @example
-   * import { Setup } from 'meteor/duckdodgerbrasl:lern-layouts';
-   * // Config
-   * const setup = new Setup({ protect: 'admin', nav: true, bar: true });
-   */
-  constructor(args1) {
-    this.args1 = args1;
-  }
+    
 
-  /**
-   * Render Layout and received component
-   * @memberof Setup
-   * @param {class} main - Component to be rendered
-   * @example
-   * const setup = new Setup({ protect: 'admin', nav: true, bar: true });
-   * setup.render({ main: &lt;AdminHome /> });
-   */
-  render(args2) {
-    const props = _.assign({}, this.args1, args2);
-    mount(Layout, props);
-  }
-};
+    
+    <h4 class="name" id="UserProfileSchema"><span class="type-signature"></span>new UserProfileSchema<span class="signature">()</span><span class="type-signature"> &rarr; {AstroClass}</span></h4>
+    
 
-export default Setup;
-</code></pre>
-        </article>
-    </section>
+    
+
+
+
+<div class="description">
+    <p>User profile</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lern-model_collections_users_schema.js.html">lern-model/collections/users/schema.js</a>, <a href="lern-model_collections_users_schema.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>An User profile</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">AstroClass</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

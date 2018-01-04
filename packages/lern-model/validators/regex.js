@@ -1,5 +1,6 @@
 import { Validator } from 'meteor/jagi:astronomy';
 import _ from 'lodash';
+import Regex from '../regex.js';
 
 _.forEach(Regex, (v, k) => {
 

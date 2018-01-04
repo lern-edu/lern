@@ -12,6 +12,10 @@
       "packages/lern-layouts/mixins",
       "packages/lern-layouts/components",
 
+      "packages/lern-model",
+      "packages/lern-model/collections",
+      "packages/lern-model/collections/users",
+
       "client"
     ],
     "exlude": ["node_modules", ".git", ".meteor"]

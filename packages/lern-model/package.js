@@ -23,6 +23,8 @@ Package.onUse((api) => {
   api.addFiles([
     'regex.js',
 
+    'collections/static.js',
+
     'validators/regex.js',
     'validators/content.js',
     'validators/date.js',
@@ -34,9 +36,8 @@ Package.onUse((api) => {
     'validators/reference.js',
     'validators/tags.js',
 
-    'collections/static.js',
-
     'collections/users/validators.js',
+    'collections/users/templates.jsx',
     'collections/users/schema.js',
   ]);
 
@@ -48,7 +49,7 @@ Package.onTest((api) => {
 
   api.use([
     'ecmascript',
-    'accounts-base',
+    'accounts-base@1.4.0',
     'coffeescript@1.12.7_3',
     'practicalmeteor:mocha@2.4.5_6',
     'dispatch:phantomjs-tests@=0.0.5',

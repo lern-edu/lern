@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-layouts/Setup.jsx</title>
+    <title>JSDoc: Source: lern-check/lib/Regex.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-layouts/Setup.jsx</h1>
+    <h1 class="page-title">Source: lern-check/lib/Regex.js</h1>
 
     
 
@@ -26,48 +26,63 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { mount } from 'react-mounter';
-import Layout from './Container.jsx';
-import _ from 'lodash';
-
-/**
- * Setup React components render
- * @lends Setup
- * @memberof LernLayouts
- */
-const Setup = class {
-
-  /**
-   * Arguments before define render
-   * @constructs
-   * @param {object=} config - configuration for render options
-   * @param {string=} config.protect - a user role can access view
-   * @param {bool=} config.nav - enable side Drawer
-   * @param {bool=} config.bar - Set padding 64px on top of Layout
-   * @example
-   * import { Setup } from 'meteor/duckdodgerbrasl:lern-layouts';
-   * // Config
-   * const setup = new Setup({ protect: 'admin', nav: true, bar: true });
-   */
-  constructor(args1) {
-    this.args1 = args1;
-  }
-
-  /**
-   * Render Layout and received component
-   * @memberof Setup
-   * @param {class} main - Component to be rendered
-   * @example
-   * const setup = new Setup({ protect: 'admin', nav: true, bar: true });
-   * setup.render({ main: &lt;AdminHome /> });
-   */
-  render(args2) {
-    const props = _.assign({}, this.args1, args2);
-    mount(Layout, props);
-  }
+            <pre class="prettyprint source linenums"><code>const patterns = {
+  id: /^[a-zA-Z0-9]{17}$/i,
+  url: /^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/i,
+  cnpj: /^[0-9]{14}$/,
+  cpf: /^[0-9]{11}$/,
+  mail:  /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
+  decimal: /^\d+\.?\d{0,}$/i,
+  password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
 };
 
-export default Setup;
+/**
+* Check Regex expression (Check.Regex()).
+* @namespace Regex()
+* @memberof LernCheck
+*/
+
+/**
+ * @desc Self description
+ * @memberof LernCheck.Regex()
+ * @example
+ * const checkRegex = Check.Regex('id')
+ * @public
+ * @param {String} type - pre defined pattern
+ */
+const Regex = (pattern) => {
+  return {
+
+    /**
+     * Check if regex match string (Check.Cursor().match()).
+     * @memberof LernCheck.Regex()
+     * @example
+     * Check.Regex('email').match('lern@lern.com')
+     * @public
+     * @param {String} str - string to test
+     * @returns {Boolean}
+     */
+    match(str) {
+      return patterns.pattern.test(str);
+    },
+
+    /**
+     * Check if regex match string (Check.Cursor().match()).
+     * @memberof LernCheck.Regex()
+     * @example
+     * Check.Regex('email').check('lern@lern.com')
+     * @public
+     * @param {String} str - string to test
+     * @throws {Meteor.Error} regex-police-alarm
+     */
+    check(str) {
+      if (!patterns.pattern.test(str))
+        throw new Meteor.Error('regex-police-alarm');
+    },
+  };
+};
+
+export default Regex;
 </code></pre>
         </article>
     </section>
