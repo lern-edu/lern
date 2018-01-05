@@ -1,6 +1,7 @@
 // Libs
 import React from 'react';
 import _ from 'lodash';
+import i18n from 'meteor/universe:i18n';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
@@ -44,7 +45,16 @@ const GoogleIcon = props => (
   </SvgIcon>
 );
 
-const texts = {};
+const texts = {
+  password: i18n.__('PublicLogin.password'),
+  signIn: i18n.__('PublicLogin.signIn'),
+  welcomeMessage: i18n.__('PublicLogin.welcomeMessage'),
+  errorMessage: i18n.__('PublicLogin.errorMessage'),
+  userNotFoundMessage: i18n.__('PublicLogin.userNotFoundMessage'),
+  invalidPasswordMessage: i18n.__('PublicLogin.invalidPasswordMessage'),
+  allFieldsMessage: i18n.__('PublicLogin.allFieldsMessage'),
+
+};
 
 class PublicLogin extends React.Component {
 
@@ -70,31 +80,31 @@ class PublicLogin extends React.Component {
       Meteor.loginWithPassword(email, password, (err, res) => {
         if (err) {
           snack(err.reason.includes('password')
-          ? 'Senha incorreta'
-          : 'Usuário não encontrado');
+          ? texts.invalidPasswordMessage
+          : texts.userNotFoundMessage);
           this.clear();
         } else this.handleRedirect.bind(this)();
       });
-    } else snack('Preencha todos os campos');
+    } else snack(texts.allFieldsMessage);
   }
 
   handleFacebookLogin() {
     Meteor.loginWithFacebook({ requestPermissions: ['public_profile', 'email'] },
     (err) => {
-      if (err) snack('Problemas ao cadastrar');
+      if (err) snack(texts.errorMessage);
       else this.handleRedirect.bind(this);
     });
   }
 
   handleGoogleLogin() {
     Meteor.loginWithGoogle({}, (err) => {
-      if (err) snack('Problemas ao cadastrar');
+      if (err) snack(texts.errorMessage);
       else this.handleRedirect.bind(this);
     });
   }
 
   handleRedirect() {
-    snack('Bem vindo!');
+    snack(texts.welcomeMessage);
     Meteor.call(
       'UserGetInitialRoute',
       _.get(this, 'props.query.alias') ? 'setup' : 'home',
@@ -133,7 +143,7 @@ class PublicLogin extends React.Component {
                 </Typography>
 
                 <TextField
-                  label='E-mail'
+                  label='Email'
                   name='email'
                   type='email'
                   margin='normal'
@@ -144,7 +154,7 @@ class PublicLogin extends React.Component {
                 <br/>
 
                 <TextField
-                  label='Senha'
+                  label={texts.password}
                   name='password'
                   type='password'
                   margin='normal'
@@ -155,7 +165,7 @@ class PublicLogin extends React.Component {
                 <br/>
 
                 <Button color='primary' onTouchTap={handleLogin}>
-                  Entrar
+                  {texts.signIn}
                 </Button>
 
               </CardContent>
