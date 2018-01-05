@@ -60,48 +60,37 @@ describe('Check', function () {
 
       });
 
-      describe('User', function () {
+    };
 
-        let user = {};
+  });
 
-        beforeEach(function () {
+  describe('User', function () {
 
-          user = new User();
-          user.roles = ['admin'];
-          user.profile = {
-            name: 'Steven Gerrard',
-            firstName: 'Steven',
-            lastName: 'Gerrard',
-            gender: 'male',
-          };
-          user.save();
+    if (Meteor.isServer) {
+      let user = {};
 
-        });
+      beforeEach(function () {
 
-        it('Has admin role? Yes, it has!', function () {
-          try {
-            Check.User(user._id).role('admin');
-            assert(true);
-          } catch (err) {
-            assert(false, err.message);
-          };
-        });
-
-        it('Has student role? no, it hasn\'t!', function () {
-          try {
-            Check.User(user._id).role('student');
-          } catch (err) {
-            assert(true);
-            return;
-          };
-
-          assert(false, 'Role student is not present! Expected [check.user.role: wrong-role]');
-        });
+        user = new User();
+        user.roles = ['admin'];
+        user.profile = {
+          name: 'Steven Gerrard',
+          firstName: 'Steven',
+          lastName: 'Gerrard',
+          gender: 'male',
+        };
+        user.save();
 
       });
 
-    };
+      it('Has admin role? Yes, it has!', function () {
+        expect(() => Check.User(user._id).role('admin')).to.not.throw();
+      });
 
+      it('Has student role? no, it hasn\'t!', function () {
+        expect(() => Check.User(user._id).role('student')).to.throw();
+      });
+    }
   });
 
 });
