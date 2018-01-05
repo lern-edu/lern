@@ -32,7 +32,8 @@
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
     "react-mounter": "^1.2.0",
-    "react-tap-event-plugin": "^3.0.2"
+    "react-tap-event-plugin": "^3.0.2",
+    "semantic-ui-react": "^0.76.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1",
