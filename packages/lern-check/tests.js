@@ -71,21 +71,31 @@ describe('Check', function () {
 
   describe('User', function () {
 
+    it('Is a function', function () {
+      assert.isFunction(Check.User);
+    });
+
     if (Meteor.isServer) {
+
+      let admin = {};
       let user = {};
 
-      beforeEach(function () {
-
-        user = new User();
-        user.roles = ['admin'];
-        user.profile = {
+      before(function () {
+        admin = { email: 'test@test.com', password: 'password' };
+        admin.profile = {
           name: 'Steven Gerrard',
           firstName: 'Steven',
           lastName: 'Gerrard',
-          gender: 'male',
         };
-        user.save();
+      });
 
+      it('Create user', function () {
+        expect(() => {
+          const userId = Accounts.createUser(admin);
+          user = User.findOne(userId);
+          user.roles = ['admin'];
+          user.save();
+        }).to.not.throw();
       });
 
       it('Has admin role? Yes, it has!', function () {
@@ -94,6 +104,10 @@ describe('Check', function () {
 
       it('Has student role? no, it hasn\'t!', function () {
         expect(() => Check.User(user._id).role('student')).to.throw();
+      });
+
+      after(function () {
+        const userGet = User.remove(user._id);
       });
     }
   });
