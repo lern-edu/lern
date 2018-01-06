@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lern-layouts/exporter.js</title>
+    <title>JSDoc: Source: lern-check/lib/Regex.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lern-layouts/exporter.js</h1>
+    <h1 class="page-title">Source: lern-check/lib/Regex.js</h1>
 
     
 
@@ -26,41 +26,40 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Layout from './Layout.jsx';
-import Bar from './Bar.jsx';
-import Screen from './mixins/Screen.jsx';
-import NotFound from './NotFound.jsx';
-import Setup from './Setup.jsx';
+            <pre class="prettyprint source linenums"><code>import _ from 'lodash';
 
 /**
- * lern-layouts
- * @namespace
+ * Check user roles (Check.Regex()).
+ * @namespace Regex()
+ * @memberof LernCheck
  */
-const LernLayouts = true;
+
+const patterns = {
+  id: /^[a-zA-Z0-9]{17}$/i,
+  url: /^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/i,
+  cnpj: /^[0-9]{14}$/,
+  cpf: /^[0-9]{11}$/,
+  mail:  /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
+  decimal: /^\d+\.?\d{0,}$/i,
+};
 
 /**
- * @namespace Components
- * @memberof LernLayouts
+ * @memberof LernCheck.Regex()
+ * @desc Self description
+ * @example
+ * const checkId = Check.Regex('8MZekqrgCkhQqaNty').id()
+ * const checkMultiplesId = Check.Regex('8MZekqrgCkhQqaNty', '9MAekhrgTkhaqa3ry').id()
+ * const checkUrl = Check.Regex('www.lern.com.br').url()
+ * @public
+ * @param {...String} args - Values to be checked
+ * @throws {Meteor.Error} regex-police-alarm - if param not match regex
  */
-const Components = true;
+const Check = (...args) => _.mapValues(patterns, p => () => {
+  const valid = _.every(args, a => p.test(a));
+  if (!valid) throw new Meteor.Error('regex-police-alarm');
+});
 
-/**
- * @namespace Mixins
- * @memberof LernLayouts
- */
-const Mixins = true;
-
-/**
- * @memberof LernLayouts
- * @desc Self description - Layout default Components and Mixins
- * @return {Object} Components(Bar and NotFound) and Mixins(Screen)
- */
-Layout = Layout;
-Layout.Bar = Bar;
-Layout.Screen = Screen;
-Layout.NotFound = NotFound;
-
-export { Layout, Setup, Bar, Screen, NotFound };
+export default Check;
 </code></pre>
         </article>
     </section>
