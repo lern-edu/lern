@@ -25,6 +25,7 @@ Package.onUse((api) => {
   api.addFiles([
     'lib/Cursor.js',
     'lib/User.js',
+    'lib/Regex.js',
   ]);
 
   api.mainModule('exporter.js');

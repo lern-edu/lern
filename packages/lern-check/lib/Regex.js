@@ -1,3 +1,11 @@
+import _ from 'lodash';
+
+/**
+ * Check user roles (Check.Regex()).
+ * @namespace Regex()
+ * @memberof LernCheck
+ */
+
 const patterns = {
   id: /^[a-zA-Z0-9]{17}$/i,
   url: /^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/i,
@@ -7,11 +15,20 @@ const patterns = {
   decimal: /^\d+\.?\d{0,}$/i,
 };
 
-Check.Regex = function (...args) {
-  return _.mapValues(patterns, p => () => {
-    const valid = _.every(args, a => p.test(a));
-    if (!valid) throw new Meteor.Error('regex-police-alarm');
-  });
-};
+/**
+ * @memberof LernCheck.Regex()
+ * @desc Self description
+ * @example
+ * const checkId = Check.Regex('8MZekqrgCkhQqaNty').id()
+ * const checkMultiplesId = Check.Regex('8MZekqrgCkhQqaNty', '9MAekhrgTkhaqa3ry').id()
+ * const checkUrl = Check.Regex('www.lern.com.br').url()
+ * @public
+ * @param {...String} args - Values to be checked
+ * @throws {Meteor.Error} regex-police-alarm - if param not match regex
+ */
+const Check = (...args) => _.mapValues(patterns, p => () => {
+  const valid = _.every(args, a => p.test(a));
+  if (!valid) throw new Meteor.Error('regex-police-alarm');
+});
 
-Match.Regex = (...args) => _.mapValues(patterns, p => () => _.every(args, a => p.test(a)));
+export default Check;
