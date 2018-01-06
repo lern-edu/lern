@@ -13,6 +13,10 @@ describe('Check', function () {
 
   describe('Cursor', function () {
 
+    it('Is a function', function () {
+      assert.isFunction(Check.Cursor);
+    });
+
     if (Meteor.isServer) {
 
       describe('Empty cursor', function () {
