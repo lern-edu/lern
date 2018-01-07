@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: User()</title>
+    <title>JSDoc: Namespace: Regex()</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: User()</h1>
+    <h1 class="page-title">Namespace: Regex()</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="LernCheck.html">LernCheck</a>.</span>User()</h2>
+            <span class="ancestors"><a href="LernCheck.html">LernCheck</a>.</span>Regex()</h2>
         
     
 </header>
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Check user roles (Check.Cursor()).</p></div>
+            <div class="description"><p>Check user roles (Check.Regex()).</p></div>
         
 
         
@@ -73,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lern-check_lib_User.js.html">lern-check/lib/User.js</a>, <a href="lern-check_lib_User.js.html#line5">line 5</a>
+        <a href="lern-check_lib_Regex.js.html">lern-check/lib/Regex.js</a>, <a href="lern-check_lib_Regex.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -112,176 +112,7 @@
     
 
     
-    <h4 class="name" id=".role"><span class="type-signature">(static) </span>role<span class="signature">(role)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Check Mongo user role match (Check.Cursor().role()).</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>role</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>some role to check [admin, school, student, teacher]</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lern-check_lib_User.js.html">lern-check/lib/User.js</a>, <a href="lern-check_lib_User.js.html#line36">line 36</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        <p>wrong-role - if user role not garanteed</p>
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Meteor.Error</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>Check.User('8MZekqrgCkhQqaNty').role('admin')</code></pre>
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".User"><span class="type-signature">(static) </span>User<span class="signature">(userId)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".Check"><span class="type-signature">(static) </span>Check<span class="signature">(&hellip;args)</span><span class="type-signature"></span></h4>
     
 
     
@@ -313,6 +144,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -325,7 +158,7 @@
 
         <tr>
             
-                <td class="name"><code>userId</code></td>
+                <td class="name"><code>args</code></td>
             
 
             <td class="type">
@@ -338,10 +171,20 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>User uniq identification (_id)</p></td>
+            <td class="description last"><p>Values to be checked</p></td>
         </tr>
 
     
@@ -382,7 +225,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lern-check_lib_User.js.html">lern-check/lib/User.js</a>, <a href="lern-check_lib_User.js.html#line20">line 20</a>
+        <a href="lern-check_lib_Regex.js.html">lern-check/lib/Regex.js</a>, <a href="lern-check_lib_Regex.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -410,7 +253,7 @@
 <dl>
     <dt>
         <div class="param-desc">
-        <p>none-cursor - if user not found</p>
+        <p>regex-police-alarm - if param not match regex</p>
         </div>
     </dt>
     <dd></dd>
@@ -440,7 +283,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const checkUser = Check.User('8MZekqrgCkhQqaNty')</code></pre>
+    <pre class="prettyprint"><code>const checkId = Check.Regex('8MZekqrgCkhQqaNty').id()
+const checkMultiplesId = Check.Regex('8MZekqrgCkhQqaNty', '9MAekhrgTkhaqa3ry').id()
+const checkUrl = Check.Regex('www.lern.com.br').url()</code></pre>
 
 
 
