@@ -36,9 +36,13 @@ Package.onUse((api) => {
     'validators/reference.js',
     'validators/tags.js',
 
+    'behaviors/author.js',
+
     'collections/users/validators.js',
     'collections/users/templates.jsx',
     'collections/users/schema.js',
+
+    'collections/companies/schema.js',
   ]);
 
   api.mainModule('./exporter.js');
