@@ -7,15 +7,6 @@ import Author from '../../behaviors/author.js';
 
 const Companies = new Mongo.Collection('companies');
 
-/**
- * Company collection
- * @memberof LernModel
- * @class
- * @public
- * @return {AstroClass} A Company model
- * @example
- * import { Company } from 'meteor/duckdodgerbrasl:lern-model'
- */
 const Company = Class.create({
   name: 'Company',
   collection: Companies,
@@ -50,11 +41,6 @@ const Company = Class.create({
     },
   },
   events: {
-    /**
-     * Update Company class in users and tags
-     * @memberof LernModel.Company
-     * @private
-     */
     afterSave({ currentTarget: company }) {
       const users = User.find({ 'profile.companies': company._id }).fetch();
       _.forEach(users, user => {
