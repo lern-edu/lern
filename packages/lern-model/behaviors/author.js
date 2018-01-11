@@ -1,6 +1,17 @@
 import { Meteor } from 'meteor/meteor';
 
-export default function Author(Schema) {
+/**
+ * Author Behavior - Bind `author` field on schema and add before insert hook
+ * to put author automaticaly
+ * @memberof LernModel
+ * @public
+ * @example
+ * import Author from '../../behaviors/author.js';
+ * const User = Class.create({ ... });
+ * Author(User);
+ * export default User;
+ */
+const Author = function (Schema) {
 
   if (Meteor.isServer)
     Meteor.methods({
@@ -27,3 +38,5 @@ export default function Author(Schema) {
     },
   });
 };
+
+export default Author;
