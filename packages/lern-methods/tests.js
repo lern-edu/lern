@@ -139,33 +139,6 @@ describe('Methods', function () {
 
       });
 
-      /*describe('Not empty cursor', function () {
-
-        beforeEach(function () {
-
-          const newUser = new User();
-          newUser.roles = ['admin'];
-          newUser.profile = {
-            name: 'Steven Gerrard',
-            firstName: 'Steven',
-            lastName: 'Gerrard',
-            gender: 'male',
-          };
-          newUser.save();
-
-          user = User.find();
-        });
-
-        it('Check cursor is not empty, no throw [none-cursor]', function () {
-          expect(Check.Cursor(user).some).to.not.throw();
-        });
-
-        it('Check cursor is empty, throw [some-cursor]', function () {
-          expect(Check.Cursor(user).none).to.throw();
-        });
-
-      });*/
-
     };
 
   });
