@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import { User } from 'meteor/duckdodgerbrasl:lern-model';
+import { User, Company } from 'meteor/duckdodgerbrasl:lern-model';
 import Check from 'meteor/duckdodgerbrasl:lern-check';
+import Helpers from '../../helpers.js';
 import { convertToRaw, convertFromRaw, ContentState } from 'draft-js';
 const [prefix, protect] = ['Admin', 'admin'];
 
@@ -33,4 +34,17 @@ Helpers.Methods({ prefix, protect }, {
     return user;
   },
 
+});
+
+Helpers.Methods({ prefix, protect }, {
+  CompaniesGet(query={}, options={}) {
+    _.assign(options, { fields: { services: 0 } });
+    return Company.find(query, options).fetch();
+  },
+
+  CompaniesCount(query={}, options={}) {
+    return Company.find(query, options).count();
+  },
+
+  CompanySave: Helpers.DefaultSave,
 });

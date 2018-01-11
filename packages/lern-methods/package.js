@@ -14,16 +14,6 @@ Package.onUse(function (api) {
 
   api.addFiles([
     'helpers.js',
-
     'server/admin/admin.js',
-    // 'server/school/school.js',
-    'server/user/user.js',
-
-    // 'server/teacher/teacher.js',
-    // 'server/public/public.js',
-    // 'server/student/answer.js',
-    // 'server/student/attempt.js',
-    // 'server/student/profile.js',
-    // 'server/student/test.js',
   ], 'server');
 });

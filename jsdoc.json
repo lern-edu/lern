@@ -13,8 +13,10 @@
       "packages/lern-layouts/components",
 
       "packages/lern-model",
+      "packages/lern-model/behaviors",
       "packages/lern-model/collections",
       "packages/lern-model/collections/users",
+      "packages/lern-model/collections/companies",
 
       "client"
     ],

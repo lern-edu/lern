@@ -1,5 +1,6 @@
 import StaticCollections from './collections/static.js';
 import User from './collections/users/schema.js';
+import Company from './collections/companies/schema.js';
 
 /**
  * lern-model
@@ -7,4 +8,4 @@ import User from './collections/users/schema.js';
  */
 const LernModel = true;
 
-export { User, StaticCollections };
+export { User, Company, StaticCollections };

@@ -1,7 +1,7 @@
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import _ from 'lodash';
 
-Helpers = {
+const Helpers = {
   Function(func) {
     return {
       protect(role) {
@@ -31,3 +31,5 @@ Helpers = {
   },
 
 };
+
+export default Helpers;
