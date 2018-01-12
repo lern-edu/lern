@@ -18,6 +18,9 @@
       "packages/lern-model/collections/users",
       "packages/lern-model/collections/companies",
 
+      "packages/lern-methods",
+      "packages/lern-methods/server/admin",
+
       "client"
     ],
     "exlude": ["node_modules", ".git", ".meteor"]
