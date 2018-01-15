@@ -1,7 +1,16 @@
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import _ from 'lodash';
 
-const Helpers = {
+/**
+ * lern-methods package
+ * @namespace
+ */
+const LernMethods = {
+  /**
+   * @memberof LernMethods
+   * @desc Check witch functions to publish by user role
+   * @public
+   */
   Function(func) {
     return {
       protect(role) {
@@ -15,6 +24,11 @@ const Helpers = {
     };
   },
 
+  /**
+   * @memberof LernMethods
+   * @desc Publish methods to Meteor
+   * @public
+   */
   Methods({ prefix='', protect }={}, funcs) {
     let methods = funcs;
 
@@ -24,6 +38,13 @@ const Helpers = {
     Meteor.methods(methods);
   },
 
+  /**
+   * @memberof LernMethods
+   * @desc Default save a doc
+   * @public
+   * @param {Object} [doc] - Document to save
+   * @return {Object} - Saved document
+   */
   DefaultSave(doc) {
     doc.validate();
     doc.save();
@@ -31,5 +52,7 @@ const Helpers = {
   },
 
 };
+
+const Helpers = LernMethods;
 
 export default Helpers;
