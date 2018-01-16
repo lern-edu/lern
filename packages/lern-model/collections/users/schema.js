@@ -201,7 +201,6 @@ const User = Class.create({
 
   events: {
     beforeSave(e) {
-      console.log(e.currentTarget);
       if (!e.currentTarget.profile.name)
         e.currentTarget.profile.name = e.currentTarget.getFullName();
     },
