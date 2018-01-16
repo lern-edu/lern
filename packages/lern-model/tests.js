@@ -31,9 +31,51 @@ Meteor.methods({
     let users = User.find();
     return _.first(users.fetch())._id;
   },
+
+  'test.createCompany': () => {
+    if (Meteor.isServer) {
+      const userId = Meteor.userId();
+      const company = new Company({
+        name: 'Liverpool FC',
+        admins: [userId],
+      });
+
+      company.save();
+      return company;
+    }
+  },
+
+  'test.updateUserCompany': () => {
+    if (Meteor.isServer) {
+      const user = User.findOne();
+      const company = Company.findOne();
+
+      user.profile.company = company._id;
+      user.profile.companies = [company];
+
+      user.save();
+      return user;
+    }
+  },
+
+  'test.updateCompanyName': () => {
+    const company = Company.findOne();
+
+    company.name = 'Lern';
+
+    company.save();
+
+    const user = User.findOne();
+
+    return { company, user };
+  },
+
 });
 
 describe('Model Package', function () {
+
+  // Init User Model
+
   describe('User Model', function () {
 
     it('Class name is User', function () {
@@ -117,5 +159,114 @@ describe('Model Package', function () {
     });
 
   });
+
+  // Finish User Model
+
+  // Init Company Model
+
+  describe('Company Model', function () {
+
+    it('Class name is Company', function () {
+      assert.equal(Company.className, 'Company');
+    });
+
+    it('Fields', function () {
+      assert.include(
+        ['_id', 'name', 'admins', 'author', 'createdAt', 'plan', 'users', 'tags'],
+        ...Company.getFieldsNames(),
+        'All fields set'
+      );
+    });
+
+    describe('Create Company', function () {
+
+      let company;
+
+      if (Meteor.isClient) {
+
+        before(function (done) {
+          Meteor.call('test.createUser', () => {
+            Meteor.loginWithPassword(admin.email, admin.password, (err) => {
+              Meteor.call('test.createCompany', (err, doc) => {
+                company = doc;
+                done(err);
+              });
+            });
+          });
+        });
+
+        it('Has _id?', function () {
+          expect(company).to.have.property('_id');
+        });
+
+        it('Is _id a string?', function () {
+          assert.isString(company._id);
+        });
+
+        it('Has author?', function () {
+          expect(company).to.have.property('author');
+        });
+      };
+
+    });
+
+    describe('Running events', function () {
+
+      if (Meteor.isClient) {
+
+        let user;
+        let company;
+
+        before(function (done) {
+          Meteor.call('test.createUser', (err, doc) => {
+            Meteor.loginWithPassword(admin.email, admin.password, (err) => {
+              Meteor.call('test.createCompany', (err, doc1) => {
+                company = doc1;
+                Meteor.call('test.updateUserCompany', (err, doc2) => {
+                  user = doc2;
+                  done(err);
+                });
+              });
+            });
+          });
+        });
+
+        describe('Before update company', function () {
+
+          it('Set user company', function () {
+            assert.equal(user.profile.company, company._id);
+          });
+
+          it('Company name is the same', function () {
+            assert.equal(user.profile.companies[0].name, company.name);
+          });
+
+        });
+
+        describe('After update company', function () {
+
+          before(function (done) {
+            Meteor.loginWithPassword(admin.email, admin.password, (err) => {
+              Meteor.call('test.updateCompanyName', (err, docs) => {
+                company = docs.company;
+                user = docs.user;
+                done(err);
+              });
+            });
+          });
+
+          it('User company name updated automatically', function () {
+            assert.equal(user.profile.companies[0].name, company.name);
+          });
+
+        });
+
+      };
+
+    });
+
+  });
+
+  // Finish Company Model
 
 });
