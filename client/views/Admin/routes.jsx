@@ -14,6 +14,7 @@ import AdminHome from './Home/View.jsx';
 import AdminUsers from './Users/View.jsx';
 import AdminUser from './User/View.jsx';
 import AdminCompanies from './Companies/View.jsx';
+import AdminCompany from './Company/View.jsx';
 
 adminRoutes.route('/', {
   name: 'AdminHome',
@@ -56,6 +57,24 @@ adminRoutes.route('/companies', {
   action(params, query) {
     setup.render({
       main: <AdminCompanies {...query}/>,
+    });
+  },
+});
+
+adminRoutes.route('/company', {
+  name: 'AdminCompany',
+  action(params, query) {
+    setup.render({
+      main: <AdminCompany {...query} />,
+    });
+  },
+});
+
+adminRoutes.route('/company/:userId', {
+  name: 'AdminCompany',
+  action(params, query) {
+    setup.render({
+      main: <AdminCompany {...params} {...query} />,
     });
   },
 });
