@@ -13,6 +13,7 @@ const adminRoutes = FlowRouter.group({
 import AdminHome from './Home/View.jsx';
 import AdminUsers from './Users/View.jsx';
 import AdminUser from './User/View.jsx';
+import AdminCompanies from './Companies/View.jsx';
 
 adminRoutes.route('/', {
   name: 'AdminHome',
@@ -46,6 +47,15 @@ adminRoutes.route('/user/:userId', {
   action(params, query) {
     setup.render({
       main: <AdminUser {...params} {...query} />,
+    });
+  },
+});
+
+adminRoutes.route('/companies', {
+  name: 'AdminCompanies',
+  action(params, query) {
+    setup.render({
+      main: <AdminCompanies {...query}/>,
     });
   },
 });
