@@ -9,8 +9,6 @@ class AdminCompaniesList extends React.Component {
   render() {
     const { companies, query } = this.props;
 
-    console.log(companies);
-
     const companiesFiltered = _.filter(companies, ({ name }) =>
       _.isEmpty(query)
       || _.deburr(name.toLowerCase()).includes(_.deburr(query.toLowerCase()))
@@ -21,7 +19,11 @@ class AdminCompaniesList extends React.Component {
 
         {
           _.map(companiesFiltered, ({ _id, name }) =>
-            <ListItem button key={_id} onClick={() => FlowRouter.go('AdminUser', { userId: _id })}>
+            <ListItem
+              button
+              key={_id}
+              onClick={() => FlowRouter.go('AdminUser', { companyId: _id })}
+            >
               <ListItemText primary={name} />
             </ListItem>
           )

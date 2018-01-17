@@ -79,7 +79,11 @@ class AdminCompanies extends React.Component {
                   />
                 </Toolbar>
               </AppBar>,
-              <AdminCompaniesList key='list' companies={collections.companies.docs} query={query} />,
+              <AdminCompaniesList
+                key='list'
+                companies={collections.companies.docs}
+                query={query}
+              />,
             ]
           )
         }
