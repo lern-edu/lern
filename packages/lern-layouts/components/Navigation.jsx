@@ -36,6 +36,10 @@ class Navigation extends React.Component {
             label: 'Usuários',
             icon: 'person',
           },
+          AdminCompanies: {
+            label: 'Empresas',
+            icon: 'business',
+          },
         },
       },
     };
