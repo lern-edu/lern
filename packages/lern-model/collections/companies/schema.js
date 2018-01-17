@@ -4,6 +4,7 @@ import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
 import User from '../users/schema.js';
 import Author from '../../behaviors/author.js';
+import Templates from './templates.jsx';
 
 const Companies = new Mongo.Collection('companies');
 
@@ -55,5 +56,17 @@ const Company = Class.create({
 });
 
 Author(Company);
+
+if (Meteor.isClient)
+Company.extend({
+  fields: {
+    templates: {
+      type: Object,
+      default() {
+        return Templates;
+      },
+    },
+  },
+});
 
 export default Company;
