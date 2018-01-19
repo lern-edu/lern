@@ -7,6 +7,8 @@
  */
 const StaticCollections = {
   UserRoles: ['student', 'teacher', 'admin'],
+  PostsTypes: ['info', 'lecture', 'question', 'answer'],
+  ContentTypes: ['text', 'image', 'link', 'test', 'question', 'video'],
 };
 
 export default { ...StaticCollections };
