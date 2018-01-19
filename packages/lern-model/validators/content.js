@@ -3,15 +3,13 @@ import _ from 'lodash';
 
 Validator.create({
   name: 'Content',
-  validate(value, fieldName) {
+  isValidate({ value, name }) {
     const { type } = this;
-    return type != fieldName;
+    return type != name;
   },
 
-  events: {
-    validationError(e) {
-      var fieldName = e.data.fieldName;
-      e.setMessage(fieldName + ' is required!');
-    },
+  resolveError({ name }) {
+    return name + ' is required!';
   },
+
 });
