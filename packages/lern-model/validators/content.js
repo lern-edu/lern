@@ -5,7 +5,7 @@ import _ from 'lodash';
  * @namespace Content()
  * @memberof LernModel
  */
-//treta
+
  /**
    * @memberof LernModel.Content()
    * @desc Self description
