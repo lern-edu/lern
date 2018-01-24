@@ -1,0 +1,12 @@
+{
+  "_locale": "en-US",
+  "_namespace": "PublicLogin",
+  "title": "English",
+  "password": "Password",
+  "signIn" : "Log in",
+  "allFieldsMessage": "Please fill in all fields",
+  "userNotFoundMessage": "User not found",
+  "invalidPasswordMessage": "Invalid password",
+  "errorMessage": "Problems on signing in",
+  "welcomeMessage":  "Welcome!"
+}
