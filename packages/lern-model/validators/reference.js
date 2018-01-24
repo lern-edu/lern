@@ -1,4 +1,5 @@
 import { Validator } from 'meteor/jagi:astronomy';
+import Regex from '../regex.js';
 import _ from 'lodash';
 
 Validator.create({

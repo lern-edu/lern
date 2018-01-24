@@ -17,7 +17,7 @@ const Company = Class.create({
       validators: [{ type: 'References' }],
       default: () => [],
     },
-    Plan: {
+    plan: {
       type: Object,
       optional: true,
     },
@@ -42,7 +42,7 @@ const Company = Class.create({
   },
   events: {
     afterSave({ currentTarget: company }) {
-      const users = User.find({ 'profile.companies': company._id }).fetch();
+      const users = User.find({ 'profile.companies._id': company._id }).fetch();
       _.forEach(users, user => {
         if (user.profile.company._id == company._id)
           user.profile.company = company;
