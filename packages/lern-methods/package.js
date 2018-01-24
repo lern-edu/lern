@@ -15,6 +15,7 @@ Package.onUse(function (api) {
   api.addFiles([
     'helpers.js',
     'server/admin/admin.js',
+    'server/user/user.js',
   ], 'server');
 });
 
