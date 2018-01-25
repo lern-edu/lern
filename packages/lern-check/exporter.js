@@ -1,11 +1,12 @@
 import Cursor from './lib/Cursor.js';
 import User from './lib/User.js';
+import Regex from './lib/Regex.js';
 
 /**
  * lern-check package
  * @namespace
  */
-const LernCheck = { Cursor, User };
+const LernCheck = { Cursor, User, Regex };
 
 /**
  * @memberof LernCheck

@@ -1,0 +1,12 @@
+{
+  "_locale": "pt-BR",
+  "_namespace": "PublicLogin",
+  "title": "Português",
+  "password": "Senha",
+  "signIn" : "Entrar",
+  "allFieldsMessage": "Preencha todos os campos",
+  "userNotFoundMessage": "Usuário não encontrado",
+  "invalidPasswordMessage": "Senha incorreta",
+  "errorMessage": "Problemas ao cadastrar",
+  "welcomeMessage":  "Bem-vindo(a)!"
+}

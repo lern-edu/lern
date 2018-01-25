@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lern-model/collections/users/schema.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lern-model/collections/users/schema.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Class, Validator } from 'meteor/jagi:astronomy';
+import StaticCollections from '../static.js';
+import _ from 'lodash';
+
+import Templates from './templates.jsx';
+
+/**
+ * User profile
+ * @memberof LernModel.User
+ * @class
+ * @public
+ * @return {AstroClass} An User profile
+ */
+const UserProfileSchema = Class.create({
+  name: 'UserProfile',
+  fields: {
+    name: {
+      type: String,
+    },
+    profilePic: {
+      type: String,
+      optional: true,
+    },
+    gender: {
+      type: String,
+      validators: [{ type: 'choice', param: ['male', 'female'] }],
+      optional: true,
+    },
+    firstName: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
+    lastName: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
+    company: {
+      type: String,
+      validators: [{ type: 'Reference' }],
+      optional: true,
+    },
+    companies: {
+      type: [Object],
+      optional: true,
+      default: () => [],
+    },
+    role: {
+      type: String,
+      validators: [{ type: 'OneOf', param: StaticCollections.UserRoles }],
+      optional: true,
+    },
+  },
+});
+
+const UserEmailsSchema = Class.create({
+  name: 'UserEmails',
+  fields: {
+    address: {
+      type: String,
+      validators: [{ type: 'email' }],
+    },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+  },
+});
+
+/**
+ * User collection
+ * @memberof LernModel
+ * @class
+ * @public
+ * @return {AstroClass} An User model
+ * @example
+ * import { User } from 'meteor/duckdodgerbrasl:lern-model'
+ */
+const User = Class.create({
+  name: 'User',
+  collection: Meteor.users,
+  fields: {
+    emails: {
+      type: [Object],
+    },
+    services: {
+      type: Object,
+      optional: true,
+      immutable: true,
+    },
+    roles: {
+      type: [String],
+      validators: [
+        { type: 'UserRolesInRoles' },
+        { type: 'minLength', param: 1 },
+        { type: 'maxLength', param: 3 },
+      ],
+      default: () => [],
+    },
+    profile: {
+      type: UserProfileSchema,
+      default() {
+        return { firstName: '', lastName: '' };
+      },
+    },
+  },
+
+  behaviors: {
+    timestamp: {
+      hasCreatedField: true,
+      createdFieldName: 'createdAt',
+      hasUpdatedField: true,
+      updatedFieldName: 'updatedAt',
+    },
+  },
+
+  helpers: {
+
+    /**
+     * Return a unique role
+     * @memberof LernModel.User
+     * @return {String} userRole
+     */
+    getRole() {
+      return this.get('profile.role') || _.first(this.get('roles'));
+    },
+
+    /**
+     * Return all roles
+     * @memberof LernModel.User
+     * @return {Array} userRoles
+     */
+    getRoles() {
+      return this.get('roles');
+    },
+
+    /**
+     * Get first user email
+     * @memberof LernModel.User
+     * @return {String} email
+     */
+    getEmail() {
+      return _.get(_.first(this.emails), 'address');
+    },
+
+    /**
+     * Get user email from social network
+     * @memberof LernModel.User
+     * @return {String} email
+     */
+    getSocialEmail() {
+      return _.get(this, 'services.facebook.email')
+        || _.get(this, 'services.google.email');
+    },
+
+    /**
+     * Verify user roles contains certain role
+     * @memberof LernModel.User
+     * @param {String} role - role to verify
+     * @return {Boolean} includes
+     */
+    hasRole(r) {
+      const role = this.getRoles();
+      return _.includes(role, r);
+    },
+
+    /**
+     * Get settings route
+     * @memberof LernModel.User
+     * @return {String} FlowRouter route
+     */
+    getSettingsRoute() {
+      const role = this.getRole();
+      return _.capitalize(role) + 'Settings';
+    },
+
+    /**
+     * Get Home route
+     * @memberof LernModel.User
+     * @return {String} FlowRouter route
+     */
+    getHomeRoute() {
+      const role = this.getRole();
+      return _.capitalize(role) + 'Home';
+    },
+
+    /**
+     * Get setup route
+     * @memberof LernModel.User
+     * @return {String} FlowRouter route
+     */
+    getSetupRoute() {
+      const role = this.getRole();
+      return _.capitalize(role) + 'Setup';
+    },
+
+    getFullName() {
+      const { firstName, lastName } = this.profile;
+      return firstName + ' ' + lastName;
+    },
+  },
+
+  events: {
+    beforeSave(e) {
+      console.log(e.currentTarget);
+      if (!e.currentTarget.profile.name)
+        e.currentTarget.profile.name = e.currentTarget.getFullName();
+    },
+  },
+
+});
+
+if (Meteor.isClient)
+User.extend({
+  fields: {
+    templates: {
+      type: Object,
+      default() {
+        return Templates;
+      },
+    },
+  },
+});
+
+export default User;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LernLayouts.Bar.html">Bar</a></li><li><a href="LernLayouts.Components.Snackbar.html">Snackbar</a></li><li><a href="LernLayouts.LayoutView.html">LayoutView</a></li><li><a href="LernLayouts.Mixins.Screen.html">Screen</a></li><li><a href="LernLayouts.NotFound.html">NotFound</a></li><li><a href="LernModel.User.html">User</a></li><li><a href="LernModel.User.UserProfileSchema.html">UserProfileSchema</a></li><li><a href="Setup.html">Setup</a></li></ul><h3>Namespaces</h3><ul><li><a href="LernCheck.html">LernCheck</a></li><li><a href="LernCheck.Cursor.html">Cursor()</a></li><li><a href="LernCheck.Regex.html">Regex()</a></li><li><a href="LernCheck.User.html">User()</a></li><li><a href="LernHead.html">LernHead</a></li><li><a href="LernLayouts.html">LernLayouts</a></li><li><a href="LernLayouts.Components.html">Components</a></li><li><a href="LernLayouts.Mixins.html">Mixins</a></li><li><a href="LernModel.html">LernModel</a></li><li><a href="LernModel.User.Validators.html">Validators</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 07 2018 13:01:13 GMT-0200 (-02)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

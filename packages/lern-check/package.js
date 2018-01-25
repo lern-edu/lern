@@ -25,6 +25,7 @@ Package.onUse((api) => {
   api.addFiles([
     'lib/Cursor.js',
     'lib/User.js',
+    'lib/Regex.js',
   ]);
 
   api.mainModule('exporter.js');
@@ -35,6 +36,7 @@ Package.onTest((api) => {
   api.use([
     'ecmascript',
     'accounts-base@1.4.0',
+    'accounts-password@1.5.0',
     'coffeescript@1.12.7_3',
     'practicalmeteor:mocha@2.4.5_6',
     'dispatch:phantomjs-tests@=0.0.5',
