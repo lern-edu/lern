@@ -28,13 +28,23 @@ Meteor.startup(() => {
 
       if (!user.roles) user.roles = ['student'];
 
-      const newUser = new User(user);
+      const oldUser = User.findOne({
+        emails: { $elemMatch: { email: 'andredornas299@gmail.com' } },
+      });
 
-      newUser._isNew = false;
+      if (!oldUser) {
+        const newUser = new User(user);
+        newUser._isNew = false;
+        newUser.save();
+        return newUser;
+      }
 
-      newUser.save();
+      _.merge(oldUser.services, user.services);
 
-      return newUser;
+      User.remove({ _id: oldUser._id });
+
+      return oldUser;
+
     });
   };
 });
