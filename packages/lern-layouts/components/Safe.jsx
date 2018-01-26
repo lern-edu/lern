@@ -51,7 +51,8 @@ class Safe extends React.Component {
 
     if (user) {
       if (_.size(_.get(user, 'emails')) === 0) {
-        if (FlowRouter.getRouteName() !== 'PublicComplete') {
+        if (FlowRouter.getRouteName() &&
+          !_.includes(FlowRouter.getRouteName(), 'Public')) {
           snack('É necessário cadastrar um email');
           FlowRouter.go('PublicComplete', {}, { path: FlowRouter.current().path });
         }
