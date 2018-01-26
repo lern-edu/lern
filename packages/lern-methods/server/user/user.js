@@ -15,4 +15,13 @@ Helpers.Methods({ prefix, protect }, {
       home: user.getHomeRoute(),
     }, option);
   },
+
+  CompleteLogin(email) {
+    const userId = Meteor.userId();
+
+    const user = User.findOne(userId);
+    user.emails = [{ email: email, verified: false }];
+
+    user.save();
+  },
 });
