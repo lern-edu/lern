@@ -15,6 +15,10 @@ Meteor.startup(() => {
           profilePic: `http://graph.facebook.com/${_.get(face, 'id')}/picture?type=square`,
           gender: _.get(face, 'gender'),
         };
+        if (_.get(face, 'email'))
+          user.emails = [{ email: _.get(face, 'email'), verified: true }];
+        else
+          user.emails = [];
       } else if (_.get(user, 'services.google')) {
         const google = _.get(user, 'services.google');
         user.profile = {
@@ -24,6 +28,10 @@ Meteor.startup(() => {
           profilePic: _.get(google, 'picture'),
           gender: _.get(google, 'gender'),
         };
+        if (_.get(google, 'email'))
+          user.emails = [{ email: _.get(google, 'email'), verified: true }];
+        else
+          user.emails = [];
       } else if (options.profile) user.profile = options.profile;
 
       if (!user.roles) user.roles = ['student'];
