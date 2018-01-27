@@ -1,6 +1,9 @@
+// Libs
 import React from 'react';
 import _ from 'lodash';
+import i18n from 'meteor/universe:i18n';
 
+// Material components
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
@@ -11,6 +14,9 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import { FormControl } from 'material-ui/Form';
 import Icon from 'material-ui/Icon';
+
+// Translations
+const texts = {};
 
 /**
  * Navigation or side Drawer
@@ -33,8 +39,18 @@ class Navigation extends React.Component {
             icon: 'home',
           },
           AdminUsers: {
-            label: 'Usuários',
+            label: 'Users',
             icon: 'person',
+          },
+        },
+        student: {
+          StudentHome: {
+            label: 'student.StudentHome',
+            icon: 'home',
+          },
+          StudentReport: {
+            label: 'student.StudentReport',
+            icon: 'timeline',
           },
         },
       },
@@ -165,7 +181,7 @@ class Navigation extends React.Component {
                 _.map(routes[user.getRole()], ({ label, icon }, _route) =>
                   <ListItem button component='a' key={_route} href={FlowRouter.path(_route)}>
                     <Icon>{icon}</Icon>
-                    <ListItemText primary={label} />
+                    <ListItemText primary={i18n.__('Navigation', label)} />
                   </ListItem>
                 )
               }
