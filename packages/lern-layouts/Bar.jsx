@@ -16,6 +16,9 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  iconButton: {
+    color: '#FFF',
+  },
 };
 
 const getTitle = ({ title, crumbs }) =>
@@ -73,11 +76,10 @@ const Bar = (props) => {
 
         <IconButton
           className={classes.menuButton}
-          onTouchTap={disableActions ? () => false : window.nav}
-          color='contrast'
+          onClick={disableActions ? () => false : window.nav}
           aria-label='Menu'
         >
-           <Icon color='contrast'>menu</Icon>
+           <Icon className={classes.iconButton} >menu</Icon>
         </IconButton>
 
         <Typography type='title' color='inherit' className={classes.flex}>
