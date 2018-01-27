@@ -5,7 +5,7 @@ import { Setup } from 'meteor/duckdodgerbrasl:lern-layouts';
 // Config
 const setup = new Setup({ protect: 'student', nav: true, bar: true });
 const studentRoutes = FlowRouter.group({
-  prefix: '/stundent',
+  prefix: '/student',
   name: 'Student',
 });
 
