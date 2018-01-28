@@ -37,22 +37,15 @@ class StudentReport extends React.Component {
 
   render() {
     const { classes } = this.props;
-
-    console.log(_.isEmpty(this.state.report)
-    ? `<LinearProgress color='primary' />`
-    : `_.isArray(this.state.report)`
-    ? `_.map(this.state.report, report => <StudentReportCard report={report} key={report.name}/>)`
-    : `<StudentReportCard report={this.state.report} />`);
+    const { user } = this.context;
 
     return <div>
       <Layout.Bar title={i18n.__('StudentReport.appBar')} />
 
       {
-        _.isEmpty(this.state.report)
+        _.isEmpty(user.report)
         ? <LinearProgress color='primary' />
-        : _.isArray(this.state.report)
-        ? _.map(this.state.report, report => <StudentReportCard report={report} key={report.name}/>)
-        : <StudentReportCard report={this.state.report} />
+        : _.map(user.report, report => <StudentReportCard report={report} key={report.name}/>)
       }
 
     </div>;

@@ -59,13 +59,11 @@ class StudentReportCard extends React.Component {
   render() {
     const { classes, report } = this.props;
 
-    console.log(report);
-
     return (
       <Card key={report.name}>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
+            <Avatar aria-label='report.name' className={classes.avatar}>
               {_.head(report.name)}
             </Avatar>
           }
@@ -77,13 +75,6 @@ class StudentReportCard extends React.Component {
           _.isEmpty(report.childrens)
           ? null
           : <CardActions className={classes.actions} disableActionSpacing>
-
-            <Button
-              onClick={() => this.handleDetailsClick(report)}
-              className={classes.button}
-            >
-              See More
-            </Button>
 
             <Button
               className={classes.button}
