@@ -20,7 +20,7 @@ Helpers.Methods({ prefix, protect }, {
     const userId = Meteor.userId();
 
     const user = User.findOne(userId);
-    user.emails = [{ email: email, verified: false }];
+    user.emails = [{ address: email, verified: false }];
 
     user.save();
   },
