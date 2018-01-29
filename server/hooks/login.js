@@ -16,7 +16,7 @@ Meteor.startup(() => {
           gender: _.get(face, 'gender'),
         };
         if (_.get(face, 'email'))
-          user.emails = [{ email: _.get(face, 'email'), verified: true }];
+          user.emails = [{ address: _.get(face, 'email'), verified: true }];
         else
           user.emails = [];
       } else if (_.get(user, 'services.google')) {
@@ -29,7 +29,7 @@ Meteor.startup(() => {
           gender: _.get(google, 'gender'),
         };
         if (_.get(google, 'email'))
-          user.emails = [{ email: _.get(google, 'email'), verified: true }];
+          user.emails = [{ address: _.get(google, 'email'), verified: true }];
         else
           user.emails = [];
       } else if (options.profile) user.profile = options.profile;
