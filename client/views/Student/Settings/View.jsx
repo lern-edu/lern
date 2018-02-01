@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import { LinearProgress } from 'material-ui';
+import i18n from 'meteor/universe:i18n';
 import _ from 'lodash';
 
 import StudentSettingsTabs from './Tabs.jsx';
@@ -32,7 +33,6 @@ class StudentSettingsView extends React.Component {
   componentWillMount() {
     Meteor.call('UserGet', { limit: 1 },  (err, doc) => {
       if (err) snack({ message: 'Erro ao encontrar usuário' });
-      console.log(doc);
       this.setState({
         collections: { user: { handler: false, doc: doc } },
       });
@@ -43,11 +43,9 @@ class StudentSettingsView extends React.Component {
     const { classes, tab='profile' } = this.props;
     const { collections } = this.state;
 
-    console.log(this.state);
-
     return (
       <div>
-        <Layout.Bar title='Settings'>
+        <Layout.Bar title={i18n.__('StudentSettings.appBar')}>
           <StudentSettingsTabs tab={tab}/>
         </Layout.Bar>
 

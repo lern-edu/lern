@@ -2,21 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import i18n from 'meteor/universe:i18n';
 import _ from 'lodash';
 
 const styles = theme => ({
 
 });
 
-const tabs = {
-  profile: 'Perfil',
-  security: 'Segurança',
-};
-
 class StudentSettingsTabs extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      tabs: {
+        profile: i18n.__('StudentSettings.profile'),
+        security: i18n.__('StudentSettings.security'),
+      },
+    };
   }
 
   handleChange(event, value) {
@@ -24,6 +26,7 @@ class StudentSettingsTabs extends React.Component {
   }
 
   render() {
+    const { tabs } = this.state;
     const { tab } = this.props;
 
     return (
