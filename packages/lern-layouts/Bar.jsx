@@ -52,6 +52,7 @@ const getTitle = ({ title, crumbs }) =>
  * @class
  * @public
  * @memberof LernLayouts
+ * @param {object=} this.props.children - children react component to be rendered in AppBar
  * @param {object=} this.props.crumbs - paths to compose links for crumbs
  * @param {string=} this.props.label - label of path
  * @param {string=} this.props.path - FlowRouter path
@@ -65,10 +66,20 @@ const getTitle = ({ title, crumbs }) =>
  * import { Bar } from 'meteor/duckdodgerbrasl:lern-layouts';
  * ...
  * <Bar title='Tags' crumbs={[{ path: 'AdminHome', label: 'Home' }]} />
+ * @example
+ * import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
+ * ...
+ * <Layout.Bar title='Tabs'>
+ *  <Tabs>
+ *    <Tab label='Item One'>
+ *    <Tab label='Item Two'>
+ *    <Tab label='Item Three'>
+ *  </Tabs>
+ * </Layout.Bar>
  */
 const Bar = (props) => {
 
-  const { crumbs, title, disableActions, classes } = props;
+  const { crumbs, title, disableActions, classes, children } = props;
 
   return (
     <AppBar position='fixed'>
@@ -87,6 +98,7 @@ const Bar = (props) => {
         </Typography>
 
       </Toolbar>
+      {children}
     </AppBar>
   );
 };
