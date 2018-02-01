@@ -5,7 +5,8 @@ const [prefix, protect] = ['User'];
 Helpers.Publications({ type: 'plain', prefix, protect }, {
   Data() {
     const { userId } = this;
-    return User.find(userId);
+    const options = { fields: { services: 0 } };
+    return User.find(userId, options);
   },
 
 });

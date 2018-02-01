@@ -1,0 +1,9 @@
+{
+  "_locale": "en-US",
+  "_namespace": "Navigation",
+  "title": "English",
+  "student": {
+    "StudentHome": "Home",
+    "StudentReport": "Report"
+  }
+}

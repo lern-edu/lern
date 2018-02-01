@@ -108,8 +108,10 @@ class PublicLogin extends React.Component {
     Meteor.call(
       'UserGetInitialRoute',
       _.get(this, 'props.query.alias') ? 'setup' : 'home',
-      (err, route) => {
+      (err, { route, locale }) => {
         FlowRouter.go(route, {}, { ...this.props.query });
+        i18n.setLocale(locale);
+        i18n.getLocale();
       }
     );
   }

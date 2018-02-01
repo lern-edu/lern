@@ -27,6 +27,10 @@ Package.onUse(function (api) {
     'NotFound.jsx',
     'Bar.jsx',
     'Setup.jsx',
+
+    // Translations
+    'components/translations/Navigation/en-US.i18n.json',
+    'components/translations/Navigation/pt-BR.i18n.json',
   ], 'client');
 
   api.mainModule('./exporter.js', 'client');

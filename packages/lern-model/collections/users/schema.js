@@ -49,6 +49,11 @@ const UserProfileSchema = Class.create({
       validators: [{ type: 'OneOf', param: StaticCollections.UserRoles }],
       optional: true,
     },
+    locale: {
+      type: String,
+      validators: [{ type: 'OneOf', param: StaticCollections.Locales }],
+      default: _.head(StaticCollections.Locales),
+    },
   },
 });
 
@@ -101,6 +106,10 @@ const User = Class.create({
       default() {
         return { firstName: '', lastName: '' };
       },
+    },
+    report: {
+      type: [Object],
+      optional: true,
     },
   },
 

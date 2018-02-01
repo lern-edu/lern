@@ -9,11 +9,14 @@ Helpers.Methods({ prefix, protect }, {
     const userId = Meteor.userId();
 
     const user = User.findOne(userId);
-
-    return _.get({
-      setup: user.getSetupRoute(),
-      home: user.getHomeRoute(),
-    }, option);
+    
+    return {
+      route: _.get({
+        setup: user.getSetupRoute(),
+        home: user.getHomeRoute(),
+      }, option),
+      locale: _.get(user, 'profile.locale') || 'en-US',
+    };
   },
 
   CompleteLogin(email) {
