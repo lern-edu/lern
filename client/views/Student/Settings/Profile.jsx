@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { Paper, TextField, Grid, Button, Avatar } from 'material-ui';
+import i18n from 'meteor/universe:i18n';
 
 const styles = theme => ({
   paper: {
@@ -76,12 +77,12 @@ class StudentSettingsProfile extends React.Component {
                   >
                     <Grid item>
                       <Button href={FlowRouter.path('StudentSettings')} raised>
-                        Cancel
+                        {i18n.__('StudentSettings.cancel')}
                       </Button>
                     </Grid>
                     <Grid item>
                       <Button onClick={this.handleSubmit.bind(this)} raised color='primary'>
-                        Save
+                        {i18n.__('StudentSettings.save')}
                       </Button>
                     </Grid>
                   </Grid>

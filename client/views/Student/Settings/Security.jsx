@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { Paper, TextField, Grid, Button, Typography } from 'material-ui';
 import _ from 'lodash';
+import i18n from 'meteor/universe:i18n';
 
 const styles = theme => ({
   paper: {
@@ -153,7 +154,7 @@ class StudentSettingsSecurity extends React.Component {
                         raised
                         href={FlowRouter.path('StudentSettings')}
                       >
-                        Cancel
+                        {i18n.__('StudentSettings.cancel')}
                       </Button>
                     </Grid>
                     <Grid item>
@@ -165,7 +166,7 @@ class StudentSettingsSecurity extends React.Component {
                           !target || target.length < 6 || target !== confirm
                         }
                       >
-                        Save
+                        {i18n.__('StudentSettings.save')}
                       </Button>
                     </Grid>
                   </Grid>
