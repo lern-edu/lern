@@ -5,11 +5,24 @@ import Helpers from '../../helpers.js';
 const [prefix, protect] = ['User'];
 
 Helpers.Methods({ prefix, protect }, {
+  SaveProfile(doc) {
+    const userId = Meteor.userId();
+    const user = User.findOne(userId);
+    let profile = user.get('profile');
+    console.log(profile);
+    profile.set('firstName', doc.profile.firstName);
+    profile.set('lastName', doc.profile.lastName);
+    console.log(profile);
+    user.set('profile', profile);
+    console.log(user);
+    user.save();
+  },
+
   GetInitialRoute(option) {
     const userId = Meteor.userId();
 
     const user = User.findOne(userId);
-    
+
     return {
       route: _.get({
         setup: user.getSetupRoute(),
