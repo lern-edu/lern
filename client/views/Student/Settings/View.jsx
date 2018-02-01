@@ -1,0 +1,73 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
+import { LinearProgress } from 'material-ui';
+import _ from 'lodash';
+
+import StudentSettingsTabs from './Tabs.jsx';
+import StudentSettingsProfile from './Profile.jsx';
+import StudentSettingsSecurity from './Security.jsx';
+
+const styles = theme => ({
+  tabs: {
+    marginTop: '48px',
+  },
+});
+
+class StudentSettingsView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      collections: {
+        user: {
+          handler: true,
+          doc: null,
+        },
+      },
+    };
+  }
+
+  componentWillMount() {
+    Meteor.call('UserGet', { limit: 1 },  (err, doc) => {
+      if (err) snack({ message: 'Erro ao encontrar usuário' });
+      console.log(doc);
+      this.setState({
+        collections: { user: { handler: false, doc: doc } },
+      });
+    });
+  }
+
+  render() {
+    const { classes, tab='profile' } = this.props;
+    const { collections } = this.state;
+
+    console.log(this.state);
+
+    return (
+      <div>
+        <Layout.Bar title='Settings'>
+          <StudentSettingsTabs tab={tab}/>
+        </Layout.Bar>
+
+        <div className={classes.tabs}>
+          {
+            !_.every(collections, c => !c.handler)
+            ? <LinearProgress color='accent' />
+            : _.get({
+              profile: <StudentSettingsProfile key='profile' {...this.state}/>,
+              security: <StudentSettingsSecurity key='security'{...this.state}/>,
+            }, tab)
+          }
+        </div>
+      </div>
+    );
+  }
+}
+
+StudentSettingsView.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(StudentSettingsView);
