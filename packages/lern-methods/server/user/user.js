@@ -27,4 +27,23 @@ Helpers.Methods({ prefix, protect }, {
 
     user.save();
   },
+
+  Get(options={}) {
+    //_.assign(options, { fields: { services: 0 } });
+
+    const userId = Meteor.userId();
+
+    let user = User.findOne(userId, options);
+
+    const keys = _.pull(_.keys(user.services), 'resume');
+
+    _.assign(user, { services: keys });
+
+    return user;
+  },
+
+  SetPassword(_id, target) {
+    Accounts.setPassword(_id, target, { logout: false });
+  },
+
 });
