@@ -34,7 +34,7 @@ if (Meteor.isClient) {
     }
 
     render() {
-      const { form, doc, index } = this.props;
+      const { form, doc, index, disabled=false } = this.props;
       const { error, message } = this.state;
       return (
         <FormControl error={error}>
@@ -42,6 +42,7 @@ if (Meteor.isClient) {
           <Input
             id='email'
             type='email'
+            disabled={disabled}
             value={_.get(doc, `emails[${index}].address`)}
             onChange={this.handleChange.bind(this)}
           />
