@@ -5,5 +5,10 @@
   "student": {
     "StudentHome": "Home",
     "StudentReport": "Report"
+  },
+  "admin": {
+    "adminHome": "Home",
+    "adminUsers": "Users",
+    "adminTags": "Tags"
   }
 }
