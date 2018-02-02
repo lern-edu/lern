@@ -74,7 +74,7 @@ class AdminUser extends React.Component {
 
         {
           !_.every(collections, c => !c.handler)
-          ? <LinearProgress color='accent' />
+          ? <LinearProgress color='secondary' />
           : (
             <Grid container className={classes.root} justify='center'>
 
