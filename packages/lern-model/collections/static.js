@@ -7,6 +7,7 @@
  */
 const StaticCollections = {
   UserRoles: ['student', 'teacher', 'admin'],
+  Locales: ['pt-BR', 'en-US'],
 };
 
 export default { ...StaticCollections };

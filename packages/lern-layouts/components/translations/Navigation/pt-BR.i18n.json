@@ -1,0 +1,9 @@
+{
+  "_locale": "pt-BR",
+  "_namespace": "Navigation",
+  "title": "Português",
+  "student": {
+    "StudentHome": "Home",
+    "StudentReport": "Desempenho"
+  }
+}
