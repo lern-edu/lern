@@ -49,3 +49,15 @@ adminRoutes.route('/user/:userId', {
     });
   },
 });
+
+// 
+
+adminRoutes.route('/tags', {
+  name: 'AdminTags',
+  action(params, query) {
+    setup.render({
+      main: <AdminTags {...query} />,
+    });
+  },
+});
+
