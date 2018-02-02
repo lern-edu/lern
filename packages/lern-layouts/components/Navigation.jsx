@@ -35,12 +35,16 @@ class Navigation extends React.Component {
       routes: {
         admin: {
           AdminHome: {
-            label: 'Home',
+            label: 'admin.AdminHome',
             icon: 'home',
           },
           AdminUsers: {
-            label: 'Users',
+            label: 'admin.AdminUsers',
             icon: 'person',
+          },
+          AdminTags: {
+            label: 'admin.AdminTags',
+            icon: 'tag',
           },
         },
         student: {
