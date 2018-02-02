@@ -29,7 +29,9 @@ Meteor.startup(() => {
       if (!user.roles) user.roles = ['student'];
 
       const oldUser = User.findOne({
-        emails: { $elemMatch: { email: 'andredornas299@gmail.com' } },
+        emails: {
+          $elemMatch: { address:  { $in: user.emails } },
+        },
       });
 
       if (!oldUser) {
