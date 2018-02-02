@@ -37,9 +37,7 @@ Meteor.startup(() => {
       if (!user.roles) user.roles = ['student'];
 
       const oldUser = User.findOne({
-        emails: {
-          $elemMatch: { address:  { $in: user.emails } },
-        },
+        'emails.address': { $in: _.map(user.emails, e => e.address) },
       });
 
       if (!oldUser) {
