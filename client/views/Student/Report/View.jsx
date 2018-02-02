@@ -4,7 +4,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import i18n from 'meteor/universe:i18n';
-import LinearProgress from 'material-ui/Progress'
+import { LinearProgress } from 'material-ui/Progress'
 
 import StudentReportCard from './Card.jsx';
 
