@@ -15,10 +15,7 @@ Meteor.startup(() => {
           profilePic: `http://graph.facebook.com/${_.get(face, 'id')}/picture?type=square`,
           gender: _.get(face, 'gender'),
         };
-        if (_.get(face, 'email'))
-          user.emails = [{ email: _.get(face, 'email'), verified: true }];
-        else
-          user.emails = [];
+        user.emails = [];
       } else if (_.get(user, 'services.google')) {
         const google = _.get(user, 'services.google');
         user.profile = {
