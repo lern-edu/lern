@@ -18,4 +18,13 @@ Helpers.Methods({ prefix, protect }, {
       locale: _.get(user, 'profile.locale') || 'en-US',
     };
   },
+
+  CompleteLogin(email) {
+    const userId = Meteor.userId();
+
+    const user = User.findOne(userId);
+    user.emails = [{ address: email, verified: false }];
+
+    user.save();
+  },
 });
