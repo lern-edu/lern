@@ -8,6 +8,7 @@
 const StaticCollections = {
   UserRoles: ['student', 'teacher', 'admin'],
   ContentTypes: ['text', 'image', 'link', 'test', 'question', 'video'],
+  Locales: ['pt-BR', 'en-US'],
 };
 
 export default { ...StaticCollections };
