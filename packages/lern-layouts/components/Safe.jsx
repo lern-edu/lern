@@ -1,6 +1,7 @@
 import React from 'react';
 import Bar from '../Bar.jsx';
 import { FontIcon, RaisedButton, LinearProgress } from 'material-ui';
+import _ from 'lodash';
 
 /**
  * Safe view render
@@ -46,6 +47,16 @@ class Safe extends React.Component {
     if (access === null) {
       snack('Você deve entrar primeiro');
       FlowRouter.go('PublicLogin');
+    }
+
+    if (user) {
+      if (_.size(_.get(user, 'emails')) === 0) {
+        if (FlowRouter.getRouteName() &&
+          !_.includes(FlowRouter.getRouteName(), 'Public')) {
+          snack('É necessário cadastrar um email');
+          FlowRouter.go('PublicComplete', {}, { path: FlowRouter.current().path });
+        }
+      }
     }
 
     if (!this.props.user && user && this.redir) {

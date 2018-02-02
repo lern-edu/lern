@@ -92,14 +92,14 @@ class PublicLogin extends React.Component {
     Meteor.loginWithFacebook({ requestPermissions: ['public_profile', 'email'] },
     (err) => {
       if (err) snack(texts.errorMessage);
-      else this.handleRedirect.bind(this);
+      else this.handleRedirect.bind(this)();
     });
   }
 
   handleGoogleLogin() {
     Meteor.loginWithGoogle({}, (err) => {
       if (err) snack(texts.errorMessage);
-      else this.handleRedirect.bind(this);
+      else this.handleRedirect.bind(this)();
     });
   }
 
