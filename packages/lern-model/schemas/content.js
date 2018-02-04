@@ -2,16 +2,17 @@ import { Class } from 'meteor/jagi:astronomy';
 import { ContentTypes } from '../collections/static.js';
 
 const ContentSchema = Class.create({
-  name,
+  name: 'Content',
   fields: {
     type: {
       type: String,
-      validators: [{ type: 'oneof', param: ContentTypes }],
+      validators: [{ type: 'choice', param: ContentTypes }],
       immutable: true,
       default: 'text',
     },
 
     text: {
+      type: String,
       validators: [
         {
           type: 'or',
@@ -31,7 +32,7 @@ const ContentSchema = Class.create({
     },
 
     image: {
-      type: 'string',
+      type: String,
       validators: [
         { type: 'Reference' },
         { type: 'Content' },
