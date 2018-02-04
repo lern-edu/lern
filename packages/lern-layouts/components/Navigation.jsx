@@ -35,25 +35,25 @@ class Navigation extends React.Component {
       routes: {
         admin: {
           AdminHome: {
-            label: 'admin.AdminHome',
+            label: 'AdminHome',
             icon: 'home',
           },
           AdminUsers: {
-            label: 'admin.AdminUsers',
+            label: 'AdminUsers',
             icon: 'person',
           },
           AdminTags: {
-            label: 'admin.AdminTags',
-            icon: 'tag',
+            label: 'AdminTags',
+            icon: 'more',
           },
         },
         student: {
           StudentHome: {
-            label: 'student.StudentHome',
+            label: 'StudentHome',
             icon: 'home',
           },
           StudentReport: {
-            label: 'student.StudentReport',
+            label: 'StudentReport',
             icon: 'timeline',
           },
         },
@@ -185,7 +185,7 @@ class Navigation extends React.Component {
                 _.map(routes[user.getRole()], ({ label, icon }, _route) =>
                   <ListItem button component='a' key={_route} href={FlowRouter.path(_route)}>
                     <Icon>{icon}</Icon>
-                    <ListItemText primary={i18n.__('Navigation', label)} />
+                    <ListItemText primary={i18n.__('Navigation', `${user.getRole()}.${label}`)} />
                   </ListItem>
                 )
               }

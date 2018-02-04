@@ -7,8 +7,8 @@
     "StudentReport": "Desempenho"
   },
   "admin": {
-    "adminHome": "Home",
-    "adminUsers": "usuários",
-    "adminTags": "Tags"
+    "AdminHome": "Home",
+    "AdminUsers": "Usuários",
+    "AdminTags": "Tags"
   }
 }
