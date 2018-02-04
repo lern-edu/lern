@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
 import Author from '../../behaviors/author.js';
 import ContentSchema from '../../schemas/content.js';
@@ -10,16 +11,15 @@ const Tag = Class.create({
   fields: {
     name: {
       type: String,
-      validators: [{ type: 'mixLength', param: 100 }],
+      validators: [{ type: 'maxLength', param: 100 }],
     },
     description: {
       type: [ContentSchema],
       validators: [{ type: 'minLength', param: 1 }],
     },
     parent: {
-      type: String,
+      type: Object,
       optional: true,
-      validators: [{ type: 'Reference' }],
       default: null,
     },
   },
