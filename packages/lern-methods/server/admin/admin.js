@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { User, Company } from 'meteor/duckdodgerbrasl:lern-model';
+import { User, Company, Tag } from 'meteor/duckdodgerbrasl:lern-model';
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import Helpers from '../../helpers.js';
 import { convertToRaw, convertFromRaw, ContentState } from 'draft-js';
