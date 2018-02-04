@@ -1,5 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 
+if (Meteor.isServer)
+    Meteor.methods({
+      AstroAuthor(event) {
+        const user = Meteor.user();
+        return user;
+      },
+    });
+
 /**
  * Author Behavior - Bind `author` field on schema and add before insert hook
  * to put author automaticaly
@@ -11,15 +19,7 @@ import { Meteor } from 'meteor/meteor';
  * Author(User);
  * export default User;
  */
-const Author = function (Schema) {
-
-  if (Meteor.isServer)
-    Meteor.methods({
-      AstroAuthor(event) {
-        const user = Meteor.user();
-        return user;
-      },
-    });
+const Author = (Schema) => {
 
   Schema.extend({
     fields: {
