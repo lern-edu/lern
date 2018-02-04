@@ -10,9 +10,13 @@ const adminRoutes = FlowRouter.group({
 });
 
 // Views
+// Users
 import AdminHome from './Home/View.jsx';
 import AdminUsers from './Users/View.jsx';
 import AdminUser from './User/View.jsx';
+
+// Tags
+import AdminTags from './Tags/View.jsx';
 
 adminRoutes.route('/', {
   name: 'AdminHome',
