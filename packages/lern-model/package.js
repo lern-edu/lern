@@ -38,11 +38,15 @@ Package.onUse((api) => {
 
     'behaviors/author.js',
 
+    'schemas/content.js',
+
     'collections/users/validators.js',
     'collections/users/templates.jsx',
     'collections/users/schema.js',
 
     'collections/companies/schema.js',
+
+    'collections/tags/schema.js',
   ]);
 
   api.mainModule('./exporter.js');
