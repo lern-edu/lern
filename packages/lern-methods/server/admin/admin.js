@@ -5,6 +5,8 @@ import Helpers from '../../helpers.js';
 import { convertToRaw, convertFromRaw, ContentState } from 'draft-js';
 const [prefix, protect] = ['Admin', 'admin'];
 
+// =================== Users METHODS ====================
+
 /**
  * Meteor Methods for Admin user.
  * @namespace Admin()
@@ -70,6 +72,8 @@ Helpers.Methods({ prefix, protect }, {
 
 });
 
+// =================== COMPANIES METHODS ====================
+
 Helpers.Methods({ prefix, protect }, {
   /**
    * @memberof LernMethods.Admin()
@@ -110,4 +114,47 @@ Helpers.Methods({ prefix, protect }, {
    * @return {Object} - Saved company (with _id)
    */
   CompanySave: Helpers.DefaultSave,
+});
+
+// =================== TAGS METHODS ====================
+
+Helpers.Methods({ prefix, protect }, {
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Retrieve tags from the database
+   * @example
+   * const tags = Meteor.call('AdminTagsGet');
+   * @public
+   * @param {Object} [query] - Query to mongo
+   * @param {Object} [options] - Options to mongo
+   * @return {Array} - Array of tags
+   */
+  TagsGet(query={}, options={}) {
+    return Tag.find(query, options).fetch();
+  },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Count tags that match the criteria
+   * @example
+   * const numTags = Meteor.call('AdminTagsCount');
+   * @public
+   * @param {Object} [query] - Query to mongo
+   * @param {Object} [options] - Options to mongo
+   * @return {Number} - Number of tags
+   */
+  TagsCount(query={}, options={}) {
+    return Tag.find(query, options).count();
+  },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Save a tag in collection
+   * @example
+   * const savedTag = Meteor.call('AdminTagSave', company);
+   * @public
+   * @param {Object} tag - Company to be saved
+   * @return {Object} - Saved company (with _id)
+   */
+  TagSave: Helpers.DefaultSave,
 });
