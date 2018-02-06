@@ -19,6 +19,7 @@ Package.onUse((api) => {
   api.use('ecmascript'),
   api.use('jagi:astronomy@2.5.2');
   api.use('jagi:astronomy-timestamp-behavior@2.0.0');
+  api.use('universe:i18n');
 
   api.addFiles([
     'regex.js',
@@ -43,6 +44,10 @@ Package.onUse((api) => {
     'collections/users/schema.js',
 
     'collections/companies/schema.js',
+
+    // Translations
+    'collections/users/translations/Templates/en-US.i18n.json',
+    'collections/users/translations/Templates/pt-BR.i18n.json',
   ]);
 
   api.mainModule('./exporter.js');

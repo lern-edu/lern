@@ -1,0 +1,29 @@
+{
+  "_locale": "pt-BR",
+  "_namespace": "Templates",
+  "title": "Português",
+  "email": {
+    "message": "Email não válido",
+    "name": "Email",
+    "verified": "Email verificado",
+    "notVerified": "Email não verificado"
+  },
+  "firstName": {
+    "message": "Primeiro nome não válido",
+    "name": "Primeiro nome"
+  },
+  "lastName": {
+    "message": "Último nome não válido",
+    "name": "Último nome"
+  },
+  "roles": {
+    "name": "Funções"
+  },
+  "locale": {
+    "name": "Localidade"
+  },
+  "password": {
+    "name": "Senha",
+    "message": "Mínimo de oito caracteres, com pelo menos uma letra e um número"
+  }
+}
