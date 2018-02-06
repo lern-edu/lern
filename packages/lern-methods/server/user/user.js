@@ -6,16 +6,7 @@ const [prefix, protect] = ['User'];
 
 Helpers.Methods({ prefix, protect }, {
   SaveProfile(doc) {
-    const userId = Meteor.userId();
-    const user = User.findOne(userId);
-    let profile = user.get('profile');
-    console.log(profile);
-    profile.set('firstName', doc.profile.firstName);
-    profile.set('lastName', doc.profile.lastName);
-    console.log(profile);
-    user.set('profile', profile);
-    console.log(user);
-    user.save();
+    doc.save();
   },
 
   GetInitialRoute(option) {
