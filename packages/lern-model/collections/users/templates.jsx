@@ -218,6 +218,69 @@ if (Meteor.isClient) {
     }
   };
 
+  class Locale extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        error: false,
+        message: undefined,
+      };
+    }
+
+    handleChange({ target: { value } }) {
+      const { form, doc } = this.props;
+      doc.profile.locale = value;
+      form.setState({ collections: { user: { doc } } });
+      doc.validate({ fields: [`locale`] }, (err) => {
+        if (err)
+          this.setState({ message: err.reason, error: true });
+        else
+          this.setState({ message: undefined, error: false });
+      });
+
+    }
+
+    render() {
+      const { form, doc } = this.props;
+      const { error, message } = this.state;
+      return (
+        <FormControl error={error}>
+          <InputLabel htmlFor='locale'>Language</InputLabel>
+          <Select
+            value={doc.profile.locale}
+            onChange={this.handleChange.bind(this)}
+            input={<Input id='locale' />}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                  width: 200,
+                },
+              },
+            }}
+          >
+            {
+              _.map(StaticCollections.Locales, locale =>
+                <MenuItem
+                  key={locale}
+                  value={locale}
+                >
+                  {locale}
+                </MenuItem>
+              )
+            }
+          </Select>
+
+          {
+            !error
+            ? undefined
+            : <FormHelperText>{message}</FormHelperText>
+          }
+        </FormControl>
+      );
+    }
+  };
+
   class Password extends React.Component {
     constructor(props) {
       super(props);
@@ -283,6 +346,7 @@ if (Meteor.isClient) {
   Templates.FirstName = FirstName;
   Templates.LastName = LastName;
   Templates.Roles = Roles;
+  Templates.Locale = Locale;
   Templates.Password = Password;
 };
 
