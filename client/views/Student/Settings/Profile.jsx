@@ -71,6 +71,10 @@ class StudentSettingsProfile extends React.Component {
                 </Grid>
 
                 <Grid item xs={12}>
+                  <doc.templates.Locale form={this} doc={doc} />
+                </Grid>
+
+                <Grid item xs={12}>
                   <Grid
                     container
                     alignItems='flex-end'
