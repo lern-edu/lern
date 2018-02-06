@@ -13,12 +13,6 @@ class StudentSettingsTabs extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      tabs: {
-        profile: i18n.__('StudentSettings.profile'),
-        security: i18n.__('StudentSettings.security'),
-      },
-    };
   }
 
   handleChange(event, value) {
@@ -26,8 +20,12 @@ class StudentSettingsTabs extends React.Component {
   }
 
   render() {
-    const { tabs } = this.state;
     const { tab } = this.props;
+
+    const tabs = {
+      profile: i18n.__('StudentSettings.profile'),
+      security: i18n.__('StudentSettings.security'),
+    };
 
     return (
       <Tabs centered value={tab} onChange={this.handleChange}>

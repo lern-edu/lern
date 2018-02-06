@@ -26,11 +26,13 @@ class StudentSettingsProfile extends React.Component {
     const { collections: { user: { doc } } } = this.props;
 
     doc.validate(
-      { fields: ['profile.firstName', 'profile.lastName'] },
+      { fields: ['profile'] },
       (err) => {
-        if (err) snack({ message: err.reason });
-        else
-          Meteor.call('UserSaveProfile', doc.profile, (err, res) => {
+        if (err) {
+          console.error(err);
+          snack({ message: err.reason });
+        } else
+          Meteor.call('UserSaveProfile', doc, (err, res) => {
             if (err) {
               snack({ message: 'Erro ao salvar usuário' });
               console.error(err);
