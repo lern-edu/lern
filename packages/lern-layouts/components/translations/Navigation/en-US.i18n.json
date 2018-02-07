@@ -4,6 +4,7 @@
   "title": "English",
   "student": {
     "StudentHome": "Home",
-    "StudentReport": "Report"
+    "StudentReport": "Report",
+    "StudentSettings": "Settings"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "_locale": "en-US",
+  "_namespace": "StudentSettings",
+  "title": "English",
+  "appBar": "Settings",
+  "profile": "Profile",
+  "security": "Security",
+  "save": "Save",
+  "cancel": "Cancel"
+}

@@ -42,9 +42,7 @@ Meteor.startup(() => {
 
       if (!oldUser) {
         const newUser = new User(user);
-        newUser._isNew = false;
-        newUser.save();
-        return newUser;
+        return newUser.raw();
       }
 
       _.merge(oldUser.services, user.services);

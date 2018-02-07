@@ -4,6 +4,7 @@
   "title": "Português",
   "student": {
     "StudentHome": "Home",
-    "StudentReport": "Desempenho"
+    "StudentReport": "Desempenho",
+    "StudentSettings": "Configurações"
   }
 }

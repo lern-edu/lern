@@ -5,6 +5,7 @@ import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
+import i18n from 'meteor/universe:i18n';
 import _ from 'lodash';
 import Regex from '../../regex.js';
 
@@ -29,19 +30,20 @@ if (Meteor.isClient) {
       if (Regex.email.test(value))
         this.setState({ message: undefined, error: false });
       else
-        this.setState({ message: 'Email not valid', error: true });
+        this.setState({ message: i18n.__('Templates', 'email.message'), error: true });
 
     }
 
     render() {
-      const { form, doc, index } = this.props;
+      const { form, doc, index, disabled=false } = this.props;
       const { error, message } = this.state;
       return (
         <FormControl error={error}>
-          <InputLabel htmlFor='email'>Email</InputLabel>
+          <InputLabel htmlFor='email'>{i18n.__('Templates', 'email.name')}</InputLabel>
           <Input
             id='email'
             type='email'
+            disabled={disabled}
             value={_.get(doc, `emails[${index}].address`)}
             onChange={this.handleChange.bind(this)}
           />
@@ -54,8 +56,8 @@ if (Meteor.isClient) {
           <FormHelperText>
             {
               _.get(doc, `emails[${index}].verified`)
-              ? 'Email verified'
-              : 'Email not verified'
+              ? i18n.__('Templates', 'email.verified')
+              : i18n.__('Templates', 'email.notVerified')
             }
           </FormHelperText>
 
@@ -91,7 +93,7 @@ if (Meteor.isClient) {
       const { error, message } = this.state;
       return (
         <FormControl error={error}>
-          <InputLabel htmlFor='firstName'>First name</InputLabel>
+          <InputLabel htmlFor='firstName'>{i18n.__('Templates', 'firstName.name')}</InputLabel>
           <Input
             value={doc.profile.firstName}
             onChange={this.handleChange.bind(this)}
@@ -134,7 +136,7 @@ if (Meteor.isClient) {
       const { error, message } = this.state;
       return (
         <FormControl error={error}>
-          <InputLabel htmlFor='lastName'>Last name</InputLabel>
+          <InputLabel htmlFor='lastName'>{i18n.__('Templates', 'lastName.name')}</InputLabel>
           <Input
             value={doc.profile.lastName}
             onChange={this.handleChange.bind(this)}
@@ -180,7 +182,7 @@ if (Meteor.isClient) {
       const { error, message } = this.state;
       return (
         <FormControl error={error}>
-          <InputLabel htmlFor='roles'>Roles</InputLabel>
+          <InputLabel htmlFor='roles'>{i18n.__('Templates', 'roles.name')}</InputLabel>
           <Select
             multiple
             value={doc.roles}
@@ -217,6 +219,69 @@ if (Meteor.isClient) {
     }
   };
 
+  class Locale extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        error: false,
+        message: undefined,
+      };
+    }
+
+    handleChange({ target: { value } }) {
+      const { form, doc } = this.props;
+      doc.profile.locale = value;
+      form.setState({ collections: { user: { doc } } });
+      doc.validate({ fields: [`locale`] }, (err) => {
+        if (err)
+          this.setState({ message: err.reason, error: true });
+        else
+          this.setState({ message: undefined, error: false });
+      });
+
+    }
+
+    render() {
+      const { form, doc } = this.props;
+      const { error, message } = this.state;
+      return (
+        <FormControl error={error}>
+          <InputLabel htmlFor='locale'>{i18n.__('Templates', 'locale.name')}</InputLabel>
+          <Select
+            value={doc.profile.locale}
+            onChange={this.handleChange.bind(this)}
+            input={<Input id='locale' />}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                  width: 200,
+                },
+              },
+            }}
+          >
+            {
+              _.map(StaticCollections.Locales, locale =>
+                <MenuItem
+                  key={locale}
+                  value={locale}
+                >
+                  {locale}
+                </MenuItem>
+              )
+            }
+          </Select>
+
+          {
+            !error
+            ? undefined
+            : <FormHelperText>{message}</FormHelperText>
+          }
+        </FormControl>
+      );
+    }
+  };
+
   class Password extends React.Component {
     constructor(props) {
       super(props);
@@ -234,7 +299,7 @@ if (Meteor.isClient) {
       if (Regex.password.test(value))
         this.setState({ message: undefined, error: false });
       else
-        this.setState({ message: 'Minimum eight characters, at least one letter and one number', error: true });
+        this.setState({ message: i18n.__('Templates', 'password.message'), error: true });
 
     }
 
@@ -251,7 +316,7 @@ if (Meteor.isClient) {
       const { error, message } = this.state;
       return (
         <FormControl error={error}>
-          <InputLabel htmlFor='password'>Password</InputLabel>
+          <InputLabel htmlFor='password'>{i18n.__('Templates', 'password.name')}</InputLabel>
           <Input
             id='password'
             autoComplete='off'
@@ -282,6 +347,7 @@ if (Meteor.isClient) {
   Templates.FirstName = FirstName;
   Templates.LastName = LastName;
   Templates.Roles = Roles;
+  Templates.Locale = Locale;
   Templates.Password = Password;
 };
 
