@@ -1,7 +1,8 @@
 import { Class } from 'meteor/jagi:astronomy';
 import { ContentTypes } from '../collections/static.js';
+import ContentCreate from './template/Create/index.jsx';
 
-const ContentSchema = Class.create({
+const Content = Class.create({
   name: 'Content',
   fields: {
     type: {
@@ -43,4 +44,17 @@ const ContentSchema = Class.create({
   },
 });
 
-export default ContentSchema;
+if (Meteor.isClient)
+Content.extend({
+  fields: {
+    templates: {
+      type: Object,
+      immutable: true,
+      default() {
+        return { ContentCreate };
+      },
+    },
+  },
+});
+
+export default Content;

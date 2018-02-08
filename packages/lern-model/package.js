@@ -38,7 +38,8 @@ Package.onUse((api) => {
 
     'behaviors/author.js',
 
-    'schemas/content.js',
+    'schemas/content/schema.js',
+    'schemas/content/template/Create/index.jsx',
 
     'collections/users/validators.js',
     'collections/users/templates.jsx',
