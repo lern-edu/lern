@@ -15,9 +15,6 @@ import AdminHome from './Home/View.jsx';
 import AdminUsers from './Users/View.jsx';
 import AdminUser from './User/View.jsx';
 
-// Tags
-import AdminTags from './Tags/View.jsx';
-
 adminRoutes.route('/', {
   name: 'AdminHome',
   action(params, query) {
@@ -54,7 +51,9 @@ adminRoutes.route('/user/:userId', {
   },
 });
 
-// 
+// Tags
+import AdminTags from './Tags/View.jsx';
+import AdminTag from './Tag/View.jsx';
 
 adminRoutes.route('/tags', {
   name: 'AdminTags',
@@ -65,3 +64,20 @@ adminRoutes.route('/tags', {
   },
 });
 
+adminRoutes.route('/tag', {
+  name: 'AdminTag',
+  action(params, query) {
+    setup.render({
+      main: <AdminTag {...query} />,
+    });
+  },
+});
+
+adminRoutes.route('/tag/:tagId', {
+  name: 'AdminTag',
+  action(params, query) {
+    setup.render({
+      main: <AdminTag {...params} {...query} />,
+    });
+  },
+});

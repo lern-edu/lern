@@ -86,25 +86,14 @@ class AdminTag extends React.Component {
 
                     <Grid container spacing={24}>
 
-                        {
-                          _.map(doc.get('emails'), (e, index) =>
-                            <Grid key={`email-${index}`} item xs={12}>
-                              <doc.templates.Emails form={this} doc={doc} index={index} />
-                            </Grid>
-                          )
-                        }
-
                         <Grid item xs={12}>
-                          <doc.templates.FirstName form={this} doc={doc} />
+                          <doc.templates.Name form={this} doc={doc} />
                         </Grid>
 
                         <Grid item xs={12}>
-                          <doc.templates.LastName form={this} doc={doc} />
+                          <doc.templates.Description form={this} doc={doc} />
                         </Grid>
 
-                        <Grid item xs={12}>
-                          <doc.templates.Roles form={this} doc={doc} />
-                        </Grid>
 
                         <Grid item xs={12}>
 
