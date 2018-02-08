@@ -11,4 +11,4 @@ const StaticCollections = {
   Locales: ['pt-BR', 'en-US'],
 };
 
-export default { ...StaticCollections };
+export default StaticCollections;
