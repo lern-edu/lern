@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
 import Author from '../../behaviors/author.js';
 import Content from '../../schemas/content/schema.js';
+import Templates from './templates.jsx';
 
 const Tags = new Mongo.Collection('tags');
 

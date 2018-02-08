@@ -1,5 +1,5 @@
 import { Class } from 'meteor/jagi:astronomy';
-import { ContentTypes } from '../collections/static.js';
+import StaticCollections from '../../collections/static.js';
 import ContentCreate from './template/Create/index.jsx';
 
 const Content = Class.create({
@@ -7,7 +7,7 @@ const Content = Class.create({
   fields: {
     type: {
       type: String,
-      validators: [{ type: 'choice', param: ContentTypes }],
+      validators: [{ type: 'choice', param: StaticCollections.ContentTypes }],
       immutable: true,
       default: 'text',
     },
