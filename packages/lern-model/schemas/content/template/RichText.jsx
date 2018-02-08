@@ -34,9 +34,11 @@ class PublicContentRichText extends React.Component {
   };
 
   onChange = (editorState) => {
-    this.props.parent.setState({ editorState });
-    const text = convertToRaw(editorState.getCurrentContent());
-    this.props.parent.defaultHandler({ text }, { doc: true });
+    const { parent } = this.props;
+    const { doc } = parent.state;
+    parent.setState({ editorState });
+    doc.text = convertToRaw(editorState.getCurrentContent());
+    parent.setState({ doc });
   };
 
   handleKeyCommand = (command) => {
