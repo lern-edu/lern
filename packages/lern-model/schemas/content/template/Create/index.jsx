@@ -1,13 +1,13 @@
 import React from 'react';
+import _ from 'lodash';
 import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
+import { MenuItem } from 'material-ui/Menu';
+import Select from 'material-ui/Select';
+import TextField from 'material-ui/TextField';
 
-// import ContentCreateQuestion from './Question.jsx';
-// import ContentCreateTest from './Test/Container.jsx';
-// import ContentCreateUpload from './Upload.jsx';
-// import ContentCreateVideo from './Video.jsx';
 import ContentRichText from './../RichText.jsx';
 
 class ContentCreate extends React.Component {
@@ -16,7 +16,7 @@ class ContentCreate extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { editorState: EditorState.createEmpty() };
+    this.state = { doc: new props.schema(), editorState: EditorState.createEmpty() };
   };
 
   componentWillMount = () => {
@@ -43,7 +43,7 @@ class ContentCreate extends React.Component {
   };
 
   handleEditorChange = (editorState) => {
-    const { doc } = this.props;
+    const { doc } = this.state;
     this.setState({ editorState });
     const text = convertToRaw(editorState.getCurrentContent());
     doc.text = text;
@@ -55,80 +55,73 @@ class ContentCreate extends React.Component {
   };
 
   handleTextChange = ({ currentTarget }, value) => {
-    const { doc } = this.props;
+    const { doc } = this.state;
     const name = currentTarget.getAttribute('name');
     doc[name] = value;
   };
 
-  handleTypeChange = (event, index, type) => {
+  handleTypeChange = ({ target: { value: type } }) => {
+    const { doc } = this.state;
     doc[doc.type] = null;
     doc.type = type;
     doc[type] = '';
+    this.setState({ doc });
   };
 
   // Render
 
   render() {
-    const { doc, contentTypes } = this.props;
-    const { type, text, link } = this.doc;
-    const { editorState } = this.state;
+    const { contentTypes } = this.props;
+    const { editorState, doc } = this.state;
+    const { type, text, link } = doc;
 
     return (
       <div>
         
-        <Paper className={classes.paper}>
+        <Grid container spacing={24}>
 
-          <Grid container spacing={24}>
-
-            <Grid item xs={12}>
-              <Select
-                value={type}
-                onChange={this.handleTypeChange}
-                inputProps={{
-                  name: 'type',
-                  id: 'type-simple',
-                }}
-              >
-                {
-                  _.map(contentTypes, (v, k) =>
-                    <MenuItem key={k} value={k} onClick={this.handleClose}>v</MenuItem>
-                  )
-                }
-              </Select>
-            </Grid>
-
-            <Grid item xs={12}>
+          <Grid item xs={12}>
+            <Select
+              value={type}
+              onChange={this.handleTypeChange}
+              inputProps={{
+                name: 'type',
+                id: 'type-simple',
+              }}
+            >
               {
-                _.get({
-                  text:
-                    <Paper zDepth={0}>
-                      <ContentRichText
-                        parent={this}
-                        editorState={editorState}
-                      />
-                    </Paper>,
-                  image:
-                    <ContentCreateUpload
-                      form={this}
-                    />,
-                  link:
-                    <TextField
-                      name='link'
-                      value={link}
-                      floatingLabelText='Link'
-                      onChange={this.handleTextChange}
-                      errorText={_.get(errors, 'link')}
-                    />,
-                }, type)
+                _.map(contentTypes, (v, k) =>
+                  <MenuItem key={k} value={v}>{v}</MenuItem>
+                )
               }
-            </Grid>
-
+            </Select>
           </Grid>
 
-        </Paper>
+          <Grid item xs={12}>
+            {
+              _.get({
+                text:
+                  <ContentRichText
+                    parent={this}
+                    editorState={editorState}
+                  />,
+                link:
+                  <TextField
+                    name='link'
+                    value={link}
+                    floatingLabelText='Link'
+                    onChange={this.handleTextChange}
+                  />,
+              }, type)
+            }
+          </Grid>
+
+        </Grid>
 
       </div>
     );
   };
 
 };
+
+export default ContentCreate;
