@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
 import Author from '../../behaviors/author.js';
-import ContentSchema from '../../schemas/content.js';
+import Content from '../../schemas/content/schema.js';
 
 const Tags = new Mongo.Collection('tags');
 
@@ -11,12 +11,9 @@ const Tag = Class.create({
   fields: {
     name: {
       type: String,
-      validators: [{ type: 'maxLength', param: 100 }],
+      validators: [{ type: 'maxLength', param: 180 }],
     },
-    description: {
-      type: [ContentSchema],
-      validators: [{ type: 'minLength', param: 1 }],
-    },
+    description: [Content],
     parent: {
       type: Object,
       optional: true,
@@ -29,6 +26,18 @@ const Tag = Class.create({
       createdFieldName: 'createdAt',
       hasUpdatedField: true,
       updatedFieldName: 'updatedAt',
+    },
+  },
+});
+
+if (Meteor.isClient)
+Tag.extend({
+  fields: {
+    templates: {
+      type: Object,
+      default() {
+        return Templates;
+      },
     },
   },
 });
