@@ -1,14 +1,15 @@
 import React from 'react';
+import _ from 'lodash';
+import StaticCollections from '../static.js';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
-import _ from 'lodash';
 import Content from '../../schemas/content/schema.js';
-
-import StaticCollections from '../static.js';
+const content = new Content();
 
 const Templates = {};
 
 if (Meteor.isClient) {
+  const ContentCreate = _.get(content, 'templates.ContentCreate');
 
   class Name extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ if (Meteor.isClient) {
     handleChange = ({ target: { value } }) => {
       const { form, doc } = this.props;
       doc.name = value;
-      form.setState({ collections: { user: { doc } } });
+      form.setState({ collections: { tag: { doc } } });
       doc.validate({ fields: [`name`] }, (err) => {
         if (err) this.setState({ message: err.reason, error: true });
         else this.setState({ message: undefined, error: false });
@@ -69,21 +70,8 @@ if (Meteor.isClient) {
 
     render() {
       const { form, doc } = this.props;
-      const { error, message } = this.state;
       return (
-        <FormControl error={error}>
-          <InputLabel htmlFor='name'>Name</InputLabel>
-          <Input
-            value={doc.name}
-            onChange={this.handleChange}
-          />
-          {
-            !error
-            ? undefined
-            : <FormHelperText>{message}</FormHelperText>
-          }
-
-        </FormControl>
+        <content.templates.ContentCreate schema={Content} doc={doc} contentTypes={StaticCollections.ContentTypes} />
       );
     }
   };

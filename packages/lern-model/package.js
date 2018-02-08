@@ -48,6 +48,7 @@ Package.onUse((api) => {
     'collections/companies/schema.js',
 
     'collections/tags/schema.js',
+    'collections/tags/templates.jsx',
   ]);
 
   api.mainModule('./exporter.js');
