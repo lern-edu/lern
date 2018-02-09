@@ -72,7 +72,7 @@ if (Meteor.isClient) {
     render() {
       const { form, doc } = this.props;
       return (
-        <content.templates.ContentCreate schema={Content} doc={doc} contentTypes={StaticCollections.ContentTypes} />
+        <content.templates.ContentCreate Schema={Content} doc={doc} form={form} contentTypes={StaticCollections.ContentTypes} />
       );
     }
   };

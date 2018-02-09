@@ -16,7 +16,7 @@ class ContentCreate extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { doc: new props.schema(), editorState: EditorState.createEmpty() };
+    this.state = { doc: new props.Schema(), editorState: EditorState.createEmpty() };
   };
 
   componentWillMount = () => {
@@ -27,19 +27,18 @@ class ContentCreate extends React.Component {
   // Handlers
 
   handleSubmit = () => {
-    // if (this.props.handleSubmit) {
-    //   this.props.handleSubmit();
-    //   return;
-    // };
+    if (typeof this.props.handleSubmit === 'function') {
+      this.props.handleSubmit();
+      return;
+    };
 
-    // const { type } = this.doc;
-    // const { form, schema, field, updateQuestionsSelected } = this.props;
-    // form.defaultHandler({ [field]: _.clone(this.doc) }, { doc: true, operation: 'push' });
-    // snack('Bloco criado!');
-    // this.doc = new this.props.schema({ type, [type]: '' });
-    // if (type == 'question') updateQuestionsSelected && updateQuestionsSelected();
-    // this.setState({ editorState: EditorState.createEmpty() });
-    // this.updateValidation();
+    const { doc, doc: { type } } = this.state;
+    const { form, doc: docToSave, Schema, field='description' } = this.props;
+    if (_.isArray(docToSave[field]))
+      docToSave[field].push(_.clone(doc));
+    else docToSave[field] = [_.clone(doc)];
+    form.setState({ doc: docToSave });
+    this.setState({ doc: new Schema({ type, [type]: '' }), editorState: EditorState.createEmpty() });
   };
 
   handleEditorChange = (editorState) => {
@@ -114,6 +113,21 @@ class ContentCreate extends React.Component {
                   />,
               }, type)
             }
+          </Grid>
+
+          <Grid
+            container
+            alignItems='flex-end'
+            direction='row'
+            justify='flex-end'
+          >
+
+            <Grid item>
+              <Button onClick={this.handleSubmit} color='primary'>
+                Save
+              </Button>
+            </Grid>
+
           </Grid>
 
         </Grid>

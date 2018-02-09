@@ -36,10 +36,10 @@ class AdminTag extends React.Component {
       collections: {
         tag: {
           handler: !_.isEmpty(tagId),
-          doc: !tagId ? new Tag() : null,
-          errors: {},
         },
       },
+      doc: !tagId ? new Tag() : null,
+      errors: {},
     };
   }
 
@@ -49,14 +49,14 @@ class AdminTag extends React.Component {
     if (tagId)
       Meteor.call('AdminTagsGet', { _id: tagId }, { limit: 1 },  (err, docs) => {
         if (err) snack({ message: 'Erro ao encontrar tag' });
-        this.setState({ collections: { tag: { handler: false, doc: _.head(docs) } } });
+        this.setState({ doc: _.head(docs), collections: { tag: { handler: false } } });
       });
   };
 
   handleChange = ({ target: { value } }) => {
-    const { form, doc } = this.props;
+    const { doc } = this.state;
     doc.name = value;
-    form.setState({ collections: { tag: { doc } } });
+    this.setState({ doc });
     doc.validate({ fields: [`name`] }, (err) => {
       if (err) this.setState({ errors: { name: { message: err.reason, error: true } } });
       else this.setState({ errors: { name: { message: undefined, error: false } } });
@@ -67,7 +67,7 @@ class AdminTag extends React.Component {
   // Handlers
 
   handleSubmit() {
-    const { collections: { tag: { doc } } } = this.state;
+    const { doc } = this.state;
 
     doc.validate({ fields: ['name'] }, (err) => {
       if (err) snack({ message: err.reason });
@@ -80,8 +80,10 @@ class AdminTag extends React.Component {
   }
 
   render() {
-    const { title, collections, collections: { tag: { doc }, errors } } = this.state;
+    const { title, collections, errors, doc } = this.state;
     const { classes } = this.props;
+
+    console.log(doc);
 
     return (
       <div>
@@ -106,7 +108,7 @@ class AdminTag extends React.Component {
                           <FormControl error={_.get(errors, 'name.error')} className={classes.input}>
                             <InputLabel htmlFor='name'>Name</InputLabel>
                             <Input
-                              value={doc.name}
+                              value={doc.name || ''}
                               onChange={this.handleChange}
                               className={classes.input}
                             />
