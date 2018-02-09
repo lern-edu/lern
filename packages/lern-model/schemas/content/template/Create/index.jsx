@@ -109,7 +109,7 @@ class ContentCreate extends React.Component {
                   <TextField
                     name='link'
                     value={link}
-                    floatingLabelText='Link'
+                    label='Link'
                     onChange={this.handleTextChange}
                   />,
               }, type)

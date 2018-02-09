@@ -19,6 +19,9 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     margin: theme.spacing.unit * 2,
   },
+  input: {
+    width: '100%',
+  },
 });
 
 class AdminTag extends React.Component {
@@ -33,7 +36,8 @@ class AdminTag extends React.Component {
       collections: {
         tag: {
           handler: !_.isEmpty(tagId),
-          doc: !tagId ? new Tag({ emails: [{ address: '' }], services: { password: '' } }) : null,
+          doc: !tagId ? new Tag() : null,
+          errors: {},
         },
       },
     };
@@ -47,7 +51,18 @@ class AdminTag extends React.Component {
         if (err) snack({ message: 'Erro ao encontrar tag' });
         this.setState({ collections: { tag: { handler: false, doc: _.head(docs) } } });
       });
-  }
+  };
+
+  handleChange = ({ target: { value } }) => {
+    const { form, doc } = this.props;
+    doc.name = value;
+    form.setState({ collections: { tag: { doc } } });
+    doc.validate({ fields: [`name`] }, (err) => {
+      if (err) this.setState({ errors: { name: { message: err.reason, error: true } } });
+      else this.setState({ errors: { name: { message: undefined, error: false } } });
+    });
+
+  };
 
   // Handlers
 
@@ -65,12 +80,12 @@ class AdminTag extends React.Component {
   }
 
   render() {
-    const { title, collections, collections: { tag: { doc } } } = this.state;
+    const { title, collections, collections: { tag: { doc }, errors } } = this.state;
     const { classes } = this.props;
 
     return (
       <div>
-        <Layout.Bar title={title} crumbs={[{ label: 'tags', path: 'AdminTags' }]}/>
+        <Layout.Bar title={title} crumbs={[{ label: 'Tags', path: 'AdminTags' }]}/>
 
         {
           !_.every(collections, c => !c.handler)
@@ -80,50 +95,67 @@ class AdminTag extends React.Component {
 
               <Grid item xs={12} md={10} lg={8} className={classes.grid}>
 
-                <Paper className={classes.paper}>
+                <form autoComplete='off'>
 
-                  <form autoComplete='off'>
+                  <Grid container spacing={24}>
 
-                    <Grid container spacing={24}>
+                      <Grid item xs={12}>
+                        
+                        <Paper className={classes.paper}>
 
-                        <Grid item xs={12}>
-                          <doc.templates.Name form={this} doc={doc} />
-                        </Grid>
+                          <FormControl error={_.get(errors, 'name.error')} className={classes.input}>
+                            <InputLabel htmlFor='name'>Name</InputLabel>
+                            <Input
+                              value={doc.name}
+                              onChange={this.handleChange}
+                              className={classes.input}
+                            />
+                            {
+                              !_.get(errors, 'name.error')
+                              ? undefined
+                              : <FormHelperText>{_.get(errors, 'name.message')}</FormHelperText>
+                            }
 
-                        <Grid item xs={12}>
+                          </FormControl>
+
+                        </Paper>
+
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <Paper className={classes.paper}>
                           <doc.templates.Description form={this} doc={doc} />
-                        </Grid>
+                        </Paper>
+                      </Grid>
 
 
-                        <Grid item xs={12}>
+                      <Grid item xs={12}>
 
-                          <Grid
-                            container
-                            alignItems='flex-end'
-                            direction='row'
-                            justify='flex-end'
-                          >
-                            <Grid item>
-                              <Button href={FlowRouter.path('AdminTags')} raised>
-                                Cancel
-                              </Button>
-                            </Grid>
+                        <Grid
+                          container
+                          alignItems='flex-end'
+                          direction='row'
+                          justify='flex-end'
+                        >
+                          <Grid item>
+                            <Button href={FlowRouter.path('AdminTags')} raised>
+                              Cancel
+                            </Button>
+                          </Grid>
 
-                            <Grid item>
-                              <Button onClick={this.handleSubmit.bind(this)} raised color='primary'>
-                                Save
-                              </Button>
-                            </Grid>
-
+                          <Grid item>
+                            <Button onClick={this.handleSubmit.bind(this)} raised color='primary'>
+                              Save
+                            </Button>
                           </Grid>
 
                         </Grid>
 
-                    </Grid>
+                      </Grid>
 
-                  </form>
+                  </Grid>
 
-                </Paper>
+                </form>
 
               </Grid>
 

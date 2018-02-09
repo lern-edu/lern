@@ -1,5 +1,6 @@
 import React from 'react';
 import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
+import Paper from 'material-ui/Paper';
 
 // Custom overrides for "code" style.
 const styleMap = {
@@ -108,7 +109,7 @@ class PublicContentRichText extends React.Component {
     }
 
     return (
-      <div
+      <Paper
         className='RichEditor-root'
         style={readOnly
           ? undefined
@@ -151,7 +152,7 @@ class PublicContentRichText extends React.Component {
             spellCheck={true}
           />
         </div>
-      </div>
+      </Paper>
     );
   };
 

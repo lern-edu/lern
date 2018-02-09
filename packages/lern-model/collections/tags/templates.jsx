@@ -32,7 +32,7 @@ if (Meteor.isClient) {
     };
 
     render() {
-      const { form, doc } = this.props;
+      const { form, doc, Input } = this.props;
       const { error, message } = this.state;
       return (
         <FormControl error={error}>
@@ -40,6 +40,7 @@ if (Meteor.isClient) {
           <Input
             value={doc.name}
             onChange={this.handleChange}
+            {...this.props}
           />
           {
             !error
