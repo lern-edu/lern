@@ -1,17 +1,20 @@
 import { Class } from 'meteor/jagi:astronomy';
-import { ContentTypes } from '../collections/static.js';
+import StaticCollections from '../../collections/static.js';
+import ContentCreate from './template/Create/index.jsx';
+import ContentShow from './template/Show/index.jsx';
 
-const ContentSchema = Class.create({
-  name,
+const Content = Class.create({
+  name: 'Content',
   fields: {
     type: {
       type: String,
-      validators: [{ type: 'oneof', param: ContentTypes }],
+      validators: [{ type: 'choice', param: StaticCollections.ContentTypes }],
       immutable: true,
       default: 'text',
     },
 
     text: {
+      type: Object,
       validators: [
         {
           type: 'or',
@@ -29,17 +32,20 @@ const ContentSchema = Class.create({
       ],
       optional: true,
     },
+  },
+});
 
-    image: {
-      type: 'string',
-      validators: [
-        { type: 'Reference' },
-        { type: 'Content' },
-      ],
+if (Meteor.isClient)
+Content.extend({
+  fields: {
+    templates: {
+      type: Object,
       immutable: true,
-      optional: true,
+      default() {
+        return { ContentCreate, ContentShow };
+      },
     },
   },
 });
 
-export default ContentSchema;
+export default Content;

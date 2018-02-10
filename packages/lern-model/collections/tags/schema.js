@@ -1,6 +1,9 @@
+import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
+import _ from 'lodash';
 import Author from '../../behaviors/author.js';
-import ContentSchema from '../../schemas/content.js';
+import Content from '../../schemas/content/schema.js';
+import Templates from './templates.jsx';
 
 const Tags = new Mongo.Collection('tags');
 
@@ -10,16 +13,15 @@ const Tag = Class.create({
   fields: {
     name: {
       type: String,
-      validators: [{ type: 'mixLength', param: 100 }],
+      validators: [{ type: 'maxLength', param: 180 }],
     },
     description: {
-      type: [ContentSchema],
-      validators: [{ type: 'minLength', param: 1 }],
+      type: [Content],
+      optional: true,
     },
     parent: {
-      type: String,
+      type: Object,
       optional: true,
-      validators: [{ type: 'Reference' }],
       default: null,
     },
   },
@@ -29,6 +31,27 @@ const Tag = Class.create({
       createdFieldName: 'createdAt',
       hasUpdatedField: true,
       updatedFieldName: 'updatedAt',
+    },
+  },
+  events: {
+    afterSave({ currentTarget: tag }) {
+      const tags = Tag.find({ 'parent._id': tag._id }).fetch();
+      _.forEach(tags, t => {
+        t.parent = _.pick(tag.raw(), ['name', '_id', 'author']);
+        t.save();
+      });
+    },
+  },
+});
+
+if (Meteor.isClient)
+Tag.extend({
+  fields: {
+    templates: {
+      type: Object,
+      default() {
+        return Templates;
+      },
     },
   },
 });

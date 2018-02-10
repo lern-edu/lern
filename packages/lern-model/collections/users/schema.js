@@ -1,6 +1,7 @@
 import { Class, Validator } from 'meteor/jagi:astronomy';
-import StaticCollections from '../static.js';
 import _ from 'lodash';
+import StaticCollections from '../static.js';
+import Tag from '../tags/schema.js';
 
 import Templates from './templates.jsx';
 
@@ -48,6 +49,11 @@ const UserProfileSchema = Class.create({
       type: String,
       validators: [{ type: 'OneOf', param: StaticCollections.UserRoles }],
       optional: true,
+    },
+    locale: {
+      type: String,
+      validators: [{ type: 'OneOf', param: StaticCollections.Locales }],
+      default: _.head(StaticCollections.Locales),
     },
   },
 });
@@ -101,6 +107,10 @@ const User = Class.create({
       default() {
         return { firstName: '', lastName: '' };
       },
+    },
+    report: {
+      type: [Object],
+      optional: true,
     },
   },
 
@@ -203,6 +213,14 @@ const User = Class.create({
     beforeSave(e) {
       if (!e.currentTarget.profile.name)
         e.currentTarget.profile.name = e.currentTarget.getFullName();
+    },
+
+    afterSave({ currentTarget: user }) {
+      const tags = Tag.find({ 'author._id': user._id }).fetch();
+      _.forEach(tags, t => {
+        t.author = _.pick(user, ['profile', '_id', 'roles']);
+        t.save();
+      });
     },
   },
 

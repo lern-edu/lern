@@ -1,9 +1,11 @@
 import _ from 'lodash';
-import { User, Company } from 'meteor/duckdodgerbrasl:lern-model';
+import { User, Company, Tag } from 'meteor/duckdodgerbrasl:lern-model';
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import Helpers from '../../helpers.js';
 import { convertToRaw, convertFromRaw, ContentState } from 'draft-js';
 const [prefix, protect] = ['Admin', 'admin'];
+
+// =================== Users METHODS ====================
 
 /**
  * Meteor Methods for Admin user.
@@ -21,7 +23,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Array} - Array of users
    */
-  UsersGet(query={}, options={}) {
+  UsersGet(query, options) {
     _.assign(options, { fields: { services: 0 } });
     return User.find(query, options).fetch();
   },
@@ -36,7 +38,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Number} - Number of users
    */
-  UsersCount(query={}, options={}) {
+  UsersCount(query, options) {
     return User.find(query, options).count();
   },
 
@@ -70,6 +72,8 @@ Helpers.Methods({ prefix, protect }, {
 
 });
 
+// =================== COMPANIES METHODS ====================
+
 Helpers.Methods({ prefix, protect }, {
   /**
    * @memberof LernMethods.Admin()
@@ -81,7 +85,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Array} - Array of companies
    */
-  CompaniesGet(query={}, options={}) {
+  CompaniesGet(query, options) {
     _.assign(options, { fields: { services: 0 } });
     return Company.find(query, options).fetch();
   },
@@ -96,7 +100,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Number} - Number of companies
    */
-  CompaniesCount(query={}, options={}) {
+  CompaniesCount(query, options) {
     return Company.find(query, options).count();
   },
 
@@ -110,4 +114,55 @@ Helpers.Methods({ prefix, protect }, {
    * @return {Object} - Saved company (with _id)
    */
   CompanySave: Helpers.DefaultSave,
+});
+
+// =================== TAGS METHODS ====================
+
+Helpers.Methods({ prefix, protect }, {
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Retrieve tags from the database
+   * @example
+   * const tags = Meteor.call('AdminTagsGet');
+   * @public
+   * @param {Object} [query] - Query to mongo
+   * @param {Object} [options] - Options to mongo
+   * @return {Array} - Array of tags
+   */
+  TagsGet(query, options) {
+    return Tag.find(query, options).fetch();
+  },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Count tags that match the criteria
+   * @example
+   * const numTags = Meteor.call('AdminTagsCount');
+   * @public
+   * @param {Object} [query] - Query to mongo
+   * @param {Object} [options] - Options to mongo
+   * @return {Number} - Number of tags
+   */
+  TagsCount(query, options) {
+    return Tag.find(query, options).count();
+  },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Save a tag in collection
+   * @example
+   * const savedTag = Meteor.call('AdminTagSave', company);
+   * @public
+   * @param {Object} tag - Company to be saved
+   * @return {Object} - Saved company (with _id)
+   */
+  TagSave(tag) {
+    let { parent } = tag;
+
+    if (parent) {
+      tag.parent = _.pick(parent, ['name', '_id', 'author', 'description']);
+    };
+
+    return Helpers.DefaultSave(tag);
+  },
 });

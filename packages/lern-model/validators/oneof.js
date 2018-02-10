@@ -4,7 +4,7 @@ import _ from 'lodash';
 Validator.create({
   name: 'OneOf',
 
-  isValid({ value, param }) {
+  validate({ value, param }) {
     return (
       !_.isNull(value) &&
       _.includes(param, value)
