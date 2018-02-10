@@ -37,7 +37,7 @@ class AdminTagChildrens extends React.Component {
           docs: null,
         },
       },
-      doc: new Tag({ parent: parent.raw() }),
+      doc: new Tag({ parent }),
       errors: {},
     };
   };
@@ -47,11 +47,9 @@ class AdminTagChildrens extends React.Component {
   };
 
   shouldComponentUpdate(props, state) {
-    if (this.props.tagId === props.tagId)
-      return true;
-    else
+    if (this.props.tagId !== props.tagId)
       this.getTags(props.tagId);
-    return false;
+    return true;
   };
 
   getTags = (tagId) => {
@@ -86,8 +84,8 @@ class AdminTagChildrens extends React.Component {
           if (err) snack({ message: 'Erro ao salvar tag' });
           else {
             snack({ message: 'Tag salva' });
-            this.setState({ doc: new Tag({ parent: parent.raw() }), collections: { tags: { handler: true } } });
-            this.getTags();
+            this.setState({ doc: new Tag({ parent }), collections: { tags: { handler: true } } });
+            this.getTags(this.props.tagId);
           };
         });
     });

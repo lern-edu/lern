@@ -102,8 +102,10 @@ class AdminTag extends React.Component {
           if (err) {
             snack({ message: 'Erro ao salvar tag' });
             console.error(err);
-          }
-          else FlowRouter.go('AdminTag', { tagId: res._id });
+          } else {
+            snack({ message: 'Tag salva' });
+            FlowRouter.go('AdminTag', { tagId: res._id });
+          };
         });
     });
   }
