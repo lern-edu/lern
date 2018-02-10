@@ -23,7 +23,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Array} - Array of users
    */
-  UsersGet(query={}, options={}) {
+  UsersGet(query, options) {
     _.assign(options, { fields: { services: 0 } });
     return User.find(query, options).fetch();
   },
@@ -38,7 +38,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Number} - Number of users
    */
-  UsersCount(query={}, options={}) {
+  UsersCount(query, options) {
     return User.find(query, options).count();
   },
 
@@ -85,7 +85,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Array} - Array of companies
    */
-  CompaniesGet(query={}, options={}) {
+  CompaniesGet(query, options) {
     _.assign(options, { fields: { services: 0 } });
     return Company.find(query, options).fetch();
   },
@@ -100,7 +100,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Number} - Number of companies
    */
-  CompaniesCount(query={}, options={}) {
+  CompaniesCount(query, options) {
     return Company.find(query, options).count();
   },
 
@@ -129,7 +129,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Array} - Array of tags
    */
-  TagsGet(query={}, options={}) {
+  TagsGet(query, options) {
     return Tag.find(query, options).fetch();
   },
 
@@ -143,7 +143,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Number} - Number of tags
    */
-  TagsCount(query={}, options={}) {
+  TagsCount(query, options) {
     return Tag.find(query, options).count();
   },
 
