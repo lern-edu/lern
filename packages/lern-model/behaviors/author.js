@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import _ from 'lodash';
 
 if (Meteor.isServer)
     Meteor.methods({
@@ -26,14 +27,13 @@ const Author = (Schema) => {
       author: {
         type: Object,
         optional: true,
-        immutable: true,
       },
     },
 
     events: {
       beforeInsert(e) {
         const user = Meteor.call('AstroAuthor', e);
-        e.currentTarget.author = user;
+        e.currentTarget.author = _.pick(user, ['profile', '_id', 'roles']);
       },
     },
   });
