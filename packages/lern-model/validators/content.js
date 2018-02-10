@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 Validator.create({
   name: 'Content',
-  isValidate({ value, name }) {
+  validate({ value, name }) {
     const { type } = this;
     return type != name;
   },
