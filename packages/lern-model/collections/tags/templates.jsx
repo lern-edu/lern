@@ -10,6 +10,7 @@ const Templates = {};
 
 if (Meteor.isClient) {
   const ContentCreate = _.get(content, 'templates.ContentCreate');
+  const ContentShow = _.get(content, 'templates.ContentShow');
 
   class Name extends React.Component {
     constructor(props) {
@@ -53,32 +54,34 @@ if (Meteor.isClient) {
     }
   };
 
-  class Description extends React.Component {
+  class DescriptionCreate extends React.Component {
     constructor(props) {
       super(props);
-    };
-
-    handleChange = ({ target: { value } }) => {
-      const { form, doc } = this.props;
-      doc.name = value;
-      form.setState({ collections: { user: { doc } } });
-      doc.validate({ fields: [`name`] }, (err) => {
-        if (err) this.setState({ message: err.reason, error: true });
-        else this.setState({ message: undefined, error: false });
-      });
-
     };
 
     render() {
       const { form, doc } = this.props;
       return (
-        <content.templates.ContentCreate Schema={Content} doc={doc} form={form} contentTypes={StaticCollections.ContentTypes} />
+        <content.templates.ContentCreate
+          Schema={Content}
+          doc={doc}
+          form={form}
+          contentTypes={StaticCollections.ContentTypes}
+        />
       );
     }
   };
 
+  class DescriptionShow extends React.Component {
+    render() {
+      const { content } = this.props;
+      return <ContentShow doc={content} />;
+    }
+  };
+
   Templates.Name = Name;
-  Templates.Description = Description;
+  Templates.DescriptionCreate = DescriptionCreate;
+  Templates.DescriptionShow = DescriptionShow;
 
 };
 
