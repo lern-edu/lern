@@ -75,64 +75,60 @@ class ContentCreate extends React.Component {
     const { type, text, link } = doc;
 
     return (
-      <div>
-        
-        <Grid container spacing={24}>
+      <Grid container spacing={24}>
 
-          <Grid item xs={12}>
-            <Select
-              value={type}
-              onChange={this.handleTypeChange}
-              inputProps={{
-                name: 'type',
-                id: 'type-simple',
-              }}
-            >
-              {
-                _.map(contentTypes, (v, k) =>
-                  <MenuItem key={k} value={v}>{v}</MenuItem>
-                )
-              }
-            </Select>
-          </Grid>
-
-          <Grid item xs={12}>
-            {
-              _.get({
-                text:
-                  <ContentRichText
-                    parent={this}
-                    editorState={editorState}
-                  />,
-                link:
-                  <TextField
-                    name='link'
-                    value={link}
-                    label='Link'
-                    onChange={this.handleTextChange}
-                  />,
-              }, type)
-            }
-          </Grid>
-
-          <Grid
-            container
-            alignItems='flex-end'
-            direction='row'
-            justify='flex-end'
+        <Grid item xs={12}>
+          <Select
+            value={type}
+            onChange={this.handleTypeChange}
+            inputProps={{
+              name: 'type',
+              id: 'type-simple',
+            }}
           >
+            {
+              _.map(contentTypes, (v, k) =>
+                <MenuItem key={k} value={v}>{v}</MenuItem>
+              )
+            }
+          </Select>
+        </Grid>
 
-            <Grid item>
-              <Button onClick={this.handleSubmit} color='primary'>
-                Save
-              </Button>
-            </Grid>
+        <Grid item xs={12}>
+          {
+            _.get({
+              text:
+                <ContentRichText
+                  parent={this}
+                  editorState={editorState}
+                />,
+              link:
+                <TextField
+                  name='link'
+                  value={link}
+                  label='Link'
+                  onChange={this.handleTextChange}
+                />,
+            }, type)
+          }
+        </Grid>
 
+        <Grid
+          container
+          alignItems='flex-end'
+          direction='row'
+          justify='flex-end'
+        >
+
+          <Grid item>
+            <Button onClick={this.handleSubmit} color='primary'>
+              Save
+            </Button>
           </Grid>
 
         </Grid>
 
-      </div>
+      </Grid>
     );
   };
 
