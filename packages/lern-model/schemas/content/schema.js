@@ -1,6 +1,7 @@
 import { Class } from 'meteor/jagi:astronomy';
 import StaticCollections from '../../collections/static.js';
 import ContentCreate from './template/Create/index.jsx';
+import ContentShow from './template/Show/index.jsx';
 
 const Content = Class.create({
   name: 'Content',
@@ -13,7 +14,7 @@ const Content = Class.create({
     },
 
     text: {
-      type: String,
+      type: Object,
       validators: [
         {
           type: 'or',
@@ -31,16 +32,6 @@ const Content = Class.create({
       ],
       optional: true,
     },
-
-    image: {
-      type: String,
-      validators: [
-        { type: 'Reference' },
-        { type: 'Content' },
-      ],
-      immutable: true,
-      optional: true,
-    },
   },
 });
 
@@ -51,7 +42,7 @@ Content.extend({
       type: Object,
       immutable: true,
       default() {
-        return { ContentCreate };
+        return { ContentCreate, ContentShow };
       },
     },
   },
