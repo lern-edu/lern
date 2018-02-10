@@ -56,6 +56,10 @@ class Navigation extends React.Component {
             label: 'StudentReport',
             icon: 'timeline',
           },
+          StudentSettings: {
+            label: 'student.StudentSettings',
+            icon: 'settings',
+          },
         },
       },
     };

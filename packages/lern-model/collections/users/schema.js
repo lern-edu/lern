@@ -105,7 +105,7 @@ const User = Class.create({
     profile: {
       type: UserProfileSchema,
       default() {
-        return { firstName: '', lastName: '' };
+        return new UserProfileSchema();
       },
     },
     report: {
