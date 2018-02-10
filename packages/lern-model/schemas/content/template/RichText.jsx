@@ -109,7 +109,7 @@ class PublicContentRichText extends React.Component {
     }
 
     return (
-      <Paper
+      <div
         className='RichEditor-root'
         style={readOnly
           ? undefined
@@ -139,20 +139,20 @@ class PublicContentRichText extends React.Component {
             }
           }
           className={className}
-          onClick={this.focus}>
+          onClick={readOnly ? () => {} : this.focus}>
           <Editor
             readOnly={readOnly}
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
-            handleKeyCommand={this.handleKeyCommand}
-            onChange={this.onChange}
-            onTab={this.onTab}
+            handleKeyCommand={!readOnly && this.handleKeyCommand}
+            onChange={!readOnly && this.onChange}
+            onTab={!readOnly && this.onTab}
             ref='editor'
             spellCheck={true}
           />
         </div>
-      </Paper>
+      </div>
     );
   };
 
