@@ -14,7 +14,10 @@ const Tag = Class.create({
       type: String,
       validators: [{ type: 'maxLength', param: 180 }],
     },
-    description: [Content],
+    description: {
+      type: [Content],
+      optional: true,
+    },
     parent: {
       type: Object,
       optional: true,
