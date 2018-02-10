@@ -156,5 +156,13 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} tag - Company to be saved
    * @return {Object} - Saved company (with _id)
    */
-  TagSave: Helpers.DefaultSave,
+  TagSave(tag) {
+    let { parent } = tag;
+
+    if (parent) {
+      tag.parent = _.pick(parent, ['name', '_id', 'author', 'description']);
+    };
+
+    return Helpers.DefaultSave(tag);
+  },
 });
