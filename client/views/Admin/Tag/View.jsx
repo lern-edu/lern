@@ -1,6 +1,7 @@
 // Libs
 import React from 'react';
 import PropTypes from 'prop-types';
+import log from 'loglevel';
 import _ from 'lodash';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import { Tag } from 'meteor/duckdodgerbrasl:lern-model';
@@ -32,6 +33,7 @@ class AdminTag extends React.Component {
   // Lifecycle
 
   constructor(props) {
+    log.info('AdminTag', props);
     super(props);
     const { tagId } = props;
     this.state = {
@@ -48,6 +50,7 @@ class AdminTag extends React.Component {
   };
 
   shouldComponentUpdate(props, state) {
+    log.info('AdminTag.shouldComponentUpdate/props =>', props);
     if (this.props.tagId === props.tagId)
       return true;
     else
@@ -56,11 +59,12 @@ class AdminTag extends React.Component {
   };
 
   componentWillMount() {
+    log.info('AdminTag.componentWillMount');
     this.getTags(this.props.tagId);
   };
 
   getTags = (tagId) => {
-
+    log.info('AdminTag.getTags/tagId =>', tagId);
     if (tagId)
       Meteor.call('AdminTagsGet', { _id: tagId }, { limit: 1 }, (err, docs) => {
         if (err) snack({ message: 'Erro ao encontrar tag' });
@@ -94,6 +98,7 @@ class AdminTag extends React.Component {
 
   handleSubmit = () => {
     const { doc } = this.state;
+    log.info('AdminTag.handleSubmit');
 
     doc.validate({ fields: ['name'] }, (err) => {
       if (err) snack({ message: err.reason });
@@ -101,9 +106,11 @@ class AdminTag extends React.Component {
         Meteor.call('AdminTagSave', doc, (err, res) => {
           if (err) {
             snack({ message: 'Erro ao salvar tag' });
-            console.error(err);
+            log.error(err);
           } else {
+            log.debug('Tag criada! =>', res);
             snack({ message: 'Tag salva' });
+            this.setState({ doc: res });
             FlowRouter.go('AdminTag', { tagId: res._id });
           };
         });
@@ -111,6 +118,7 @@ class AdminTag extends React.Component {
   }
 
   render() {
+    log.info('AdminTag.render =>', this.state);
     const { title, collections, errors, doc, crumbs } = this.state;
     const { classes, tagId } = this.props;
 
