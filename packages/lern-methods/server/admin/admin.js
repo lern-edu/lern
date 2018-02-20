@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { User, Company, Tag } from 'meteor/duckdodgerbrasl:lern-model';
+import log from 'loglevel';
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import Helpers from '../../helpers.js';
 import { convertToRaw, convertFromRaw, ContentState } from 'draft-js';
@@ -159,9 +160,8 @@ Helpers.Methods({ prefix, protect }, {
   TagSave(tag) {
     let { parent } = tag;
 
-    if (parent) {
+    if (parent)
       tag.parent = _.pick(parent, ['name', '_id', 'author', 'description']);
-    };
 
     return Helpers.DefaultSave(tag);
   },
