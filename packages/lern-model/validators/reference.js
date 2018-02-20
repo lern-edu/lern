@@ -20,7 +20,7 @@ import _ from 'lodash';
 Validator.create({
   name: 'Reference',
 
-  isValid({ value }) {
+  validate({ value }) {
     return (
       !_.isNull(value) &&
       _.isString(value) &&

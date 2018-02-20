@@ -4,7 +4,11 @@
   "title": "English",
   "student": {
     "StudentHome": "Home",
-    "StudentReport": "Report",
-    "StudentSettings": "Settings"
+    "StudentReport": "Report"
+  },
+  "admin": {
+    "adminHome": "Home",
+    "adminUsers": "Users",
+    "adminTags": "Tags"
   }
 }

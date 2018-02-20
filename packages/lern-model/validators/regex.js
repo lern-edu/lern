@@ -21,7 +21,7 @@ _.forEach(Regex, (v, k) => {
   Validator.create({
     name: k,
 
-    isValid({ value, param }) {
+    validate({ value, param }) {
       return (
         !_.isNull(value) &&
         v.test(value)
