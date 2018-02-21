@@ -1,3 +1,4 @@
+import log from 'loglevel';
 import i18n from 'meteor/universe:i18n';
 import moment from 'moment';
 moment.locale('pt-br');
@@ -7,6 +8,13 @@ import { User } from 'meteor/duckdodgerbrasl:lern-model';
 // Material events
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
+
+// setup logs
+Meteor.startup(() => {
+  const env = process.env.NODE_ENV;
+  const { logLevel='info' } = Meteor.settings.public;
+  log.setLevel(env === 'production' ? 'info' : logLevel);
+});
 
 /**
  * Setup configurations for Accounts|Google|Facebook

@@ -4,7 +4,11 @@
   "title": "Português",
   "student": {
     "StudentHome": "Home",
-    "StudentReport": "Desempenho",
-    "StudentSettings": "Configurações"
+    "StudentReport": "Desempenho"
+  },
+  "admin": {
+    "AdminHome": "Home",
+    "AdminUsers": "Usuários",
+    "AdminTags": "Tags"
   }
 }
