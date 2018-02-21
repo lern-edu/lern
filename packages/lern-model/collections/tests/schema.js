@@ -1,6 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
 import _ from 'lodash';
+import StaticCollections from '../static.js';
 import Author from '../../behaviors/author.js';
 import Timestamp from '../../behaviors/timestamp.js';
 import Content from '../../schemas/content/schema.js';
@@ -12,6 +13,8 @@ const TestTimeoutSchema = Class.create({
   fields: {
     type: {
       type: String,
+      validators: [{ type: 'OneOf', param: StaticCollections.TestTimeoutTypes }],
+      immutable: true,
     },
     timeout: {
       type: Number,
@@ -34,7 +37,7 @@ const TestPageSchema = Class.create({
   },
 });
 
-const TestTagsSchema = Class.create({
+const TestScoreSchema = Class.create({
   name: 'TestTags',
   fields: {
     name: String,
@@ -64,7 +67,7 @@ const Test = Class.create({
       validators: [{ type: 'References' }],
       optional: true,
     },
-    tags: [TestTagsSchema],
+    score: [TestScoreSchema],
     pages: {
       type: [TestPageSchema],
       validators: [{ type: 'minLength', param: 1 }],
