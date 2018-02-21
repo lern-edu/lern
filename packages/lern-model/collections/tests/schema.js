@@ -3,7 +3,7 @@ import { Class } from 'meteor/jagi:astronomy';
 import _ from 'lodash';
 import StaticCollections from '../static.js';
 import Author from '../../behaviors/author.js';
-import Timestamp from '../../behaviors/timestamp.js';
+import TimeTracked from '../../behaviors/timetracked.js';
 import Content from '../../schemas/content/schema.js';
 
 const Tests = new Mongo.Collection('tests');
@@ -89,6 +89,6 @@ const Test = Class.create({
   },
 });
 
-Timestamp(Author(Test));
+TimeTracked(Author(Test));
 
 export default Test;

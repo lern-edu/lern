@@ -38,7 +38,7 @@ Package.onUse((api) => {
     'validators/tags.js',
 
     'behaviors/author.js',
-    'behaviors/timestamp.js',
+    'behaviors/timetracked.js',
 
     'schemas/content/schema.js',
     'schemas/content/template/Create/index.jsx',

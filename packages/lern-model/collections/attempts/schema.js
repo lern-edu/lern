@@ -2,7 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
 import _ from 'lodash';
 import Author from '../../behaviors/author.js';
-import Timestamp from '../../behaviors/timestamp.js';
+import TimeTracked from '../../behaviors/timetracked.js';
 import Content from '../../schemas/content/schema.js';
 
 const Attempts = new Mongo.Collection('attempts');
@@ -44,8 +44,16 @@ const Attempt = Class.create({
       type: [AttemptScoreSchema],
     },
   },
+  behaviors: {
+    timestamp: {
+      hasCreatedField: true,
+      createdFieldName: 'createdAt',
+      hasUpdatedField: true,
+      updatedFieldName: 'updatedAt',
+    },
+  },
 });
 
-Timestamp(Author(Attempt));
+TimeTracked(Author(Attempt));
 
 export default Attempt;
