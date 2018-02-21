@@ -65,7 +65,7 @@ class AdminTags extends React.Component {
 
         {
           !_.every(collections, c => !c.handler)
-          ? <LinearProgress color='accent' />
+          ? <LinearProgress color='secondary' />
           : <AdminTagsList key='list' tags={collections.tags.docs} query={query} />
         }
 
