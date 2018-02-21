@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
 import _ from 'lodash';
 import Author from '../../behaviors/author.js';
+import Timestamp from '../../behaviors/timestamp.js';
 import Content from '../../schemas/content/schema.js';
 
 const Tests = new Mongo.Collection('tests');
@@ -33,14 +34,23 @@ const TestPageSchema = Class.create({
   },
 });
 
-const TestAvalableAtSchema = Class.create({
-  name: 'TestAvalableAt',
+const TestTagsSchema = Class.create({
+  name: 'TestTags',
   fields: {
-    start: Date,
-    end: {
-      type: Date,
+    name: String,
+    parent: {
+      type: Object,
       optional: true,
     },
+    description: {
+      type: Object,
+      optional: true,
+    },
+    _id: {
+      type: String,
+      validators: [{ type: 'Reference' }],
+    },
+    score: Number,
   },
 });
 
@@ -54,7 +64,7 @@ const Test = Class.create({
       validators: [{ type: 'References' }],
       optional: true,
     },
-    tags: [Object],
+    tags: [TestTagsSchema],
     pages: {
       type: [TestPageSchema],
       validators: [{ type: 'minLength', param: 1 }],
@@ -63,10 +73,6 @@ const Test = Class.create({
     resolution: String,
     help: {
       type: [Content],
-      optional: true,
-    },
-    availableAt: {
-      type: TestAvalableAtSchema,
       optional: true,
     },
   },
@@ -80,6 +86,6 @@ const Test = Class.create({
   },
 });
 
-Author(Test);
+Timestamp(Author(Test));
 
 export default Test;
