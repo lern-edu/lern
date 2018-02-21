@@ -32,6 +32,26 @@ const Content = Class.create({
       ],
       optional: true,
     },
+
+    image: {
+      type: String,
+      validators: [
+        {
+          type: 'or',
+          param: [
+            { type: 'Content' },
+            {
+              type: 'and',
+              param: [
+                { type: 'required' },
+                { type: 'object' },
+              ],
+            },
+          ],
+        },
+      ],
+      optional: true,
+    },
   },
 });
 
