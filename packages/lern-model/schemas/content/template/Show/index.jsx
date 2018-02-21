@@ -6,6 +6,7 @@ import { Editor, EditorState, convertFromRaw } from 'draft-js';
 
 // Views
 import PublicContentRichText from './../RichText.jsx';
+import PublicContentShowImage from '../ShowImage.jsx';
 
 class ContentShow extends React.Component {
 
@@ -13,16 +14,21 @@ class ContentShow extends React.Component {
   // Render
 
   render() {
-    const { doc, doc: { text, link, image, type } } = this.props; 
+    const { doc, doc: { text, link, image, type } } = this.props;
 
     return _.get({
-      text: <PublicContentRichText
-        editorState={
-          text
-          && EditorState.createWithContent(convertFromRaw(text))
-        }
-        readOnly={true}
-      />,
+      text:
+        <PublicContentRichText
+          editorState={
+            text
+            && EditorState.createWithContent(convertFromRaw(text))
+          }
+          readOnly={true}
+        />,
+      image:
+        <PublicContentShowImage
+          image={image}
+        />,
     }, type);
   };
 
