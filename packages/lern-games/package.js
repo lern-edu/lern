@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'lern-games',
+  name: 'duckdodgerbrasl:lern-games',
   version: '0.0.1',
   summary: '',
   git: '',

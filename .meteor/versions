@@ -26,6 +26,7 @@ ddp-server@2.1.1
 deps@1.0.12
 diff-sequence@1.0.7
 duckdodgerbrasl:lern-check@0.0.1
+duckdodgerbrasl:lern-games@0.0.1
 duckdodgerbrasl:lern-head@0.0.1
 duckdodgerbrasl:lern-layouts@0.0.1
 duckdodgerbrasl:lern-methods@0.0.1
@@ -54,7 +55,6 @@ juliancwirko:postcss@1.2.0
 kadira:dochead@1.5.0
 kadira:flow-router@2.12.1
 launch-screen@1.1.1
-lern-games@0.0.1
 less@2.7.11
 livedata@1.0.18
 localstorage@1.2.0
