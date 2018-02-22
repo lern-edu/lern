@@ -99,7 +99,9 @@ Meteor.startup(() => {
       `você estar conosco nessa jornada.</p>` +
       `<p>Nós, da Lern - Soluções Educaionais, queremos ajudá-lo ao ` +
       `máximo com suas habilidades e desenvolvimento pessoal.</p>` +
-      `<p>Para isso, precisamos que acesse eonda por esse e-mail. ` +
+      `<p>Para isso, precisamos que acesse esse ` +
+      `<a href='${url}'>link de verificação</a> e finalize o seu cadastro.</p>` +
+      `<p>Se ainda resta alguma dúvida, responda por esse e-mail. ` +
       `<br>` +
       `<br>` +
       `<p>Caso você ou sua escola não tenham se registrado, ignore esta mensagem.</p>` +
