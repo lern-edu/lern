@@ -8,8 +8,8 @@ import Content from '../../schemas/content/schema.js';
 
 const Tests = new Mongo.Collection('tests');
 
-const TestTimeoutSchema = Class.create({
-  name: 'TestTimeout',
+const TestTimeSchema = Class.create({
+  name: 'TestTime',
   fields: {
     type: {
       type: String,
@@ -88,7 +88,7 @@ const Test = Class.create({
     },
   },
 });
-
-TimeTracked(Author(Test));
+Author(Test)
+TimeTracked(Test);
 
 export default Test;
