@@ -133,7 +133,7 @@ Meteor.startup(() => {
 Meteor.startup(() => {
 
   if (Meteor.isServer) {
-    if (!Meteor.users.findOne()) {
+    if (!Meteor.users.findOne({ roles: 'admin' })) {
       const { admin } = Meteor.settings.credentials;
       admin.profile = {
         name: 'Lern Admin',
