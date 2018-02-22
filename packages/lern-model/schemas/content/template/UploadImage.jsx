@@ -206,6 +206,8 @@ class PublicContentUploadImage extends React.Component {
           loading: false,
           key: null,
         });
+        ReactDOM.findDOMNode(_this.refs.file).value = '';
+        ReactDOM.findDOMNode(_this.refs.file).files = null;
       }
     });
   }
