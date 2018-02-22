@@ -75,15 +75,16 @@ class PublicContentUploadImage extends React.Component {
     super(props);
     this.state = {
       open: false,
-      upload: false,
+      upload: {
+        loading: false,
+        success: false,
+      },
       remove: false,
       expanded: false,
       file: null,
       fileName: null,
       key: null,
       path: null,
-      loading: false,
-      success: false,
     };
   }
 
@@ -93,15 +94,15 @@ class PublicContentUploadImage extends React.Component {
       parent.setState({ clear: false });
       this.setState({
         open: false,
-        upload: false,
+        upload: {
+          loading: false,
+          success: false,
+        },
         remove: false,
         expanded: false,
         file: null,
-        fileName: null,
         key: null,
         path: null,
-        loading: false,
-        success: false,
       });
     }
   }
@@ -128,12 +129,39 @@ class PublicContentUploadImage extends React.Component {
           s4() + '-' + s4() + s4() + s4();
       };
 
-      const key = guid();
-      const extension = '.' + file.name.split('.').pop();
-      this.setState({ upload: true, file: file, fileName: file.name, key: key + extension });
+      const key = guid() + '.' + file.name.split('.').pop();
+      this.setState({
+        file: file,
+        key: key,
+        upload: {
+          loading: true,
+        },
+      });
       var reader = new FileReader();
       reader.onloadend = function () {
-        _this.setState({ path: reader.result });
+        Meteor.call('UserUploadFile', reader.result, key, file.type, (err, res) => {
+          if (err) {
+            _this.setState({
+              upload: {
+                loading: false,
+                success: false,
+              },
+            });
+            throw err;
+          }
+
+          _this.updateDoc(res.Key);
+          _this.setState({
+            path: res.Location,
+            upload: false,
+            remove: true,
+            upload: {
+              loading: false,
+              success: true,
+            },
+          });
+          snack('Uploaded!');
+        });
       };
 
       reader.readAsDataURL(file);
@@ -156,55 +184,24 @@ class PublicContentUploadImage extends React.Component {
     parent.setState({ doc });
   }
 
-  handleUpload() {
-    const { file, key } = this.state;
-    var _this = this;
-    if (!file) {
-      return;
-    }
-
-    this.setState({ loading: true });
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      Meteor.call('UserUploadFile', reader.result, key, file.type, (err, res) => {
-        if (err) {
-          _this.setState({
-            loading: false,
-            success: false,
-          });
-          throw err;
-        }
-
-        _this.updateDoc(res.Key);
-        _this.setState({
-          upload: false,
-          remove: true,
-          loading: false,
-          success: true,
-        });
-        snack('Uploaded!');
-      });
-    };
-
-    reader.readAsDataURL(file);
-  }
-
   handleRemove() {
     const { key } = this.state;
     var _this = this;
+    this.setState({
+      file: null,
+      path: null,
+      key: null,
+    });
     Meteor.call('UserDeleteFile', key, (err, res) => {
       if (err) {
         throw err;
       } else {
         _this.setState({
-          upload: false,
+          upload: {
+            success: false,
+            loading: false,
+          },
           remove: false,
-          file: null,
-          path: null,
-          fileName: null,
-          success: false,
-          loading: false,
-          key: null,
         });
         ReactDOM.findDOMNode(_this.refs.file).value = '';
         ReactDOM.findDOMNode(_this.refs.file).files = null;
@@ -213,7 +210,7 @@ class PublicContentUploadImage extends React.Component {
   }
 
   render() {
-    const { upload, remove, open, fileName, path, file, loading, success } = this.state;
+    const { upload, remove, open, path, file, loading, success } = this.state;
     const { classes } = this.props;
 
     const instructions = {
@@ -225,7 +222,7 @@ class PublicContentUploadImage extends React.Component {
       <Card style={{ padding: '5px' }}>
         <CardHeader
           title='Imagem'
-          subheader={fileName || 'Nenhuma imagem selecionada'}
+          subheader={file ? file.name : 'Nenhuma imagem selecionada'}
           action={
             <IconButton
               className={classnames(classes.expand, {
@@ -240,18 +237,10 @@ class PublicContentUploadImage extends React.Component {
           }
         />
         <CardContent>
-          { file && path ?
+          { path ?
             <img className={classes.media} src={path}/>
             : undefined
           }
-          {/*<TextField
-            helperText='Selecione um imagem'
-            disabled={remove}
-            value={fileName || ''}
-            name={instructions.file}
-            fullWidth={true}
-            onClick={this.triggerSelectFolder.bind(this)}
-            rows={1} />*/}
           <input
             style={{ display: 'none' }}
             type='file'
@@ -260,30 +249,21 @@ class PublicContentUploadImage extends React.Component {
           />
         </CardContent>
         <CardActions>
-          <Button
-            className={classes.button}
-            raised
-            color='primary'
-            size="medium"
-            onClick={this.triggerSelectFolder.bind(this)}
-          >
-            Selecionar
-            <FileUpload className={classes.rightIcon} />
-          </Button>
           <div className={classes.right}>
             <div className={classes.wrapper}>
               <Button
                 className={classnames(classes.button, {
-                  [classes.buttonSuccess]: success,
+                  [classes.buttonSuccess]: upload.success,
                 })}
                 color='primary'
                 size="medium"
-                disabled={!upload}
-                onClick={this.handleUpload.bind(this)}
+                disabled={upload.success}
+                onClick={this.triggerSelectFolder.bind(this)}
               >
                 Upload
+                <FileUpload className={classes.rightIcon} />
               </Button>
-              {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              {upload.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
             </div>
             <Button
               className={classes.button}
