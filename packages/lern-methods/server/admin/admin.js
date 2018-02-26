@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { User, Company, Tag } from 'meteor/duckdodgerbrasl:lern-model';
+import { User, Company, Tag, Test } from 'meteor/duckdodgerbrasl:lern-model';
 import log from 'loglevel';
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import Helpers from '../../helpers.js';
@@ -165,4 +165,47 @@ Helpers.Methods({ prefix, protect }, {
 
     return Helpers.DefaultSave(tag);
   },
+});
+
+// =================== TEST METHODS ====================
+
+Helpers.Methods({ prefix, protect }, {
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Retrieve tags from the database
+   * @example
+   * const tags = Meteor.call('AdminTagsGet');
+   * @public
+   * @param {Object} [query] - Query to mongo
+   * @param {Object} [options] - Options to mongo
+   * @return {Array} - Array of tags
+   */
+  TestsGet(query, options) {
+    return Test.find(query, options).fetch();
+  },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Count tests that match the criteria
+   * @example
+   * const numTests = Meteor.call('AdminTestsCount');
+   * @public
+   * @param {Object} [query] - Query to mongo
+   * @param {Object} [options] - Options to mongo
+   * @return {Number} - Number of tests
+   */
+  TestsCount(query, options) {
+    return Test.find(query, options).count();
+  },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Save a test in collection
+   * @example
+   * const savedTest = Meteor.call('AdminTestSave', company);
+   * @public
+   * @param {Object} test - Company to be saved
+   * @return {Object} - Saved company (with _id)
+   */
+  TestSave: Helpers.DefaultSave,
 });
