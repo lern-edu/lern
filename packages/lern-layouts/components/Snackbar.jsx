@@ -36,7 +36,7 @@ class Snackbar extends React.Component {
               color='inherit'
               onClick={() => this.setState({ open: false })}
             >
-              <Icon color='accent'>close</Icon>
+              <Icon color='secondary'>close</Icon>
             </IconButton>,
         ],
         message: '',
