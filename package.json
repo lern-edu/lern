@@ -31,7 +31,7 @@
     "lodash": "^4.17.4",
     "loglevel": "^1.6.1",
     "material-ui": "^1.0.0-beta.25",
-    "material-ui-icons": "^1.0.0-beta.17",
+    "material-ui-icons": "^1.0.0-beta.35",
     "meteor-node-stubs": "^0.3.2",
     "moment": "^2.19.2",
     "prop-types": "^15.6.0",

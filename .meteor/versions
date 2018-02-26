@@ -31,6 +31,7 @@ duckdodgerbrasl:lern-layouts@0.0.1
 duckdodgerbrasl:lern-methods@0.0.1
 duckdodgerbrasl:lern-model@0.0.1
 duckdodgerbrasl:lern-publications@0.0.1
+duckdodgerbrasl:youtube-api@0.0.1
 dynamic-import@0.2.0
 ecmascript@0.9.0
 ecmascript-runtime@0.5.0
@@ -88,6 +89,7 @@ react-meteor-data@0.2.15
 reactive-dict@1.2.0
 reactive-var@1.0.11
 reload@1.1.11
+renaldo:youtube-api@0.0.1
 retry@1.0.9
 routepolicy@1.0.12
 semantic:ui@2.2.6_5
