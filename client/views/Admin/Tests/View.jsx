@@ -73,7 +73,7 @@ class AdminTests extends React.Component {
           fab
           color='primary'
           aria-label='add'
-          href={FlowRouter.path('AdminTag')}
+          href={FlowRouter.path('AdminTest')}
           className={classes.fab}
         >
           <Icon>add</Icon>
