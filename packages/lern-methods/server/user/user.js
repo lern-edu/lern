@@ -111,7 +111,6 @@ Helpers.Methods({ prefix, protect }, {
   },
 
   SearchVideo(videoId) {
-    console.log('here', videoId);
     const future = new Future();
     YoutubeApi.videos.list({
       part: 'id, contentDetails, player, status, snippet',

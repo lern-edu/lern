@@ -9,7 +9,6 @@ Youtube = {
 
   url: {
     getId(url) {
-      console.log('url', url);
       return url.replace(regex, '');
     },
 
