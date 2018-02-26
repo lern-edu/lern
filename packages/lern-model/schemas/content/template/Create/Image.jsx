@@ -69,7 +69,7 @@ const styles = theme => ({
   },
 });
 
-class PublicContentUploadImage extends React.Component {
+class PublicContentCreateImage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -304,8 +304,8 @@ class PublicContentUploadImage extends React.Component {
   }
 }
 
-PublicContentUploadImage.propTypes = {
+PublicContentCreateImage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PublicContentUploadImage);
+export default withStyles(styles)(PublicContentCreateImage);

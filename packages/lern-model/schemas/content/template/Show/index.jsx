@@ -6,7 +6,7 @@ import { Editor, EditorState, convertFromRaw } from 'draft-js';
 
 // Views
 import PublicContentRichText from './../RichText.jsx';
-import PublicContentShowImage from '../ShowImage.jsx';
+import PublicContentShowImage from './Image.jsx';
 
 class ContentShow extends React.Component {
 

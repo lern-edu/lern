@@ -9,7 +9,7 @@ import Select from 'material-ui/Select';
 import TextField from 'material-ui/TextField';
 
 import ContentRichText from './../RichText.jsx';
-import PublicContentUploadImage from '../UploadImage.jsx';
+import PublicContentCreateImage from './Image.jsx';
 
 class ContentCreate extends React.Component {
 
