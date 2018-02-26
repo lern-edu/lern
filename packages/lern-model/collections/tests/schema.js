@@ -30,7 +30,7 @@ const TestTimeSchema = Class.create({
 const TestPageSchema = Class.create({
   name: 'TestPage',
   fields: {
-    content: {
+    description: {
       type: [Object],
       validators: [{ type: 'minLength', param: 1 }],
     },
@@ -40,7 +40,10 @@ const TestPageSchema = Class.create({
 const TestScoreSchema = Class.create({
   name: 'TestTags',
   fields: {
-    name: String,
+    name: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
     parent: {
       type: Object,
       optional: true,
@@ -62,6 +65,10 @@ const Test = Class.create({
   collection: Tests,
   fields: {
     name: String,
+    description: {
+      type: [Content],
+      optional: true,
+    },
     students: {
       type: [String],
       validators: [{ type: 'References' }],

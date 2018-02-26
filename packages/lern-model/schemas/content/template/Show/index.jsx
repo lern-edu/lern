@@ -10,7 +10,6 @@ import PublicContentShowImage from '../ShowImage.jsx';
 
 class ContentShow extends React.Component {
 
-
   // Render
 
   render() {
