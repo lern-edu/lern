@@ -1,5 +1,6 @@
 // Libs
 import React from 'react';
+import log from 'loglevel';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Tag } from 'meteor/duckdodgerbrasl:lern-model';
@@ -53,10 +54,12 @@ class AdminTagChildrens extends React.Component {
   };
 
   getTags = (tagId) => {
+
     if (tagId)
       Meteor.call('AdminTagsGet', { 'parent._id': tagId }, {}, (err, docs) => {
         if (err) snack({ message: 'Erro ao encontrar tags' });
         this.setState({ collections: { tags: { handler: false, docs } } });
+        log.debug(docs);
       });
   };
 
@@ -74,8 +77,10 @@ class AdminTagChildrens extends React.Component {
   // Handlers
 
   handleSubmit = () => {
-    const { parent } = this.props;
+    const { parent, tagId } = this.props;
     const { doc } = this.state;
+
+    log.debug(doc);
 
     doc.validate({ fields: ['name'] }, (err) => {
       if (err) snack({ message: err.reason });
@@ -85,7 +90,7 @@ class AdminTagChildrens extends React.Component {
           else {
             snack({ message: 'Tag salva' });
             this.setState({ doc: new Tag({ parent }), collections: { tags: { handler: true } } });
-            this.getTags(this.props.tagId);
+            this.getTags(tagId);
           };
         });
     });

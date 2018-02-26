@@ -9,6 +9,7 @@ import Select from 'material-ui/Select';
 import TextField from 'material-ui/TextField';
 
 import ContentRichText from './../RichText.jsx';
+import PublicContentUploadImage from '../UploadImage.jsx';
 
 class ContentCreate extends React.Component {
 
@@ -16,7 +17,11 @@ class ContentCreate extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { doc: new props.Schema(), editorState: EditorState.createEmpty() };
+    this.state = {
+      doc: new props.Schema(),
+      editorState: EditorState.createEmpty(),
+      clear: false,
+    };
   };
 
   componentWillMount = () => {
@@ -38,7 +43,11 @@ class ContentCreate extends React.Component {
       docToSave[field].push(_.clone(doc));
     else docToSave[field] = [_.clone(doc)];
     form.setState({ doc: docToSave });
-    this.setState({ doc: new Schema({ type, [type]: '' }), editorState: EditorState.createEmpty() });
+    this.setState({
+      doc: new Schema({ type, [type]: '' }),
+      editorState: EditorState.createEmpty(),
+      clear: true,
+    });
   };
 
   handleEditorChange = (editorState) => {
@@ -71,8 +80,8 @@ class ContentCreate extends React.Component {
 
   render() {
     const { contentTypes } = this.props;
-    const { editorState, doc } = this.state;
-    const { type, text, link } = doc;
+    const { editorState, doc, clear } = this.state;
+    const { type, text, link, image } = doc;
 
     return (
       <Grid container spacing={24}>
@@ -108,6 +117,11 @@ class ContentCreate extends React.Component {
                   value={link}
                   label='Link'
                   onChange={this.handleTextChange}
+                />,
+              image:
+                <PublicContentUploadImage
+                  parent={this}
+                  clear={clear}
                 />,
             }, type)
           }

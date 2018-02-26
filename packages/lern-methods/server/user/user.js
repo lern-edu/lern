@@ -1,6 +1,7 @@
 
 import _ from 'lodash';
 import { User } from 'meteor/duckdodgerbrasl:lern-model';
+import AWS from 'aws-sdk';
 import Helpers from '../../helpers.js';
 const [prefix, protect] = ['User'];
 
@@ -48,6 +49,64 @@ Helpers.Methods({ prefix, protect }, {
 
   SetPassword(_id, target) {
     Accounts.setPassword(_id, target, { logout: false });
+  },
+
+});
+
+AWS.config.region = 'us-east-1'; // Region
+AWS.config.credentials = Meteor.settings.credentials.S3;
+var s3 = new AWS.S3({ region: 'us-east-1' });
+
+Helpers.Methods({ prefix, protect }, {
+  UploadFile(base64image, Key, type) {
+    var buf = new Buffer(base64image.replace(/^data:image\/\w+;base64,/, ''), 'base64');
+    return new Promise((resolve, reject) => {
+      s3.upload({
+        Bucket: 'lern-repo',
+        Key: Key,
+        Body: buf,
+        ACL: 'authenticated-read',
+
+        ContentType: type,
+        ContentEncoding: 'base64',
+      }, (err, data) => {
+        if (err) reject(err);
+        else {
+          resolve(data);
+        }
+      });
+    });
+  },
+
+  GetFile(Key) {
+    return new Promise((resolve, reject) => {
+      s3.getObject({
+        Bucket: 'lern-repo',
+        Key: Key,
+      }, (err, data) => {
+        if (err) reject(err);
+        else {
+          resolve({
+            file: 'data:image/jpeg;base64,' + new Buffer(data.Body).toString('base64'),
+            location: data.Location,
+          });
+        }
+      });
+    });
+  },
+
+  DeleteFile(Key) {
+    return new Promise((resolve, reject) => {
+      s3.deleteObject({
+        Bucket: 'lern-repo',
+        Key: Key,
+      }, (err, data) => {
+        if (err) reject(err);
+        else {
+          resolve(data);
+        }
+      });
+    });
   },
 
 });

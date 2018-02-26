@@ -32,7 +32,11 @@ Meteor.startup(() => {
           user.emails = [{ address: _.get(google, 'email'), verified: true }];
         else
           user.emails = [];
-      } else if (options.profile) user.profile = options.profile;
+      } else if (options.profile) {
+        user.profile = options.profile;
+        if (options.email)
+          user.emails = [{ address: options.email, verified: false }];
+      }
 
       if (!user.roles) user.roles = ['student'];
 
