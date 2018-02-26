@@ -10,6 +10,8 @@ Package.onUse(function (api) {
     'ecmascript',
     'duckdodgerbrasl:lern-check',
     'duckdodgerbrasl:lern-model',
+
+    'renaldo:youtube-api',
   ]);
 
   api.addFiles([

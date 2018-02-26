@@ -4,6 +4,7 @@ import { User } from 'meteor/duckdodgerbrasl:lern-model';
 import AWS from 'aws-sdk';
 import Helpers from '../../helpers.js';
 const [prefix, protect] = ['User'];
+Future = Npm.require('fibers/future');
 
 Helpers.Methods({ prefix, protect }, {
   SaveProfile(doc) {
@@ -107,6 +108,19 @@ Helpers.Methods({ prefix, protect }, {
         }
       });
     });
+  },
+
+  SearchVideo(videoId) {
+    console.log('here', videoId);
+    const future = new Future();
+    YoutubeApi.videos.list({
+      part: 'id, contentDetails, player, status, snippet',
+      id: videoId,
+    }, (err, res) => {
+      if (err) future.throw(err);
+      else future.return(res);
+    });
+    return future.wait();
   },
 
 });
