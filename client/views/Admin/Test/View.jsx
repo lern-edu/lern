@@ -22,6 +22,7 @@ import AdminTestText from './Text.jsx';
 import AdminTestSelect from './Select.jsx';
 import AdminTestTime from './Time.jsx';
 import AdminTestTimeout from './Timeout.jsx';
+import AdminTestPages from './Pages.jsx';
 
 // Styles
 const styles = theme => ({
@@ -48,7 +49,7 @@ class AdminTest extends React.Component {
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 5,
+      activeStep: 6,
     };
   };
 
@@ -111,7 +112,7 @@ class AdminTest extends React.Component {
     const { classes, testId } = this.props;
 
     const actionButtons = (field) => {
-      const stepsLenght = 6;
+      const stepsLenght = 7;
       let error = _.get(this, `state.errors.${field}.error`);
 
       return (
@@ -377,6 +378,35 @@ class AdminTest extends React.Component {
                         </Step>
 
                         {/* End doc.timeout */}
+                        {/* doc.pages */}
+
+                        <Step key='pages'>
+                          <StepLabel>Pages</StepLabel>
+
+                          <StepContent>
+
+                            <Grid item xs={12}>
+
+                              <Paper className={classes.paper}>
+
+                                <AdminTestPages
+                                  doc={doc}
+                                  field='pages'
+                                  errors={errors}
+                                  parent={this}
+                                />
+
+                              </Paper>
+
+                              {actionButtons('pages')}
+
+                            </Grid>
+
+                          </StepContent>
+
+                        </Step>
+
+                        {/* End doc.pages */}
 
                       </Stepper>
 
