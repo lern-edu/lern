@@ -19,6 +19,7 @@ const ContentCreate = _.get(content, 'templates.ContentCreate');
 const ContentShow = _.get(content, 'templates.ContentShow');
 
 import AdminTestText from './Text.jsx';
+import AdminTestSelect from './Select.jsx';
 
 // Styles
 const styles = theme => ({
@@ -45,7 +46,7 @@ class AdminTest extends React.Component {
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 0,
+      activeStep: 3,
     };
   };
 
@@ -108,19 +109,8 @@ class AdminTest extends React.Component {
     const { classes, testId } = this.props;
 
     const actionButtons = (field) => {
-      const stepsLenght = 3;
-      let error = this.state.errors[field];
-
-      if (!error) {
-        doc.validate({ fields: [field] }, (err) => {
-          if (err) error = { message: err.reason, error: true };
-          else error = { message: undefined, error: false };
-        });
-      };
-
-      console.log(error);
-
-      error = _.get(error, 'error') || false;
+      const stepsLenght = 4;
+      let error = _.get(this, `state.errors.${field}.error`);
 
       return (
         <div className={classes.actionsContainer}>
@@ -144,6 +134,7 @@ class AdminTest extends React.Component {
           </div>
         </div>
       );
+
     };
 
     return (
@@ -179,11 +170,11 @@ class AdminTest extends React.Component {
                                 <AdminTestText
                                   doc={doc}
                                   field='name'
-                                  error={_.get(errors, 'name.error')}
+                                  error={_.get(errors, 'name')}
                                   parent={this}
                                 />
 
-                                {actionButtons('name')}
+                                {actionButtons()}
                               </Paper>
                             
                             </Grid>
@@ -236,7 +227,7 @@ class AdminTest extends React.Component {
                             </Grid>
 
                             <Grid item xs={12}>
-                              {actionButtons('help')}
+                              {actionButtons()}
                             </Grid>
 
                           </StepContent>
@@ -288,7 +279,7 @@ class AdminTest extends React.Component {
                             </Grid>
 
                             <Grid item xs={12}>
-                              {actionButtons('help')}
+                              {actionButtons()}
                             </Grid>
 
                           </StepContent>
@@ -296,6 +287,36 @@ class AdminTest extends React.Component {
                         </Step>
 
                         {/* End doc.help */}
+                        {/* doc.resolution */}
+
+                        <Step key='resolution'>
+                          <StepLabel>Resolution</StepLabel>
+
+                          <StepContent>
+
+                            <Grid item xs={12}>
+
+                              <Paper className={classes.paper}>
+
+                                <AdminTestSelect
+                                  options={StaticCollections.TestResolutions}
+                                  doc={doc}
+                                  field='resolution'
+                                  error={errors.resolution}
+                                  parent={this}
+                                />
+
+                              </Paper>
+
+                              {actionButtons()}
+
+                            </Grid>
+
+                          </StepContent>
+
+                        </Step>
+
+                        {/* End doc.resolution */}
 
                       </Stepper>
 

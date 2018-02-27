@@ -10,6 +10,7 @@ const StaticCollections = {
   ContentTypes: ['text', 'image', 'link'],
   Locales: ['pt-BR', 'en-US'],
   TestTimeoutTypes: ['global', 'none'],
+  TestResolutions: ['content', 'sudoku'],
 };
 
 export default StaticCollections;
