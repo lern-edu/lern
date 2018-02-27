@@ -11,14 +11,17 @@ const Tests = new Mongo.Collection('tests');
 const TestTimeSchema = Class.create({
   name: 'TestTime',
   fields: {
-    type: {
+    timeoutType: {
       type: String,
       validators: [{ type: 'OneOf', param: StaticCollections.TestTimeoutTypes }],
-      immutable: true,
     },
     timeout: {
       type: Number,
       optional: true,
+    },
+    timeType: {
+      type: String,
+      validators: [{ type: 'OneOf', param: StaticCollections.TestTimeTypes }],
     },
     range: {
       type: [Object],
@@ -64,9 +67,13 @@ const Test = Class.create({
   name: 'Test',
   collection: Tests,
   fields: {
-    name: String,
+    name: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
     description: {
       type: [Content],
+      validators: [{ type: 'minLength', param: 1 }],
       optional: true,
     },
     students: {
@@ -77,12 +84,17 @@ const Test = Class.create({
     score: [TestScoreSchema],
     pages: {
       type: [TestPageSchema],
-      validators: [{ type: 'minLength', param: 1 }],
+      optional: true,
     },
-    time: TestTimeSchema,
+    time: {
+      type: TestTimeSchema,
+      default: new TestTimeSchema(),
+      immutable: true,
+    },
     resolution: String,
     help: {
       type: [Content],
+      validators: [{ type: 'minLength', param: 1 }],
       optional: true,
     },
   },
@@ -97,5 +109,7 @@ const Test = Class.create({
 });
 Author(Test)
 TimeTracked(Test);
+
+Test.TestPageSchema = TestPageSchema;
 
 export default Test;
