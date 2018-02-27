@@ -39,9 +39,12 @@ class ContentCreate extends React.Component {
 
     const { doc, doc: { type } } = this.state;
     const { form, doc: docToSave, Schema, field='description' } = this.props;
-    if (_.isArray(docToSave[field]))
-      docToSave[field].push(_.clone(doc));
-    else docToSave[field] = [_.clone(doc)];
+    if (_.isArray(_.get(docToSave, field))) {
+      const array = _.get(docToSave, field);
+      array.push(_.clone(doc));
+      docToSave.set(field, array);
+    }
+    else docToSave.set(field, [_.clone(doc)]);
     form.setState({ doc: docToSave });
     this.setState({
       doc: new Schema({ type, [type]: '' }),
