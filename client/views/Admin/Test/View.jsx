@@ -20,6 +20,8 @@ const ContentShow = _.get(content, 'templates.ContentShow');
 
 import AdminTestText from './Text.jsx';
 import AdminTestSelect from './Select.jsx';
+import AdminTestTime from './Time.jsx';
+import AdminTestTimeout from './Timeout.jsx';
 
 // Styles
 const styles = theme => ({
@@ -46,7 +48,7 @@ class AdminTest extends React.Component {
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 3,
+      activeStep: 5,
     };
   };
 
@@ -109,7 +111,7 @@ class AdminTest extends React.Component {
     const { classes, testId } = this.props;
 
     const actionButtons = (field) => {
-      const stepsLenght = 4;
+      const stepsLenght = 6;
       let error = _.get(this, `state.errors.${field}.error`);
 
       return (
@@ -308,7 +310,7 @@ class AdminTest extends React.Component {
 
                               </Paper>
 
-                              {actionButtons()}
+                              {actionButtons('resolution')}
 
                             </Grid>
 
@@ -317,6 +319,64 @@ class AdminTest extends React.Component {
                         </Step>
 
                         {/* End doc.resolution */}
+                        {/* doc.time */}
+
+                        <Step key='time'>
+                          <StepLabel>Time</StepLabel>
+
+                          <StepContent>
+
+                            <Grid item xs={12}>
+
+                              <Paper className={classes.paper}>
+
+                                <AdminTestTime
+                                  doc={doc}
+                                  field='time'
+                                  error={errors.time}
+                                  parent={this}
+                                />
+
+                              </Paper>
+
+                              {actionButtons('time')}
+
+                            </Grid>
+
+                          </StepContent>
+
+                        </Step>
+
+                        {/* End doc.time */}
+                        {/* doc.timeout */}
+
+                        <Step key='timeout'>
+                          <StepLabel>Timeout</StepLabel>
+
+                          <StepContent>
+
+                            <Grid item xs={12}>
+
+                              <Paper className={classes.paper}>
+
+                                <AdminTestTimeout
+                                  doc={doc}
+                                  field='timeout'
+                                  errors={errors}
+                                  parent={this}
+                                />
+
+                              </Paper>
+
+                              {actionButtons('timeout')}
+
+                            </Grid>
+
+                          </StepContent>
+
+                        </Step>
+
+                        {/* End doc.timeout */}
 
                       </Stepper>
 
