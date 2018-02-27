@@ -21,7 +21,7 @@ class AdminTestSelect extends React.Component {
 
   handleChange = ({ target: { value } }) => {
     const { doc, field, parent } = this.props;
-    doc[field] = value;
+    doc.set(field, value);
     parent.setState({ doc });
     doc.validate({ fields: [field] }, (err) => {
       if (err) parent.setState({ errors: { [field]: { message: err.reason, error: true } } });
@@ -33,7 +33,6 @@ class AdminTestSelect extends React.Component {
   render() {
     const { error: { error, message }={}, doc, field, options } = this.props;
 
-    console.log(error);
     return (
       <FormControl error={error}>
         <InputLabel htmlFor={field}>{field}</InputLabel>

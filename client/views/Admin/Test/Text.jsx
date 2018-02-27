@@ -16,7 +16,7 @@ class AdminTestText extends React.Component {
 
   handleChange = ({ target: { value } }) => {
     const { doc, field, parent } = this.props;
-    doc[field] = value;
+    doc.set(field, value);
     parent.setState({ doc });
     doc.validate({ fields: [field] }, (err) => {
       if (err) parent.setState({ errors: { [field]: { message: err.reason, error: true } } });
