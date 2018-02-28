@@ -11,14 +11,17 @@ const Tests = new Mongo.Collection('tests');
 const TestTimeSchema = Class.create({
   name: 'TestTime',
   fields: {
-    type: {
+    timeoutType: {
       type: String,
       validators: [{ type: 'OneOf', param: StaticCollections.TestTimeoutTypes }],
-      immutable: true,
     },
     timeout: {
       type: Number,
       optional: true,
+    },
+    timeType: {
+      type: String,
+      validators: [{ type: 'OneOf', param: StaticCollections.TestTimeTypes }],
     },
     range: {
       type: [Object],
@@ -30,7 +33,7 @@ const TestTimeSchema = Class.create({
 const TestPageSchema = Class.create({
   name: 'TestPage',
   fields: {
-    content: {
+    description: {
       type: [Object],
       validators: [{ type: 'minLength', param: 1 }],
     },
@@ -40,7 +43,11 @@ const TestPageSchema = Class.create({
 const TestScoreSchema = Class.create({
   name: 'TestTags',
   fields: {
-    name: String,
+    author: Object,
+    name: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
     parent: {
       type: Object,
       optional: true,
@@ -53,7 +60,9 @@ const TestScoreSchema = Class.create({
       type: String,
       validators: [{ type: 'Reference' }],
     },
-    score: Number,
+    score: {
+      type: Number,
+    },
   },
 });
 
@@ -61,23 +70,40 @@ const Test = Class.create({
   name: 'Test',
   collection: Tests,
   fields: {
-    name: String,
+    name: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
+    description: {
+      type: [Content],
+      validators: [{ type: 'minLength', param: 1 }],
+      optional: true,
+    },
     students: {
       type: [String],
       validators: [{ type: 'References' }],
       optional: true,
     },
-    score: [TestScoreSchema],
+    scores: {
+      type: [TestScoreSchema],
+      default: () => [],
+    },
     pages: {
       type: [TestPageSchema],
-      validators: [{ type: 'minLength', param: 1 }],
+      optional: true,
     },
-    time: TestTimeSchema,
+    time: {
+      type: TestTimeSchema,
+      default: new TestTimeSchema(),
+      immutable: true,
+    },
     resolution: String,
     help: {
       type: [Content],
+      validators: [{ type: 'minLength', param: 1 }],
       optional: true,
     },
+    score: Number,
   },
   behaviors: {
     timestamp: {
@@ -90,5 +116,8 @@ const Test = Class.create({
 });
 Author(Test)
 TimeTracked(Test);
+
+Test.TestPageSchema = TestPageSchema;
+Test.TestScoreSchema = TestScoreSchema;
 
 export default Test;
