@@ -9,6 +9,7 @@
   "admin": {
     "AdminHome": "Home",
     "AdminUsers": "Usuários",
-    "AdminTags": "Tags"
+    "AdminTags": "Tags",
+    "AdminTests": "Testes"
   }
 }
