@@ -27,7 +27,6 @@ class AdminTestSelect extends React.Component {
       if (err) parent.setState({ errors: { [field]: { message: err.reason, error: true } } });
       else parent.setState({ errors: { [field]: { message: undefined, error: false } } });
     });
-
   };
 
   render() {

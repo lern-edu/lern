@@ -19,10 +19,12 @@ const ContentCreate = _.get(content, 'templates.ContentCreate');
 const ContentShow = _.get(content, 'templates.ContentShow');
 
 import AdminTestText from './Text.jsx';
+import AdminTestNumber from './Number.jsx';
 import AdminTestSelect from './Select.jsx';
 import AdminTestTime from './Time.jsx';
 import AdminTestTimeout from './Timeout.jsx';
 import AdminTestPages from './Pages.jsx';
+import AdminTestScores from './Scores.jsx';
 
 // Styles
 const styles = theme => ({
@@ -39,23 +41,30 @@ class AdminTest extends React.Component {
   constructor(props) {
     log.info('AdminTest', props);
     super(props);
-    const { testId } = props;
+    const { testId, skip } = props;
     this.state = {
       title: !testId ? 'Criar' : 'Editar',
       collections: {
         test: {
           handler: !_.isEmpty(testId),
         },
+        tags: {
+          docs: [],
+          handler: true,
+          query: {},
+          options: { skip },
+        }
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 6,
+      activeStep: 8,
     };
   };
 
   componentWillMount() {
     log.info('AdminTest.componentWillMount');
     this.getTests(this.props.testId);
+    this.getTags();
   };
 
   getTests = (testId) => {
@@ -73,6 +82,17 @@ class AdminTest extends React.Component {
         };
 
       });
+  };
+
+  getTags = () => {
+    const { tags, tags: { query, options } } = this.state.collections;
+
+    Meteor.call('AdminTagsGet', query, options,  (err, docs) => {
+      if (err) snack({ message: 'Erro ao encontrar tags' });
+      tags.handler = false;
+      tags.docs = docs;
+      this.setState({ collections: { tags } });
+    });
   };
 
   // Handlers
@@ -109,10 +129,11 @@ class AdminTest extends React.Component {
   render() {
     log.info('AdminTest.render =>', this.state);
     const { title, collections, errors, doc, activeStep } = this.state;
+    const { tags } = collections;
     const { classes, testId } = this.props;
 
     const actionButtons = (field) => {
-      const stepsLenght = 7;
+      const stepsLenght = 9;
       let error = _.get(this, `state.errors.${field}.error`);
 
       return (
@@ -407,6 +428,64 @@ class AdminTest extends React.Component {
                         </Step>
 
                         {/* End doc.pages */}
+                        {/* doc.scores */}
+
+                        <Step key='scores'>
+                          <StepLabel>Scores</StepLabel>
+
+                          <StepContent>
+
+                            <Grid item xs={12}>
+
+                              <Paper className={classes.paper}>
+
+                                <AdminTestScores
+                                  doc={doc}
+                                  tags={tags.docs}
+                                  errors={errors}
+                                  parent={this}
+                                />
+
+                              </Paper>
+
+                              {actionButtons('scores')}
+
+                            </Grid>
+
+                          </StepContent>
+
+                        </Step>
+
+                        {/* End doc.scores */}
+                        {/* doc.score */}
+
+                        <Step key='score'>
+                          <StepLabel>Score</StepLabel>
+
+                          <StepContent>
+
+                            <Grid item xs={12}>
+
+                              <Paper className={classes.paper}>
+
+                                <AdminTestNumber
+                                  doc={doc}
+                                  field='score'
+                                  error={errors.score}
+                                  parent={this}
+                                />
+                
+                              </Paper>
+
+                              {actionButtons('score')}
+
+                            </Grid>
+
+                          </StepContent>
+
+                        </Step>
+
+                        {/* End doc.score */}
 
                       </Stepper>
 

@@ -59,7 +59,13 @@ const TestScoreSchema = Class.create({
       type: String,
       validators: [{ type: 'Reference' }],
     },
-    score: Number,
+    score: {
+      type: Number,
+      validators: [
+        { type: 'minLength', param: 0 },
+        { type: 'maxLength', param: 1 },
+      ],
+    },
   },
 });
 
@@ -81,7 +87,10 @@ const Test = Class.create({
       validators: [{ type: 'References' }],
       optional: true,
     },
-    score: [TestScoreSchema],
+    scores: {
+      type: [TestScoreSchema],
+      default: () => [],
+    },
     pages: {
       type: [TestPageSchema],
       optional: true,
@@ -97,6 +106,7 @@ const Test = Class.create({
       validators: [{ type: 'minLength', param: 1 }],
       optional: true,
     },
+    score: Number,
   },
   behaviors: {
     timestamp: {
@@ -111,5 +121,6 @@ Author(Test)
 TimeTracked(Test);
 
 Test.TestPageSchema = TestPageSchema;
+Test.TestScoreSchema = TestScoreSchema;
 
 export default Test;
