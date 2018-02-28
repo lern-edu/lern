@@ -9,7 +9,8 @@ import Select from 'material-ui/Select';
 import TextField from 'material-ui/TextField';
 
 import ContentRichText from './../RichText.jsx';
-import PublicContentUploadImage from '../UploadImage.jsx';
+import PublicContentCreateImage from './Image.jsx';
+import PublicContentCreateVideo from './Video.jsx';
 
 class ContentCreate extends React.Component {
 
@@ -119,7 +120,12 @@ class ContentCreate extends React.Component {
                   onChange={this.handleTextChange}
                 />,
               image:
-                <PublicContentUploadImage
+                <PublicContentCreateImage
+                  parent={this}
+                  clear={clear}
+                />,
+              video:
+                <PublicContentCreateVideo
                   parent={this}
                   clear={clear}
                 />,

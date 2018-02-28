@@ -7,7 +7,7 @@
  */
 const StaticCollections = {
   UserRoles: ['student', 'teacher', 'admin'],
-  ContentTypes: ['text', 'image', 'link'],
+  ContentTypes: ['text', 'image', 'link', 'video'],
   Locales: ['pt-BR', 'en-US'],
 };
 

@@ -52,6 +52,26 @@ const Content = Class.create({
       ],
       optional: true,
     },
+
+    video: {
+      type: Object,
+      validators: [
+        {
+          type: 'or',
+          param: [
+            { type: 'Content' },
+            {
+              type: 'and',
+              param: [
+                { type: 'required' },
+                { type: 'object' },
+              ],
+            },
+          ],
+        },
+      ],
+      optional: true,
+    },
   },
 });
 
