@@ -57,7 +57,7 @@ class AdminTest extends React.Component {
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 8,
+      activeStep: 0,
     };
   };
 
@@ -74,10 +74,12 @@ class AdminTest extends React.Component {
         if (err) snack({ message: 'Erro ao encontrar test' });
         else {
           const doc = _.head(docs);
+          const { collections } = this.state;
+          collections.test = { handler: false };
           this.setState({
             doc,
+            collections,
             title: doc.name,
-            collections: { test: { handler: false } },
           });
         };
 

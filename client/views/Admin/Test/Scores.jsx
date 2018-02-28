@@ -49,7 +49,7 @@ class AdminTestScores extends React.Component {
 
   handleChange = ({ target: { value } }) => {
     const { score } = this.state;
-    score.score = value;
+    score.score = _.toNumber(value);
     this.setState({ score });
   };
 

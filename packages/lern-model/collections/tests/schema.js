@@ -43,6 +43,7 @@ const TestPageSchema = Class.create({
 const TestScoreSchema = Class.create({
   name: 'TestTags',
   fields: {
+    author: Object,
     name: {
       type: String,
       validators: [{ type: 'minLength', param: 1 }],
@@ -61,10 +62,6 @@ const TestScoreSchema = Class.create({
     },
     score: {
       type: Number,
-      validators: [
-        { type: 'minLength', param: 0 },
-        { type: 'maxLength', param: 1 },
-      ],
     },
   },
 });
