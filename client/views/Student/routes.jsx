@@ -24,6 +24,15 @@ studentRoutes.route('/', {
   },
 });
 
+studentRoutes.route('/', {
+  name: 'StudentHome',
+  action(params, query) {
+    setup.render({
+      main: <StudentTests {...query} />,
+    });
+  },
+});
+
 studentRoutes.route('/report', {
   name: 'StudentReport',
   action(params, query) {
@@ -38,15 +47,6 @@ studentRoutes.route('/settings', {
   action(params, query) {
     setup.render({
       main: <StudentSettings {...query}/>,
-    });
-  },
-});
-
-studentRoutes.route('/Tasks', {
-  name: 'StudentTasks',
-  action(params, query) {
-    setup.render({
-      main: <StudentTasks {...query}/>,
     });
   },
 });
