@@ -61,7 +61,7 @@ class Navigation extends React.Component {
             icon: 'timeline',
           },
           StudentSettings: {
-            label: 'student.StudentSettings',
+            label: 'StudentSettings',
             icon: 'settings',
           },
         },

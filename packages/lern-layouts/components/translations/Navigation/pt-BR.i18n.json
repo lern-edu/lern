@@ -3,8 +3,9 @@
   "_namespace": "Navigation",
   "title": "Português",
   "student": {
-    "StudentHome": "Home",
-    "StudentReport": "Desempenho"
+    "StudentTests": "Tarefas",
+    "StudentReport": "Desempenho",
+    "StudentSettings": "Configurações"
   },
   "admin": {
     "StudentTests": "Tarefas",
