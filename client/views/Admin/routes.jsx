@@ -81,3 +81,34 @@ adminRoutes.route('/tag/:tagId', {
     });
   },
 });
+
+// Tests
+import AdminTests from './Tests/View.jsx';
+import AdminTest from './Test/View.jsx';
+
+adminRoutes.route('/tests', {
+  name: 'AdminTests',
+  action(params, query) {
+    setup.render({
+      main: <AdminTests {...query} />,
+    });
+  },
+});
+
+adminRoutes.route('/test', {
+  name: 'AdminTest',
+  action(params, query) {
+    setup.render({
+      main: <AdminTest {...query} />,
+    });
+  },
+});
+
+adminRoutes.route('/test/:testId', {
+  name: 'AdminTest',
+  action(params, query) {
+    setup.render({
+      main: <AdminTest {...params} {...query} />,
+    });
+  },
+});

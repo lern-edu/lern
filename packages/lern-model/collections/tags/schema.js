@@ -22,7 +22,6 @@ const Tag = Class.create({
     parent: {
       type: Object,
       optional: true,
-      default: null,
     },
   },
   behaviors: {

@@ -38,6 +38,7 @@ Package.onUse((api) => {
     'validators/tags.js',
 
     'behaviors/author.js',
+    'behaviors/timetracked.js',
 
     'schemas/content/schema.js',
     'schemas/content/template/Create/index.jsx',
@@ -50,6 +51,8 @@ Package.onUse((api) => {
 
     'collections/tags/schema.js',
     'collections/tags/templates.jsx',
+
+    'collections/tests/schema.js',
 
     // Translations
     'collections/users/translations/Templates/en-US.i18n.json',

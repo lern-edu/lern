@@ -9,6 +9,9 @@ const StaticCollections = {
   UserRoles: ['student', 'teacher', 'admin'],
   ContentTypes: ['text', 'image', 'link', 'video'],
   Locales: ['pt-BR', 'en-US'],
+  TestTimeoutTypes: ['global', 'none'],
+  TestTimeTypes: ['range', 'none'],
+  TestResolutions: ['content', 'sudoku'],
 };
 
 export default StaticCollections;
