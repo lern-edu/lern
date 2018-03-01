@@ -16,8 +16,11 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-  iconButton: {
+  primaryIconButton: {
     color: '#FFF',
+  },
+  secondaryIconButton: {
+    color: '#000',
   },
 };
 
@@ -79,18 +82,18 @@ const getTitle = ({ title, crumbs }) =>
  */
 const Bar = (props) => {
 
-  const { crumbs, title, disableActions, classes, children, color } = props;
+  const { crumbs, title, disableActions, classes, children, color='primary' } = props;
 
   return (
-    <AppBar position='fixed'>
-      <Toolbar color={color}>
+    <AppBar position='fixed' color={color}>
+      <Toolbar>
 
         <IconButton
           className={classes.menuButton}
           onClick={disableActions ? () => false : window.nav}
           aria-label='Menu'
         >
-           <Icon className={classes.iconButton} >menu</Icon>
+          <Icon className={classes[`${color}IconButton`]} >menu</Icon>
         </IconButton>
 
         <Typography type='title' color='inherit' className={classes.flex}>
