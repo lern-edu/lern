@@ -53,7 +53,7 @@ class AdminTest extends React.Component {
           handler: true,
           query: {},
           options: { skip },
-        }
+        },
       },
       doc: !testId ? new Test() : null,
       errors: {},
