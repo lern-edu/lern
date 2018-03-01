@@ -41,3 +41,12 @@ studentRoutes.route('/settings', {
     });
   },
 });
+
+studentRoutes.route('/Tasks', {
+  name: 'StudentTasks',
+  action(params, query) {
+    setup.render({
+      main: <StudentTasks {...query}/>,
+    });
+  },
+});
