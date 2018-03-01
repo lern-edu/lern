@@ -7,7 +7,7 @@
     "StudentReport": "Desempenho"
   },
   "admin": {
-    "AdminHome": "Home",
+    "StudentTests": "Tarefas",
     "AdminUsers": "Usuários",
     "AdminTags": "Tags",
     "AdminTests": "Testes"

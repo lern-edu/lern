@@ -52,8 +52,8 @@ class Navigation extends React.Component {
           },
         },
         student: {
-          StudentHome: {
-            label: 'StudentHome',
+          StudentTests: {
+            label: 'StudentTests',
             icon: 'home',
           },
           StudentReport: {

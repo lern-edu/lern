@@ -79,11 +79,11 @@ const getTitle = ({ title, crumbs }) =>
  */
 const Bar = (props) => {
 
-  const { crumbs, title, disableActions, classes, children } = props;
+  const { crumbs, title, disableActions, classes, children, color } = props;
 
   return (
     <AppBar position='fixed'>
-      <Toolbar>
+      <Toolbar color={color}>
 
         <IconButton
           className={classes.menuButton}

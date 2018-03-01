@@ -7,7 +7,7 @@
     "StudentReport": "Report"
   },
   "admin": {
-    "adminHome": "Home",
+    "StudentTests": "Tasks",
     "adminUsers": "Users",
     "adminTags": "Tags",
     "AdminTests": "Tests"
