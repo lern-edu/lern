@@ -35,12 +35,16 @@ const Attempt = Class.create({
   name: 'Attempt',
   collection: Attempts,
   fields: {
-    test: Object,
-    finished: {
-      type: Boolean,
+    testId: {
+      type: String,
+      validators: [{ type: 'Reference' }],
       immutable: true,
     },
-    score: {
+    finished: {
+      type: Boolean,
+      default: false,
+    },
+    scores: {
       type: [AttemptScoreSchema],
     },
   },
@@ -56,5 +60,7 @@ const Attempt = Class.create({
 
 Author(Attempt);
 TimeTracked(Attempt);
+
+Attempt.AttemptScoreSchema = AttemptScoreSchema;
 
 export default Attempt;

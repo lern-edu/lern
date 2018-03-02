@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { Test } from 'meteor/duckdodgerbrasl:lern-model';
+import { Test, Attempt } from 'meteor/duckdodgerbrasl:lern-model';
+import Check from 'meteor/duckdodgerbrasl:lern-check';
 import log from 'loglevel';
 import Helpers from '../../helpers.js';
 const [prefix, protect] = ['Student', 'student'];
@@ -36,6 +37,50 @@ Helpers.Methods({ prefix, protect }, {
    */
   TestsCount(query, options) {
     return Test.find(query, options).count();
+  },
+
+  /**
+   * @memberof LernMethods.Student()
+   * @desc Retrieve attempt (find or create) and test from the database
+   * @example
+   * const testAndAttempt0 = Meteor.call('StudentTestAttemptStart');
+   * @public
+   * @param {String} [testId] - Test id
+   * @return {Array} - Array of tags
+   */
+  TestAttemptStart(testId) {
+
+    let test = Test.find({ _id: testId });
+    Check.Cursor(test).some();
+    test = _.head(test.fetch());
+
+    let attempt = Attempt.find({ testId });
+    let hasAttempt = true;
+    try {
+      Check.Cursor(attempt).some();
+    }
+    catch (err) {
+      hasAttempt = false
+    }
+
+    if (hasAttempt)
+      return {
+        attempt: _.head(attempt.fetch()),
+        test,
+      };
+    else {
+      attempt = new Attempt({
+        testId,
+        scores: _.map(test.scores, score => new Attempt.AttemptScoreSchema(score.raw())),
+        startedAt: new Date(),
+      });
+      const attemptId = attempt.save();
+      return {
+        attempt: Attempt.findOne(attemptId),
+        test,
+      };
+    }
+
   },
 
 });
