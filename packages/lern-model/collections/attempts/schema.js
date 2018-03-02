@@ -54,6 +54,7 @@ const Attempt = Class.create({
   },
 });
 
-TimeTracked(Author(Attempt));
+Author(Attempt);
+TimeTracked(Attempt);
 
 export default Attempt;
