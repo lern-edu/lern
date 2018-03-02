@@ -65,7 +65,7 @@ class AdminUsers extends React.Component {
 
         {
           !_.every(collections, c => !c.handler)
-          ? <LinearProgress color='accent' />
+          ? <LinearProgress color='secondary' />
           : (
             [
               <AppBar position='static' color='default' key='toolbar'>

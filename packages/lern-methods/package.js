@@ -10,11 +10,14 @@ Package.onUse(function (api) {
     'ecmascript',
     'duckdodgerbrasl:lern-check',
     'duckdodgerbrasl:lern-model',
+
+    'renaldo:youtube-api',
   ]);
 
   api.addFiles([
     'helpers.js',
     'server/admin/admin.js',
+    'server/student/tests.js',
     'server/user/user.js',
   ], 'server');
 });

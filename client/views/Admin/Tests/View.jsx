@@ -11,7 +11,7 @@ import { LinearProgress } from 'material-ui/Progress';
 import { withStyles } from 'material-ui/styles';
 import { Layout, Snackbar } from 'meteor/duckdodgerbrasl:lern-layouts';
 
-import AdminTagsList from './List.jsx';
+import AdminTestsList from './List.jsx';
 
 const styles = theme => ({
   fab: {
@@ -21,7 +21,7 @@ const styles = theme => ({
   },
 });
 
-class AdminTags extends React.Component {
+class AdminTests extends React.Component {
 
   // Lifecycle
 
@@ -32,7 +32,7 @@ class AdminTags extends React.Component {
       query: {},
       options: { skip },
       collections: {
-        tags: {
+        tests: {
           handler: true,
           docs: [],
         },
@@ -43,9 +43,9 @@ class AdminTags extends React.Component {
   componentWillMount() {
     const { query, options } = this.state;
 
-    Meteor.call('AdminTagsGet', query, options,  (err, docs) => {
-      if (err) snack({ message: 'Erro ao encontrar tags' });
-      this.setState({ collections: { tags: { handler: false, docs } } });
+    Meteor.call('AdminTestsGet', query, options,  (err, docs) => {
+      if (err) snack({ message: 'Erro ao encontrar testes' });
+      this.setState({ collections: { tests: { handler: false, docs } } });
     });
   }
 
@@ -61,19 +61,19 @@ class AdminTags extends React.Component {
 
     return (
       <div>
-        <Layout.Bar title='Tags' />
+        <Layout.Bar title='Tests' />
 
         {
           !_.every(collections, c => !c.handler)
           ? <LinearProgress color='secondary' />
-          : <AdminTagsList key='list' tags={collections.tags.docs} query={query} />
+          : <AdminTestsList key='list' tests={collections.tests.docs} query={query} />
         }
 
         <Button
           fab
-          color="primary"
-          aria-label="add"
-          href={FlowRouter.path('AdminTag')}
+          color='primary'
+          aria-label='add'
+          href={FlowRouter.path('AdminTest')}
           className={classes.fab}
         >
           <Icon>add</Icon>
@@ -84,8 +84,8 @@ class AdminTags extends React.Component {
 
 };
 
-AdminTags.propTypes = {
+AdminTests.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AdminTags);
+export default withStyles(styles)(AdminTests);

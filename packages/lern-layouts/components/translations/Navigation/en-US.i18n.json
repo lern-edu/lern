@@ -3,12 +3,13 @@
   "_namespace": "Navigation",
   "title": "English",
   "student": {
-    "StudentHome": "Home",
-    "StudentReport": "Report"
+    "StudentTests": "Tasks",
+    "StudentReport": "Report",
+    "StudentSettings": "Settings"
   },
   "admin": {
-    "adminHome": "Home",
     "adminUsers": "Users",
-    "adminTags": "Tags"
+    "adminTags": "Tags",
+    "AdminTests": "Tests"
   }
 }

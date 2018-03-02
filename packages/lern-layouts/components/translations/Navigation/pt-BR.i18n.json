@@ -3,12 +3,14 @@
   "_namespace": "Navigation",
   "title": "Português",
   "student": {
-    "StudentHome": "Home",
-    "StudentReport": "Desempenho"
+    "StudentTests": "Tarefas",
+    "StudentReport": "Desempenho",
+    "StudentSettings": "Configurações"
   },
   "admin": {
-    "AdminHome": "Home",
+    "StudentTests": "Tarefas",
     "AdminUsers": "Usuários",
-    "AdminTags": "Tags"
+    "AdminTags": "Tags",
+    "AdminTests": "Testes"
   }
 }

@@ -52,7 +52,7 @@ class StudentSettingsView extends React.Component {
         <div className={classes.tabs}>
           {
             !_.every(collections, c => !c.handler)
-            ? <LinearProgress color='accent' />
+            ? <LinearProgress color='secondary' />
             : _.get({
               profile: <StudentSettingsProfile key='profile' {...this.state}/>,
               security: <StudentSettingsSecurity key='security'{...this.state}/>,
