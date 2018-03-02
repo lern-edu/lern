@@ -114,8 +114,7 @@ const Test = Class.create({
     },
   },
 });
-Author(Test)
-TimeTracked(Test);
+Author(Test);
 
 Test.TestPageSchema = TestPageSchema;
 Test.TestScoreSchema = TestScoreSchema;
