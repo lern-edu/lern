@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { Typography, Button } from 'material-ui';
-import { Sudoku } from 'meteor/lern-games';
+import { Sudoku } from 'meteor/duckdodgerbrasl:lern-games';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 
 const styles = theme => ({
