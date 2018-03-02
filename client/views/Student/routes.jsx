@@ -9,11 +9,16 @@ const studentRoutes = FlowRouter.group({
   name: 'Student',
 });
 
-// Views
-import StudentHome from './Home/View.jsx';
-import StudentReport from './Report/View.jsx';
-import StudentSettings from './Settings/View.jsx';
+// Tests
 import StudentTests from './Tests/View.jsx';
+studentRoutes.route('/', {
+  name: 'StudentHome',
+  action(params, query) {
+    setup.render({
+      main: <StudentTests {...query} />,
+    });
+  },
+});
 
 studentRoutes.route('/', {
   name: 'StudentTests',
@@ -24,15 +29,8 @@ studentRoutes.route('/', {
   },
 });
 
-studentRoutes.route('/', {
-  name: 'StudentHome',
-  action(params, query) {
-    setup.render({
-      main: <StudentTests {...query} />,
-    });
-  },
-});
-
+// Report
+import StudentReport from './Report/View.jsx';
 studentRoutes.route('/report', {
   name: 'StudentReport',
   action(params, query) {
@@ -42,11 +40,24 @@ studentRoutes.route('/report', {
   },
 });
 
+// Settings
+import StudentSettings from './Settings/View.jsx';
 studentRoutes.route('/settings', {
   name: 'StudentSettings',
   action(params, query) {
     setup.render({
       main: <StudentSettings {...query}/>,
+    });
+  },
+});
+
+// TestAttempt
+import StudentTestAttempt from './TestAttempt/View.jsx';
+studentRoutes.route('/test/:testId', {
+  name: 'StudentTestAttempt',
+  action(params, query) {
+    setup.render({
+      main: <StudentTestAttempt {...params} />,
     });
   },
 });
