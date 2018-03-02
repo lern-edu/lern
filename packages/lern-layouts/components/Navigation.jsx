@@ -52,8 +52,8 @@ class Navigation extends React.Component {
           },
         },
         student: {
-          StudentHome: {
-            label: 'StudentHome',
+          StudentTests: {
+            label: 'StudentTests',
             icon: 'home',
           },
           StudentReport: {
@@ -61,7 +61,7 @@ class Navigation extends React.Component {
             icon: 'timeline',
           },
           StudentSettings: {
-            label: 'student.StudentSettings',
+            label: 'StudentSettings',
             icon: 'settings',
           },
         },

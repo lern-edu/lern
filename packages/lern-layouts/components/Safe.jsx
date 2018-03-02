@@ -72,22 +72,21 @@ class Safe extends React.Component {
   render() {
     const { access } = this.state;
     return (
-       <div>
+      <div>
          {access === true ? (
            this.props.children
          ) : access === null ? (
            undefined
          ) : access === undefined ? (
-           <div className='ui center aligned basic segment'>
+           <div>
              <LinearProgress size={2}/>
            </div>
          ) : access === false ? (<div>
            <Layout.Bar title='Ops' />
-           <div className='ui center aligned basic segment'>
-             <h1 className='ui icon header'>
-               <FontIcon className='material-icons' style={{ fontSize: 50 }}>mood_bad</FontIcon>
-               <div className='content'>
-                 <div className='sub header'>Você não deveria estar aqui</div>
+           <div>
+             <h1>
+               <div>
+                 <div>Você não deveria estar aqui</div>
                </div>
              </h1>
              <div>

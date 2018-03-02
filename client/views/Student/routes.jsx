@@ -13,12 +13,22 @@ const studentRoutes = FlowRouter.group({
 import StudentHome from './Home/View.jsx';
 import StudentReport from './Report/View.jsx';
 import StudentSettings from './Settings/View.jsx';
+import StudentTests from './Tests/View.jsx';
+
+studentRoutes.route('/', {
+  name: 'StudentTests',
+  action(params, query) {
+    setup.render({
+      main: <StudentTests {...query} />,
+    });
+  },
+});
 
 studentRoutes.route('/', {
   name: 'StudentHome',
   action(params, query) {
     setup.render({
-      main: <StudentHome />,
+      main: <StudentTests {...query} />,
     });
   },
 });
