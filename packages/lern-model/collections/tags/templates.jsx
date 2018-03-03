@@ -6,6 +6,7 @@ import StaticCollections from '../static.js';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Button from 'material-ui/Button';
+import Chip from 'material-ui/Chip';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import AppBar from 'material-ui/AppBar';
@@ -105,6 +106,9 @@ if (Meteor.isClient) {
     content: {
       padding: theme.spacing.unit,
     },
+    chip: {
+      margin: theme.spacing.unit,
+    },
   });
 
   class TagDialog extends React.Component {
@@ -125,13 +129,23 @@ if (Meteor.isClient) {
     };
 
     render() {
-      const { classes, doc } = this.props;
+      const { classes, doc, type = 'chip' } = this.props;
 
       return (
         <div>
-          <IconButton onClick={this.handleClickOpen}>
-            <Fullscreen />
-          </IconButton>
+          {
+            _.get({
+              icon:
+                <IconButton onClick={this.handleClickOpen}>
+                  <Fullscreen />
+                </IconButton>,
+              chip:
+                <Chip
+                  label={doc.name}
+                  className={classes.chip}
+                />,
+            }, type)
+          }
           <Dialog
             fullScreen
             open={this.state.open}
@@ -170,6 +184,7 @@ if (Meteor.isClient) {
   TagDialog.propTypes = {
     classes: PropTypes.object.isRequired,
     doc: PropTypes.object.isRequired,
+    type: PropTypes.string,
   };
 
   Templates.Name = Name;
