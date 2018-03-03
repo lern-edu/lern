@@ -1,0 +1,9 @@
+{
+  "_locale": "pt-BR",
+  "_namespace": "StudentTestAttempt",
+  "title": "Português",
+  "warning": {
+    "content": "Chegue ao final da página antes de terminar"
+  },
+  "finish": "Terminar"
+}

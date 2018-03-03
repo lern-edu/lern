@@ -1,0 +1,9 @@
+{
+  "_locale": "en-US",
+  "_namespace": "StudentTestAttempt",
+  "title": "English",
+  "warning": {
+    "content": "Reach page end before finish"
+  },
+  "finish": "Finish"
+}
