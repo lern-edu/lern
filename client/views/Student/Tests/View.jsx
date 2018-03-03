@@ -16,6 +16,8 @@ import amber from 'material-ui/colors/amber';
 import blue from 'material-ui/colors/blue';
 import Subheader from 'material-ui/List/ListSubheader';
 
+import StudentTestsDialog from './Dialog.jsx';
+
 const styles = theme => ({
   body: {
     background: 'linear-gradient(to left, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%)',
@@ -121,11 +123,11 @@ class StudentTests extends React.Component {
         <div className={classes.root} >
 
           <GridList cellHeight={180}>
-          
+
             {/*<GridListTile key="Subheader" cols={2} className={classes.gridTitle}>
               <Subheader component="div">December</Subheader>
             </GridListTile>*/}
-            
+
               {
                 _.map(docs, test =>
 
@@ -134,7 +136,7 @@ class StudentTests extends React.Component {
                     <GridListTileBar
                       title={test.name}
                       subtitle={
-                        _.map(test.scores, ({ name }) =>
+                        /*_.map(test.scores, ({ name }) =>
                           <Chip
                             key={name}
                             avatar={
@@ -145,6 +147,9 @@ class StudentTests extends React.Component {
                             label={name}
                             className={classes.chip}
                           />
+                        )*/
+                        _.map(_.shuffle(test.scores), score =>
+                          <StudentTestsDialog doc={score} key={`ContentShow-${score.name}`}/>
                         )
                       }
                       actionIcon={
@@ -158,9 +163,9 @@ class StudentTests extends React.Component {
 
                 )
               }
-          
+
             </GridList>
-        
+
         </div>
 
       </div>
