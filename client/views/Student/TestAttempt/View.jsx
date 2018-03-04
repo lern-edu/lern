@@ -35,7 +35,6 @@ class StudentTestAttempt extends React.Component {
 
     this.state = {
       collections: {
-        test: null,
         attempt: null,
       },
       handler: true,
@@ -53,19 +52,18 @@ class StudentTestAttempt extends React.Component {
     log.info('StudentTestAttempt.getData => Start');
     const { testId } = this.props;
 
-    Meteor.call('StudentTestAttemptStart', testId, (err, collections) => {
-      const { attempt, test } = collections;
+    Meteor.call('StudentTestAttemptStart', testId, (err, doc) => {
 
-      if (err || _.isEmpty(attempt) || _.isEmpty(test)) {
+      if (err || _.isEmpty(doc)) {
 
         log.info('StudentTestAttempt.getData.TestAttemptStart => error =>', err);
-        snack({ message: 'Erro ao encontrar testes' });
+        snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
         FlowRouter.go('StudentHome');
 
       };
 
-      log.info('StudentTestAttempt.getData.TestAttemptStart => finish =>', collections);
-      this.setState({ collections, handler: false });
+      log.info('StudentTestAttempt.getData.TestAttemptStart => finish =>', doc);
+      this.setState({ collections: { attempt: doc }, handler: false });
 
     });
   };
@@ -73,10 +71,10 @@ class StudentTestAttempt extends React.Component {
   // Handlers
 
   handleBottom = (event, value) => {
-    const { bottom, collections: { test } } = this.state;
+    const { bottom, collections: { attempt } } = this.state;
 
     if (!bottom) {
-      snack(i18n.__(`StudentTestAttempt.warning.${test.resolution}`));
+      snack(i18n.__(`StudentTestAttempt.warning.${attempt.test.resolution}`));
       return;
     }
     else {
@@ -84,7 +82,20 @@ class StudentTestAttempt extends React.Component {
       if (value === 'finish') {
         this.setState({ bottom: 'loading' });
 
-        // Meteor.call('StudentTestAttemptFinish')
+        Meteor.call('StudentTestAttemptFinish', attempt._id, (err, doc) => {
+
+          if (err || !doc) {
+
+            log.info('StudentTestAttempt.getData.TestAttemptFinish => error =>', err);
+            snack({ message: i18n.__('StudentTestAttempt.error.finishAttempt') });
+
+          };
+
+          log.info('StudentTestAttempt.getData.TestAttemptFinish => finish =>', doc);
+          snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
+          FlowRouter.go('StudentHome');
+
+        });
       };
 
     }
@@ -98,7 +109,6 @@ class StudentTestAttempt extends React.Component {
     const {
       collections,
       collections: {
-        test,
         attempt,
       },
       handler,
@@ -109,22 +119,22 @@ class StudentTestAttempt extends React.Component {
     ? <LinearProgress />
     : (
       <div>
-        <Layout.Bar title={test.name} />
+        <Layout.Bar title={attempt.test.name} />
 
-          <Grid container justify='center' className={classes.grid}>
+        <Grid container justify='center' className={classes.grid}>
 
-            <Grid item xs={12} md={10} lg={8}>
+          <Grid item xs={12} md={10} lg={8}>
 
-              <Grid container spacing={24}>
-                {
-                  _.get(
-                    {
-                      content: <StudentTestAttemptContent parent={this} pages={test.pages} />,
-                    },
-                    test.resolution
-                  )
-                }
-              </Grid>
+            <Grid container spacing={24}>
+              {
+                _.get(
+                  {
+                    content: <StudentTestAttemptContent parent={this} pages={attempt.test.pages} />,
+                  },
+                  attempt.test.resolution
+                )
+              }
+            </Grid>
 
           </Grid>
 
