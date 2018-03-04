@@ -57,7 +57,7 @@ class StudentReportCard extends React.Component {
   // Render
 
   render() {
-    const { classes, report } = this.props;
+    const { classes, report, childrens } = this.props;
 
     return (
       <Card key={report.name}>
@@ -68,11 +68,11 @@ class StudentReportCard extends React.Component {
             </Avatar>
           }
           title={report.name}
-          subheader={`Total score: ${report.score || _.sum(_.map(report.childrens, 'score'))}`}
+          subheader={`Total score: ${report.score || _.sum(_.map(childrens, 'score'))}`}
         />
 
         {
-          _.isEmpty(report.childrens)
+          _.isEmpty(childrens)
           ? null
           : <CardActions className={classes.actions} disableActionSpacing>
 
@@ -98,12 +98,12 @@ class StudentReportCard extends React.Component {
         }
 
         {
-          _.isEmpty(report.childrens)
+          _.isEmpty(childrens)
           ? null
           : <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Divider />
-              <StudentReportChart report={report} />
+              <StudentReportChart childrens={childrens} />
             </CardContent>
           </Collapse>
         }
