@@ -43,12 +43,12 @@ Package.onUse((api) => {
     'schemas/content/schema.js',
     'schemas/content/template/Create/index.jsx',
 
-    'collections/attempts/validators.js',
-    'collections/attempts/schema.js',
-
     'collections/users/validators.js',
     'collections/users/templates.jsx',
     'collections/users/schema.js',
+
+    'collections/attempts/validators.js',
+    'collections/attempts/schema.js',
 
     'collections/companies/schema.js',
 
