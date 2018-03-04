@@ -16,8 +16,6 @@ class ContentShow extends React.Component {
   render() {
     const { doc, doc: { text, link, image, type, video } } = this.props;
 
-    console.log(this);
-
     return _.get({
       text:
         <PublicContentRichText
