@@ -11,5 +11,6 @@
     "adminUsers": "Users",
     "adminTags": "Tags",
     "AdminTests": "Tests"
-  }
+  },
+  "exit": "Exit"
 }
