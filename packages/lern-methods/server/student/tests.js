@@ -75,8 +75,46 @@ Helpers.Methods({ prefix, protect }, {
     }
 
   },
+
+  /**
+   * @memberof LernMethods.Student()
+   * @desc set attempt to finish
+   * @example
+   * Meteor.call('StudentTestAttemptFinish');
+   * @public
+   * @param {String} [attemptId] - attempt id
+   * @return {bool} - true if setted
+   */
+  TestAttemptFinish(attemptId) {
+    const user = Meteor.user();
+
+    let attempt = Attempt.find({ _id: attemptId });
+    Check.Cursor(attempt).some();
+    attempt = _.head(attempt.fetch());
+
+    const { test } = attempt;
+
+    // DONE THIS ON ATTEMPT SCHEMA
+    if (test.resolution === 'content') {
+
+      _.map(test.scores, score => attempt.scores.push(new Attempt.AttemptScoreSchema(score)));
+
+      _.forEach(attempt.scores, score => {
+
+        const userReportIndex = _.findIndex(user.report, { _id: score._id });
+        const doneThisTestBefore = _.get(user, `report.${userReportIndex}.tests.${test._id}`);
+
+        score.score = score.score * (doneThisTestBefore ? 0 : test.score);
+      });
+
+      attempt.set('finished', true);
+      attempt.set('finishedAt', new Date());
+
     }
 
+    console.log(attempt.scores);
+
+    return attempt.save();
   },
 
 });
