@@ -45,12 +45,12 @@ class PublicContentShowImage extends React.Component {
 
   render() {
     const { image, file } = this.state;
-    const { classes } = this.props;
+    const { classes, imgStyle } = this.props;
 
     return (
       file ?
         <div className={classes.container}>
-          <img className={classes.media} src={file}/>
+          <img className={classes.media} src={file} style={imgStyle} />
         </div>
         : null
     );

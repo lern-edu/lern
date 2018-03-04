@@ -69,7 +69,7 @@ class StudentTestAttemptContent extends React.Component {
                 ? (
                   <Grid container justify='center' >
                     <Grid item xs={12} >
-                      <ContentShow doc={description} />
+                      <ContentShow doc={description} imgStyle={{ width: '100%' }} />
                     </Grid>
                   </Grid>
                 )

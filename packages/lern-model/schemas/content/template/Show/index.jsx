@@ -14,7 +14,7 @@ class ContentShow extends React.Component {
   // Render
 
   render() {
-    const { doc, doc: { text, link, image, type, video } } = this.props;
+    const { doc, doc: { text, link, image, type, video }, imgStyle } = this.props;
 
     return _.get({
       text:
@@ -28,6 +28,7 @@ class ContentShow extends React.Component {
       image:
         <PublicContentShowImage
           image={image}
+          imgStyle={imgStyle}
         />,
       video:
         <PublicContentShowVideo
