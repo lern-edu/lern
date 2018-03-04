@@ -5,5 +5,12 @@
   "warning": {
     "content": "Reach page end before finish"
   },
+  "error": {
+    "findTest": "Problem to find test",
+    "finishAttempt": "Problem to finish test"
+  },
+  "success": {
+    "attempt": "Congratulations!"
+  },
   "finish": "Finish"
 }
