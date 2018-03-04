@@ -53,7 +53,7 @@ const TestScoreSchema = Class.create({
       optional: true,
     },
     description: {
-      type: Object,
+      type: [Object],
       optional: true,
     },
     _id: {
