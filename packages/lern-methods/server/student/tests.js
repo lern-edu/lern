@@ -43,10 +43,10 @@ Helpers.Methods({ prefix, protect }, {
    * @memberof LernMethods.Student()
    * @desc Retrieve attempt (find or create) and test from the database
    * @example
-   * const testAndAttempt0 = Meteor.call('StudentTestAttemptStart');
+   * const testAndAttempt = Meteor.call('StudentTestAttemptStart');
    * @public
    * @param {String} [testId] - Test id
-   * @return {Array} - Array of tags
+   * @return {Object} - test and attempt
    */
   TestAttemptStart(testId) {
 
@@ -54,31 +54,27 @@ Helpers.Methods({ prefix, protect }, {
     Check.Cursor(test).some();
     test = _.head(test.fetch());
 
-    let attempt = Attempt.find({ testId });
+    let attempt = Attempt.find({ 'test._id': testId, finished: false });
     let hasAttempt = true;
     try {
       Check.Cursor(attempt).some();
     }
     catch (err) {
-      hasAttempt = false
+      hasAttempt = false;
     }
 
     if (hasAttempt)
-      return {
-        attempt: _.head(attempt.fetch()),
-        test,
-      };
+      return _.head(attempt.fetch());
     else {
       attempt = new Attempt({
-        testId,
-        scores: _.map(test.scores, score => new Attempt.AttemptScoreSchema(score.raw())),
+        test: test.raw(),
         startedAt: new Date(),
       });
       const attemptId = attempt.save();
-      return {
-        attempt: Attempt.findOne(attemptId),
-        test,
-      };
+      return Attempt.findOne(attemptId);
+    }
+
+  },
     }
 
   },
