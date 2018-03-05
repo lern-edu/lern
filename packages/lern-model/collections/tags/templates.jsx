@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import StaticCollections from '../static.js';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
@@ -74,9 +75,21 @@ if (Meteor.isClient) {
 
   class DescriptionShow extends React.Component {
     render() {
-      const { content } = this.props;
-      return <ContentShow doc={content} />;
+      const { content, form, canRemove, index } = this.props;
+      return <ContentShow
+        doc={content}
+        form={form}
+        canRemove={canRemove}
+        index={index}
+      />;
     }
+  };
+
+  DescriptionShow.propTypes = {
+    content: PropTypes.object.isRequired,
+    form: PropTypes.object.isRequired,
+    canRemove: PropTypes.bool.isRequired,
+    index: PropTypes.number.isRequired,
   };
 
   Templates.Name = Name;
