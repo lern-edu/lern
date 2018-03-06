@@ -1,7 +1,8 @@
 import _ from 'lodash';
-import { Test, Attempt } from 'meteor/duckdodgerbrasl:lern-model';
+import { Test, Attempt, Sudoku } from 'meteor/duckdodgerbrasl:lern-model';
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import log from 'loglevel';
+import Future from 'fibers/future';
 import Helpers from '../../helpers.js';
 const [prefix, protect] = ['Student', 'student'];
 
@@ -66,12 +67,39 @@ Helpers.Methods({ prefix, protect }, {
     if (hasAttempt)
       return _.head(attempt.fetch());
     else {
+
       attempt = new Attempt({
         test: test.raw(),
         startedAt: new Date(),
       });
+
+      const future = new Future();
+      let rawSudokuDb = Sudoku.getCollection();
+      rawSudokuDb = rawSudokuDb.rawCollection();
+      rawSudokuDb.aggregate([
+        {
+          $match: {
+            $and: [
+              { level: test.level || 'easy' },
+            ],
+          },
+        },
+        { $sample: { size: 1 } },
+      ])
+      .toArray((err, docs) => {
+
+        if (err && !_.isEmpty(docs))
+          throw new Meteor.Error('Problem to start game');
+        else
+          future.return(_.head(docs));
+      });
+
+      attempt.sudoku = future.wait();
+      attempt.sudoku.answer = attempt.sudoku.board;
+
       const attemptId = attempt.save();
       return Attempt.findOne(attemptId);
+
     }
 
   },
@@ -109,12 +137,9 @@ Helpers.Methods({ prefix, protect }, {
 
       attempt.set('finished', true);
       attempt.set('finishedAt', new Date());
-
+      return attempt.save();
     }
 
-    console.log(attempt.scores);
-
-    return attempt.save();
   },
 
 });
