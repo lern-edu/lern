@@ -4,8 +4,6 @@ import { withStyles } from 'material-ui/styles';
 import { Button, Select, Input, MenuItem, Toolbar } from 'material-ui';
 import Sudoku from '../Sudoku';
 import Timer from './Timer.jsx';
-import _sudoku from 'sudoku';
-import boards from './boards';
 import _ from 'lodash';
 
 const styles = theme => ({

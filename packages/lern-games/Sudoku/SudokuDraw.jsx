@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgress, Paper } from 'material-ui';
 import SudokuCell from './Cell.jsx';
-import _sudoku from 'sudoku';
 import lodash from 'lodash';
 const _ = lodash;
 

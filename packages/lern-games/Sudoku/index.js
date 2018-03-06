@@ -4,7 +4,6 @@ import { withStyles } from 'material-ui/styles';
 import { Button, Select, Input, MenuItem, Toolbar } from 'material-ui';
 import SudokuDraw from './SudokuDraw.jsx';
 import Timer from './Timer.jsx';
-import _sudoku from 'sudoku';
 import boards from './boards';
 import _ from 'lodash';
 

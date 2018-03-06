@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { RaisedButton } from 'material-ui';
-import _sudoku from 'sudoku';
 import _ from 'lodash';
 
 import SudokuDraw from './SudokuDraw.jsx';
@@ -37,7 +36,7 @@ class Sudoku extends React.Component {
   }
 
   validate() {
-    const { answer } = this.state;
+    const { answer } = this;
     var conflict = false;
     var conflictRow = false;
     for (var row = 0; row < 9; row++) {
