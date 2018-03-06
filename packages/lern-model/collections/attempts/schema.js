@@ -33,6 +33,10 @@ const Attempt = Class.create({
       type: Object,
       immutable: true,
     },
+    sudoku: {
+      type: Object,
+      optional: true,
+    },
     finished: {
       type: Boolean,
       default: false,
