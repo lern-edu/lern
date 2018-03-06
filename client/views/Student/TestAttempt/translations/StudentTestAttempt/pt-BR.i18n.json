@@ -3,7 +3,8 @@
   "_namespace": "StudentTestAttempt",
   "title": "Português",
   "warning": {
-    "content": "Chegue ao final da página antes de terminar"
+    "content": "Chegue ao final da página antes de terminar",
+    "sudoku": "Você deve terminar o jogo"
   },
   "error": {
     "findTest": "Problema ao encontrar teste",

@@ -10,6 +10,7 @@ import { LinearProgress, CircularProgress } from 'material-ui/Progress';
 import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
 
 import StudentTestAttemptContent from './Content.jsx';
+import StudentTestAttemptSudoku from './Sudoku.jsx';
 
 const styles = theme => ({
   bottom: {
@@ -125,11 +126,12 @@ class StudentTestAttempt extends React.Component {
 
           <Grid item xs={12} md={10} lg={8}>
 
-            <Grid container spacing={24}>
+            <Grid container spacing={40}>
               {
                 _.get(
                   {
                     content: <StudentTestAttemptContent parent={this} pages={attempt.test.pages} />,
+                    sudoku: <StudentTestAttemptSudoku parent={this} sudoku={attempt.sudoku} />,
                   },
                   attempt.test.resolution
                 )

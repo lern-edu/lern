@@ -332,6 +332,20 @@ class AdminTest extends React.Component {
                                   parent={this}
                                 />
 
+                                {
+                                  doc.resolution !== 'sudoku'
+                                  ? undefined
+                                  : (
+                                      <AdminTestSelect
+                                        options={StaticCollections.SudokuLevel}
+                                        doc={doc}
+                                        field='level'
+                                        error={errors.level}
+                                        parent={this}
+                                      />
+                                  )
+                                }
+
                               </Paper>
 
                               {actionButtons('resolution')}
