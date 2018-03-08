@@ -1,9 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 import _ from 'lodash';
 import StaticCollections from '../static.js';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
+import Button from 'material-ui/Button';
+import Chip from 'material-ui/Chip';
+import Dialog from 'material-ui/Dialog';
+import Divider from 'material-ui/Divider';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import Typography from 'material-ui/Typography';
+import CloseIcon from 'material-ui-icons/Close';
+import Slide from 'material-ui/transitions/Slide';
+import Fullscreen from 'material-ui-icons/Fullscreen';
 import Content from '../../schemas/content/schema.js';
 const content = new Content();
 
@@ -90,11 +102,107 @@ if (Meteor.isClient) {
     form: PropTypes.object.isRequired,
     canRemove: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
+  }
+
+  function Transition(props) {
+    return <Slide direction="up" {...props} />;
+  }
+
+  const TagStyles = theme => ({
+    appBar: {
+      position: 'relative',
+    },
+    flex: {
+      flex: 1,
+    },
+    content: {
+      padding: theme.spacing.unit,
+    },
+    chip: {
+      margin: theme.spacing.unit,
+    },
+  });
+
+  class TagDialog extends React.Component {
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        open: false,
+      };
+    }
+
+    handleClickOpen = () => {
+      this.setState({ open: true });
+    };
+
+    handleClose = () => {
+      this.setState({ open: false });
+    };
+
+    render() {
+      const { classes, doc, type = 'chip' } = this.props;
+
+      return (
+        <div>
+          {
+            _.get({
+              icon:
+                <IconButton onClick={this.handleClickOpen}>
+                  <Fullscreen />
+                </IconButton>,
+              chip:
+                <Chip
+                  label={doc.name}
+                  className={classes.chip}
+                />,
+            }, type)
+          }
+          <Dialog
+            fullScreen
+            open={this.state.open}
+            onClose={this.handleClose}
+            transition={Transition}
+          >
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+                <IconButton color="inherit" onClick={this.handleClose}>
+                  <CloseIcon />
+                </IconButton>
+                <Typography type='title' color="inherit" className={classes.flex}>
+                  {doc.name}
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <div className={classes.content}>
+              {
+                _.map(doc.description, (description, index) =>
+                  [
+                    <doc.templates.DescriptionShow
+                      content={description}
+                      key={`descriptionShow${index}`}
+                    />,
+                    <Divider key={`descriptionDivider${index}`}/>,
+                  ]
+                )
+              }
+            </div>
+          </Dialog>
+        </div>
+      );
+    }
+  }
+
+  TagDialog.propTypes = {
+    classes: PropTypes.object.isRequired,
+    doc: PropTypes.object.isRequired,
+    type: PropTypes.string,
   };
 
   Templates.Name = Name;
   Templates.DescriptionCreate = DescriptionCreate;
   Templates.DescriptionShow = DescriptionShow;
+  Templates.Dialog = withStyles(TagStyles)(TagDialog);
 
 };
 
