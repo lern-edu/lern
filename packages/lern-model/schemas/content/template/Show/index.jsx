@@ -102,38 +102,37 @@ class ContentShow extends React.Component {
               />,
           }, type)}
         </div>
-
-        <div className={classes.buttonGroup}>
-          {
-            array.length > 1 && index > 0 ?
-              <IconButton
-                onClick={this.handleUp}
-                className={classes.button}
-              >
-                <ArrowUpward />
-              </IconButton> : null
-          }
-          {
-            !canRemove
-            ? undefined
-            :
+        {
+          !canRemove
+          ? undefined
+          :
+          <div className={classes.buttonGroup}>
+            {
+              array.length > 1 && index > 0 ?
+                <IconButton
+                  onClick={this.handleUp}
+                  className={classes.button}
+                >
+                  <ArrowUpward />
+                </IconButton> : null
+            }
             <IconButton
               onClick={this.handleRemove}
               className={classes.button}
             >
               <RemoveCircle />
             </IconButton>
-          }
-          {
-            array.length > 1 && index < array.length - 1 ?
-            <IconButton
-              onClick={this.handleDown}
-              className={classes.button}
-            >
-              <ArrowDownward />
-            </IconButton> : null
-          }
-        </div>
+            {
+              array.length > 1 && index < array.length - 1 ?
+              <IconButton
+                onClick={this.handleDown}
+                className={classes.button}
+              >
+                <ArrowDownward />
+              </IconButton> : null
+            }
+          </div>
+        }
       </div>
     );
   };
