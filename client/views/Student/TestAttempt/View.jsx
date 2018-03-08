@@ -74,30 +74,39 @@ class StudentTestAttempt extends React.Component {
   handleBottom = (event, value) => {
     const { bottom, collections: { attempt } } = this.state;
 
-    if (!bottom) {
+    let dismiss = null;
+
+    if (value === 'dismiss') {
+      dismiss = confirm(i18n.__(`StudentTestAttempt.warning.dismiss`));
+      if (!dismiss) return;
+    }
+
+    if (!bottom && value === 'finish') {
       snack(i18n.__(`StudentTestAttempt.warning.${attempt.test.resolution}`));
       return;
     }
     else {
+      this.setState({ bottom: 'loading' });
 
-      if (value === 'finish') {
-        this.setState({ bottom: 'loading' });
+      Meteor.call('StudentTestAttemptFinish', attempt._id, dismiss, (err, doc) => {
 
-        Meteor.call('StudentTestAttemptFinish', attempt._id, (err, doc) => {
-
-          if (err || !doc) {
-
-            log.info('StudentTestAttempt.getData.TestAttemptFinish => error =>', err);
-            snack({ message: i18n.__('StudentTestAttempt.error.finishAttempt') });
-
-          };
-
-          log.info('StudentTestAttempt.getData.TestAttemptFinish => finish =>', doc);
-          snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
+        if (err || !doc) {
+          log.info('StudentTestAttempt.TestAttemptFinish => error =>', err);
+          if (err && err.error === 501)
+            snack({ message: i18n.__('StudentTestAttempt.error.sudokuInvalid') });
+          else
+            snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
+          this.setState({ bottom: null });
+        } else {
+          log.info('StudentTestAttempt.TestAttemptFinish => finish =>', doc);
+          if (dismiss)
+            snack({ message: i18n.__('StudentTestAttempt.success.thankYou') });
+          else
+            snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
           FlowRouter.go('StudentHome');
+        };
 
-        });
-      };
+      });
 
     }
 
@@ -126,12 +135,16 @@ class StudentTestAttempt extends React.Component {
 
           <Grid item xs={12} md={10} lg={8}>
 
-            <Grid container spacing={40}>
+            <Grid container spacing={0}>
               {
                 _.get(
                   {
                     content: <StudentTestAttemptContent parent={this} pages={attempt.test.pages} />,
-                    sudoku: <StudentTestAttemptSudoku parent={this} sudoku={attempt.sudoku} />,
+                    sudoku: <StudentTestAttemptSudoku
+                      parent={this}
+                      attempt={attempt}
+                      sudoku={attempt.sudoku}
+                    />,
                   },
                   attempt.test.resolution
                 )
@@ -144,19 +157,27 @@ class StudentTestAttempt extends React.Component {
 
         <BottomNavigation
           value={bottom}
+          showLabels
           onChange={this.handleBottom}
           className={classes.bottom}
         >
           {
             bottom === 'loading'
             ? <CircularProgress color='secondary' />
-            : (
+            : [
+              <BottomNavigationAction
+                label={i18n.__('StudentTestAttempt.dismiss')}
+                value='dismiss'
+                key='dismiss'
+                icon={<Icon>mood_bad</Icon>}
+              />,
               <BottomNavigationAction
                 label={i18n.__('StudentTestAttempt.finish')}
                 value='finish'
+                key='finish'
                 icon={<Icon>check</Icon>}
-              />
-            )
+              />,
+            ]
           }
         </BottomNavigation>
           
