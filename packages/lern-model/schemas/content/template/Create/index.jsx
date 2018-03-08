@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField';
 import ContentRichText from './../RichText.jsx';
 import PublicContentCreateImage from './Image.jsx';
 import PublicContentCreateVideo from './Video.jsx';
+import PublicContentCreateTask from './Task.jsx';
 
 class ContentCreate extends React.Component {
 
@@ -44,8 +45,7 @@ class ContentCreate extends React.Component {
       const array = _.get(docToSave, field);
       array.push(_.clone(doc));
       docToSave.set(field, array);
-    }
-    else docToSave.set(field, [_.clone(doc)]);
+    } else docToSave.set(field, [_.clone(doc)]);
     form.setState({ doc: docToSave });
     this.setState({
       doc: new Schema({ type, [type]: '' }),
@@ -86,6 +86,8 @@ class ContentCreate extends React.Component {
     const { contentTypes } = this.props;
     const { editorState, doc, clear } = this.state;
     const { type, text, link, image } = doc;
+
+    console.log(this);
 
     return (
       <Grid container spacing={24}>
@@ -129,6 +131,11 @@ class ContentCreate extends React.Component {
                 />,
               video:
                 <PublicContentCreateVideo
+                  parent={this}
+                  clear={clear}
+                />,
+              task:
+                <PublicContentCreateTask
                   parent={this}
                   clear={clear}
                 />,
