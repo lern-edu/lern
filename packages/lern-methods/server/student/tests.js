@@ -99,9 +99,7 @@ Helpers.Methods({ prefix, protect }, {
 
       const attemptId = attempt.save();
       return Attempt.findOne(attemptId);
-
     }
-
   },
 
   /**
@@ -113,7 +111,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {String} [attemptId] - attempt id
    * @return {bool} - true if setted
    */
-  TestAttemptFinish(attemptId) {
+  TestAttemptFinish(attemptId, dismiss) {
     const user = Meteor.user();
 
     let attempt = Attempt.find({ _id: attemptId });
@@ -123,7 +121,37 @@ Helpers.Methods({ prefix, protect }, {
     const { test } = attempt;
 
     // DONE THIS ON ATTEMPT SCHEMA
-    if (test.resolution === 'content') {
+    if (dismiss) {
+      attempt.set('finished', true);
+      attempt.set('finishedAt', new Date());
+      return attempt.save();
+    };
+
+    if (test.resolution === 'content' && !dismiss) {
+      _.map(test.scores, score => attempt.scores.push(new Attempt.AttemptScoreSchema(score)));
+
+      _.forEach(attempt.scores, score => {
+
+        const userReportIndex = _.findIndex(user.report, { _id: score._id });
+        const doneThisTestBefore = _.get(user, `report.${userReportIndex}.tests.${test._id}`);
+
+        score.score = score.score * (doneThisTestBefore ? 0 : test.score);
+      });
+
+      attempt.set('finished', true);
+      attempt.set('finishedAt', new Date());
+      return attempt.save();
+    };
+
+    if (test.resolution === 'sudoku' && !dismiss) {
+
+      let sudoku = Sudoku.find({ _id: attempt.sudoku._id });
+      Check.Cursor(sudoku).some();
+      sudoku = _.head(sudoku.fetch());
+      const validate = sudoku.validateGame(attempt.sudoku.answer);
+
+      if (!validate)
+        throw new Meteor.Error(501, 'Fails on validate');
 
       _.map(test.scores, score => attempt.scores.push(new Attempt.AttemptScoreSchema(score)));
 
@@ -139,7 +167,8 @@ Helpers.Methods({ prefix, protect }, {
       attempt.set('finishedAt', new Date());
       return attempt.save();
     }
-
   },
+
+  TestAttemptUpdate: Helpers.DefaultSave,
 
 });
