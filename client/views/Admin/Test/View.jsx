@@ -126,7 +126,7 @@ class AdminTest extends React.Component {
           };
         });
     });
-  }
+  };
 
   render() {
     log.info('AdminTest.render =>', this.state);
@@ -187,9 +187,9 @@ class AdminTest extends React.Component {
                           <StepLabel>Name</StepLabel>
 
                           <StepContent>
-                          
+
                             <Grid item xs={12}>
-  
+
 
                               <Paper className={classes.paper}>
 
@@ -202,11 +202,11 @@ class AdminTest extends React.Component {
 
                                 {actionButtons()}
                               </Paper>
-                            
+
                             </Grid>
 
                           </StepContent>
-                        
+
                         </Step>
 
                         {/* End doc.name */}
@@ -242,6 +242,9 @@ class AdminTest extends React.Component {
                                         [
                                           <ContentShow
                                             doc={description}
+                                            form={this}
+                                            index={index}
+                                            canRemove={true}
                                             key={`descriptionShow${index}`}
                                           />,
                                           <Divider key={`descriptionDivider${index}`} />,
@@ -294,6 +297,9 @@ class AdminTest extends React.Component {
                                         [
                                           <ContentShow
                                             doc={help}
+                                            form={this}
+                                            index={index}
+                                            canRemove={true}
                                             key={`helpShow${index}`}
                                           />,
                                           <Divider key={`helpDivider${index}`} />,
@@ -476,7 +482,7 @@ class AdminTest extends React.Component {
                                   error={errors.score}
                                   parent={this}
                                 />
-                
+
                               </Paper>
 
                               {actionButtons('score')}

@@ -115,7 +115,7 @@ class AdminTag extends React.Component {
           };
         });
     });
-  }
+  };
 
   render() {
     log.info('AdminTag.render =>', this.state);
@@ -139,7 +139,7 @@ class AdminTag extends React.Component {
                   <Grid container spacing={24}>
 
                       <Grid item xs={12}>
-                        
+
                         <Paper className={classes.paper}>
 
                           <FormControl error={_.get(errors, 'name.error')} className={classes.input}>
@@ -166,7 +166,7 @@ class AdminTag extends React.Component {
                           <doc.templates.DescriptionCreate form={this} doc={doc} />
                         </Paper>
                       </Grid>
-                      
+
                       <Grid item xs={12}>
                         {
                           _.isEmpty(doc.description)
@@ -177,6 +177,9 @@ class AdminTag extends React.Component {
                                 [
                                   <doc.templates.DescriptionShow
                                     content={description}
+                                    form={this}
+                                    canRemove={true}
+                                    index={index}
                                     key={`descriptionShow${index}`}
                                   />,
                                   <Divider key={`descriptionDivider${index}`}/>,
@@ -186,7 +189,7 @@ class AdminTag extends React.Component {
                           </Paper>
                         }
                       </Grid>
-                      
+
 
                       <Grid item xs={12}>
 
