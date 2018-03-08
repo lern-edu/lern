@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Class } from 'meteor/jagi:astronomy';
+import _ from 'lodash';
 
 const _Sudoku = new Mongo.Collection('sudoku');
 
@@ -24,7 +25,7 @@ const Sudoku = Class.create({
           cRow[answer[row * 9 + col] - 1] = true;
         }
 
-        console.log('row: ' + row, cRow, conflictRow, _.every(cRow));
+        // console.log('row: ' + row, cRow, conflictRow, _.every(cRow));
       }
 
       var conflictCol = false;
@@ -35,7 +36,7 @@ const Sudoku = Class.create({
           cCol[answer[row * 9 + col] - 1] = true;
         }
 
-        console.log('col: ' + col, cCol, conflictCol, _.every(cCol));
+        // console.log('col: ' + col, cCol, conflictCol, _.every(cCol));
       }
 
       var conflictGrid = false;
@@ -49,11 +50,11 @@ const Sudoku = Class.create({
             }
           }
 
-          console.log('grid: ' + i + ',' + j, cGrid, conflictGrid, _.every(cGrid));
+          // console.log('grid: ' + i + ',' + j, cGrid, conflictGrid, _.every(cGrid));
         }
       }
 
-      console.log(conflictRow, conflictCol, conflictGrid);
+      // console.log(conflictRow, conflictCol, conflictGrid);
 
       conflict |= conflictRow || conflictCol || conflictGrid;
 
