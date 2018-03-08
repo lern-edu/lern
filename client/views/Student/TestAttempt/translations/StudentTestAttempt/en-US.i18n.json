@@ -4,14 +4,18 @@
   "title": "English",
   "warning": {
     "content": "Reach page end before finish",
-    "sudoku": "You should finish the game"
+    "sudoku": "You should finish the game",
+    "dismiss": "You really want dismiss the game?"
   },
   "error": {
     "findTest": "Problem to find test",
+    "sudokuInvalid": "The sudoku game is incorrect",
     "finishAttempt": "Problem to finish test"
   },
   "success": {
-    "attempt": "Congratulations!"
+    "attempt": "Congratulations!",
+    "thankYou": "Thank you. Try again another time..."
   },
-  "finish": "Finish"
+  "finish": "Finish",
+  "dismiss": "Dismiss"
 }
