@@ -50,12 +50,13 @@ Helpers.Methods({ prefix, protect }, {
    * @return {Object} - test and attempt
    */
   TestAttemptStart(testId) {
+    const userId = Meteor.userId();
 
     let test = Test.find({ _id: testId });
     Check.Cursor(test).some();
     test = _.head(test.fetch());
 
-    let attempt = Attempt.find({ 'test._id': testId, finished: false });
+    let attempt = Attempt.find({ 'test._id': testId, finished: false, 'author._id': userId });
     let hasAttempt = true;
     try {
       Check.Cursor(attempt).some();
