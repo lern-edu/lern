@@ -1,5 +1,6 @@
 // Libs
 import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import i18n from 'meteor/universe:i18n';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
@@ -89,8 +90,16 @@ class LayoutView extends React.Component {
 
   constructor(props) {
     super(props);
-    i18n.setLocale('pt-BR');
-    this.state = { locale: 'pt-BR' };
+    this.state = { locale: 'en-US' };
+  }
+
+  componentWillReceiveProps(props) {
+    const { user } = props;
+
+    if (_.get(user, 'profile.locale'))
+      i18n.setLocale(_.get(user, 'profile.locale'));
+
+    this.setState({ locale: _.get(user, 'profile.locale') });
   }
 
   onLocale(locale) {
@@ -103,10 +112,6 @@ class LayoutView extends React.Component {
 
   componentWillUnmount() {
     i18n.offChangeLocale(this.onLocale.bind(this));
-  }
-
-  getLanguage() {
-    return 'pt-BR';
   }
 
   /* Render

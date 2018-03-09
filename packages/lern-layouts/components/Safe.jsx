@@ -1,6 +1,8 @@
 import React from 'react';
 import Bar from '../Bar.jsx';
-import { FontIcon, RaisedButton, LinearProgress } from 'material-ui';
+import { LinearProgress } from 'material-ui/Progress';
+import Button from 'material-ui/Button';
+import _ from 'lodash';
 
 /**
  * Safe view render
@@ -18,7 +20,7 @@ class Safe extends React.Component {
          !protect ? true
        : logging ? undefined
        : !user ? null
-       : !user.roles ? undefined
+       : _.isEmpty(user.roles) ? undefined
        : user.hasRole(protect)
      ),
     });
@@ -48,6 +50,16 @@ class Safe extends React.Component {
       FlowRouter.go('PublicLogin');
     }
 
+    if (user) {
+      if (_.size(_.get(user, 'emails')) === 0) {
+        if (FlowRouter.getRouteName() &&
+          !_.includes(FlowRouter.getRouteName(), 'Public')) {
+          snack('É necessário cadastrar um email');
+          FlowRouter.go('PublicComplete', {}, { path: FlowRouter.current().path });
+        }
+      }
+    }
+
     if (!this.props.user && user && this.redir) {
       if (!_.get(user, 'profile.tutorial'))
         FlowRouter.go(user.getHomeRoute);
@@ -61,35 +73,36 @@ class Safe extends React.Component {
   render() {
     const { access } = this.state;
     return (
-       <div>
+      <div>
          {access === true ? (
            this.props.children
          ) : access === null ? (
            undefined
          ) : access === undefined ? (
-           <div className='ui center aligned basic segment'>
+           <div>
              <LinearProgress size={2}/>
            </div>
-         ) : access === false ? (<div>
-           <Layout.Bar title='Ops' />
-           <div className='ui center aligned basic segment'>
-             <h1 className='ui icon header'>
-               <FontIcon className='material-icons' style={{ fontSize: 50 }}>mood_bad</FontIcon>
-               <div className='content'>
-                 <div className='sub header'>Você não deveria estar aqui</div>
-               </div>
-             </h1>
+         ) : access === false ? (
+          <div>
+            <Bar title='Ops' />
              <div>
-               <RaisedButton
-                 label='Voltar'
-                 primary={true}
-                 href={FlowRouter.path('PublicHome')}
-               />
-             </div>
-           </div>
-         </div>) : undefined}
-       </div>
-     );
+               <h3>
+                <div>Você não deveria estar aqui</div>
+              </h3>
+              <div>
+                <Button
+                  raised
+                  color='primary'
+                  href={FlowRouter.path('PublicLogin')}
+                >
+                  Voltar
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : undefined}
+      </div>
+    );
   }
 };
 

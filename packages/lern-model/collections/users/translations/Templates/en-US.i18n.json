@@ -1,0 +1,29 @@
+{
+  "_locale": "en-US",
+  "_namespace": "Templates",
+  "title": "English",
+  "email": {
+    "message": "Email is not valid",
+    "name": "Email",
+    "verified": "Email verified",
+    "notVerified": "Email not verified"
+  },
+  "firstName": {
+    "message": "First name is not valid",
+    "name": "First name"
+  },
+  "lastName": {
+    "message": "Last name is not valid",
+    "name": "Last name"
+  },
+  "roles": {
+    "name": "Roles"
+  },
+  "locale": {
+    "name": "Locale"
+  },
+  "password": {
+    "name": "Password",
+    "message": "Minimum eight characters, at least one letter and one number"
+  }
+}

@@ -1,42 +1,60 @@
 // Libs
 import React from 'react';
 import _ from 'lodash';
+import i18n from 'meteor/universe:i18n';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
 import TextField from 'material-ui/TextField';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-import { Icon } from 'semantic-ui-react';
+import SvgIcon from 'material-ui/SvgIcon';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 
 // Styles
 const styles = {
   background: {
-    style: {
-      width: `100%`,
-      height: `100%`,
-      top: 0,
-      left: 0,
-      backgroundSize: 'cover',
-      backgroundImage: 'url(/backgrounds/triangles-login.svg)',
-      backgroundRepeat: 'no-repeat',
-      position: 'fixed',
-      zIndex: '-1',
-    },
+    width: `100%`,
+    height: `100%`,
+    top: 0,
+    left: 0,
+    backgroundSize: 'cover',
+    backgroundImage: 'url(/backgrounds/triangles-login.svg)',
+    backgroundRepeat: 'no-repeat',
+    position: 'fixed',
+    zIndex: '-1',
   },
-  form: {
-    className: 'eight wide computer ten wide tablet thirteen wide mobile column',
-    style: {
-      marginTop: '3%',
-      padding: '0px',
-    },
-  },
-  column: {
-    className: 'sixteen wide column',
-    style: { paddingBottom: '0px' },
+  image: {
+    width: '80%',
+    paddingbottom: '48px',
+    margin: 'auto',
   },
 };
 
-const texts = {};
+//icons
+const FacebookIcon = props => (
+  <SvgIcon {...props}>
+    <path d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+  </SvgIcon>
+);
+
+const GoogleIcon = props => (
+  <SvgIcon {...props}>
+    <path d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
+  </SvgIcon>
+);
+
+const texts = {
+  password: i18n.__('PublicLogin.password'),
+  signIn: i18n.__('PublicLogin.signIn'),
+  welcomeMessage: i18n.__('PublicLogin.welcomeMessage'),
+  errorMessage: i18n.__('PublicLogin.errorMessage'),
+  userNotFoundMessage: i18n.__('PublicLogin.userNotFoundMessage'),
+  invalidPasswordMessage: i18n.__('PublicLogin.invalidPasswordMessage'),
+  allFieldsMessage: i18n.__('PublicLogin.allFieldsMessage'),
+
+};
 
 class PublicLogin extends React.Component {
 
@@ -62,36 +80,38 @@ class PublicLogin extends React.Component {
       Meteor.loginWithPassword(email, password, (err, res) => {
         if (err) {
           snack(err.reason.includes('password')
-          ? 'Senha incorreta'
-          : 'Usuário não encontrado');
+          ? texts.invalidPasswordMessage
+          : texts.userNotFoundMessage);
           this.clear();
         } else this.handleRedirect.bind(this)();
       });
-    } else snack('Preencha todos os campos');
+    } else snack(texts.allFieldsMessage);
   }
 
   handleFacebookLogin() {
     Meteor.loginWithFacebook({ requestPermissions: ['public_profile', 'email'] },
     (err) => {
-      if (err) snack('Problemas ao cadastrar');
-      else this.handleRedirect.bind(this);
+      if (err) snack(texts.errorMessage);
+      else this.handleRedirect.bind(this)();
     });
   }
 
   handleGoogleLogin() {
     Meteor.loginWithGoogle({}, (err) => {
-      if (err) snack('Problemas ao cadastrar');
-      else this.handleRedirect.bind(this);
+      if (err) snack(texts.errorMessage);
+      else this.handleRedirect.bind(this)();
     });
   }
 
   handleRedirect() {
-    snack('Bem vindo!');
+    snack(texts.welcomeMessage);
     Meteor.call(
       'UserGetInitialRoute',
       _.get(this, 'props.query.alias') ? 'setup' : 'home',
-      (err, route) => {
+      (err, { route, locale }) => {
         FlowRouter.go(route, {}, { ...this.props.query });
+        i18n.setLocale(locale);
+        i18n.getLocale();
       }
     );
   }
@@ -100,6 +120,7 @@ class PublicLogin extends React.Component {
 
   render() {
 
+    const { classes } = this.props;
     const { email, password } = this.state;
 
     const handleInput         = this.handleInput.bind(this);
@@ -108,89 +129,72 @@ class PublicLogin extends React.Component {
     const handleGoogleLogin   = this.handleGoogleLogin.bind(this);
 
     return (
-      <div className='ui middle aligned center aligned grid' >
+      <Grid container justify="center" style={{ textAlign: 'center' }}>
 
-        <div {...styles.background} />
+        <div className={classes.background} />
 
-        <div {...styles.form} >
+          <Grid item xs={12} sm={8} lg={6}>
+            <img
+              className={classes.image}
+              src='/images/brain-clear.png'
+            />
+            <Card elevation={4}>
+              <CardContent>
+                <Typography type='headline' component='h2'>
+                  Login
+                </Typography>
 
-          <div className='row' style={{ marginTop: '15px' }}>
-            <div className='ui center aligned grid'>
+                <TextField
+                  label='Email'
+                  name='email'
+                  type='email'
+                  margin='normal'
+                  value={email}
+                  onChange={handleInput}
+                />
 
-              <div {...styles.column}>
-                <a>
-                  <img
-                    style={{ display: 'inline-block' }}
-                    className='ui medium image'
-                    src='/images/brain-clear.png'
-                  />
-                </a>
+                <br/>
 
-              </div>
+                <TextField
+                  label={texts.password}
+                  name='password'
+                  type='password'
+                  margin='normal'
+                  value={password}
+                  onChange={handleInput}
+                />
 
-              <Card elevation={4} {...styles.column} >
-                <CardContent>
-                  <Typography type='headline' component='h2'>
-                    Login
-                  </Typography>
+                <br/>
 
-                  <TextField
-                    label='E-mail'
-                    placeholder='E-mail'
-                    name='email'
-                    type='email'
-                    margin='normal'
-                    value={email}
-                    onChange={handleInput}
-                  />
+                <Button color='primary' onTouchTap={handleLogin}>
+                  {texts.signIn}
+                </Button>
 
-                  <br/>
+              </CardContent>
+              <CardActions>
+                <Button
+                  style={{ color: '#3954A1' }}
+                  onTouchTap={handleFacebookLogin}
+                >
+                  <FacebookIcon/>
+                  Facebook
+                </Button>
 
-                  <TextField
-                    label='Senha'
-                    placeholder='Senha'
-                    name='password'
-                    type='password'
-                    margin='normal'
-                    value={password}
-                    onChange={handleInput}
-                  />
+                <Button
+                  style={{ color: '#DC4A38' }}
+                  onTouchTap={handleGoogleLogin}
+                >
+                  <GoogleIcon/>
+                  Google
+                </Button>
+              </CardActions>
+            </Card>
 
-                  <br/>
-
-                  <Button color='primary' onTouchTap={handleLogin}>
-                    Entrar
-                  </Button>
-
-                </CardContent>
-                <CardActions>
-                  <Button
-                    style={{ color: '#3954A1' }}
-                    onTouchTap={handleFacebookLogin}
-                  >
-                    <Icon style={{ lineHeight: '1em' }} name='facebook f' />
-                    Facebook
-                  </Button>
-
-                  <Button
-                    style={{ color: '#DC4A38' }}
-                    onTouchTap={handleGoogleLogin}
-                  >
-                    <Icon style={{ lineHeight: '1em', marginRight: 8 }} name='google plus' />
-                    Google
-                  </Button>
-                </CardActions>
-              </Card>
-
-            </div>
-          </div>
-
-        </div>
-
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 
 };
 
-export default PublicLogin;
+export default withStyles(styles)(PublicLogin);

@@ -15,6 +15,10 @@ Meteor.startup(() => {
           profilePic: `http://graph.facebook.com/${_.get(face, 'id')}/picture?type=square`,
           gender: _.get(face, 'gender'),
         };
+        if (_.get(face, 'email'))
+          user.emails = [{ address: _.get(face, 'email'), verified: true }];
+        else
+          user.emails = [];
       } else if (_.get(user, 'services.google')) {
         const google = _.get(user, 'services.google');
         user.profile = {
@@ -24,17 +28,33 @@ Meteor.startup(() => {
           profilePic: _.get(google, 'picture'),
           gender: _.get(google, 'gender'),
         };
-      } else if (options.profile) user.profile = options.profile;
+        if (_.get(google, 'email'))
+          user.emails = [{ address: _.get(google, 'email'), verified: true }];
+        else
+          user.emails = [];
+      } else if (options.profile) {
+        user.profile = options.profile;
+        if (options.email)
+          user.emails = [{ address: options.email, verified: false }];
+      }
 
       if (!user.roles) user.roles = ['student'];
 
-      const newUser = new User(user);
+      const oldUser = User.findOne({
+        'emails.address': { $in: _.map(user.emails, e => e.address) },
+      });
 
-      newUser._isNew = false;
+      if (!oldUser) {
+        const newUser = new User(user);
+        return newUser.raw();
+      }
 
-      newUser.save();
+      _.merge(oldUser.services, user.services);
 
-      return newUser;
+      User.remove({ _id: oldUser._id });
+
+      return oldUser;
+
     });
   };
 });

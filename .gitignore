@@ -3,3 +3,4 @@ settings.json
 .git
 *.log
 *.log.*
+.vscode

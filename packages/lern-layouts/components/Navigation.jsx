@@ -1,6 +1,9 @@
+// Libs
 import React from 'react';
 import _ from 'lodash';
+import i18n from 'meteor/universe:i18n';
 
+// Material components
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
@@ -29,8 +32,34 @@ class Navigation extends React.Component {
       routes: {
         admin: {
           AdminHome: {
-            label: 'Home',
+            label: 'AdminHome',
             icon: 'home',
+          },
+          AdminUsers: {
+            label: 'AdminUsers',
+            icon: 'person',
+          },
+          AdminTags: {
+            label: 'AdminTags',
+            icon: 'more',
+          },
+          AdminTests: {
+            label: 'AdminTests',
+            icon: 'edit',
+          },
+        },
+        student: {
+          StudentTests: {
+            label: 'StudentTests',
+            icon: 'home',
+          },
+          StudentReport: {
+            label: 'StudentReport',
+            icon: 'timeline',
+          },
+          StudentSettings: {
+            label: 'StudentSettings',
+            icon: 'settings',
           },
         },
       },
@@ -94,12 +123,12 @@ class Navigation extends React.Component {
       <Drawer
         {..._.omit(this.state, ['open'])}
         open={!open ? false : true}
-        onRequestClose={() => this.setState({ open: !open })}
+        onClose={() => this.setState({ open: !open })}
       >
 
         {
           !user
-          ? <div className='ui center aligned basic segment'>
+          ? <div>
               {
                 logging
                 ? <div/>
@@ -120,7 +149,7 @@ class Navigation extends React.Component {
               }
             } >
               <List>
-                <ListItem dense >
+                <ListItem>
                   {
                     profilePic
                     ? <Avatar key='image' size={60} src={profilePic} />
@@ -161,23 +190,24 @@ class Navigation extends React.Component {
                 _.map(routes[user.getRole()], ({ label, icon }, _route) =>
                   <ListItem button component='a' key={_route} href={FlowRouter.path(_route)}>
                     <Icon>{icon}</Icon>
-                    <ListItemText primary={label} />
+                    <ListItemText primary={i18n.__('Navigation', `${user.getRole()}.${label}`)} />
                   </ListItem>
                 )
               }
 
             </List>
 
-            <Divider/>
 
-            <List>
+            <List  style={{ bottom: 0, position: 'fixed', width: '100%' }}>
+              <Divider/>
 
               {/* <ListItem button component='a' href={FlowRouter.path(user.getSettingsRoute())} >
                 <ListItemText primary='Configurações' />
               </ListItem> */}
 
-              <ListItem button onTouchTap={logout} >
-                <ListItemText primary='Sair' />
+              <ListItem button onTouchTap={logout}>
+                <Icon>exit_to_app</Icon>
+                <ListItemText primary={i18n.__('Navigation.exit')} />
               </ListItem>
 
             </List>

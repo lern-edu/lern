@@ -23,6 +23,8 @@
 - [Tests](https://guide.meteor.com/testing.html)
   - [Chai](http://chaijs.com/)
   - [Mocha](https://github.com/practicalmeteor/meteor-mocha)
+- Logs
+  - [loglevel](https://github.com/pimterry/loglevel)
 
 ## Languages
 - ES6 Javascript (.js)

@@ -1,0 +1,17 @@
+{
+  "_locale": "en-US",
+  "_namespace": "Navigation",
+  "title": "English",
+  "student": {
+    "StudentTests": "Tasks",
+    "StudentReport": "Report",
+    "StudentSettings": "Settings"
+  },
+  "admin": {
+    "AdminHome": "Home",
+    "AdminUsers": "Users",
+    "AdminTags": "Tags",
+    "AdminTests": "Tests"
+  },
+  "exit": "Exit"
+}

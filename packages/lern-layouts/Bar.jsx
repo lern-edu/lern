@@ -16,6 +16,12 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  primaryIconButton: {
+    color: '#FFF',
+  },
+  secondaryIconButton: {
+    color: '#000',
+  },
 };
 
 const getTitle = ({ title, crumbs }) =>
@@ -49,7 +55,10 @@ const getTitle = ({ title, crumbs }) =>
  * @class
  * @public
  * @memberof LernLayouts
+ * @param {object=} this.props.children - children react component to be rendered in AppBar
  * @param {object=} this.props.crumbs - paths to compose links for crumbs
+ * @param {string=} this.props.label - label of path
+ * @param {string=} this.props.path - FlowRouter path
  * @param {string} this.props.title - current view title
  * @param {bool=} this.props.disableActions - prevent actions to exit from view
  * @example
@@ -60,22 +69,31 @@ const getTitle = ({ title, crumbs }) =>
  * import { Bar } from 'meteor/duckdodgerbrasl:lern-layouts';
  * ...
  * <Bar title='Tags' crumbs={[{ path: 'AdminHome', label: 'Home' }]} />
+ * @example
+ * import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
+ * ...
+ * <Layout.Bar title='Tabs'>
+ *  <Tabs>
+ *    <Tab label='Item One'>
+ *    <Tab label='Item Two'>
+ *    <Tab label='Item Three'>
+ *  </Tabs>
+ * </Layout.Bar>
  */
 const Bar = (props) => {
 
-  const { crumbs, title, disableActions, classes } = props;
+  const { crumbs, title, disableActions, classes, children, color='primary' } = props;
 
   return (
-    <AppBar position='fixed'>
+    <AppBar position='fixed' color={color}>
       <Toolbar>
 
         <IconButton
           className={classes.menuButton}
-          onTouchTap={disableActions ? () => false : window.nav}
-          color='contrast'
+          onClick={disableActions ? () => false : window.nav}
           aria-label='Menu'
         >
-           <Icon color='contrast'>menu</Icon>
+          <Icon className={classes[`${color}IconButton`]} >menu</Icon>
         </IconButton>
 
         <Typography type='title' color='inherit' className={classes.flex}>
@@ -83,6 +101,7 @@ const Bar = (props) => {
         </Typography>
 
       </Toolbar>
+      {children}
     </AppBar>
   );
 };

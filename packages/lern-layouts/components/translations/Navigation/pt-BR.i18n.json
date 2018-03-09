@@ -1,0 +1,17 @@
+{
+  "_locale": "pt-BR",
+  "_namespace": "Navigation",
+  "title": "Português",
+  "student": {
+    "StudentTests": "Tarefas",
+    "StudentReport": "Desempenho",
+    "StudentSettings": "Configurações"
+  },
+  "admin": {
+    "AdminHome": "Home",
+    "AdminUsers": "Usuários",
+    "AdminTags": "Tags",
+    "AdminTests": "Testes"
+  },
+  "exit": "Sair"
+}
