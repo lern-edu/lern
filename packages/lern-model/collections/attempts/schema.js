@@ -57,48 +57,58 @@ const Attempt = Class.create({
   },
   events: {
     afterUpdate({ currentTarget: attempt }) {
-      const author = User.findOne({ _id: _.get(attempt, 'author._id') });
-      const { test } = attempt;
+      if (attempt.finished) {
+        const author = User.findOne({ _id: _.get(attempt, 'author._id') });
+        const { test } = attempt;
+        _.forEach(attempt.scores, score => {
+          const index = _.findIndex(author.report, { _id: score._id });
 
-      _.forEach(attempt.scores, score => {
-        const index = _.findIndex(author.report, { _id: score._id });
+          if (index >= 0) {
+            const report = author.report[index];
+            report.score = (report.score || 0) + score.score;
 
-        let parent = score.parent;
-        while (parent) {
-          const parentIndex = _.findIndex(author.report, { _id: parent._id });
-
-          if (parentIndex < 0) {
+            if (report.tests[test._id])
+              report.tests[test._id].push(attempt._id);
+            else
+              report.tests[test._id] = [attempt._id];
+          }
+          else {
             author.report.push(
               new User.UserReportSchema({
-                ...parent,
+                ...score.raw(),
                 tests: { [attempt.test._id]: [attempt._id] },
               })
             );
           }
 
-          parent = parent.parent;
-        };
+          let parent = score.parent;
+          while (parent) {
+            const parentIndex = _.findIndex(author.report, { _id: parent._id });
 
-        if (index >= 0) {
-          const report = author.report[index];
-          report.score += score.score;
+            if (parentIndex < 0) {
+              author.report.push(
+                new User.UserReportSchema({
+                  ...parent,
+                  tests: { [test._id]: [attempt._id] },
+                })
+              );
+            } else {
+              const reportTests = author.report[parentIndex].tests;
+              if (reportTests[test._id]) {
+                const attemptIndex = reportTests[test._id].indexOf(attempt._id);
+                if (attemptIndex < 0)
+                  reportTests[test._id].push(attempt._id);
+              }
+              else
+                reportTests[test._id] = [attempt._id];
+            };
 
-          if (report.tests[test._id])
-            report.tests[test._id].push(attempt._id);
-          else
-            report.tests[test._id] = [attempt._id];
-        }
-        else {
-          author.report.push(
-            new User.UserReportSchema({
-              ...score.raw(),
-              tests: { [attempt.test._id]: [attempt._id] },
-            })
-          );
-        }
-      });
+            parent = parent.parent;
+          };
+        });
 
-      author.save();
+        author.save();
+      }
     },
   },
 });

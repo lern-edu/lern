@@ -120,22 +120,29 @@ class StudentTestAttemptSudoku extends React.Component {
                   
                     {
                       _.map(cells, (cell, col) =>
-                        <Grid item xs={1} key={`row${row}-cell${col}`} className={classes.cell}>
+                        <Grid
+                          item
+                          xs={1}
+                          key={`row${row}-cell${col}`}
+                          className={classes.cell}
+                          style={{
+                            backgroundColor: (col < 3 || col > 5)
+                              ? (
+                                (row < 3 || row > 5)
+                                ? 'white'
+                                : 'rgba(0, 0, 0, 0.12)'
+                              )
+                              : (
+                                (row < 3 || row > 5)
+                                  ? 'rgba(0, 0, 0, 0.12)'
+                                  : 'white'
+                              ),
+                          }}
+                        >
                           <IconButton
                             className={classes.cellPaper}
                             onClick={() => this.handleInsertValue(row, col)}
                             style={{
-                              backgroundColor: (col < 3 || col > 5)
-                                ? (
-                                  (row < 3 || row > 5)
-                                  ? 'white'
-                                  : 'rgba(0, 0, 0, 0.12)'
-                                )
-                                : (
-                                  (row < 3 || row > 5)
-                                    ? 'rgba(0, 0, 0, 0.12)'
-                                    : 'white'
-                                ),
                               fontWeight: cell && sudoku.board[row * 9 + col] === cell
                                 ? 'bold'
                                 : 'regular',

@@ -50,12 +50,13 @@ Helpers.Methods({ prefix, protect }, {
    * @return {Object} - test and attempt
    */
   TestAttemptStart(testId) {
+    const userId = Meteor.userId();
 
     let test = Test.find({ _id: testId });
     Check.Cursor(test).some();
     test = _.head(test.fetch());
 
-    let attempt = Attempt.find({ 'test._id': testId, finished: false });
+    let attempt = Attempt.find({ 'test._id': testId, finished: false, 'author._id': userId });
     let hasAttempt = true;
     try {
       Check.Cursor(attempt).some();
@@ -120,6 +121,16 @@ Helpers.Methods({ prefix, protect }, {
 
     const { test } = attempt;
 
+    // Function to create one attempt score
+    const scoreSchema = score => {
+      const userReportIndex = _.findIndex(user.report, { _id: score._id });
+      const doneThisTestBefore = _.get(user, `report.${userReportIndex}.tests.${test._id}`);
+      return new Attempt.AttemptScoreSchema({
+        ...score,
+        score: score.score * (doneThisTestBefore ? 0 : test.score),
+      });
+    };
+
     // DONE THIS ON ATTEMPT SCHEMA
     if (dismiss) {
       attempt.set('finished', true);
@@ -128,16 +139,7 @@ Helpers.Methods({ prefix, protect }, {
     };
 
     if (test.resolution === 'content' && !dismiss) {
-      _.map(test.scores, score => attempt.scores.push(new Attempt.AttemptScoreSchema(score)));
-
-      _.forEach(attempt.scores, score => {
-
-        const userReportIndex = _.findIndex(user.report, { _id: score._id });
-        const doneThisTestBefore = _.get(user, `report.${userReportIndex}.tests.${test._id}`);
-
-        score.score = score.score * (doneThisTestBefore ? 0 : test.score);
-      });
-
+      attempt.set('scores', _.map(test.scores, scoreSchema));
       attempt.set('finished', true);
       attempt.set('finishedAt', new Date());
       return attempt.save();
@@ -153,16 +155,12 @@ Helpers.Methods({ prefix, protect }, {
       if (!validate)
         throw new Meteor.Error(501, 'Fails on validate');
 
-      _.map(test.scores, score => attempt.scores.push(new Attempt.AttemptScoreSchema(score)));
-
-      _.forEach(attempt.scores, score => {
-
-        const userReportIndex = _.findIndex(user.report, { _id: score._id });
-        const doneThisTestBefore = _.get(user, `report.${userReportIndex}.tests.${test._id}`);
-
-        score.score = score.score * (doneThisTestBefore ? 0 : test.score);
-      });
-
+      attempt.set('scores',
+        _.map(test.scores, score => new Attempt.AttemptScoreSchema({
+          ...score,
+          score: score.score * test.score,
+        }))
+      );
       attempt.set('finished', true);
       attempt.set('finishedAt', new Date());
       return attempt.save();
