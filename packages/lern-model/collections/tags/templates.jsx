@@ -102,7 +102,7 @@ if (Meteor.isClient) {
     form: PropTypes.object.isRequired,
     canRemove: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
-  }
+  };
 
   function Transition(props) {
     return <Slide direction="up" {...props} />;
@@ -179,6 +179,9 @@ if (Meteor.isClient) {
                 _.map(doc.description, (description, index) =>
                   [
                     <doc.templates.DescriptionShow
+                      index={index}
+                      form={this}
+                      canRemove={false}
                       content={description}
                       key={`descriptionShow${index}`}
                     />,
