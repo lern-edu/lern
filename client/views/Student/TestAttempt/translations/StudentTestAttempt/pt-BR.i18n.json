@@ -1,0 +1,21 @@
+{
+  "_locale": "pt-BR",
+  "_namespace": "StudentTestAttempt",
+  "title": "Português",
+  "warning": {
+    "content": "Chegue ao final da página antes de terminar",
+    "sudoku": "Você deve terminar o jogo",
+    "dismiss": "Você realmente quer abandonar a partida?"
+  },
+  "error": {
+    "findTest": "Problema ao encontrar teste",
+    "sudokuInvalid": "O jogo do sudoku está incorreto",
+    "finishAttempt": "Problema ao finalizar teste"
+  },
+  "success": {
+    "attempt": "Parabéns!",
+    "thankYou": "Obrigado. Tente novamente outra hora..."
+  },
+  "finish": "Terminar",
+  "dismiss": "Abandonar"
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import Bar from '../Bar.jsx';
-import { FontIcon, RaisedButton, LinearProgress } from 'material-ui';
+import { LinearProgress } from 'material-ui/Progress';
+import Button from 'material-ui/Button';
 import _ from 'lodash';
 
 /**
@@ -81,25 +82,27 @@ class Safe extends React.Component {
            <div>
              <LinearProgress size={2}/>
            </div>
-         ) : access === false ? (<div>
-           <Layout.Bar title='Ops' />
-           <div>
-             <h1>
-               <div>
-                 <div>Você não deveria estar aqui</div>
-               </div>
-             </h1>
+         ) : access === false ? (
+          <div>
+            <Bar title='Ops' />
              <div>
-               <RaisedButton
-                 label='Voltar'
-                 primary={true}
-                 href={FlowRouter.path('PublicHome')}
-               />
-             </div>
-           </div>
-         </div>) : undefined}
-       </div>
-     );
+               <h3>
+                <div>Você não deveria estar aqui</div>
+              </h3>
+              <div>
+                <Button
+                  raised
+                  color='primary'
+                  href={FlowRouter.path('PublicLogin')}
+                >
+                  Voltar
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : undefined}
+      </div>
+    );
   }
 };
 

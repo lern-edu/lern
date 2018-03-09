@@ -38,7 +38,8 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-mounter": "^1.2.0",
-    "react-tap-event-plugin": "^3.0.2"
+    "react-tap-event-plugin": "^3.0.2",
+    "sudoku": "0.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1",

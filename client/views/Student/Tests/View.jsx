@@ -153,7 +153,12 @@ class StudentTests extends React.Component {
                         )
                       }
                       actionIcon={
-                        <Button className={classes.button} raised color="secondary">
+                        <Button
+                          href={FlowRouter.path('StudentTestAttempt', { testId: test._id })}
+                          className={classes.button}
+                          color="secondary"
+                          raised
+                        >
                           {i18n.__('StudentTests.play')}
                           <Icon className={classes.rightIcon}>play_arrow</Icon>
                         </Button>

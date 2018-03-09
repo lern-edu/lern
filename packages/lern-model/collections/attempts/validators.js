@@ -15,11 +15,14 @@ import StaticCollections from '../static.js';
  * @public
  * @return {String|undefined} Error message or undefined
  */
-const UserRolesInRoles = {
+const TagTestReference = {
   name: 'TagTestReference',
 
   isValid({ doc, value: scores }) {
-    return _.every(_.map(scores, '_id'), tagId => _.includes(_.map(doc, 'test.scores._id'), tagId));
+    return _.every(
+      _.map(scores, '_id'),
+      tagId => _.includes(_.map(doc, 'test.scores._id'), tagId)
+    );
   },
 
   resolveError({ doc, value }) {
@@ -27,4 +30,4 @@ const UserRolesInRoles = {
   },
 };
 
-Validator.create(UserRolesInRoles);
+Validator.create(TagTestReference);

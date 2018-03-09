@@ -12,6 +12,7 @@ const StaticCollections = {
   TestTimeoutTypes: ['global', 'none'],
   TestTimeTypes: ['range', 'none'],
   TestResolutions: ['content', 'sudoku'],
+  SudokuLevel: ['easy', 'medium', 'hard'],
 };
 
 export default StaticCollections;

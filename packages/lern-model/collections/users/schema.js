@@ -58,8 +58,29 @@ const UserProfileSchema = Class.create({
   },
 });
 
-const UserEmailsSchema = Class.create({
-  name: 'UserEmails',
+const UserReportSchema = Class.create({
+  name: 'UserReport',
+  fields: {
+    name: String,
+    parent: {
+      type: Object,
+      optional: true,
+    },
+    description: {
+      type: [Object],
+      optional: true,
+    },
+    _id: String,
+    score: {
+      type: Number,
+      optional: true,
+    },
+    tests: Object,
+  },
+});
+
+const UserEmailSchema = Class.create({
+  name: 'UserEmail',
   fields: {
     address: {
       type: String,
@@ -104,12 +125,11 @@ const User = Class.create({
     },
     profile: {
       type: UserProfileSchema,
-      default() {
-        return new UserProfileSchema();
-      },
+      default: () => new UserProfileSchema(),
     },
     report: {
-      type: [Object],
+      type: [UserReportSchema],
+      default: () => [],
       optional: true,
     },
   },
@@ -237,5 +257,7 @@ User.extend({
     },
   },
 });
+
+User.UserReportSchema = UserReportSchema;
 
 export default User;

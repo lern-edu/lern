@@ -8,8 +8,10 @@
     "StudentSettings": "Settings"
   },
   "admin": {
-    "adminUsers": "Users",
-    "adminTags": "Tags",
+    "AdminHome": "Home",
+    "AdminUsers": "Users",
+    "AdminTags": "Tags",
     "AdminTests": "Tests"
-  }
+  },
+  "exit": "Exit"
 }

@@ -15,9 +15,6 @@ import { MenuItem } from 'material-ui/Menu';
 import { FormControl } from 'material-ui/Form';
 import Icon from 'material-ui/Icon';
 
-// Translations
-const texts = {};
-
 /**
  * Navigation or side Drawer
  * @private
@@ -131,7 +128,7 @@ class Navigation extends React.Component {
 
         {
           !user
-          ? <div className='ui center aligned basic segment'>
+          ? <div>
               {
                 logging
                 ? <div/>
@@ -152,7 +149,7 @@ class Navigation extends React.Component {
               }
             } >
               <List>
-                <ListItem dense >
+                <ListItem>
                   {
                     profilePic
                     ? <Avatar key='image' size={60} src={profilePic} />
@@ -200,16 +197,17 @@ class Navigation extends React.Component {
 
             </List>
 
-            <Divider/>
 
-            <List>
+            <List  style={{ bottom: 0, position: 'fixed', width: '100%' }}>
+              <Divider/>
 
               {/* <ListItem button component='a' href={FlowRouter.path(user.getSettingsRoute())} >
                 <ListItemText primary='Configurações' />
               </ListItem> */}
 
-              <ListItem button onTouchTap={logout} >
-                <ListItemText primary='Sair' />
+              <ListItem button onTouchTap={logout}>
+                <Icon>exit_to_app</Icon>
+                <ListItemText primary={i18n.__('Navigation.exit')} />
               </ListItem>
 
             </List>

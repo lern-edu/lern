@@ -8,9 +8,10 @@
     "StudentSettings": "Configurações"
   },
   "admin": {
-    "StudentTests": "Tarefas",
+    "AdminHome": "Home",
     "AdminUsers": "Usuários",
     "AdminTags": "Tags",
     "AdminTests": "Testes"
-  }
+  },
+  "exit": "Sair"
 }

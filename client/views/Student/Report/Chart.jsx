@@ -9,37 +9,45 @@ class StudentReportChart extends React.Component {
   // Lifecycle
 
   componentDidMount() {
-    const { report } = this.props;
+    const { childrens } = this.props;
     const { chart } = this.refs;
 
-    const orderedTags = _.orderBy(report.childrens, ['name']);
+    const orderedReports = _.orderBy(childrens, ['name']);
 
     const node = new Chart(chart, {
       type: 'doughnut',
       data: {
-        labels: _.map(orderedTags, 'name'),
+        labels: _.map(orderedReports, 'name'),
         datasets: [
           {
             label: 'Colors',
-            data: _.map(orderedTags, 'score'),
-            backgroundColor: _.map(orderedTags, 'color'),
+            data: _.map(orderedReports, 'score'),
+            backgroundColor: _.map(orderedReports, (report) => (report.color || this.getRandomColor())),
           },
         ],
       },
     });
   };
 
+  // Util
+
+  getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    const color = '#';
+    for (let i = 0; i < 6; i++)
+      color += letters[Math.floor(Math.random() * 16)];
+    return color;
+  }
+
   // Render
 
   render() {
-    const { report } = this.props;
-
     return <canvas ref='chart' width={300} height={300} />;
   };
 };
 
 StudentReportChart.propTypes = {
-  report: PropTypes.object.isRequired,
+  childrens: PropTypes.array.isRequired,
 };
 
 export default StudentReportChart;

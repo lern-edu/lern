@@ -21,12 +21,6 @@ class StudentReport extends React.Component {
     this.setState({ report: _.get(user, 'report') });
   };
 
-  // Get Context
-
-  contextTypes: {
-    user: PropTypes.object,
-  };
-
   // Handlers
 
   handleDetailsClick = (report) => {
@@ -45,7 +39,14 @@ class StudentReport extends React.Component {
       {
         _.isEmpty(user.report)
         ? <LinearProgress color='primary' />
-        : _.map(user.report, report => <StudentReportCard report={report} key={report.name}/>)
+        : _.map(
+          _.filter(user.report, { parent: undefined }),
+          report => <StudentReportCard
+            key={report.name}
+            report={report}
+            childrens={_.filter(user.report, { parent: { _id: report._id } })}
+          />
+        )
       }
 
     </div>;
