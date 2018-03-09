@@ -87,10 +87,22 @@ if (Meteor.isClient) {
 
   class DescriptionShow extends React.Component {
     render() {
-      const { content } = this.props;
-      return <ContentShow doc={content} />;
+      const { content, form, canRemove, index } = this.props;
+      return <ContentShow
+        doc={content}
+        form={form}
+        canRemove={canRemove}
+        index={index}
+      />;
     }
   };
+
+  DescriptionShow.propTypes = {
+    content: PropTypes.object.isRequired,
+    form: PropTypes.object.isRequired,
+    canRemove: PropTypes.bool.isRequired,
+    index: PropTypes.number.isRequired,
+  }
 
   function Transition(props) {
     return <Slide direction="up" {...props} />;

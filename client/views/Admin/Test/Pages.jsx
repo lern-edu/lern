@@ -64,6 +64,9 @@ class AdminTestPages extends React.Component {
                             [
                               <ContentShow
                                 doc={description}
+                                form={parent}
+                                index={index}
+                                canRemove={true}
                                 key={`pages.0.descriptionShow${index}`}
                               />,
                               <Divider key={`pages.0.descriptionDivider${index}`} />,
