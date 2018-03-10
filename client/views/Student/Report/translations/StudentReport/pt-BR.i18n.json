@@ -2,5 +2,6 @@
   "_locale": "pt-BR",
   "_namespace": "StudentReport",
   "title": "Português",
-  "appBar": "Desempenho"
+  "appBar": "Desempenho",
+  "details": "Ver detalhes"
 }

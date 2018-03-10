@@ -85,6 +85,9 @@ class StudentTestsDialog extends React.Component {
                 [
                   <ContentShow
                     doc={description}
+                    form={this}
+                    canRemove={false}
+                    index={index}
                     key={`descriptionShow${index}`}
                   />,
                   <Divider key={`descriptionDivider${index}`}/>,

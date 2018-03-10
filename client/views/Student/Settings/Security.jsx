@@ -40,7 +40,7 @@ class StudentSettingsSecurity extends React.Component {
       Accounts.changePassword(current, target, err => {
         if (err) {
           console.error(err);
-          snack('Erro inesperado', 'orange warning');
+          snack(i18n.__('StudentSettings.error'), 'orange warning');
         } else {
           this.setState({
             current: undefined,
@@ -48,14 +48,14 @@ class StudentSettingsSecurity extends React.Component {
             confirm: undefined,
             hasPassword: true,
           });
-          snack('Senha trocada', 'green checkmark');
+          snack(i18n.__('StudentSettings.success'), 'green checkmark');
         }
       });
     } else {
       Meteor.call('UserSetPassword', doc._id, target, err => {
         if (err) {
           console.error(err);
-          snack('Erro inesperado', 'orange warning');
+          snack(i18n.__('StudentSettings.error'), 'orange warning');
         } else {
           this.setState({
             current: undefined,
@@ -63,7 +63,7 @@ class StudentSettingsSecurity extends React.Component {
             confirm: undefined,
             hasPassword: true,
           });
-          snack('Senha trocada', 'green checkmark');
+          snack(i18n.__('StudentSettings.success'), 'green checkmark');
         }
       });
     }
@@ -101,14 +101,16 @@ class StudentSettingsSecurity extends React.Component {
               <Grid container spacing={24}>
                 <Grid item xs={12}>
                   <Typography type="title" gutterBottom>
-                    {hasPassword ? 'Alterar Senha' : 'Adcionar Senha'}
+                    {hasPassword ?
+                      i18n.__('StudentSettings.change_password') :
+                      i18n.__('StudentSettings.add_password')}
                   </Typography>
                 </Grid>
 
                 {hasPassword ?
                   <Grid item xs={12}>
                     <TextField
-                      label='Senha atual'
+                      label={i18n.__('StudentSettings.current_password')}
                       type='password'
                       onChange={this.handleInputChange.bind(this)}
                       name='current'
@@ -120,25 +122,25 @@ class StudentSettingsSecurity extends React.Component {
                 <Grid item xs={12}>
                   <TextField
                     required
-                    label='Nova senha'
+                    label={i18n.__('StudentSettings.new_password')}
                     type='password'
                     onChange={this.handleInputChange.bind(this)}
                     name='target'
                     error={!target || target.length < 6}
                     helperText={!target || target.length < 6 ?
-                      'Tamanho mínimo de 6 caracteres' : ''}
+                      i18n.__('StudentSettings.password_size') : ''}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <TextField
                     required
-                    label='Confirmar nova senha'
+                    label={i18n.__('StudentSettings.confirm_new_password')}
                     type='password'
                     onChange={this.handleInputChange.bind(this)}
                     name='confirm'
                     error={target !== confirm}
-                    helperText={target !== confirm ? 'Senhas não conferem' : ''}
+                    helperText={target !== confirm ? i18n.__('StudentSettings.password_match') : ''}
                   />
                 </Grid>
 
