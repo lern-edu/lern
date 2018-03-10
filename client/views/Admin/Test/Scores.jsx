@@ -9,6 +9,7 @@ import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
 import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
 import Input from 'material-ui/Input';
+import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
 import { Test } from 'meteor/duckdodgerbrasl:lern-model';
@@ -119,16 +120,24 @@ class AdminTestScores extends React.Component {
           
           <DialogContent>
 
-            <Input
-              value={_.get(score, 'score') || 0.1}
+            <Select
+              value={doc.get(field) || 0.1}
               onChange={this.handleChange}
-              type='number'
-              inputProps={{
-                step: 0.1,
-                min: 0.1,
-                max: 1,
+              input={<Input id='score' type='Number' />}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    width: 200,
+                  },
+                },
               }}
-            />
+            >
+              {
+                _.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], op =>
+                  <option key={op / 10} value={op / 10} >{op / 10}</option>
+                )
+              }
+            </Select>
 
           </DialogContent>
 
