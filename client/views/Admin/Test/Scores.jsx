@@ -13,6 +13,7 @@ import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
 import { Test } from 'meteor/duckdodgerbrasl:lern-model';
+import { MenuItem } from 'material-ui/Menu';
 
 import AdminTestNumber from './Number.jsx';
 
@@ -49,23 +50,11 @@ class AdminTestScores extends React.Component {
   };
 
   handleChange = ({ target: { value } }) => {
-    const { score } = this.state;
+    const { score, scores } = this.state;
     score.score = _.toNumber(value);
-    this.setState({ score });
-  };
-
-  handleClose = (value) => () => {
-    const { doc, doc: { scores }, parent } = this.props;
-    const { score } = this.state;
-
-    if (value === 'cancel')
-      this.setState({ score: null });
-    else {
-      scores.push(_.clone(score));
-      this.setState({ scores });
-      this.save(scores);
-    };
-
+    scores.push(_.clone(score));
+    this.setState({ scores, score });
+    this.save(scores);
     this.setState({ open: false });
   };
 
@@ -121,9 +110,9 @@ class AdminTestScores extends React.Component {
           <DialogContent>
 
             <Select
-              value={doc.get(field) || 0.1}
+              value={_.toString(score) || '0.1'}
               onChange={this.handleChange}
-              input={<Input id='score' type='Number' />}
+              input={<Input id='score' />}
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -133,25 +122,13 @@ class AdminTestScores extends React.Component {
               }}
             >
               {
-                _.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], op =>
-                  <option key={op / 10} value={op / 10} >{op / 10}</option>
+                _.map([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], op =>
+                  <MenuItem key={_.toString(op)} value={_.toString(op)} >{op * 100}%</MenuItem>
                 )
               }
             </Select>
 
           </DialogContent>
-
-          <DialogActions>
-
-            <Button onClick={this.handleClose('cancel')} color="secondary">
-              Cancel
-            </Button>
-            
-            <Button onClick={this.handleClose('save')} color="primary">
-              Save
-            </Button>
-
-          </DialogActions>
 
         </Dialog>
       
