@@ -1,0 +1,21 @@
+{
+  "_locale": "en-US",
+  "_namespace": "Templates",
+  "title": "English",
+  "search": "Search",
+  "remove": "Remove",
+  "upload": "Upload",
+  "sorry": "Sorry!",
+  "image": "Image",
+  "no_image": "No image selected",
+  "instructions": {
+    "extension": "Image is not supported"
+  },
+  "content_type": {
+    "text": "Text",
+    "image": "Image",
+    "link": "Link",
+    "video": "Video"
+  },
+  "save": "Save"
+}

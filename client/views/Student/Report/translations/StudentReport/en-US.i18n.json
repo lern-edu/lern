@@ -2,5 +2,6 @@
   "_locale": "en-US",
   "_namespace": "StudentReport",
   "title": "English",
-  "appBar": "Report"
+  "appBar": "Report",
+  "details": "See details"
 }
