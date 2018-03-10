@@ -3,5 +3,7 @@
   "_namespace": "StudentReport",
   "title": "English",
   "appBar": "Report",
-  "details": "See details"
+  "details": "See details",
+  "goTasks": "Do Tasks, and then us will create some reports :)",
+  "goTasksButton": "Start now"
 }

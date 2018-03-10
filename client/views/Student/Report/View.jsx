@@ -4,7 +4,12 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import i18n from 'meteor/universe:i18n';
-import { LinearProgress } from 'material-ui/Progress'
+import { LinearProgress } from 'material-ui/Progress';
+import Icon from 'material-ui/Icon';
+import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import Typography from 'material-ui/Typography';
 
 import StudentReportCard from './Card.jsx';
 
@@ -37,8 +42,28 @@ class StudentReport extends React.Component {
       <Layout.Bar title={i18n.__('StudentReport.appBar')} />
 
       {
-        _.isEmpty(user.report)
+        !user.report
         ? <LinearProgress color='primary' />
+        : _.isEmpty(user.report)
+        ? <Grid direction='column' justify='center' alignItems='center' container>
+          <Grid item>
+            <IconButton aria-label="Extension" color="primary" href={FlowRouter.path('StudentHome')}>
+              <Icon style={{ fontSize: 50 }}>extension</Icon>
+            </IconButton>
+          </Grid>
+
+          <Grid item>
+            <Typography style={{ fontSize: 20 }} variant='display3' component='p'>
+              {i18n.__('StudentReport.goTasks')}
+            </Typography>
+          </Grid>
+
+          <Grid item>
+            <Button href={FlowRouter.path('StudentHome')} raised color='primary'>
+              {i18n.__('StudentReport.goTasksButton')}
+            </Button>
+          </Grid>
+        </Grid>
         : _.map(
           _.filter(user.report, { parent: undefined }),
           report => <StudentReportCard
