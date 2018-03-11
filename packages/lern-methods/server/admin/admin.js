@@ -220,4 +220,16 @@ Helpers.Methods({ prefix, protect }, {
    * @return {Object} - Saved company (with _id)
    */
   TestSave: Helpers.DefaultSave,
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Delete a test from collection
+   * @example
+   * Meteor.call('AdminTestDelete', _id);
+   * @public
+   * @param {Object} _id - Test _id to be removed
+   */
+  TestDelete(_id) {
+    Test.remove(_id);
+  },
 });
