@@ -151,6 +151,12 @@ if (Meteor.isClient) {
                 <IconButton onClick={this.handleClickOpen}>
                   <Fullscreen />
                 </IconButton>,
+              button:
+                <Button raised
+                  onClick={this.handleClickOpen}
+                  >
+                  Preview
+                </Button>,
               chip:
                 <Chip
                   label={doc.name}

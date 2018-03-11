@@ -165,6 +165,18 @@ Helpers.Methods({ prefix, protect }, {
 
     return Helpers.DefaultSave(tag);
   },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Delete a tag from collection
+   * @example
+   * Meteor.call('AdminTagDelete', _id);
+   * @public
+   * @param {Object} _id - Tag _id to be removed
+   */
+  TagDelete(_id) {
+    Tag.remove(_id);
+  },
 });
 
 // =================== TEST METHODS ====================

@@ -4,16 +4,17 @@ import _ from 'lodash';
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
+import IconButton from 'material-ui/IconButton';
+import { Delete } from 'material-ui-icons';
 
 class AdminTagsList extends React.Component {
 
   render() {
-    const { tags } = this.props;
+    const { tags, handleDelete } = this.props;
 
     return (
       <Paper>
         <List>
-
           {
             _.map(tags, tag =>
               <ListItem
@@ -22,7 +23,11 @@ class AdminTagsList extends React.Component {
                 onClick={() => FlowRouter.go('AdminTag', { tagId: tag._id })}>
                 <ListItemText primary={tag.name} />
                 <ListItemSecondaryAction>
-                  <tag.templates.Dialog doc={tag} type='icon' />
+                  <IconButton
+                    onClick={() => handleDelete(tag._id)}
+                    aria-label="Delete">
+                    <Delete />
+                  </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             )
