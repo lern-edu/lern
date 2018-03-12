@@ -126,7 +126,9 @@ class StudentTestAttemptSudoku extends React.Component {
                           key={`row${row}-cell${col}`}
                           className={classes.cell}
                           style={{
-                            backgroundColor: (col < 3 || col > 5)
+                            backgroundColor: (value && value === cell)
+                              ? 'yellow'
+                              : (col < 3 || col > 5)
                               ? (
                                 (row < 3 || row > 5)
                                 ? 'white'
