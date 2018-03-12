@@ -25,6 +25,9 @@ const styles = theme => ({
     textAlign: 'center',
     lineHeight: '36px',
   },
+  cellEdit: {
+    paddingLeft: 2
+  },
   keyboard: {
     textAlign: 'center',
     minHeight: 36,
@@ -39,6 +42,16 @@ const styles = theme => ({
   optionsChild: {
     minWidth: 70
   },
+  editContainer: {
+    lineHeight: 1,
+    fontSize: 12,
+  },
+  buttonEdit: {
+    zIndex: 999,
+    height: 36,
+    width: 36,
+    position: 'absolute',
+  },
 });
 
 class StudentTestAttemptSudoku extends React.Component {
@@ -47,7 +60,13 @@ class StudentTestAttemptSudoku extends React.Component {
   constructor(props) {
     log.info('StudentTestAttemptSudoku.constructor =>', props);
     super(props);
-    this.state = { answer: props.sudoku.answer, value: null, backward: [], forward: [], edit: false };
+    this.state = {
+      answer: props.sudoku.answer,
+      value: null,
+      backward: [],
+      forward: [],
+      edit: false
+    };
   };
 
   // Handlers
@@ -129,55 +148,69 @@ class StudentTestAttemptSudoku extends React.Component {
                 (cells, row) =>
                   <Grid className={classes.root} item xs={12} key={row}>
                     <Grid container spacing={0} justify='center'>
-                  
-                    {
-                      _.map(cells, (cell, col) =>
-                        <Grid
-                          item
-                          xs={1}
-                          key={`row${row}-cell${col}`}
-                          className={classes.cell}
-                          style={{
-                            backgroundColor: (value && value === cell)
-                              ? 'yellow'
-                              : (col < 3 || col > 5)
+
+                      {
+                        _.map(cells, (cell, col) =>
+                          <Grid
+                            item
+                            xs={1}
+                            key={`row${row}-cell${col}`}
+                            className={classes.cell}
+                            style={{
+                              backgroundColor: (value && value === cell)
+                                ? 'yellow'
+                                : (col < 3 || col > 5)
+                                ? (
+                                  (row < 3 || row > 5)
+                                  ? 'white'
+                                  : 'rgba(0, 0, 0, 0.12)'
+                                )
+                                : (
+                                  (row < 3 || row > 5)
+                                    ? 'rgba(0, 0, 0, 0.12)'
+                                    : 'white'
+                                ),
+                            }}
+                          >
+                            {
+                              cell
                               ? (
-                                (row < 3 || row > 5)
-                                ? 'white'
-                                : 'rgba(0, 0, 0, 0.12)'
+                                <IconButton
+                                  className={classes.cellPaper}
+                                  onClick={() => this.handleInsertValue(row, col)}
+                                  style={{
+                                    fontWeight: cell && sudoku.board[row * 9 + col] === cell
+                                      ? 'bold'
+                                      : 'regular',
+                                    color: cell && sudoku.board[row * 9 + col] === cell
+                                      ? 'black'
+                                      : undefined,
+                                  }}
+                                >
+                                  {cell}
+                                </IconButton>
                               )
                               : (
-                                (row < 3 || row > 5)
-                                  ? 'rgba(0, 0, 0, 0.12)'
-                                  : 'white'
-                              ),
-                          }}
-                        >
-                          {
-                            cell
-                            ? (
-                              <IconButton
-                                className={classes.cellPaper}
-                                onClick={() => this.handleInsertValue(row, col)}
-                                style={{
-                                  fontWeight: cell && sudoku.board[row * 9 + col] === cell
-                                    ? 'bold'
-                                    : 'regular',
-                                  color: cell && sudoku.board[row * 9 + col] === cell
-                                    ? 'black'
-                                    : undefined,
-                                }}
-                              >
-                                {cell}
-                              </IconButton>
-                            )
-                            : (
-                              null
-                            )
-                          }
-                        </Grid>
-                      )
-                    }
+                                <Grid container className={classes.editContainer} spacing={0} justify='center'>
+                                  <Grid item xs={12} className={buttonEdit}>
+                                    <IconButton
+                                      className={classes.cellPaper}
+                                      onClick={() => this.handleInsertValue(row, col)}
+                                    />
+                                  </Grid>
+                                  {
+                                    _.map(new Array(9), (v, index) =>
+                                      <Grid item xs={4} className={classes.cellEdit} key={index + 1}>
+                                        {index + 1}
+                                      </Grid>
+                                    )
+                                  }
+                                </Grid>        
+                              )
+                            }
+                          </Grid>
+                        )
+                      }
                   
                     </Grid>
                   </Grid>
@@ -274,4 +307,3 @@ class StudentTestAttemptSudoku extends React.Component {
 };
 
 export default withStyles(styles)(StudentTestAttemptSudoku);
-
