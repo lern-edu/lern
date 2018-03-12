@@ -31,21 +31,33 @@ const styles = theme => ({
     minWidth: 100,
     maxWidth: 120,
   },
+  options: {
+    textAlign: 'center',
+    minHeight: 36,
+    maxWidth: 86,
+  },
+  optionsChild: {
+    minWidth: 70
+  },
 });
 
-// this.state.bottom = [null, 'finish', 'loading'];
 class StudentTestAttemptSudoku extends React.Component {
 
   // Lifecycle
   constructor(props) {
     log.info('StudentTestAttemptSudoku.constructor =>', props);
     super(props);
-    this.state = { answer: props.sudoku.answer, value: null, backward: [], forward: [] };
+    this.state = { answer: props.sudoku.answer, value: null, backward: [], forward: [], edit: false };
   };
 
   // Handlers
   handleClick = (value) => {
     this.setState({ value });
+  };
+
+  toggleEdit = () => {
+    const { edit } = this.state;
+    this.setState({ edit: !edit });
   };
 
   handleInsertValue = (row, col) => {
@@ -104,7 +116,7 @@ class StudentTestAttemptSudoku extends React.Component {
   render() {
     log.info('StudentTestAttemptSudoku.render =>', this.state);
     const { classes, sudoku } = this.props;
-    const { answer, value, backward, forward } = this.state;
+    const { answer, value, backward, forward, edit } = this.state;
 
     return (
       <Grid container spacing={0} justify='center'>
@@ -141,20 +153,28 @@ class StudentTestAttemptSudoku extends React.Component {
                               ),
                           }}
                         >
-                          <IconButton
-                            className={classes.cellPaper}
-                            onClick={() => this.handleInsertValue(row, col)}
-                            style={{
-                              fontWeight: cell && sudoku.board[row * 9 + col] === cell
-                                ? 'bold'
-                                : 'regular',
-                              color: cell && sudoku.board[row * 9 + col] === cell
-                                ? 'black'
-                                : undefined,
-                            }}
-                          >
-                            {cell ? cell : null}
-                          </IconButton>
+                          {
+                            cell
+                            ? (
+                              <IconButton
+                                className={classes.cellPaper}
+                                onClick={() => this.handleInsertValue(row, col)}
+                                style={{
+                                  fontWeight: cell && sudoku.board[row * 9 + col] === cell
+                                    ? 'bold'
+                                    : 'regular',
+                                  color: cell && sudoku.board[row * 9 + col] === cell
+                                    ? 'black'
+                                    : undefined,
+                                }}
+                              >
+                                {cell}
+                              </IconButton>
+                            )
+                            : (
+                              null
+                            )
+                          }
                         </Grid>
                       )
                     }
@@ -195,35 +215,49 @@ class StudentTestAttemptSudoku extends React.Component {
             <Grid item xs={12} key={4}>
               <Grid container spacing={0} justify='center'>
 
-                <Grid item xs={4} className={classes.keyboard} key='backward'>
+                <Grid item xs={3} className={classes.options} key='backward'>
                   <Button
                     raised
                     color={value == 'backward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleBackward('backward')}
+                    className={classes.optionsChild}
                     disabled={_.isEmpty(backward) ? true : false}
                   >
                     <Icon>arrow_back</Icon>
                   </Button>
                 </Grid>
 
-                <Grid item xs={4} className={classes.keyboard} key='forward'>
+                <Grid item xs={3} className={classes.options} key='forward'>
                   <Button
                     raised
                     color={value == 'forward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleForward('forward')}
+                    className={classes.optionsChild}
                     disabled={_.isEmpty(forward) ? true : false}
                   >
                     <Icon>arrow_forward</Icon>
                   </Button>
                 </Grid>
 
-                <Grid item xs={4} className={classes.keyboard} key='clear'>
+                <Grid item xs={3} className={classes.options} key='clear'>
                   <Button
                     raised
                     color={value == 0 ? 'secondary' : 'primary'}
                     onClick={() => this.handleClick(0)}
+                    className={classes.optionsChild}
                   >
                     <Icon>clear</Icon>
+                  </Button>
+                </Grid>
+
+                <Grid item xs={3} className={classes.options} key='edit'>
+                  <Button
+                    raised
+                    color={edit === true ? 'secondary' : 'primary'}
+                    onClick={() => this.toggleEdit()}
+                    className={classes.optionsChild}
+                  >
+                    <Icon>edit</Icon>
                   </Button>
                 </Grid>
 
