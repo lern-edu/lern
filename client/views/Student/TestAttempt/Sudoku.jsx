@@ -192,7 +192,7 @@ class StudentTestAttemptSudoku extends React.Component {
                               )
                               : (
                                 <Grid container className={classes.editContainer} spacing={0} justify='center'>
-                                  <Grid item xs={12} className={buttonEdit}>
+                                  <Grid item xs={12} className={classes.buttonEdit}>
                                     <IconButton
                                       className={classes.cellPaper}
                                       onClick={() => this.handleInsertValue(row, col)}
