@@ -41,19 +41,35 @@ class AdminTests extends React.Component {
   }
 
   componentWillMount() {
+    this.getTests();
+  }
+
+  getTests = () => {
     const { query, options } = this.state;
 
+    this.setState({ collections: { tests: { handler: true } } });
     Meteor.call('AdminTestsGet', query, options,  (err, docs) => {
       if (err) snack({ message: 'Erro ao encontrar testes' });
       this.setState({ collections: { tests: { handler: false, docs } } });
     });
-  }
+  };
 
   // Handlers
 
   handleUpdateQuery({ target: { value: query } }) {
     this.setState({ query });
   }
+
+  handleDelete = (_id) => {
+    let dismiss = null;
+    dismiss = confirm('Deletar teste?');
+    if (!dismiss) return;
+
+    Meteor.call('AdminTestDelete', _id, err => {
+      if (err) snack({ message: 'Erro ao deletar teste' });
+      else this.getTests();
+    });
+  };
 
   render() {
     const { collections, query } = this.state;
@@ -66,7 +82,12 @@ class AdminTests extends React.Component {
         {
           !_.every(collections, c => !c.handler)
           ? <LinearProgress color='secondary' />
-          : <AdminTestsList key='list' tests={collections.tests.docs} query={query} />
+          : <AdminTestsList
+            key='list'
+            tests={collections.tests.docs}
+            query={query}
+            handleDelete={this.handleDelete}
+          />
         }
 
         <Button

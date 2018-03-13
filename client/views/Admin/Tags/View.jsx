@@ -41,19 +41,34 @@ class AdminTags extends React.Component {
   }
 
   componentWillMount() {
-    const { query, options } = this.state;
+    this.getTags();
+  }
 
+  getTags = () => {
+    const { query, options } = this.state;
+    this.setState({ collections: { tags: { handler: true } } });
     Meteor.call('AdminTagsGet', query, options,  (err, docs) => {
       if (err) snack({ message: 'Erro ao encontrar tags' });
       this.setState({ collections: { tags: { handler: false, docs } } });
     });
-  }
+  };
 
   // Handlers
 
   handleUpdateQuery({ target: { value: query } }) {
     this.setState({ query });
   }
+
+  handleDelete = (_id) => {
+    let dismiss = null;
+    dismiss = confirm('Deletar tag?');
+    if (!dismiss) return;
+
+    Meteor.call('AdminTagDelete', _id, err => {
+      if (err) snack({ message: 'Erro ao deletar tag' });
+      else this.getTags();
+    });
+  };
 
   render() {
     const { collections, query } = this.state;
@@ -66,7 +81,12 @@ class AdminTags extends React.Component {
         {
           !_.every(collections, c => !c.handler)
           ? <LinearProgress color='secondary' />
-          : <AdminTagsList key='list' tags={collections.tags.docs} query={query} />
+          : <AdminTagsList
+            key='list'
+            tags={collections.tags.docs}
+            query={query}
+            handleDelete={this.handleDelete}
+          />
         }
 
         <Button
