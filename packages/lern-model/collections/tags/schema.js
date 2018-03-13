@@ -40,6 +40,14 @@ const Tag = Class.create({
         t.save();
       });
     },
+
+    afterRemove({ currentTarget: tag }) {
+      const tags = Tag.find({ 'parent._id': tag._id }).fetch();
+      _.forEach(tags, t => {
+        t.parent = null;
+        t.save();
+      });
+    },
   },
 });
 
