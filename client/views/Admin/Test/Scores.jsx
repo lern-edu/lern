@@ -9,11 +9,9 @@ import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
 import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
 import Input from 'material-ui/Input';
-import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
 import { Test } from 'meteor/duckdodgerbrasl:lern-model';
-import { MenuItem } from 'material-ui/Menu';
 
 import AdminTestNumber from './Number.jsx';
 
@@ -50,11 +48,23 @@ class AdminTestScores extends React.Component {
   };
 
   handleChange = ({ target: { value } }) => {
-    const { score, scores } = this.state;
+    const { score } = this.state;
     score.score = _.toNumber(value);
-    scores.push(_.clone(score));
-    this.setState({ scores, score });
-    this.save(scores);
+    this.setState({ score });
+  };
+
+  handleClose = (value) => () => {
+    const { doc, doc: { scores }, parent } = this.props;
+    const { score } = this.state;
+
+    if (value === 'cancel')
+      this.setState({ score: null });
+    else {
+      scores.push(_.clone(score));
+      this.setState({ scores });
+      this.save(scores);
+    };
+
     this.setState({ open: false });
   };
 
@@ -109,26 +119,30 @@ class AdminTestScores extends React.Component {
           
           <DialogContent>
 
-            <Select
-              value={_.toString(score) || '0.1'}
+            <Input
+              value={_.get(score, 'score') || 0.1}
               onChange={this.handleChange}
-              input={<Input id='score' />}
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    width: 200,
-                  },
-                },
+              type='number'
+              inputProps={{
+                step: 0.1,
+                min: 0.1,
+                max: 1,
               }}
-            >
-              {
-                _.map([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], op =>
-                  <MenuItem key={_.toString(op)} value={_.toString(op)} >{op * 100}%</MenuItem>
-                )
-              }
-            </Select>
+            />
 
           </DialogContent>
+
+          <DialogActions>
+
+            <Button onClick={this.handleClose('cancel')} color="secondary">
+              Cancel
+            </Button>
+            
+            <Button onClick={this.handleClose('save')} color="primary">
+              Save
+            </Button>
+
+          </DialogActions>
 
         </Dialog>
       

@@ -2,8 +2,5 @@
   "_locale": "pt-BR",
   "_namespace": "StudentReport",
   "title": "Português",
-  "appBar": "Desempenho",
-  "details": "Ver detalhes",
-  "goTasks": "Faça tarefas e então nos criaremos alguns relatórios :)",
-  "goTasksButton": "Começar agora"
+  "appBar": "Desempenho"
 }

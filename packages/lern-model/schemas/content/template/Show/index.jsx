@@ -108,7 +108,7 @@ class ContentShow extends React.Component {
           :
           <div className={classes.buttonGroup}>
             {
-              array && array.length > 1 && index > 0 ?
+              array.length > 1 && index > 0 ?
                 <IconButton
                   onClick={this.handleUp}
                   className={classes.button}
@@ -123,7 +123,7 @@ class ContentShow extends React.Component {
               <RemoveCircle />
             </IconButton>
             {
-              array && array.length > 1 && index < array.length - 1 ?
+              array.length > 1 && index < array.length - 1 ?
               <IconButton
                 onClick={this.handleDown}
                 className={classes.button}

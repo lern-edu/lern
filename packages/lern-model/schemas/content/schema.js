@@ -9,6 +9,7 @@ const Content = Class.create({
     type: {
       type: String,
       validators: [{ type: 'choice', param: StaticCollections.ContentTypes }],
+      immutable: true,
       default: 'text',
     },
 

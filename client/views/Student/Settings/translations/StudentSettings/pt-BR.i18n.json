@@ -6,14 +6,5 @@
   "profile": "Perfil",
   "security": "Segurança",
   "save": "Salvar",
-  "cancel": "Cancelar",
-  "success": "Senha trocada",
-  "error": "Erro inesperado",
-  "change_password": "Alterar senha",
-  "add_password": "Adcionar senha",
-  "current_password": "Senha atual",
-  "new_password": "Nova senha",
-  "confirm_new_password": "Confirmar nova senha",
-  "password_size": "Tamanho mínimo de 6 caracteres",
-  "password_match": "Senhas não conferem"
+  "cancel": "Cancelar"
 }
