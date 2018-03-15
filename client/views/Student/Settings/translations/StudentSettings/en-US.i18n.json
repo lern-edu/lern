@@ -6,14 +6,5 @@
   "profile": "Profile",
   "security": "Security",
   "save": "Save",
-  "cancel": "Cancel",
-  "success": "Password changed",
-  "error": "Unexpected error",
-  "change_password": "Change password",
-  "add_password": "Add password",
-  "current_password": "Current password",
-  "new_password": "New password",
-  "confirm_new_password": "Confirm new password",
-  "password_size": "Minimum length of 6 characters",
-  "password_match": "Passwords do not match"
+  "cancel": "Cancel"
 }

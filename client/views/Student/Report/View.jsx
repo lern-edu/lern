@@ -42,7 +42,7 @@ class StudentReport extends React.Component {
       <Layout.Bar title={i18n.__('StudentReport.appBar')} />
 
       {
-        !user.report
+        _.isEmpty(user.report)
         ? <LinearProgress color='primary' />
         : _.isEmpty(user.report)
         ? <Grid direction='column' justify='center' alignItems='center' container>

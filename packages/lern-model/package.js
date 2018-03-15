@@ -61,9 +61,6 @@ Package.onUse((api) => {
     // Translations
     'collections/users/translations/Templates/en-US.i18n.json',
     'collections/users/translations/Templates/pt-BR.i18n.json',
-
-    'schemas/content/template/Create/translations/Templates/en-US.i18n.json',
-    'schemas/content/template/Create/translations/Templates/pt-BR.i18n.json',
   ]);
 
   api.mainModule('./exporter.js');

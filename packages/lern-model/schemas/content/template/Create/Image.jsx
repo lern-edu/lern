@@ -8,7 +8,6 @@ import { Modal, IconButton, Button, TextField, Typography, CircularProgress } fr
 import Collapse from '@material-ui/core/transitions/Collapse';
 import green from '@material-ui/core/colors/green';
 import { ExpandMore, FileUpload } from 'material-ui-icons';
-import i18n from 'meteor/universe:i18n';
 
 const styles = theme => ({
   card: {
@@ -214,11 +213,16 @@ class PublicContentCreateImage extends React.Component {
     const { upload, remove, open, path, file, loading, success } = this.state;
     const { classes } = this.props;
 
+    const instructions = {
+      image: 'Selecione uma imagem no formato jpg',
+      extension: 'A imagem não é suportada',
+    };
+
     return (
       <Card style={{ padding: '5px' }}>
         <CardHeader
-          title={i18n.__('Templates.image')}
-          subheader={file ? file.name : i18n.__('Templates.no_image')}
+          title='Imagem'
+          subheader={file ? file.name : 'Nenhuma imagem selecionada'}
           action={
             <IconButton
               className={classnames(classes.expand, {
@@ -256,7 +260,7 @@ class PublicContentCreateImage extends React.Component {
                 disabled={upload.success}
                 onClick={this.triggerSelectFolder.bind(this)}
               >
-                {i18n.__('Templates.upload')}
+                Upload
                 <FileUpload className={classes.rightIcon} />
               </Button>
               {upload.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
@@ -269,7 +273,7 @@ class PublicContentCreateImage extends React.Component {
               disabled={!remove}
               onClick={this.handleRemove.bind(this)}
             >
-              {i18n.__('Templates.remove')}
+              Remover
             </Button>
           </div>
         </CardActions>

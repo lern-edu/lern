@@ -40,7 +40,7 @@ class StudentSettingsSecurity extends React.Component {
       Accounts.changePassword(current, target, err => {
         if (err) {
           console.error(err);
-          snack(i18n.__('StudentSettings.error'), 'orange warning');
+          snack('Erro inesperado', 'orange warning');
         } else {
           this.setState({
             current: undefined,
@@ -48,14 +48,14 @@ class StudentSettingsSecurity extends React.Component {
             confirm: undefined,
             hasPassword: true,
           });
-          snack(i18n.__('StudentSettings.success'), 'green checkmark');
+          snack('Senha trocada', 'green checkmark');
         }
       });
     } else {
       Meteor.call('UserSetPassword', doc._id, target, err => {
         if (err) {
           console.error(err);
-          snack(i18n.__('StudentSettings.error'), 'orange warning');
+          snack('Erro inesperado', 'orange warning');
         } else {
           this.setState({
             current: undefined,
@@ -63,7 +63,7 @@ class StudentSettingsSecurity extends React.Component {
             confirm: undefined,
             hasPassword: true,
           });
-          snack(i18n.__('StudentSettings.success'), 'green checkmark');
+          snack('Senha trocada', 'green checkmark');
         }
       });
     }
@@ -110,7 +110,7 @@ class StudentSettingsSecurity extends React.Component {
                 {hasPassword ?
                   <Grid item xs={12}>
                     <TextField
-                      label={i18n.__('StudentSettings.current_password')}
+                      label='Senha atual'
                       type='password'
                       onChange={this.handleInputChange.bind(this)}
                       name='current'
@@ -122,25 +122,25 @@ class StudentSettingsSecurity extends React.Component {
                 <Grid item xs={12}>
                   <TextField
                     required
-                    label={i18n.__('StudentSettings.new_password')}
+                    label='Nova senha'
                     type='password'
                     onChange={this.handleInputChange.bind(this)}
                     name='target'
                     error={!target || target.length < 6}
                     helperText={!target || target.length < 6 ?
-                      i18n.__('StudentSettings.password_size') : ''}
+                      'Tamanho mínimo de 6 caracteres' : ''}
                   />
                 </Grid>
 
                 <Grid item xs={12}>
                   <TextField
                     required
-                    label={i18n.__('StudentSettings.confirm_new_password')}
+                    label='Confirmar nova senha'
                     type='password'
                     onChange={this.handleInputChange.bind(this)}
                     name='confirm'
                     error={target !== confirm}
-                    helperText={target !== confirm ? i18n.__('StudentSettings.password_match') : ''}
+                    helperText={target !== confirm ? 'Senhas não conferem' : ''}
                   />
                 </Grid>
 
