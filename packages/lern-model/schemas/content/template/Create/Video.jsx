@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { TextField, Button, Card, CardHeader, CardActions, CardMedia } from 'material-ui';
 import _ from 'lodash';
+import i18n from 'meteor/universe:i18n';
 import moment from 'moment';
 
 const styles = theme => ({
@@ -87,7 +88,7 @@ class PublicContentCreateVideo extends React.Component {
           color='secondary'
           onClick={this.handleSearch.bind(this)}
         >
-          Pesquisar
+          {i18n.__('Templates.search')}
         </Button>
 
         {
@@ -112,7 +113,7 @@ class PublicContentCreateVideo extends React.Component {
                     size='medium'
                     onClick={this.handleRemove.bind(this)}
                   >
-                    Remover
+                    {i18n.__('Templates.remove')}
                   </Button>
                 </div>
               </CardActions>

@@ -25,22 +25,49 @@ const styles = theme => ({
     textAlign: 'center',
     lineHeight: '36px',
   },
+  cellEdit: {
+    paddingLeft: 2,
+  },
   keyboard: {
     textAlign: 'center',
     minHeight: 36,
     minWidth: 100,
     maxWidth: 120,
   },
+  options: {
+    textAlign: 'center',
+    minHeight: 36,
+    maxWidth: 86,
+  },
+  optionsChild: {
+    minWidth: 70,
+  },
+  editContainer: {
+    lineHeight: 1,
+    fontSize: 12,
+  },
+  buttonEdit: {
+    zIndex: 999,
+    height: 36,
+    width: 36,
+    position: 'absolute',
+  },
 });
 
-// this.state.bottom = [null, 'finish', 'loading'];
 class StudentTestAttemptSudoku extends React.Component {
 
   // Lifecycle
   constructor(props) {
     log.info('StudentTestAttemptSudoku.constructor =>', props);
     super(props);
-    this.state = { answer: props.sudoku.answer, value: null, backward: [], forward: [] };
+    this.state = {
+      answer: props.sudoku.answer,
+      value: null,
+      backward: [],
+      forward: [],
+      edit: false,
+      clear: false,
+    };
   };
 
   // Handlers
@@ -48,14 +75,50 @@ class StudentTestAttemptSudoku extends React.Component {
     this.setState({ value });
   };
 
+  toggleEdit = () => {
+    const { edit } = this.state;
+    this.setState({ edit: !edit, clear: false });
+  };
+
+  toggleClear = () => {
+    const { clear, edit, value } = this.state;
+    this.setState({ clear: !clear, value: edit ? value : 0 });
+  };
+
   handleInsertValue = (row, col) => {
     const { sudoku, parent } = this.props;
-    const { answer, value } = this.state;
+    const { answer, value, edit, clear } = this.state;
 
     const index = row * 9 + col;
+
     if (sudoku.board[index] === 0) {
-      this.pushBackward({ row, col, value, old: answer[index] });
-      answer[index] = value;
+
+      const backward = { row, col, value, old: _.clone(answer[index]) };
+
+      if (edit) {
+
+        if (!clear && (_.isArray(answer[index]) || !answer[index])) {
+
+          if (_.isArray(answer[index]))
+            answer[index].push(value);
+
+          else
+            answer[index] = [value];
+
+        } else if (_.isArray(answer[index])) {
+
+          _.pull(answer[index], value);
+
+        }
+
+      } else {
+        if (clear) answer[index] = 0;
+        else answer[index] = value;
+      }
+
+      backward.value = _.clone(answer[index]);
+
+      this.pushBackward(backward);
       parent.setState({ bottom: _.every(answer) ? 'finish' : null });
       this.setState({ answer });
       this.keepAttemptUpdated('sudoku.answer');
@@ -75,7 +138,7 @@ class StudentTestAttemptSudoku extends React.Component {
   handleForward = () => {
     const { backward, forward, answer } = this.state;
     const pulled = _.head(_.pullAt(forward, [forward.length - 1]));
-    const { row, col, value } = pulled;
+    const { row, col, value, old } = pulled;
     backward.push(pulled);
     answer[row * 9 + col] = value;
     this.keepAttemptUpdated('sudoku.answer');
@@ -104,7 +167,7 @@ class StudentTestAttemptSudoku extends React.Component {
   render() {
     log.info('StudentTestAttemptSudoku.render =>', this.state);
     const { classes, sudoku } = this.props;
-    const { answer, value, backward, forward } = this.state;
+    const { answer, value, backward, forward, edit, clear } = this.state;
 
     return (
       <Grid container spacing={0} justify='center'>
@@ -117,45 +180,71 @@ class StudentTestAttemptSudoku extends React.Component {
                 (cells, row) =>
                   <Grid className={classes.root} item xs={12} key={row}>
                     <Grid container spacing={0} justify='center'>
-                  
-                    {
-                      _.map(cells, (cell, col) =>
-                        <Grid
-                          item
-                          xs={1}
-                          key={`row${row}-cell${col}`}
-                          className={classes.cell}
-                          style={{
-                            backgroundColor: (col < 3 || col > 5)
-                              ? (
-                                (row < 3 || row > 5)
-                                ? 'white'
-                                : 'rgba(0, 0, 0, 0.12)'
-                              )
-                              : (
-                                (row < 3 || row > 5)
-                                  ? 'rgba(0, 0, 0, 0.12)'
-                                  : 'white'
-                              ),
-                          }}
-                        >
-                          <IconButton
-                            className={classes.cellPaper}
-                            onClick={() => this.handleInsertValue(row, col)}
+
+                      {
+                        _.map(cells, (cell, col) =>
+                          <Grid
+                            item
+                            xs={1}
+                            key={`row${row}-cell${col}`}
+                            className={classes.cell}
                             style={{
-                              fontWeight: cell && sudoku.board[row * 9 + col] === cell
-                                ? 'bold'
-                                : 'regular',
-                              color: cell && sudoku.board[row * 9 + col] === cell
-                                ? 'black'
-                                : undefined,
+                              backgroundColor: (value && value === cell)
+                                ? 'yellow'
+                                : (col < 3 || col > 5)
+                                ? (
+                                  (row < 3 || row > 5)
+                                  ? 'white'
+                                  : 'rgba(0, 0, 0, 0.12)'
+                                )
+                                : (
+                                  (row < 3 || row > 5)
+                                    ? 'rgba(0, 0, 0, 0.12)'
+                                    : 'white'
+                                ),
                             }}
                           >
-                            {cell ? cell : null}
-                          </IconButton>
-                        </Grid>
-                      )
-                    }
+                            {
+                              cell && _.isNumber(cell)
+                              ? (
+                                <IconButton
+                                  className={classes.cellPaper}
+                                  onClick={() => this.handleInsertValue(row, col)}
+                                  style={{
+                                    fontWeight: cell && sudoku.board[row * 9 + col] === cell
+                                      ? 'bold'
+                                      : 'regular',
+                                    color: cell && sudoku.board[row * 9 + col] === cell
+                                      ? 'black'
+                                      : undefined,
+                                  }}
+                                >
+                                  {cell}
+                                </IconButton>
+                              )
+                              : (
+                                <Grid container className={classes.editContainer} spacing={0} justify='center'>
+                                  <Grid item xs={12} className={classes.buttonEdit}>
+                                    <IconButton
+                                      className={classes.cellPaper}
+                                      onClick={() => this.handleInsertValue(row, col)}
+                                    />
+                                  </Grid>
+                                  {
+                                    _.isArray(cell)
+                                    ? _.map(new Array(9), (v, index) =>
+                                      <Grid item xs={4} className={classes.cellEdit} key={index + 1}>
+                                        {_.includes(cell, index + 1) ? index + 1 : ''}
+                                      </Grid>
+                                    )
+                                    : ''
+                                  }
+                                </Grid>
+                              )
+                            }
+                          </Grid>
+                        )
+                      }
                   
                     </Grid>
                   </Grid>
@@ -193,35 +282,49 @@ class StudentTestAttemptSudoku extends React.Component {
             <Grid item xs={12} key={4}>
               <Grid container spacing={0} justify='center'>
 
-                <Grid item xs={4} className={classes.keyboard} key='backward'>
+                <Grid item xs={3} className={classes.options} key='backward'>
                   <Button
                     raised
                     color={value == 'backward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleBackward('backward')}
+                    className={classes.optionsChild}
                     disabled={_.isEmpty(backward) ? true : false}
                   >
                     <Icon>arrow_back</Icon>
                   </Button>
                 </Grid>
 
-                <Grid item xs={4} className={classes.keyboard} key='forward'>
+                <Grid item xs={3} className={classes.options} key='forward'>
                   <Button
                     raised
                     color={value == 'forward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleForward('forward')}
+                    className={classes.optionsChild}
                     disabled={_.isEmpty(forward) ? true : false}
                   >
                     <Icon>arrow_forward</Icon>
                   </Button>
                 </Grid>
 
-                <Grid item xs={4} className={classes.keyboard} key='clear'>
+                <Grid item xs={3} className={classes.options} key='clear'>
                   <Button
                     raised
-                    color={value == 0 ? 'secondary' : 'primary'}
-                    onClick={() => this.handleClick(0)}
+                    color={clear ? 'secondary' : 'primary'}
+                    onClick={() => this.toggleClear()}
+                    className={classes.optionsChild}
                   >
                     <Icon>clear</Icon>
+                  </Button>
+                </Grid>
+
+                <Grid item xs={3} className={classes.options} key='edit'>
+                  <Button
+                    raised
+                    color={edit ? 'secondary' : 'primary'}
+                    onClick={() => this.toggleEdit()}
+                    className={classes.optionsChild}
+                  >
+                    <Icon>edit</Icon>
                   </Button>
                 </Grid>
 
@@ -238,4 +341,3 @@ class StudentTestAttemptSudoku extends React.Component {
 };
 
 export default withStyles(styles)(StudentTestAttemptSudoku);
-

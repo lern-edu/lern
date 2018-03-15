@@ -8,6 +8,7 @@ import { Modal, IconButton, Button, TextField, Typography, CircularProgress } fr
 import Collapse from 'material-ui/transitions/Collapse';
 import green from 'material-ui/colors/green';
 import { ExpandMore, FileUpload } from 'material-ui-icons';
+import i18n from 'meteor/universe:i18n';
 
 const styles = theme => ({
   card: {
@@ -213,16 +214,11 @@ class PublicContentCreateImage extends React.Component {
     const { upload, remove, open, path, file, loading, success } = this.state;
     const { classes } = this.props;
 
-    const instructions = {
-      image: 'Selecione uma imagem no formato jpg',
-      extension: 'A imagem não é suportada',
-    };
-
     return (
       <Card style={{ padding: '5px' }}>
         <CardHeader
-          title='Imagem'
-          subheader={file ? file.name : 'Nenhuma imagem selecionada'}
+          title={i18n.__('Templates.image')}
+          subheader={file ? file.name : i18n.__('Templates.no_image')}
           action={
             <IconButton
               className={classnames(classes.expand, {
@@ -260,7 +256,7 @@ class PublicContentCreateImage extends React.Component {
                 disabled={upload.success}
                 onClick={this.triggerSelectFolder.bind(this)}
               >
-                Upload
+                {i18n.__('Templates.upload')}
                 <FileUpload className={classes.rightIcon} />
               </Button>
               {upload.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
@@ -273,7 +269,7 @@ class PublicContentCreateImage extends React.Component {
               disabled={!remove}
               onClick={this.handleRemove.bind(this)}
             >
-              Remover
+              {i18n.__('Templates.remove')}
             </Button>
           </div>
         </CardActions>
@@ -286,10 +282,10 @@ class PublicContentCreateImage extends React.Component {
         >
           <div className={classes.modal}>
             <Typography type="title">
-              Desculpe!
+              {i18n.__('Templates.sorry')}
             </Typography>
             <Typography type="subheading">
-              {instructions.extension}
+              {i18n.__('Templates.instructions.extension')}
             </Typography>
             <Button
               color='primary'
