@@ -26,7 +26,7 @@ const styles = theme => ({
     lineHeight: '36px',
   },
   cellEdit: {
-    paddingLeft: 2
+    paddingLeft: 2,
   },
   keyboard: {
     textAlign: 'center',
@@ -40,7 +40,7 @@ const styles = theme => ({
     maxWidth: 86,
   },
   optionsChild: {
-    minWidth: 70
+    minWidth: 70,
   },
   editContainer: {
     lineHeight: 1,
@@ -65,7 +65,8 @@ class StudentTestAttemptSudoku extends React.Component {
       value: null,
       backward: [],
       forward: [],
-      edit: false
+      edit: false,
+      clear: false,
     };
   };
 
@@ -76,17 +77,48 @@ class StudentTestAttemptSudoku extends React.Component {
 
   toggleEdit = () => {
     const { edit } = this.state;
-    this.setState({ edit: !edit });
+    this.setState({ edit: !edit, clear: false });
+  };
+
+  toggleClear = () => {
+    const { clear, edit, value } = this.state;
+    this.setState({ clear: !clear, value: edit ? value : 0 });
   };
 
   handleInsertValue = (row, col) => {
     const { sudoku, parent } = this.props;
-    const { answer, value } = this.state;
+    const { answer, value, edit, clear } = this.state;
 
     const index = row * 9 + col;
+
     if (sudoku.board[index] === 0) {
-      this.pushBackward({ row, col, value, old: answer[index] });
-      answer[index] = value;
+
+      const backward = { row, col, value, old: _.clone(answer[index]) };
+
+      if (edit) {
+
+        if (!clear && (_.isArray(answer[index]) || !answer[index])) {
+
+          if (_.isArray(answer[index]))
+            answer[index].push(value);
+
+          else
+            answer[index] = [value];
+
+        } else if (_.isArray(answer[index])) {
+
+          _.pull(answer[index], value);
+
+        }
+
+      } else {
+        if (clear) answer[index] = 0;
+        else answer[index] = value;
+      }
+
+      backward.value = _.clone(answer[index]);
+
+      this.pushBackward(backward);
       parent.setState({ bottom: _.every(answer) ? 'finish' : null });
       this.setState({ answer });
       this.keepAttemptUpdated('sudoku.answer');
@@ -106,7 +138,7 @@ class StudentTestAttemptSudoku extends React.Component {
   handleForward = () => {
     const { backward, forward, answer } = this.state;
     const pulled = _.head(_.pullAt(forward, [forward.length - 1]));
-    const { row, col, value } = pulled;
+    const { row, col, value, old } = pulled;
     backward.push(pulled);
     answer[row * 9 + col] = value;
     this.keepAttemptUpdated('sudoku.answer');
@@ -135,7 +167,7 @@ class StudentTestAttemptSudoku extends React.Component {
   render() {
     log.info('StudentTestAttemptSudoku.render =>', this.state);
     const { classes, sudoku } = this.props;
-    const { answer, value, backward, forward, edit } = this.state;
+    const { answer, value, backward, forward, edit, clear } = this.state;
 
     return (
       <Grid container spacing={0} justify='center'>
@@ -173,7 +205,7 @@ class StudentTestAttemptSudoku extends React.Component {
                             }}
                           >
                             {
-                              cell
+                              cell && _.isNumber(cell)
                               ? (
                                 <IconButton
                                   className={classes.cellPaper}
@@ -199,13 +231,15 @@ class StudentTestAttemptSudoku extends React.Component {
                                     />
                                   </Grid>
                                   {
-                                    _.map(new Array(9), (v, index) =>
+                                    _.isArray(cell)
+                                    ? _.map(new Array(9), (v, index) =>
                                       <Grid item xs={4} className={classes.cellEdit} key={index + 1}>
-                                        {index + 1}
+                                        {_.includes(cell, index + 1) ? index + 1 : ''}
                                       </Grid>
                                     )
+                                    : ''
                                   }
-                                </Grid>        
+                                </Grid>
                               )
                             }
                           </Grid>
@@ -275,8 +309,8 @@ class StudentTestAttemptSudoku extends React.Component {
                 <Grid item xs={3} className={classes.options} key='clear'>
                   <Button
                     raised
-                    color={value == 0 ? 'secondary' : 'primary'}
-                    onClick={() => this.handleClick(0)}
+                    color={clear ? 'secondary' : 'primary'}
+                    onClick={() => this.toggleClear()}
                     className={classes.optionsChild}
                   >
                     <Icon>clear</Icon>
@@ -286,7 +320,7 @@ class StudentTestAttemptSudoku extends React.Component {
                 <Grid item xs={3} className={classes.options} key='edit'>
                   <Button
                     raised
-                    color={edit === true ? 'secondary' : 'primary'}
+                    color={edit ? 'secondary' : 'primary'}
                     onClick={() => this.toggleEdit()}
                     className={classes.optionsChild}
                   >
