@@ -34,6 +34,7 @@ Meteor.startup(() => {
           user.emails = [];
       } else if (options.profile) {
         user.profile = options.profile;
+        user.profile.name = user.profile.firstName + ' ' + user.profile.lastName;
         if (options.email)
           user.emails = [{ address: options.email, verified: false }];
       }
