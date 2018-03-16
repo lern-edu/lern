@@ -12,6 +12,7 @@ import i18n from 'meteor/universe:i18n';
 import ContentRichText from './../RichText.jsx';
 import PublicContentCreateImage from './Image.jsx';
 import PublicContentCreateVideo from './Video.jsx';
+import PublicContentCreateTask from './Task.jsx';
 
 class ContentCreate extends React.Component {
 
@@ -87,6 +88,8 @@ class ContentCreate extends React.Component {
     const { editorState, doc, clear } = this.state;
     const { type, text, link, image } = doc;
 
+    console.log(this);
+
     return (
       <Grid container spacing={24}>
 
@@ -131,6 +134,11 @@ class ContentCreate extends React.Component {
                 />,
               video:
                 <PublicContentCreateVideo
+                  parent={this}
+                  clear={clear}
+                />,
+              task:
+                <PublicContentCreateTask
                   parent={this}
                   clear={clear}
                 />,

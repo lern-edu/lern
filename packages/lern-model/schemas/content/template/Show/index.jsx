@@ -11,6 +11,7 @@ import { RemoveCircle, ArrowUpward, ArrowDownward } from 'material-ui-icons';
 import PublicContentRichText from './../RichText.jsx';
 import PublicContentShowImage from './Image.jsx';
 import PublicContentShowVideo from './Video.jsx';
+import PublicContentShowTask from './Task.jsx';
 
 const styles = theme => ({
   contentGroup: {
