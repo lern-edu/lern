@@ -12,8 +12,8 @@ injectTapEventPlugin();
 // setup logs
 Meteor.startup(() => {
   const env = process.env.NODE_ENV;
-  const { logLevel='info' } = Meteor.settings.public;
-  log.setLevel(env === 'production' ? 'info' : logLevel);
+  const { logLevel='error' } = Meteor.settings.public;
+  log.setLevel(env === 'development' ? 'info' : logLevel);
 });
 
 /**
