@@ -77,10 +77,8 @@ class ContentShow extends React.Component {
   render() {
     const { doc: { text, link, image, type, video }, canRemove = true } = this.props;
     const { index, form, field='description', classes } = this.props;
-    if (canRemove) {
-      const docToSave = form.state.doc;
-      const array = _.get(docToSave, field); 
-    }
+    const docToSave = _.get(form, 'state.doc');
+    const array = _.get(docToSave, field); 
 
     return (
       <div className={classes.contentGroup}>
