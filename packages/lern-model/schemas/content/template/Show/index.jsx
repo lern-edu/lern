@@ -77,8 +77,10 @@ class ContentShow extends React.Component {
   render() {
     const { doc: { text, link, image, type, video }, canRemove = true } = this.props;
     const { index, form, field='description', classes } = this.props;
-    const docToSave = form.state.doc;
-    const array = _.get(docToSave, field);
+    if (canRemove) {
+      const docToSave = form.state.doc;
+      const array = _.get(docToSave, field); 
+    }
 
     return (
       <div className={classes.contentGroup}>
@@ -141,9 +143,9 @@ class ContentShow extends React.Component {
 ContentShow.propTypes = {
   classes: PropTypes.object.isRequired,
   doc: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  canRemove: PropTypes.bool.isRequired,
+  form: PropTypes.object,
+  index: PropTypes.number,
+  canRemove: PropTypes.bool,
 };
 
 export default withStyles(styles)(ContentShow);
