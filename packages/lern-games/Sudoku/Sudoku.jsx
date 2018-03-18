@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import log from 'loglevel';
 import { RaisedButton } from 'material-ui';
 import _ from 'lodash';
 
@@ -46,7 +47,7 @@ class Sudoku extends React.Component {
         cRow[answer[row * 9 + col] - 1] = true;
       }
 
-      console.log('row: ' + row, cRow, conflictRow, _.every(cRow));
+      log.info('row: ' + row, cRow, conflictRow, _.every(cRow));
     }
 
     var conflictCol = false;
@@ -57,7 +58,7 @@ class Sudoku extends React.Component {
         cCol[answer[row * 9 + col] - 1] = true;
       }
 
-      console.log('col: ' + col, cCol, conflictCol, _.every(cCol));
+      log.info('col: ' + col, cCol, conflictCol, _.every(cCol));
     }
 
     var conflictGrid = false;
@@ -71,11 +72,11 @@ class Sudoku extends React.Component {
           }
         }
 
-        console.log('grid: ' + i + ',' + j, cGrid, conflictGrid, _.every(cGrid));
+        log.info('grid: ' + i + ',' + j, cGrid, conflictGrid, _.every(cGrid));
       }
     }
 
-    console.log(conflictRow, conflictCol, conflictGrid);
+    log.info(conflictRow, conflictCol, conflictGrid);
 
     conflict |= conflictRow || conflictCol || conflictGrid;
 
@@ -88,7 +89,6 @@ class Sudoku extends React.Component {
       return;
     }
 
-    //console.log(value, row, col);
     answer[row * 9 + col] = value;
     const isCompleted = this.isComplete();
 

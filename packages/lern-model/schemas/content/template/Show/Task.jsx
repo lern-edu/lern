@@ -43,8 +43,6 @@ class PublicContentShowTask extends React.Component {
     const { classes, handleAddTask } = this.props;
     const { task } = this.state;
 
-    console.log(this);
-
     return (
       task ?
       <ExpansionPanel className={classes.panel}>

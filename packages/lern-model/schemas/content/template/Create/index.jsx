@@ -88,8 +88,6 @@ class ContentCreate extends React.Component {
     const { editorState, doc, clear } = this.state;
     const { type, text, link, image } = doc;
 
-    console.log(this);
-
     return (
       <Grid container spacing={24}>
 
