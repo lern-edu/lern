@@ -12,6 +12,8 @@ import SvgIcon from 'material-ui/SvgIcon';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
+import PublicLoginEnroll from './Enroll.jsx';
+
 // Styles
 const styles = {
   background: {
@@ -60,11 +62,11 @@ class PublicLogin extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { password: '', email: '' };
+    this.state = { password: '', email: '', open: false };
   }
 
   clear() {
-    this.setState({ password: '', email: '' });
+    this.setState({ password: '', email: '', open: false });
   }
 
   // Handlers
@@ -166,15 +168,28 @@ class PublicLogin extends React.Component {
 
                 <br/>
 
-                <Button color='primary' onTouchTap={handleLogin}>
+                <Button raised color='primary' onClick={handleLogin}>
                   {texts.signIn}
                 </Button>
+
+                <div>
+                  <Button size='small'>
+                    Esqueceu a senha?
+                  </Button>
+                  <Button size='small' onClick={() => this.setState({ open: true })}>
+                    Cadastro
+                  </Button>
+                  <PublicLoginEnroll
+                    open={this.state.open}
+                    handleClose={() => this.setState({ open: false })}
+                  />
+                </div>
 
               </CardContent>
               <CardActions>
                 <Button
                   style={{ color: '#3954A1' }}
-                  onTouchTap={handleFacebookLogin}
+                  onClick={handleFacebookLogin}
                 >
                   <FacebookIcon/>
                   Facebook
@@ -182,7 +197,7 @@ class PublicLogin extends React.Component {
 
                 <Button
                   style={{ color: '#DC4A38' }}
-                  onTouchTap={handleGoogleLogin}
+                  onClick={handleGoogleLogin}
                 >
                   <GoogleIcon/>
                   Google
