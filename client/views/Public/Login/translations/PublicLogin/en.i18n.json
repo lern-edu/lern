@@ -8,5 +8,17 @@
   "userNotFoundMessage": "User not found",
   "invalidPasswordMessage": "Invalid password",
   "errorMessage": "Problems on signing in",
-  "welcomeMessage":  "Welcome!"
+  "welcomeMessage":  "Welcome!",
+  "sign_on": "Sign On",
+  "required": "This field is required",
+  "email": "Email not valid",
+  "new_password": "New password",
+  "confirm_new_password": "Confirm new password",
+  "password_size": "Minimum length of 6 characters",
+  "password_match": "Passwords do not match",
+  "email": "Email",
+  "password": "Password",
+  "confirm_password": "Confirm password",
+  "firstName": "First name",
+  "lastName": "Last name"
 }
