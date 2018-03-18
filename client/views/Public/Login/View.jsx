@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
 import PublicLoginEnroll from './Enroll.jsx';
+import PublicLoginForgot from './Forgot.jsx';
 
 // Styles
 const styles = {
@@ -62,11 +63,11 @@ class PublicLogin extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { password: '', email: '', open: false };
+    this.state = { password: '', email: '', openEnroll: false, openForgot: false };
   }
 
   clear() {
-    this.setState({ password: '', email: '', open: false });
+    this.setState({ password: '', email: '', openEnroll: false, openForgot: false });
   }
 
   // Handlers
@@ -173,15 +174,19 @@ class PublicLogin extends React.Component {
                 </Button>
 
                 <div>
-                  <Button size='small'>
-                    Esqueceu a senha?
+                  <Button size='small' onClick={() => this.setState({ openForgot: true })}>
+                    {i18n.__('PublicLogin.forgot_password')}
                   </Button>
-                  <Button size='small' onClick={() => this.setState({ open: true })}>
-                    Cadastro
+                  <PublicLoginForgot
+                    open={this.state.openForgot}
+                    handleClose={() => this.setState({ openForgot: false })}
+                  />
+                  <Button size='small' onClick={() => this.setState({ openEnroll: true })}>
+                    {i18n.__('PublicLogin.sign_on')}
                   </Button>
                   <PublicLoginEnroll
-                    open={this.state.open}
-                    handleClose={() => this.setState({ open: false })}
+                    open={this.state.openEnroll}
+                    handleClose={() => this.setState({ openEnroll: false })}
                   />
                 </div>
 
