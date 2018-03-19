@@ -71,8 +71,6 @@ class PublicContentSearchTask extends React.Component {
       ],
     };
 
-    console.log('query', q);
-
     Meteor.call('AdminTestsGet', q, options, (err, docs) => {
       if (err) snack({ message: 'Erro ao buscar tarefas' });
       tasks.handler = false;
