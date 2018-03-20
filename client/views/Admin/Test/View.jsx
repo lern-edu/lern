@@ -32,6 +32,9 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     margin: theme.spacing.unit * 2,
   },
+  stepper: {
+    width: '100%',
+  },
 });
 
 class AdminTest extends React.Component {
@@ -179,7 +182,10 @@ class AdminTest extends React.Component {
 
                     <Grid container spacing={24}>
 
-                      <Stepper activeStep={activeStep} orientation='vertical'>
+                      <Stepper
+                        className={classes.stepper}
+                        activeStep={activeStep}
+                        orientation='vertical'>
 
                         {/* doc.name */}
 
@@ -428,7 +434,7 @@ class AdminTest extends React.Component {
 
                           <StepContent>
 
-                            <Grid item xs={12}>
+                            <Grid item xs={12} style={{ width: '100%' }}>
 
                               <Paper className={classes.paper}>
 
