@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.2] - 20/03/2018
+### Fixed
+- [#165](https://github.com/lern-edu/lern/issues/165) Fix recurrent bug #161
 ## [1.1.2] - 17/03/2018
 ### Added
 - Section "CHANGELOG".
