@@ -84,8 +84,7 @@ class StudentTestAttempt extends React.Component {
     if (!bottom && value === 'finish') {
       snack(i18n.__(`StudentTestAttempt.warning.${attempt.test.resolution}`));
       return;
-    }
-    else {
+    } else {
       this.setState({ bottom: 'loading' });
 
       Meteor.call('StudentTestAttemptFinish', attempt._id, dismiss, (err, doc) => {
@@ -131,7 +130,7 @@ class StudentTestAttempt extends React.Component {
       <div>
         <Layout.Bar title={attempt.test.name} />
 
-        <Grid container justify='center' className={classes.grid}>
+        <Grid container justify='center' className={classes.grid} spacing={0}>
 
           <Grid item xs={12} md={10} lg={8}>
 
@@ -180,7 +179,7 @@ class StudentTestAttempt extends React.Component {
             ]
           }
         </BottomNavigation>
-          
+
       </div>
     );
   }

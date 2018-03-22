@@ -9,6 +9,10 @@ import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { Content } from 'meteor/duckdodgerbrasl:lern-model';
+import MobileStepper from 'material-ui/MobileStepper';
+import Button from 'material-ui/Button';
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
+import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 
 const content = new Content();
 const ContentShow = _.get(content, 'templates.ContentShow');
@@ -17,11 +21,23 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     margin: theme.spacing.unit * 2,
-    width: '100%',
+  },
+  stepper: {
+    flexGrow: 1,
+    marginLeft: -14,
+    marginRight: -14,
+    marginBottom: 56,
   },
 });
 
 class StudentTestAttemptContent extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeStep: 0,
+    };
+  }
 
   // Lifecycle
   componentDidMount() {
@@ -53,15 +69,51 @@ class StudentTestAttemptContent extends React.Component {
     );
   };
 
+  handleNext = () => {
+    this.setState({
+      activeStep: this.state.activeStep + 1,
+    });
+  };
+
+  handleBack = () => {
+    this.setState({
+      activeStep: this.state.activeStep - 1,
+    });
+  };
+
   // Render
   render() {
-    log.info('StudentTestAttemptContent.render =>', this.props);
-    const { pages, classes } = this.props;
+    log.info('StudentTestAttemptContent.render =>', this);
+    const { pages, classes, theme } = this.props;
+    const { activeStep } = this.state;
 
     return (
-      <Paper className={classes.paper} >
+      <div style={{ width: '100%' }}>
+        <MobileStepper
+          type="progress"
+          steps={pages.length}
+          position="bottom"
+          activeStep={this.state.activeStep}
+          className={classes.stepper}
+          nextButton={
+            <Button size="small"
+              onClick={this.handleNext}
+              disabled={this.state.activeStep === pages.length - 1}>
+              Next
+              {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+            </Button>
+          }
+          backButton={
+            <Button size="small"
+              onClick={this.handleBack}
+              disabled={this.state.activeStep === 0}>
+              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+              Back
+            </Button>
+          }
+        />
         {
-          _.map(_.get(pages, '0.description'), (description, index) =>
+          _.map(_.get(pages, `${activeStep}.description`), (description, index) =>
             <Grid item xs={12} key={`descriptionShow${index}`}>
 
               {
@@ -83,7 +135,7 @@ class StudentTestAttemptContent extends React.Component {
             </Grid>
           )
         }
-      </Paper>
+      </div>
     );
   }
 
@@ -93,4 +145,4 @@ StudentTestAttemptContent.propTypes = {
   pages: PropTypes.array.isRequired,
 };
 
-export default withStyles(styles)(StudentTestAttemptContent);
+export default withStyles(styles, { withTheme: true })(StudentTestAttemptContent);
