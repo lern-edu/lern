@@ -11,6 +11,7 @@ import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavi
 
 import StudentTestAttemptContent from './Content.jsx';
 import StudentTestAttemptSudoku from './Sudoku.jsx';
+import StudentTestAttemptToolbar from './Toolbar.jsx';
 
 const styles = theme => ({
   bottom: {
@@ -40,6 +41,7 @@ class StudentTestAttempt extends React.Component {
       },
       handler: true,
       bottom: null,
+      page: 0,
     };
   }
 
@@ -70,15 +72,37 @@ class StudentTestAttempt extends React.Component {
   };
 
   // Handlers
-
   handleBottom = (event, value) => {
-    const { bottom, collections: { attempt } } = this.state;
+    log.info('StudentTestAttempt.handleBottom => ', this, value);
+    const { bottom, collections: { attempt }, page } = this.state;
 
     let dismiss = null;
 
     if (value === 'dismiss') {
       dismiss = confirm(i18n.__(`StudentTestAttempt.warning.dismiss`));
       if (!dismiss) return;
+    }
+
+    if (value === 'next') {
+      if (page < attempt.test.pages.length - 1) {
+        this.setState({
+          page: page + 1,
+          bottom: page + 1 === attempt.test.pages.length - 1 ? 'finish' : null,
+        });
+      }
+
+      return;
+    }
+
+    if (value === 'back') {
+      if (page > 0) {
+        this.setState({
+          page: page - 1,
+          bottom: page - 1 === attempt.test.pages.length - 1 ? 'finish' : null,
+        });
+      }
+
+      return;
     }
 
     if (!bottom && value === 'finish') {
@@ -122,6 +146,7 @@ class StudentTestAttempt extends React.Component {
       },
       handler,
       bottom,
+      page,
     } = this.state;
 
     return handler
@@ -138,7 +163,11 @@ class StudentTestAttempt extends React.Component {
               {
                 _.get(
                   {
-                    content: <StudentTestAttemptContent parent={this} pages={attempt.test.pages} />,
+                    content: <StudentTestAttemptContent
+                      parent={this}
+                      pages={attempt.test.pages}
+                      page={page}
+                    />,
                     sudoku: <StudentTestAttemptSudoku
                       parent={this}
                       attempt={attempt}
@@ -154,32 +183,12 @@ class StudentTestAttempt extends React.Component {
 
         </Grid>
 
-        <BottomNavigation
-          value={bottom}
-          showLabels
+        <StudentTestAttemptToolbar
+          bottom={bottom}
           onChange={this.handleBottom}
-          className={classes.bottom}
-        >
-          {
-            bottom === 'loading'
-            ? <CircularProgress color='secondary' />
-            : [
-              <BottomNavigationAction
-                label={i18n.__('StudentTestAttempt.dismiss')}
-                value='dismiss'
-                key='dismiss'
-                icon={<Icon>mood_bad</Icon>}
-              />,
-              <BottomNavigationAction
-                label={i18n.__('StudentTestAttempt.finish')}
-                value='finish'
-                key='finish'
-                icon={<Icon>check</Icon>}
-              />,
-            ]
-          }
-        </BottomNavigation>
-
+          numPages={attempt.test.pages.length}
+          page={page}
+        />
       </div>
     );
   }

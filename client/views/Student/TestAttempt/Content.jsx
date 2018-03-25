@@ -44,30 +44,30 @@ class StudentTestAttemptContent extends React.Component {
     log.info('StudentTestAttemptContent.componentDidMount =>', this.props);
     const { parent } = this.props;
 
-    this.verifyScroll = (event) => {
+    /*this.verifyScroll = (event) => {
       if ($(window).scrollTop() + $(window).height() === this.getDocHeight())
         parent.setState({ bottom: 'finish' });
       else parent.setState({ bottom: null });
     };
 
     this.verifyScroll();
-    window.addEventListener('scroll', this.verifyScroll);
+    window.addEventListener('scroll', this.verifyScroll);*/
   };
 
-  componentWillUnmount() {
+  /*componentWillUnmount() {
     log.info('StudentTestAttemptContent.componentWillUnmount');
     window.removeEventListener('scroll', this.verifyScroll);
-  }
+  }*/
 
   // Util
-  getDocHeight = () => {
+  /*getDocHeight = () => {
     const D = document;
     return Math.max(
       D.body.scrollHeight, D.documentElement.scrollHeight,
       D.body.offsetHeight, D.documentElement.offsetHeight,
       D.body.clientHeight, D.documentElement.clientHeight
     );
-  };
+  };*/
 
   handleNext = () => {
     this.setState({
@@ -84,36 +84,12 @@ class StudentTestAttemptContent extends React.Component {
   // Render
   render() {
     log.info('StudentTestAttemptContent.render =>', this);
-    const { pages, classes, theme } = this.props;
-    const { activeStep } = this.state;
+    const { pages, page, classes, theme } = this.props;
 
     return (
       <div style={{ width: '100%' }}>
-        <MobileStepper
-          type="progress"
-          steps={pages.length}
-          position="bottom"
-          activeStep={this.state.activeStep}
-          className={classes.stepper}
-          nextButton={
-            <Button size="small"
-              onClick={this.handleNext}
-              disabled={this.state.activeStep === pages.length - 1}>
-              Next
-              {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-            </Button>
-          }
-          backButton={
-            <Button size="small"
-              onClick={this.handleBack}
-              disabled={this.state.activeStep === 0}>
-              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-              Back
-            </Button>
-          }
-        />
         {
-          _.map(_.get(pages, `${activeStep}.description`), (description, index) =>
+          _.map(_.get(pages, `${page}.description`), (description, index) =>
             <Grid item xs={12} key={`descriptionShow${index}`}>
 
               {

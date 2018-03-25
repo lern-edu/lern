@@ -119,7 +119,7 @@ class StudentTestAttemptSudoku extends React.Component {
       backward.value = _.clone(answer[index]);
 
       this.pushBackward(backward);
-      parent.setState({ bottom: _.every(answer) ? 'finish' : null });
+      parent.setState({ bottom: (_.every(answer, Number) && _.every(answer)) ? 'finish' : null });
       this.setState({ answer });
       this.keepAttemptUpdated('sudoku.answer');
     }
