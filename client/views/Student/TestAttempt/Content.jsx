@@ -23,45 +23,52 @@ const styles = theme => ({
 
 class StudentTestAttemptContent extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
   // Lifecycle
   componentDidMount() {
     log.info('StudentTestAttemptContent.componentDidMount =>', this.props);
     const { parent } = this.props;
 
-    this.verifyScroll = (event) => {
+    /*this.verifyScroll = (event) => {
       if ($(window).scrollTop() + $(window).height() === this.getDocHeight())
         parent.setState({ bottom: 'finish' });
       else parent.setState({ bottom: null });
     };
 
     this.verifyScroll();
-    window.addEventListener('scroll', this.verifyScroll);
+    window.addEventListener('scroll', this.verifyScroll);*/
   };
 
-  componentWillUnmount() {
+  /*componentWillUnmount() {
     log.info('StudentTestAttemptContent.componentWillUnmount');
     window.removeEventListener('scroll', this.verifyScroll);
-  }
+  }*/
 
   // Util
-  getDocHeight = () => {
+  /*getDocHeight = () => {
     const D = document;
     return Math.max(
       D.body.scrollHeight, D.documentElement.scrollHeight,
       D.body.offsetHeight, D.documentElement.offsetHeight,
       D.body.clientHeight, D.documentElement.clientHeight
     );
-  };
+  };*/
 
   // Render
   render() {
-    log.info('StudentTestAttemptContent.render =>', this.props);
-    const { pages, classes } = this.props;
+    log.info('StudentTestAttemptContent.render =>', this);
+    const { pages, page, classes, theme } = this.props;
 
     return (
-      <Paper className={classes.paper} >
+      <div style={{ width: '100%' }}>
         {
-          _.map(_.get(pages, '0.description'), (description, index) =>
+          _.map(_.get(pages, `${page}.description`), (description, index) =>
             <Grid item xs={12} key={`descriptionShow${index}`}>
 
               {
@@ -83,7 +90,7 @@ class StudentTestAttemptContent extends React.Component {
             </Grid>
           )
         }
-      </Paper>
+      </div>
     );
   }
 

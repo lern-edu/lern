@@ -16,6 +16,8 @@
     "attempt": "Congratulations!",
     "thankYou": "Thank you. Try again another time..."
   },
+  "back": "Back",
+  "next": "Next",
   "finish": "Finish",
   "dismiss": "Dismiss"
 }
