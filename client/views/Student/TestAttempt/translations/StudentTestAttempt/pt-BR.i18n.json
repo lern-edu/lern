@@ -16,6 +16,8 @@
     "attempt": "Parabéns!",
     "thankYou": "Obrigado. Tente novamente outra hora..."
   },
+  "back": "Voltar",
+  "next": "Avançar",
   "finish": "Terminar",
   "dismiss": "Abandonar"
 }
