@@ -62,6 +62,8 @@ class PublicLoginEnroll extends React.Component{
         throw(err);
       }
 
+      Meteor.call('PublicVerificationLink');
+
       this.handleRedirect();
     });
   };
