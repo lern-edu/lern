@@ -9,6 +9,10 @@ import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { Content } from 'meteor/duckdodgerbrasl:lern-model';
+import MobileStepper from 'material-ui/MobileStepper';
+import Button from 'material-ui/Button';
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
+import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 
 const content = new Content();
 const ContentShow = _.get(content, 'templates.ContentShow');
@@ -17,7 +21,12 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     margin: theme.spacing.unit * 2,
-    width: '100%',
+  },
+  stepper: {
+    flexGrow: 1,
+    marginLeft: -14,
+    marginRight: -14,
+    marginBottom: 56,
   },
 });
 
@@ -26,7 +35,7 @@ class StudentTestAttemptContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      activeStep: 0,
     };
   }
 
@@ -59,6 +68,18 @@ class StudentTestAttemptContent extends React.Component {
       D.body.clientHeight, D.documentElement.clientHeight
     );
   };*/
+
+  handleNext = () => {
+    this.setState({
+      activeStep: this.state.activeStep + 1,
+    });
+  };
+
+  handleBack = () => {
+    this.setState({
+      activeStep: this.state.activeStep - 1,
+    });
+  };
 
   // Render
   render() {
@@ -100,4 +121,4 @@ StudentTestAttemptContent.propTypes = {
   pages: PropTypes.array.isRequired,
 };
 
-export default withStyles(styles)(StudentTestAttemptContent);
+export default withStyles(styles, { withTheme: true })(StudentTestAttemptContent);
