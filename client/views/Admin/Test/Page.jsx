@@ -56,7 +56,7 @@ class AdminTestPage extends React.Component {
               <CloseIcon />
             </IconButton>
             <Typography type='title' color="inherit" className={classes.flex}>
-              Página {index}
+              Página {(index + 1)}
             </Typography>
           </Toolbar>
         </AppBar>
