@@ -14,29 +14,29 @@ const styles = theme => ({
     padding: 0,
   },
   cell: {
-    minHeight: 36,
-    minWidth: 36,
-    maxWidth: 36,
+    minHeight: 32,
+    minWidth: 32,
+    maxWidth: 32,
     border: '1px solid black',
   },
   cellPaper: {
     height: '100%',
     width: '100%',
     textAlign: 'center',
-    lineHeight: '36px',
+    lineHeight: '32px',
   },
   cellEdit: {
     paddingLeft: 2,
   },
   keyboard: {
     textAlign: 'center',
-    minHeight: 36,
-    minWidth: 100,
+    minHeight: 32,
+    minWidth: 96,
     maxWidth: 120,
   },
   options: {
     textAlign: 'center',
-    minHeight: 36,
+    minHeight: 32,
     maxWidth: 86,
   },
   optionsChild: {
@@ -48,8 +48,8 @@ const styles = theme => ({
   },
   buttonEdit: {
     zIndex: 999,
-    height: 36,
-    width: 36,
+    height: 32,
+    width: 32,
     position: 'absolute',
   },
 });
@@ -245,7 +245,7 @@ class StudentTestAttemptSudoku extends React.Component {
                           </Grid>
                         )
                       }
-                  
+
                     </Grid>
                   </Grid>
               )
@@ -256,7 +256,7 @@ class StudentTestAttemptSudoku extends React.Component {
         <Grid item xs={12} style={{ marginTop: 15 }}>
 
           <Grid container spacing={8} justify='center' direction='row'>
-  
+
             {
               _.map(new Array(3), (a1, row) =>
                 <Grid item xs={12} key={row + 1}>
@@ -278,7 +278,7 @@ class StudentTestAttemptSudoku extends React.Component {
                 </Grid>
               )
             }
-            
+
             <Grid item xs={12} key={4}>
               <Grid container spacing={0} justify='center'>
 
@@ -329,12 +329,12 @@ class StudentTestAttemptSudoku extends React.Component {
                 </Grid>
 
               </Grid>
-            </Grid>    
+            </Grid>
 
           </Grid>
 
         </Grid>
-      
+
       </Grid>
     );
   }
