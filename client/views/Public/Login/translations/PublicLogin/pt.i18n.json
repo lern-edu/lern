@@ -8,5 +8,22 @@
   "userNotFoundMessage": "Usuário não encontrado",
   "invalidPasswordMessage": "Senha incorreta",
   "errorMessage": "Problemas ao cadastrar",
-  "welcomeMessage":  "Bem-vindo(a)!"
+  "welcomeMessage":  "Bem-vindo(a)!",
+  "sign_on": "Cadastro",
+  "forgot_password": "Esqueceu a senha?",
+  "recovery_instructions": "Insira o email cadastrado e verifique sua caixa de entrada.",
+  "send_email": "Enviar email de recuperação",
+  "email_sent": "Email enviado!",
+  "email_error": "Erro ao enviar o email",
+  "required": "Esse campo é obrigatório",
+  "email": "Email inválido",
+  "new_password": "Nova senha",
+  "confirm_new_password": "Confirmar nova senha",
+  "password_size": "Tamanho mínimo de 6 caracteres",
+  "password_match": "Senhas não conferem",
+  "email": "Email",
+  "password": "Senha",
+  "confirm_password": "Confirmar senha",
+  "firstName": "Nome",
+  "lastName": "Sobrenome"
 }
