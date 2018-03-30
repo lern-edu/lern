@@ -82,6 +82,20 @@ adminRoutes.route('/tag/:tagId', {
   },
 });
 
+// Questions
+import AdminQuestions from './Questions/View.jsx';
+// import AdminTag from './Tag/View.jsx';
+
+adminRoutes.route('/questions', {
+  name: 'AdminQuestions',
+  action(params, query) {
+    setup.render({
+      main: <AdminQuestions {...query} />,
+    });
+  },
+});
+
+
 // Tests
 import AdminTests from './Tests/View.jsx';
 import AdminTest from './Test/View.jsx';

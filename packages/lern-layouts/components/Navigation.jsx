@@ -47,6 +47,10 @@ class Navigation extends React.Component {
             label: 'AdminTests',
             icon: 'edit',
           },
+          AdminQuestions: {
+            label: 'AdminQuestions',
+            icon: 'videogame_asset',
+          },
         },
         student: {
           StudentTests: {
