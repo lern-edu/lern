@@ -13,6 +13,7 @@ const StaticCollections = {
   TestTimeTypes: ['range', 'none'],
   TestResolutions: ['content', 'sudoku'],
   SudokuLevel: ['easy', 'medium', 'hard'],
+  QuestionTypes: ['sudoku', 'open', 'closed', 'number', 'unanswered'],
 };
 
 export default StaticCollections;
