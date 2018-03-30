@@ -9,7 +9,7 @@ import log from 'loglevel';
 
 const Questions = new Mongo.Collection('questions');
 
-const RangeSchema = Class.create({
+const QuestionRangeSchema = Class.create({
   name: 'QuestionRange',
   fields: {
     min: {
@@ -21,6 +21,32 @@ const RangeSchema = Class.create({
       type: Number,
       immutable: true,
       optional: true,
+    },
+  },
+});
+
+const QuestionScoreSchema = Class.create({
+  name: 'QuestionTags',
+  fields: {
+    author: Object,
+    name: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
+    parent: {
+      type: Object,
+      optional: true,
+    },
+    description: {
+      type: [Object],
+      optional: true,
+    },
+    _id: {
+      type: String,
+      validators: [{ type: 'Reference' }],
+    },
+    score: {
+      type: Number,
     },
   },
 });
@@ -59,7 +85,7 @@ const Question = Class.create({
       immutable: true,
     },
     range: {
-      type: [RangeSchema],
+      type: [QuestionRangeSchema],
       validators: [{ type: 'QuestionRange' }],
       optional: true,
       immutable: true,
@@ -70,7 +96,7 @@ const Question = Class.create({
       optional: true,
     },
     score: {
-      type: Number,
+      type: [QuestionScoreSchema],
       optional: true,
     },
     options: {
@@ -187,6 +213,6 @@ Question.extend({
 
 Author(Question);
 
-Question.RangeSchema = RangeSchema;
+Question.QuestionRangeSchema = QuestionRangeSchema;
 
 export default Question;
