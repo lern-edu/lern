@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
-import { Toolbar, LinearProgress, CircularProgress, Icon } from 'material-ui';
-import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
+import { LinearProgress, CircularProgress, Icon, IconButton, ButtonBase } from 'material-ui';
 
 const styles = theme => ({
   bottom: {
@@ -12,52 +12,126 @@ const styles = theme => ({
     right: 0,
     left: 0,
   },
+  parent: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: 56,
+    backgroundColor: theme.palette.background.paper,
+  },
+  root: {
+    transition: theme.transitions.create(['color', 'padding-top'], {
+      duration: theme.transitions.duration.short,
+    }),
+    paddingTop: theme.spacing.unit,
+    paddingBottom: 10,
+    paddingLeft: 12,
+    paddingRight: 12,
+    minWidth: 80,
+    maxWidth: 168,
+    color: theme.palette.text.secondary,
+    flex: '1',
+    '&:hover': {
+      paddingTop: 6,
+      color: theme.palette.primary.main,
+    },
+  },
+  wrapper: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    flexDirection: 'column',
+  },
+  label: {
+    fontFamily: theme.typography.fontFamily,
+    fontSize: theme.typography.pxToRem(12),
+    '&:hover': {
+      fontSize: theme.typography.pxToRem(14),
+    },
+  },
 });
 
 class StudentTestAttemptToolbar extends React.Component {
 
   render() {
-    const { classes, bottom, onChange, numPages, page } = this.props;
+    const { classes, loading, numPages, page, timer } = this.props;
 
     return (
       <div className={classes.bottom}>
         <LinearProgress mode="determinate" value={(page) * 100 / (numPages - 1)}/>
-        <BottomNavigation
-          value={bottom}
-          onChange={onChange}
-          showLabels
-        >
+        <div className={classes.parent}>
           {
-            bottom === 'loading'
-            ? <CircularProgress color='secondary' />
-            : [<BottomNavigationAction
-                label={i18n.__('StudentTestAttempt.back')}
-                value='back'
+            loading ?
+            <CircularProgress color='secondary' /> :
+            [
+
+              // Back
+              <ButtonBase
+                className={classes.root}
                 key='back'
-                icon={<Icon>chevron_left</Icon>}
-              />,
-              <BottomNavigationAction
-                label={i18n.__('StudentTestAttempt.dismiss')}
-                value='dismiss'
+                focusRipple
+                onClick={this.props.handleBack}
+              >
+                <span className={classes.wrapper}>
+                  <Icon>chevron_left</Icon>
+                  <span className={classes.label}>{i18n.__('StudentTestAttempt.back')}</span>
+                </span>
+              </ButtonBase>,
+
+              //Timer
+              timer ?
+                <ButtonBase
+                  className={classes.root}
+                  key='timer'
+                  focusRipple
+                >
+                  <span className={classes.wrapper}>
+                    <Icon>timer</Icon>
+                    <span className={classes.label}>{timer}</span>
+                  </span>
+                </ButtonBase>
+                : null,
+
+              //Dismiss
+              <ButtonBase
+                className={classes.root}
                 key='dismiss'
-                icon={<Icon>mood_bad</Icon>}
-              />,
-              bottom !== 'finish' ?
-                <BottomNavigationAction
-                  label={i18n.__('StudentTestAttempt.next')}
-                  value='next'
+                focusRipple
+                onClick={this.props.handleDismiss}
+              >
+                <span className={classes.wrapper}>
+                  <Icon>mood_bad</Icon>
+                  <span className={classes.label}>{i18n.__('StudentTestAttempt.dismiss')}</span>
+                </span>
+              </ButtonBase>,
+
+              // Next or Finish
+              page < numPages - 1 ?
+                <ButtonBase
+                  className={classes.root}
                   key='next'
-                  icon={<Icon>chevron_right</Icon>}
-                /> :
-                <BottomNavigationAction
-                  label={i18n.__('StudentTestAttempt.finish')}
-                  value='finish'
+                  focusRipple
+                  onClick={this.props.handleNext}
+                >
+                  <span className={classes.wrapper}>
+                    <Icon>chevron_right</Icon>
+                    <span className={classes.label}>{i18n.__('StudentTestAttempt.next')}</span>
+                  </span>
+                </ButtonBase> :
+                <ButtonBase
+                  className={classes.root}
                   key='finish'
-                  icon={<Icon>check</Icon>}
-                />,
+                  focusRipple
+                  onClick={this.props.handleFinish}
+                >
+                  <span className={classes.wrapper}>
+                    <Icon>check</Icon>
+                    <span className={classes.label}>{i18n.__('StudentTestAttempt.finish')}</span>
+                  </span>
+                </ButtonBase>,
             ]
           }
-        </BottomNavigation>
+        </div>
       </div>
     );
   }

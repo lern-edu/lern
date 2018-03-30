@@ -14,11 +14,11 @@ import StudentTestAttemptSudoku from './Sudoku.jsx';
 import StudentTestAttemptToolbar from './Toolbar.jsx';
 
 const styles = theme => ({
-  bottom: {
+  loading: {
     backgroundColor: theme.palette.background.paper,
     position: 'fixed',
     width: '100%',
-    bottom: 0,
+    loading: 0,
   },
   grid: {
     paddingLeft: 6,
@@ -27,7 +27,6 @@ const styles = theme => ({
   },
 });
 
-// this.state.bottom = [null, 'finish', 'loading'];
 class StudentTestAttempt extends React.Component {
 
   // Lifecycle
@@ -40,7 +39,7 @@ class StudentTestAttempt extends React.Component {
         attempt: null,
       },
       handler: true,
-      bottom: null,
+      loading: null,
       page: 0,
     };
   }
@@ -67,51 +66,66 @@ class StudentTestAttempt extends React.Component {
 
       log.info('StudentTestAttempt.getData.TestAttemptStart => finish =>', doc);
       this.setState({ collections: { attempt: doc }, handler: false });
-
     });
   };
 
   // Handlers
-  handleBottom = (event, value) => {
-    log.info('StudentTestAttempt.handleBottom => ', this, value);
-    const { bottom, collections: { attempt }, page } = this.state;
-
-    let dismiss = null;
-
-    if (value === 'dismiss') {
-      dismiss = confirm(i18n.__(`StudentTestAttempt.warning.dismiss`));
-      if (!dismiss) return;
+  handleBack = () => {
+    log.info('handleBack=', this.state);
+    const { collections: { attempt }, page } = this.state;
+    if (page > 0) {
+      this.setState({
+        page: page - 1,
+      });
     }
+  };
 
-    if (value === 'next') {
-      if (page < attempt.test.pages.length - 1) {
-        this.setState({
-          page: page + 1,
-          bottom: page + 1 === attempt.test.pages.length - 1 ? 'finish' : null,
-        });
-      }
-
-      return;
+  handleNext = () => {
+    log.info('handleNext=', this.state);
+    const { collections: { attempt }, page } = this.state;
+    if (page < attempt.test.pages.length - 1) {
+      this.setState({
+        page: page + 1,
+      });
     }
+  };
 
-    if (value === 'back') {
-      if (page > 0) {
-        this.setState({
-          page: page - 1,
-          bottom: page - 1 === attempt.test.pages.length - 1 ? 'finish' : null,
-        });
-      }
+  handleDismiss = () => {
+    log.info('handleDismiss=', this.state);
+    const { collections: { attempt }, page } = this.state;
+    let dismiss = confirm(i18n.__(`StudentTestAttempt.warning.dismiss`));;
+    if (!dismiss) return;
 
-      return;
-    }
+    this.setState({ loading: true });
+    Meteor.call('StudentTestAttemptFinish', attempt._id, true, (err, doc) => {
 
-    if (!bottom && value === 'finish') {
+      if (err || !doc) {
+        log.info('StudentTestAttempt.TestAttemptFinish => error =>', err);
+        if (err && err.error === 501)
+          snack({ message: i18n.__('StudentTestAttempt.error.sudokuInvalid') });
+        else
+          snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
+        this.setState({ loading: false });
+      } else {
+        log.info('StudentTestAttempt.TestAttemptFinish => finish =>', doc);
+        snack({ message: i18n.__('StudentTestAttempt.success.thankYou') });
+        FlowRouter.go('StudentHome');
+      };
+
+    });
+  };
+
+  handleFinish = () => {
+    log.info('handleFinish=', this.state);
+    const { loading, collections: { attempt }, page } = this.state;
+
+    if (page < attempt.test.pages.length - 1) {
       snack(i18n.__(`StudentTestAttempt.warning.${attempt.test.resolution}`));
       return;
     } else {
-      this.setState({ bottom: 'loading' });
+      this.setState({ loading: true });
 
-      Meteor.call('StudentTestAttemptFinish', attempt._id, dismiss, (err, doc) => {
+      Meteor.call('StudentTestAttemptFinish', attempt._id, false, (err, doc) => {
 
         if (err || !doc) {
           log.info('StudentTestAttempt.TestAttemptFinish => error =>', err);
@@ -119,20 +133,15 @@ class StudentTestAttempt extends React.Component {
             snack({ message: i18n.__('StudentTestAttempt.error.sudokuInvalid') });
           else
             snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
-          this.setState({ bottom: null });
+          this.setState({ loading: false });
         } else {
           log.info('StudentTestAttempt.TestAttemptFinish => finish =>', doc);
-          if (dismiss)
-            snack({ message: i18n.__('StudentTestAttempt.success.thankYou') });
-          else
-            snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
+          snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
           FlowRouter.go('StudentHome');
         };
 
       });
-
     }
-
   };
 
   // Render
@@ -145,7 +154,7 @@ class StudentTestAttempt extends React.Component {
         attempt,
       },
       handler,
-      bottom,
+      loading,
       page,
     } = this.state;
 
@@ -184,10 +193,15 @@ class StudentTestAttempt extends React.Component {
         </Grid>
 
         <StudentTestAttemptToolbar
-          bottom={bottom}
+          loading={loading}
           onChange={this.handleBottom}
           numPages={attempt.test.pages.length}
           page={page}
+          timer={'0:59:59'}
+          handleBack={this.handleBack}
+          handleNext={this.handleNext}
+          handleDismiss={this.handleDismiss}
+          handleFinish={this.handleFinish}
         />
       </div>
     );
