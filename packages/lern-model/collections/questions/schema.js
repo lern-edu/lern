@@ -53,13 +53,14 @@ const Question = Class.create({
       immutable: true,
     },
     answer: {
+      type: Object,
       validators: [{ type: 'QuestionAnswer' }],
       optional: true,
       immutable: true,
     },
     range: {
-      type: [QuestionRange],
-      validators: [{ type: QuestionRange }],
+      type: [RangeSchema],
+      validators: [{ type: 'QuestionRange' }],
       optional: true,
       immutable: true,
     },
@@ -139,7 +140,7 @@ const Question = Class.create({
   },
 });
 
-Questions.extend({
+Question.extend({
   fields: {
     answerCount: {
       type: Number,
