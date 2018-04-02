@@ -53,8 +53,77 @@ const styles = theme => ({
 
 class StudentTestAttemptToolbar extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.timer = 0;
+    const { attempt, attempt: { test: { time } }, page } = props;
+
+    let startTime;
+    if (time.timeoutType === 'global') {
+      startTime = attempt.startedAt;
+    } else if (time.timeoutType === 'page') {
+      startTime = attempt.pages[page].startedAt;
+    }
+
+    let timeout = time.timeout;
+    let finishTime = new Date(startTime.getTime() + timeout);
+    let timer = finishTime.getTime() - new Date().getTime();
+
+    this.state = {
+      miliseconds: timer,
+    };
+  }
+
+  countDown = () => {
+    const { attempt, attempt: { test: { time } }, page } = this.props;
+    const { miliseconds } = this.state;
+    if (miliseconds - 1000 <= 0) {
+      if (time.timeoutType === 'global') {
+        let forced = true;
+        this.props.handleFinish(forced);
+      } else if (time.timeoutType === 'page') {
+        if (page < attempt.test.pages.length - 1) {
+          this.props.handleNext();
+        } else {
+          this.props.handleFinish();
+        }
+      }
+    }
+
+    this.setState({
+      miliseconds: miliseconds - 1000,
+    });
+  };
+
+  componentDidMount() {
+    if (this.timer === 0) {
+      this.timer = setInterval(this.countDown, 1000);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  parseMiliseconds(miliseconds) {
+    if (!miliseconds) {
+      return 'infinity';
+    }
+
+    let hours = Math.floor(miliseconds / (60 * 60 * 1000));
+    miliseconds -= hours * 60 * 60 * 1000;
+    let minutes = Math.floor(miliseconds / (60 * 1000));
+    miliseconds -= minutes * 60 * 1000;
+    let seconds = Math.floor(miliseconds / (1000));
+    return ('0' + hours).slice(-2) + ':'
+      + ('0' + minutes).slice(-2) + ':'
+      + ('0' + seconds).slice(-2);
+  }
+
   render() {
-    const { classes, loading, numPages, page, timer } = this.props;
+    const { classes, loading, attempt, attempt: { test: { time } }, page } = this.props;
+
+    let numPages = attempt.test.pages.length;
 
     return (
       <div className={classes.bottom}>
@@ -66,20 +135,22 @@ class StudentTestAttemptToolbar extends React.Component {
             [
 
               // Back
-              <ButtonBase
-                className={classes.root}
-                key='back'
-                focusRipple
-                onClick={this.props.handleBack}
-              >
-                <span className={classes.wrapper}>
-                  <Icon>chevron_left</Icon>
-                  <span className={classes.label}>{i18n.__('StudentTestAttempt.back')}</span>
-                </span>
-              </ButtonBase>,
+              time.timeoutType === 'global' ?
+                <ButtonBase
+                  className={classes.root}
+                  key='back'
+                  focusRipple
+                  onClick={this.props.handleBack}
+                >
+                  <span className={classes.wrapper}>
+                    <Icon>chevron_left</Icon>
+                    <span className={classes.label}>{i18n.__('StudentTestAttempt.back')}</span>
+                  </span>
+                </ButtonBase>
+                : null,
 
               //Timer
-              timer ?
+              this.state.miliseconds ?
                 <ButtonBase
                   className={classes.root}
                   key='timer'
@@ -87,7 +158,9 @@ class StudentTestAttemptToolbar extends React.Component {
                 >
                   <span className={classes.wrapper}>
                     <Icon>timer</Icon>
-                    <span className={classes.label}>{timer}</span>
+                    <span className={classes.label}>
+                      {this.parseMiliseconds(this.state.miliseconds)}
+                    </span>
                   </span>
                 </ButtonBase>
                 : null,

@@ -1,4 +1,3 @@
-// Libs
 import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
@@ -72,8 +71,8 @@ class StudentTestAttempt extends React.Component {
   // Handlers
   handleBack = () => {
     log.info('handleBack=', this.state);
-    const { collections: { attempt }, page } = this.state;
-    if (page > 0) {
+    const { collections: { attempt, attempt: { test: { time } } }, page } = this.state;
+    if (page > 0 && time.timeoutType === 'global') {
       this.setState({
         page: page - 1,
       });
@@ -82,11 +81,30 @@ class StudentTestAttempt extends React.Component {
 
   handleNext = () => {
     log.info('handleNext=', this.state);
-    const { collections: { attempt }, page } = this.state;
+    const { collections: { attempt, attempt: { test: { time } } }, page } = this.state;
+
     if (page < attempt.test.pages.length - 1) {
-      this.setState({
-        page: page + 1,
-      });
+      if (time.timeoutType === 'global') {
+        this.setState({
+          page: page + 1,
+        });
+      } else if (time.timeoutType === 'page') {
+        this.setState({ loading: true, handler: true });
+        Meteor.call('StudentTestAttemptChangePage', attempt._id, page, page + 1, (err, doc) => {
+          if (err || !doc) {
+            log.info('StudentTestAttempt.TestAttemptChangePage => error =>', err);
+            snack({ message: 'Erro ao mudar de página' });
+            this.setState({ loading: false, handler: false });
+          } else {
+            this.setState({
+              page: page + 1,
+              loading: false,
+              collections: { attempt: doc },
+              handler: false,
+            });
+          };
+        });
+      }
     }
   };
 
@@ -115,15 +133,18 @@ class StudentTestAttempt extends React.Component {
     });
   };
 
-  handleFinish = () => {
+  handleFinish = (forced=false) => {
     log.info('handleFinish=', this.state);
     const { loading, collections: { attempt }, page } = this.state;
 
-    if (page < attempt.test.pages.length - 1) {
+    if (page < attempt.test.pages.length - 1 && !forced) {
       snack(i18n.__(`StudentTestAttempt.warning.${attempt.test.resolution}`));
       return;
     } else {
       this.setState({ loading: true });
+      if (forced) {
+        snack({ message: 'Acabou o tempo!' });
+      }
 
       Meteor.call('StudentTestAttemptFinish', attempt._id, false, (err, doc) => {
 
@@ -195,9 +216,8 @@ class StudentTestAttempt extends React.Component {
         <StudentTestAttemptToolbar
           loading={loading}
           onChange={this.handleBottom}
-          numPages={attempt.test.pages.length}
+          attempt={attempt}
           page={page}
-          timer={'0:59:59'}
           handleBack={this.handleBack}
           handleNext={this.handleNext}
           handleDismiss={this.handleDismiss}
