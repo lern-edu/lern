@@ -27,6 +27,7 @@ class AdminTestNumber extends React.Component {
 
   render() {
     const { error: { error, message } = {}, doc, field, classes } = this.props;
+
     return (
       <FormControl error={error} className={classes.input}>
         <InputLabel htmlFor={field}>{field}</InputLabel>

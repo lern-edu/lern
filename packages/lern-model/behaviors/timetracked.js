@@ -18,12 +18,12 @@ const Timestamp = (Schema) => {
     fields: {
       startedAt: {
         type: Date,
-        immutable: true,
+        /*immutable: true,*/
         optional: true,
       },
       finishedAt: {
         type: Date,
-        immutable: true,
+        /*immutable: true,*/
         optional: true,
       },
     },
