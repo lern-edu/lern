@@ -7,7 +7,10 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Icon from 'material-ui/Icon';
 import { LinearProgress, CircularProgress } from 'material-ui/Progress';
+import { ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import { MenuItem, Divider, Switch } from 'material-ui';
 import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
+import { Description, Share, Help, Settings, ContentCopy, FileDownload } from 'material-ui-icons';
 
 import StudentTestAttemptContent from './Content.jsx';
 import StudentTestAttemptSudoku from './Sudoku.jsx';
@@ -135,6 +138,39 @@ class StudentTestAttempt extends React.Component {
 
   };
 
+  renderMenu = () => {
+    const { collections: { attempt } } = this.state;
+
+    return [
+      <MenuItem key='description'>
+        <ListItemIcon><Description /></ListItemIcon>
+        <ListItemText inset primary="Description" />
+      </MenuItem>,
+      <MenuItem key='help'>
+        <ListItemIcon><Help /></ListItemIcon>
+        <ListItemText inset primary="Help" />
+      </MenuItem>,
+      <MenuItem key='settings'>
+        <ListItemIcon><Settings /></ListItemIcon>
+        <ListItemText primary="Settings" />
+      </MenuItem>,
+      <Divider key='divider-1'/>,
+      <MenuItem key='copy'>
+        <ListItemIcon><ContentCopy /></ListItemIcon>
+        <ListItemText primary="Copy" />
+      </MenuItem>,
+      <MenuItem key='download'>
+        <ListItemIcon><FileDownload /></ListItemIcon>
+        <ListItemText primary="Download" />
+      </MenuItem>,
+      <Divider key='divider-2'/>,
+      <MenuItem key='share'>
+        <ListItemIcon><Share /></ListItemIcon>
+        <ListItemText inset primary="Share" />
+      </MenuItem>,
+    ];
+  };
+
   // Render
   render() {
     log.info('StudentTestAttempt.render =>', this.state);
@@ -153,7 +189,7 @@ class StudentTestAttempt extends React.Component {
     ? <LinearProgress />
     : (
       <div>
-        <Layout.Bar title={attempt.test.name} />
+        <Layout.Bar title={attempt.test.name} menu={this.renderMenu()} />
 
         <Grid container justify='center' className={classes.grid} spacing={0}>
 
