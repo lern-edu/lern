@@ -11,29 +11,16 @@ const ITEM_PADDING_TOP = 8;
 
 class AdminQuestionSelect extends React.Component {
 
-  componentWillMount() {
-    const { doc, field, parent } = this.props;
-    doc.validate({ fields: [field] }, (err) => {
-      if (err) parent.setState({ errors: { [field]: { message: err.reason, error: true } } });
-      else parent.setState({ errors: { [field]: { message: undefined, error: false } } });
-    });
-  };
-
-  handleChange = ({ target: { value } }) => {
-    const { doc, field, parent } = this.props;
-    doc.set(field, value);
-    parent.setState({ doc });
-    doc.validate({ fields: [field] }, (err) => {
-      if (err) parent.setState({ errors: { [field]: { message: err.reason, error: true } } });
-      else parent.setState({ errors: { [field]: { message: undefined, error: false } } });
-    });
+  handleChange = ({ target: { value: type } }) => {
+    const { parent } = this.props;
+    parent.defaultHandler({ type, sudoku: undefined }, { doc: true });
   };
 
   render() {
-    const { error: { error, message }={}, doc, field, options } = this.props;
+    const { error, doc, field, options } = this.props;
 
     return (
-      <FormControl error={error}>
+      <FormControl error={!!error}>
         <InputLabel htmlFor={field}>{field}</InputLabel>
         <Select
           value={doc.get(field) || ''}
@@ -57,8 +44,8 @@ class AdminQuestionSelect extends React.Component {
 
         {
           !error
-            ? undefined
-            : <FormHelperText>{message}</FormHelperText>
+          ? undefined
+          : <FormHelperText>{error}</FormHelperText>
         }
       </FormControl>
     );

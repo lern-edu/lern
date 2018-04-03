@@ -22,6 +22,8 @@ const ContentCreate = _.get(content, 'templates.ContentCreate');
 const ContentShow = _.get(content, 'templates.ContentShow');
 
 import AdminQuestionSelect from './Select.jsx';
+import AdminQuestionOpen from './Open.jsx';
+import AdminQuestionSingleAnswer from './SingleAnswer.jsx';
 
 const fieldsToValidate = ['type', 'description'];
 
@@ -36,16 +38,15 @@ const styles = theme => ({
   },
 });
 
-class AdminQuestion extends React.Component {
+class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
 
   // Lifecycle
 
   constructor(props) {
     log.info('AdminQuestion', props);
-    super(props);
     const { questionId } = props;
 
-    this.state = {
+    const state = {
       title: !questionId ? 'Criar' : 'Editar',
       crumbs: [{ label: 'Questions', path: 'AdminQuestions' }],
       collections: {
@@ -56,15 +57,7 @@ class AdminQuestion extends React.Component {
       doc: !questionId ? new Question() : null,
     };
 
-    this.doc = !questionId ? new Question() : null;
-  };
-
-  componentWillReceiveProps(props, nextProps) {
-    this.setState({
-      valid: nextProps.astro.valid,
-      errors: nextProps.astro.errors,
-    });
-    return true;
+    super(state, props);
   };
 
   componentWillMount() {
@@ -81,7 +74,6 @@ class AdminQuestion extends React.Component {
         if (err) snack({ message: 'Erro ao encontrar questão' });
         else {
           const doc = _.head(docs);
-          this.doc = doc;
           this.setState({
             doc,
             title: doc.name,
@@ -96,17 +88,6 @@ class AdminQuestion extends React.Component {
   };
 
   // Handlers
-
-  handleChange = ({ target: { value } }) => {
-    const { doc } = this.state;
-    doc.name = value;
-    this.setState({ doc });
-    doc.validate({ fields: [`name`] }, (err) => {
-      if (err) this.setState({ errors: { name: { message: err.reason, error: true } } });
-      else this.setState({ errors: { name: { message: undefined, error: false } } });
-    });
-
-  };
 
   handleSubmit = () => {
     const { doc } = this.state;
@@ -132,13 +113,9 @@ class AdminQuestion extends React.Component {
   // Validators
 
   validate = (index) => {
-    const { errors, doc } = this.state;
-
+    const { errors } = this.state;
     const validateHere = _.slice(fieldsToValidate, 0, index);
-
-    doc.validate({ stopOnFirstError: false }, (err) => {
-      console.log(err);
-    });
+    return _.every(validateHere, field => _.isEmpty(errors[field]));
   };
 
   // Render
@@ -172,23 +149,9 @@ class AdminQuestion extends React.Component {
                           options={StaticCollections.QuestionTypes}
                           doc={doc}
                           field='type'
-                          error={_.get(errors, 'type')}
+                          error={errors.type}
                           parent={this}
                         />
-
-                        {
-                          // doc.resolution !== 'sudoku'
-                          // ? undefined
-                          // : (
-                          //     <AdminTestSelect
-                          //       options={StaticCollections.SudokuLevel}
-                          //       doc={doc}
-                          //       field='level'
-                          //       error={errors.level}
-                          //       parent={this}
-                          //     />
-                          // )
-                        }
 
                       </Paper>
 
@@ -198,7 +161,7 @@ class AdminQuestion extends React.Component {
                       !this.validate(1)
                       ? undefined
                       : [
-                        <Grid item xs={12}>
+                        <Grid item xs={12} key='descriptionCreate'>
                           <Paper className={classes.paper}>
 
                             <ContentCreate
@@ -206,11 +169,20 @@ class AdminQuestion extends React.Component {
                               doc={doc}
                               form={this}
                               contentTypes={StaticCollections.ContentTypes}
+                              afterUpdate={this.updateValidation}
                             />
+
+                            <FormControl error={!!errors.description}>
+                              {
+                                !errors.description
+                                ? undefined
+                                : <FormHelperText>{errors.description}</FormHelperText>
+                              }
+                            </FormControl>
 
                           </Paper>
                         </Grid>,
-                        <Grid item xs={12}>
+                        <Grid item xs={12} key='descriptionShow'>
                           {
                             _.isEmpty(doc.description)
                               ? undefined
@@ -224,6 +196,7 @@ class AdminQuestion extends React.Component {
                                         index={index}
                                         canRemove={true}
                                         key={`descriptionShow${index}`}
+                                        afterUpdate={this.updateValidation}
                                       />,
                                       <Divider key={`descriptionDivider${index}`} />,
                                     ]
@@ -235,10 +208,14 @@ class AdminQuestion extends React.Component {
                       ]
                     }
 
-                    <Grid item xs={12}>
-
-                    </Grid>
-
+                    {
+                      !this.validate(2)
+                      ? undefined
+                      : _.get({
+                        open: <AdminQuestionOpen parent={this} doc={doc} errors={errors} />,
+                        singleAnswer: <AdminQuestionSingleAnswer parent={this} doc={doc} errors={errors} />,
+                      }, doc.type)
+                    }
 
                     <Grid item xs={12}>
 
@@ -263,7 +240,7 @@ class AdminQuestion extends React.Component {
                         </Grid>
 
                         <Grid item>
-                          <Button onClick={this.handleSubmit} raised color='primary'>
+                          <Button onClick={this.handleSubmit} disabled={_.some(errors)} raised color='primary'>
                             Save
                           </Button>
                         </Grid>
@@ -291,4 +268,4 @@ AdminQuestion.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LernForm(AdminQuestion, Question, 'AdminQuestionSave'));
+export default withStyles(styles)(AdminQuestion);
