@@ -6,34 +6,28 @@ const QuestionAnswer = {
   name: 'QuestionAnswer',
 
   isValid({ value }) {
-    const { type, options, range } = this;
+    const { type, options, range, answer } = this;
     if (type === 'open')
       return (
-        !_.isNull(value) &&
-        _.isString(value) &&
-        _.inRange(value.length, 4, 10000)
+        !_.isNull(answer) &&
+        _.isString(answer.open) &&
+        _.inRange(answer.open.length, 1, 10000)
       );
     else if (type === 'number')
       return !(_.isNull(range.min) || _.isNull(range.max))
         && range.min <= value && value <= range.max && range.min < range.max;
-    else if (type === 'closed')
+    else if (type === 'singleAnswer')
       return (
         !_.isNull(value) &&
         _.isNumber(value) &&
         _.inRange(value, 0, options.length)
       );
-    else if (type === 'sudoku')
-      return (
-        !_.isNull(value) &&
-        _.isArray(value) &&
-        value.length === 81 &&
-        !_.some(value, (v) => v === null || (v <= 0 || v >= 10))
-      );
     else return false;
   },
 
-  resolveError({ name }) {
-    return `The field ${name} contains inappropriate options`;
+  resolveError(e) {
+    console.log(e)
+    return e;
   },
 };
 
@@ -44,7 +38,7 @@ const QuestionOptions = {
     const { type } = this;
     if (type === 'number') return _.isNull(value);
     else if (type === 'open') return _.isNull(value);
-    else if (type === 'closed') {
+    else if (type === 'singleAnswer') {
       return (
         !_.isNull(value) &&
         _.isArray(value) &&
@@ -75,6 +69,19 @@ const QuestionRange = {
   },
 };
 
+const QuestionType = {
+  name: 'QuestionType',
+  isValid({ value, name }) {
+    const { type } = this;
+    return type !== name;
+  },
+
+  resolveError(e) {
+    return `The field ${e.name} is incorrect`;
+  },
+}
+
 Validator.create(QuestionAnswer);
 Validator.create(QuestionOptions);
 Validator.create(QuestionRange);
+Validator.create(QuestionType);

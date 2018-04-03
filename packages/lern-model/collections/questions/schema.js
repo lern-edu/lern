@@ -51,46 +51,87 @@ const QuestionScoreSchema = Class.create({
   },
 });
 
+const QuestionAnswerSchema = Class.create({
+  name: 'QuestionAnswer',
+  fields: {
+    open: {
+      type: String,
+      optional: true,
+      validators: [
+        {
+          type: 'or',
+          param: [
+            { type: 'QuestionType' },
+            { type: 'required' },
+          ],
+        },
+      ],
+    },
+    singleAnswer: {
+      type: Number,
+      optional: true,
+    },
+  },
+});
+
 const Question = Class.create({
   name: 'Question',
   collection: Questions,
+  validators: {
+    type: [
+      {
+        type: 'choice',
+        param: StaticCollections.QuestionTypes,
+      },
+    ],
+    range: [{ type: 'QuestionRange' }],
+    sudoku: [
+      {
+        type: 'or',
+        param: [
+          { type: 'QuestionType' },
+          { type: 'required' },
+        ],
+      },
+    ],
+    level: [
+      {
+        type: 'or',
+        param: [
+          { type: 'QuestionType' },
+          { type: 'required' },
+        ],
+      },
+    ],
+  },
   fields: {
     description: {
       type: [Content],
-      validators: [{ type: 'minLength', param: 1 }],
       default: () => [],
     },
     text: {
       type: String,
       optional: true,
     },
-    description: {
-      type: [Content],
-      optional: true,
-    },
     type: {
       type: String,
-      validators: [
-        {
-          type: 'choice',
-          param: StaticCollections.QuestionTypes,
-        },
-      ],
       immutable: true,
     },
     answer: {
-      type: Object,
-      validators: [{ type: 'QuestionAnswer' }],
+      type: QuestionAnswerSchema,
       optional: true,
       immutable: true,
+      default: () => new QuestionAnswerSchema(),
     },
     range: {
       type: [QuestionRangeSchema],
-      validators: [{ type: 'QuestionRange' }],
       optional: true,
       immutable: true,
     },
-    sudoku: [Number],
+    sudoku: {
+      type: [Number],
+      optional: true,
+    },
     level: {
       type: String,
       optional: true,
@@ -101,7 +142,6 @@ const Question = Class.create({
     },
     options: {
       type: [Content],
-      validators: [{ type: 'QuestionOptions' }],
       optional: true,
     },
   },
@@ -189,24 +229,24 @@ Question.extend({
       }
     },
 
-    beforeSave(e) {
+    beforeSave({ currentTarget: question }) {
       const contentText = _.join(
         _.map(
-          _.flatten(_.compact(_.map(this.get('content'), 'text.blocks'))),
+          _.flatten(_.compact(_.map(question.get('description'), 'text.blocks'))),
         'text'),
       ' ') || '';
       const optionsText = _.join(
         _.map(
-          _.flatten(_.compact(_.map(this.get('options'), 'text.blocks'))),
+          _.flatten(_.compact(_.map(question.get('options'), 'text.blocks'))),
         'text'),
       ' ') || '';
 
-      this.set('text', _.join([contentText, optionsText], ' '));
+      question.set('text', _.join([contentText, optionsText], ' '));
 
-      if (this.get('range.min'))
-        this.set('range.min', _.toNumber(this.get('range.min')));
-      if (this.get('range.max'))
-        this.set('range.max', _.toNumber(this.get('range.max')));
+      if (question.get('range.min'))
+        question.set('range.min', _.toNumber(question.get('range.min')));
+      if (question.get('range.max'))
+        question.set('range.max', _.toNumber(question.get('range.max')));
     },
   },
 });
@@ -214,5 +254,6 @@ Question.extend({
 Author(Question);
 
 Question.QuestionRangeSchema = QuestionRangeSchema;
+Question.QuestionAnswerSchema = QuestionAnswerSchema;
 
 export default Question;
