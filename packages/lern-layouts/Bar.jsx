@@ -7,6 +7,8 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import { MoreVert } from 'material-ui-icons';
 
 const styles = {
   flex: {
@@ -80,30 +82,77 @@ const getTitle = ({ title, crumbs }) =>
  *  </Tabs>
  * </Layout.Bar>
  */
-const Bar = (props) => {
+class Bar extends React.Component {
 
-  const { crumbs, title, disableActions, classes, children, color='primary' } = props;
+  constructor(props) {
+    super(props);
+    this.state = {
+      anchorEl: null,
+    };
+  }
 
-  return (
-    <AppBar position='fixed' color={color}>
-      <Toolbar>
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
 
-        <IconButton
-          className={classes.menuButton}
-          onClick={disableActions ? () => false : window.nav}
-          aria-label='Menu'
-        >
-          <Icon className={classes[`${color}IconButton`]} >menu</Icon>
-        </IconButton>
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
 
-        <Typography type='title' color='inherit' className={classes.flex}>
-          {getTitle({ title, crumbs })}
-        </Typography>
+  render() {
+    const { crumbs, title, disableActions, classes, children, color='primary', menu } = this.props;
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
 
-      </Toolbar>
-      {children}
-    </AppBar>
-  );
+    return (
+      <AppBar position='fixed' color={color}>
+        <Toolbar>
+
+          <IconButton
+            className={classes.menuButton}
+            onClick={disableActions ? () => false : window.nav}
+            aria-label='Menu'
+          >
+            <Icon className={classes[`${color}IconButton`]}>menu</Icon>
+          </IconButton>
+
+          <Typography type='title' color='inherit' className={classes.flex}>
+            {getTitle({ title, crumbs })}
+          </Typography>
+
+          {menu && !_.isEmpty(menu) ?
+            <div>
+              <IconButton
+                onClick={this.handleMenu}
+                color="inherit"
+              >
+                <MoreVert />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={this.handleClose}
+              >
+                {menu}
+              </Menu>
+            </div>
+            : null
+          }
+
+        </Toolbar>
+        {children}
+      </AppBar>
+    );
+  }
 };
 
 Bar.propTypes = {
