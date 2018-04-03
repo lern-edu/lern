@@ -45,6 +45,9 @@ class ContentShow extends React.Component {
     _.pullAt(array, [index]);
     docToSave.set(field, array);
     form.setState({ doc: docToSave });
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   handleDown = () => {
@@ -58,6 +61,9 @@ class ContentShow extends React.Component {
       docToSave.set(field, array);
       form.setState({ doc: docToSave });
     }
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   handleUp = () => {
@@ -71,6 +77,9 @@ class ContentShow extends React.Component {
       docToSave.set(field, array);
       form.setState({ doc: docToSave });
     }
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   // Render

@@ -35,24 +35,28 @@ class ContentCreate extends React.Component {
   // Handlers
 
   handleSubmit = () => {
-    if (typeof this.props.handleSubmit === 'function') {
-      this.props.handleSubmit();
-      return;
-    };
-
     const { doc, doc: { type } } = this.state;
     const { form, doc: docToSave, Schema, field='description' } = this.props;
-    if (_.isArray(_.get(docToSave, field))) {
-      const array = _.get(docToSave, field);
-      array.push(_.clone(doc));
-      docToSave.set(field, array);
-    } else docToSave.set(field, [_.clone(doc)]);
-    form.setState({ doc: docToSave });
+
+    if (typeof this.props.handleSubmit === 'function')
+      this.props.handleSubmit(doc);
+    else {
+      if (_.isArray(_.get(docToSave, field))) {
+        const array = _.get(docToSave, field);
+        array.push(_.clone(doc));
+        docToSave.set(field, array);
+      } else docToSave.set(field, [_.clone(doc)]);
+      form.setState({ doc: docToSave });
+    };
+
     this.setState({
       doc: new Schema({ type, [type]: '' }),
       editorState: EditorState.createEmpty(),
       clear: true,
     });
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(doc);
   };
 
   handleEditorChange = (editorState) => {
