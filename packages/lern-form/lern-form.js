@@ -19,25 +19,28 @@ import { Class } from 'meteor/jagi:astronomy';
  * export default Screen(SomeView);
  * @return {object} this.state.innerHeight and this.state.innerWidth
  */
-const LernForm = (WrappedCompenent, AstroClass, submitMethod) => {
+
+
+const LernForm = (AstroClass, submitMethod) => {
   let restoreFields = AstroClass && AstroClass.getFieldsNames() || {};
 
   return class Form extends React.Component {
 
     // Lifecycle
-    constructor(props) {
+    constructor(state, props) {
       super(props);
       this.state = {
-        errors: undefined,
+        errors: {},
         valid: undefined,
+        ...state,
       };
     };
 
     componentWillMount() {
       const { doc } = this.props;
-      if (doc) this.doc = doc;
-      else if (this.props.schema) this.doc = new this.props.schema();
-      else this.doc = new AstroClass();
+      if (doc) this.state.doc = doc;
+      else if (this.props.schema) this.state.doc = new this.props.schema();
+      else this.state.doc = new AstroClass();
 
       if (!AstroClass) restoreFields = this.props.schema.getFieldsNames();
     };
@@ -50,7 +53,7 @@ const LernForm = (WrappedCompenent, AstroClass, submitMethod) => {
 
     componentWillReceiveProps(props) {
       const { doc, restore } = props;
-      if (doc) this.doc = doc;
+      if (doc) this.state.doc = doc;
       if (restore) this.restoreFields(restore);
       this.updateValidation();
     };
@@ -58,22 +61,19 @@ const LernForm = (WrappedCompenent, AstroClass, submitMethod) => {
     // Utils
 
     updateValidation = (fields) => {
-      const { doc } = this;
+      const { doc } = this.state;
 
-      const validateOptions = { stopOnFirstError: false };
+      const validateOptions = { stopOnFirstError: false, simulation: false, cast: false };
 
       if (_.isString(fields)) validateOptions.fields = [fields];
       else if (_.isArray(fields)) validateOptions.fields = fields;
-
-      doc.validate(validateOptions, err => {
-        this.setState({
-          valid: !err,
-          errors: _.map(
-            _.get(err, 'details'),
-            details => _.zipObject([details.name], [details.message])
-          ),
+      else validateOptions.fields = restoreFields;
+      if (doc)
+        doc.validate(validateOptions, err => {
+          const errors = {};
+          _.forEach(_.get(err, 'details'), d => errors[d.name] = d.message);
+          this.setState({ valid: !err, errors });
         });
-      });
 
     };
 
@@ -81,14 +81,14 @@ const LernForm = (WrappedCompenent, AstroClass, submitMethod) => {
       const values = _.map(restoreFields, field => restore[field]);
       const obj = _.zipObject(restoreFields, values);
       const cleanObj = _.omit(obj, _.isUndefined);
-      this.doc.set(cleanObj);
+      this.state.doc.set(cleanObj);
     };
 
     callback = (key, ...args) => {
       if (key === 'success') {
         this.setState({ valid: true });
         if (_.isFunction(this.handleSubmitSuccess))
-          this.handleSubmitSuccess(...args);  
+          this.handleSubmitSuccess(...args);
         else console.info(args);
       } else if (key === 'error') {
         this.updateValidation();
@@ -108,24 +108,24 @@ const LernForm = (WrappedCompenent, AstroClass, submitMethod) => {
           if (opts.operation === 'push') {
             _.forEach(_.keys(arg), key => {
 
-              if (this.doc.get('_isNew')) {
-                const array = this.doc.get(key) || [];
+              if (this.state.doc.get('_isNew')) {
+                const array = this.state.doc.get(key) || [];
                 array.push(arg[key]);
-                this.doc.set(key, array);
+                this.state.doc.set(key, array);
               } else {
-                this.doc.get(key)
-                ? this.doc.push(key, arg[key])
-                : this.doc.set(key, [arg[key]]);
+                this.state.doc.get(key)
+                ? this.state.doc[key].push(arg[key])
+                : this.state.doc.set(key, [arg[key]]);
               };
 
             });
           } else if (opts.operation === 'pull') {
             _.forEach(_.keys(arg), key => {
-              const array = this.doc.get(key) || [];
+              const array = this.state.doc.get(key) || [];
               array.splice(arg[key], 1);
-              this.doc.set(key, array);
+              this.state.doc.set(key, array);
             });
-          } else this.doc.set(arg);
+          } else this.state.doc.set(arg);
         }
 
         if (opts.query)
@@ -133,7 +133,7 @@ const LernForm = (WrappedCompenent, AstroClass, submitMethod) => {
         this.updateValidation();
       } else if (_.isString(arg)) {
         return value => {
-          if (opts.doc) this.doc.set(arg, value);
+          if (opts.doc) this.state.doc.set(arg, value);
           if (opts.query) FlowRouter.withReplaceState(() =>
             FlowRouter.setQueryParams({ [arg]: value }));
           this.updateValidation();
@@ -150,20 +150,12 @@ const LernForm = (WrappedCompenent, AstroClass, submitMethod) => {
       else if (_.isFunction(submitMethod)) submitMethod();
       else {
         this.setState({ valid: false });
-        Meteor.call(submitMethod, this.doc, (err, res) => {
+        Meteor.call(submitMethod, this.state.doc, (err, res) => {
           if (err) {
             this.callback('error', err);
           } else this.callback('success', res);
         });
       };
-    };
-
-    // Render
-
-    render() {
-      return (
-        <WrappedCompenent astro={this.state} {...this.props} />
-      );
     };
 
   };
