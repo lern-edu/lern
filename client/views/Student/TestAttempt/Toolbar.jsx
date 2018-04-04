@@ -58,20 +58,23 @@ class StudentTestAttemptToolbar extends React.Component {
     this.timer = 0;
     const { attempt, attempt: { test: { time } }, page } = props;
 
-    let startTime;
-    if (time.timeoutType === 'global') {
-      startTime = attempt.startedAt;
-    } else if (time.timeoutType === 'page') {
-      startTime = attempt.pages[page].startedAt;
+    this.state = {};
+    if (time.timeoutType !== 'none') {
+      let startTime;
+      if (time.timeoutType === 'global') {
+        startTime = attempt.startedAt;
+      } else if (time.timeoutType === 'page') {
+        startTime = attempt.pages[page].startedAt;
+      }
+
+      let timeout = time.timeout;
+      let finishTime = new Date(startTime.getTime() + timeout);
+      let timer = finishTime.getTime() - new Date().getTime();
+
+      this.state = {
+        miliseconds: timer,
+      };
     }
-
-    let timeout = time.timeout;
-    let finishTime = new Date(startTime.getTime() + timeout);
-    let timer = finishTime.getTime() - new Date().getTime();
-
-    this.state = {
-      miliseconds: timer,
-    };
   }
 
   countDown = () => {
@@ -96,7 +99,8 @@ class StudentTestAttemptToolbar extends React.Component {
   };
 
   componentDidMount() {
-    if (this.timer === 0) {
+    const { attempt: { test: { time } } } = this.props;
+    if (this.timer === 0 && time.timeoutType !== 'none') {
       this.timer = setInterval(this.countDown, 1000);
     }
   }
