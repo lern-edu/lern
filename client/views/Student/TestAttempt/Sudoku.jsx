@@ -3,11 +3,13 @@ import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
 import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Icon from 'material-ui/Icon';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
+import { Test } from 'meteor/duckdodgerbrasl:lern-model';
+import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from 'material-ui';
+import { ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import { Description, Share, Help, Settings, ContentCopy, FileDownload } from 'material-ui-icons';
+
+import StudentTestAttemptSettingsSudoku from './Settings/Sudoku.jsx';
+const test = new Test();
 
 const styles = theme => ({
   root: {
@@ -67,7 +69,56 @@ class StudentTestAttemptSudoku extends React.Component {
       forward: [],
       edit: false,
       clear: false,
+      settings: {
+        highlight: false,
+      },
     };
+  };
+
+  componentDidMount() {
+    this.renderMenu();
+  }
+
+  renderMenu = () => {
+    const { collections: { attempt } } = this.props.parent.state;
+
+    console.log('render menu', this);
+
+    let menu = [
+      <test.templates.TestDialog key='description'
+        doc={attempt.test}
+        field='description'
+        icon={<Description />}
+      />,
+      <test.templates.TestDialog key='help'
+        doc={attempt.test}
+        field='help'
+        icon={<Help />}
+      />,
+      attempt.test.resolution === 'sudoku' ?
+        <StudentTestAttemptSettingsSudoku
+          key='settings'
+          parent={this}
+          settings={this.state.settings}
+        />
+        : null,
+      <Divider key='divider-1'/>,
+      <MenuItem key='copy'>
+        <ListItemIcon><ContentCopy /></ListItemIcon>
+        <ListItemText primary="Copy" />
+      </MenuItem>,
+      <MenuItem key='download'>
+        <ListItemIcon><FileDownload /></ListItemIcon>
+        <ListItemText primary="Download" />
+      </MenuItem>,
+      <Divider key='divider-2'/>,
+      <MenuItem key='share'>
+        <ListItemIcon><Share /></ListItemIcon>
+        <ListItemText inset primary="Share" />
+      </MenuItem>,
+    ];
+
+    this.props.parent.setState({ menu: menu });
   };
 
   // Handlers
@@ -168,6 +219,7 @@ class StudentTestAttemptSudoku extends React.Component {
     log.info('StudentTestAttemptSudoku.render =>', this.state);
     const { classes, sudoku } = this.props;
     const { answer, value, backward, forward, edit, clear } = this.state;
+    const { settings: { highlight } } = this.state;
 
     return (
       <Grid container spacing={0} justify='center'>
@@ -189,7 +241,7 @@ class StudentTestAttemptSudoku extends React.Component {
                             key={`row${row}-cell${col}`}
                             className={classes.cell}
                             style={{
-                              backgroundColor: (value && value === cell)
+                              backgroundColor: (highlight && value && value === cell)
                                 ? 'yellow'
                                 : (col < 3 || col > 5)
                                 ? (
