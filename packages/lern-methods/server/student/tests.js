@@ -71,8 +71,11 @@ Helpers.Methods({ prefix, protect }, {
 
       attempt = new Attempt({
         test: test.raw(),
+        pages: _.map(test.pages, p => ({ finished: false })),
         startedAt: new Date(),
       });
+
+      attempt.pages[0].startedAt = new Date();
 
       const future = new Future();
       let rawSudokuDb = Sudoku.getCollection();
@@ -107,6 +110,32 @@ Helpers.Methods({ prefix, protect }, {
    * @memberof LernMethods.Student()
    * @desc set attempt to finish
    * @example
+   * Meteor.call('StudentTestAttemptChangePage');
+   * @public
+   * @param {String} [attemptId] - attempt id
+   * @param {String} [oldPage] - oldPage
+   * @param {String} [newPage] - newPage
+   * @return {bool} - true if setted
+   */
+  TestAttemptChangePage(attemptId, oldPage, newPage) {
+    const user = Meteor.user();
+
+    let attempt = Attempt.find({ _id: attemptId });
+    Check.Cursor(attempt).some();
+    attempt = _.head(attempt.fetch());
+
+    attempt.pages[oldPage].set('finished', true);
+    attempt.pages[oldPage].set('finishedAt', new Date());
+    attempt.pages[newPage].set('startedAt', new Date());
+
+    attempt.save();
+    return attempt;
+  },
+
+  /**
+   * @memberof LernMethods.Student()
+   * @desc set attempt to finish
+   * @example
    * Meteor.call('StudentTestAttemptFinish');
    * @public
    * @param {String} [attemptId] - attempt id
@@ -132,13 +161,18 @@ Helpers.Methods({ prefix, protect }, {
     };
 
     // DONE THIS ON ATTEMPT SCHEMA
+    const lastPage = _.last(attempt.pages);
     if (dismiss) {
+      lastPage.set('finished', true);
+      lastPage.set('finishedAt', new Date());
       attempt.set('finished', true);
       attempt.set('finishedAt', new Date());
       return attempt.save();
     };
 
     if (test.resolution === 'content' && !dismiss) {
+      lastPage.set('finished', true);
+      lastPage.set('finishedAt', new Date());
       attempt.set('scores', _.map(test.scores, scoreSchema));
       attempt.set('finished', true);
       attempt.set('finishedAt', new Date());
@@ -161,6 +195,8 @@ Helpers.Methods({ prefix, protect }, {
           score: score.score * test.score,
         }))
       );
+      lastPage.set('finished', true);
+      lastPage.set('finishedAt', new Date());
       attempt.set('finished', true);
       attempt.set('finishedAt', new Date());
       return attempt.save();
