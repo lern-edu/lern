@@ -27,10 +27,10 @@ class AdminQuestions extends React.Component {
 
   constructor(props) {
     super(props);
-    const { skip=0 } = props;
+    const { skip=0, limit=50 } = props;
     this.state = {
       query: {},
-      options: { skip },
+      options: { skip, limit },
       collections: {
         questions: {
           handler: true,
