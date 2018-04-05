@@ -3,17 +3,21 @@ import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
+import { Test } from 'meteor/duckdodgerbrasl:lern-model';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import Icon from 'material-ui/Icon';
 import { LinearProgress, CircularProgress } from 'material-ui/Progress';
-import { MenuItem, Divider, Switch } from 'material-ui';
 import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
+import { Description, Help, MoreVert } from 'material-ui-icons';
+import { ListItemIcon, ListItemText } from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
+import Menu, { MenuItem } from 'material-ui/Menu';
 
 import StudentTestAttemptContent from './Content.jsx';
 import StudentTestAttemptSudoku from './Sudoku.jsx';
 import StudentTestAttemptToolbar from './Toolbar.jsx';
 
+const test = new Test();
 const styles = theme => ({
   bottom: {
     backgroundColor: theme.palette.background.paper,
@@ -26,9 +30,11 @@ const styles = theme => ({
     paddingRight: 6,
     paddingBottom: 56,
   },
+  primaryIconButton: {
+    color: '#FFF',
+  },
 });
 
-// this.state.bottom = [null, 'finish', 'loading'];
 class StudentTestAttempt extends React.Component {
 
   // Lifecycle
@@ -44,6 +50,10 @@ class StudentTestAttempt extends React.Component {
       bottom: null,
       page: 0,
       menu: [],
+      anchorEl: null,
+      open: false,
+      field: null,
+      dialogData: null,
     };
   }
 
@@ -137,6 +147,21 @@ class StudentTestAttempt extends React.Component {
 
   };
 
+  handleToggleMenu = event => {
+    const { anchorEl } = this.state;
+    this.setState({ anchorEl: !anchorEl ? (event && event.currentTarget) : null });
+  };
+
+  handleClickOpen = field => {
+    const { collections: { attempt } } = this.state;
+    console.log(field)
+    this.setState({ field, open: true, dialogData: attempt.test[field], anchorEl: null });
+  };
+
+  handleClickClose = () => {
+    this.setState({ field: null, open: false, dialogData: null });
+  };
+
   // Render
   render() {
     log.info('StudentTestAttempt.render =>', this.state);
@@ -150,13 +175,55 @@ class StudentTestAttempt extends React.Component {
       bottom,
       page,
       menu,
+      anchorEl,
+      open,
+      field,
+      dialogData,
     } = this.state;
 
     return handler
     ? <LinearProgress />
     : (
       <div>
-        <Layout.Bar title={attempt.test.name} menu={menu} />
+        <Layout.Bar title={attempt.test.name} disableActions={true}>
+          <div>
+            <IconButton
+              aria-label='More'
+              aria-owns={anchorEl ? 'long-menu' : null}
+              aria-haspopup='true'
+              onClick={this.handleToggleMenu}
+            >
+              <MoreVert className={classes.primaryIconButton} />
+            </IconButton>
+            <Menu
+              id='long-menu'
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={this.handleToggleMenu}
+            >
+            <MenuItem onClick={() => this.handleClickOpen('description')}>
+              <ListItemIcon>{<Description />}</ListItemIcon>
+              <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.description')} />
+            </MenuItem>
+            <MenuItem onClick={() => this.handleClickOpen('help')}>
+              <ListItemIcon>{<Help />}</ListItemIcon>
+              <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.help')} />
+            </MenuItem>
+              
+              {
+                attempt.test.resolution !== 'sudoku'
+                  ? undefined
+                  : (
+                    <StudentTestAttemptSettingsSudoku
+                      key='settings'
+                      parent={this}
+                      settings={this.state.settings}
+                    />
+                  )
+              }
+            </Menu>
+          </div>
+        </Layout.Bar>
 
         <Grid container justify='center' className={classes.grid} spacing={0}>
 
@@ -185,6 +252,19 @@ class StudentTestAttempt extends React.Component {
           </Grid>
 
         </Grid>
+        
+        {
+          !open
+          ? undefined
+          : (
+            <test.templates.TestDialog key='dialog'
+              open={open}
+              doc={dialogData}
+              handleClickClose={this.handleClickClose}
+              title={i18n.__('StudentTestAttempt.appBarChildren.' + field)}
+            />
+          )
+        }
 
         <StudentTestAttemptToolbar
           bottom={bottom}
