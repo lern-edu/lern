@@ -86,70 +86,50 @@ if (Meteor.isClient) {
 
   class TestDialog extends React.Component {
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        open: false,
-      };
-    }
-
-    handleClickOpen = () => {
-      this.setState({ open: true });
-    };
-
-    handleClose = () => {
-      this.setState({ open: false });
-    };
-
     render() {
-      const { classes, doc, field='description', icon } = this.props;
+      const { classes, doc, open, title, handleClickClose } = this.props;
 
       return (
-        <React.Fragment>
-          <MenuItem onClick={this.handleClickOpen}>
-            {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-            <ListItemText inset primary={_.capitalize(field)} />
-          </MenuItem>
-          <Dialog
-            fullScreen
-            open={this.state.open}
-            onClose={this.handleClose}
-            transition={Transition}
-          >
-            <AppBar className={classes.appBar}>
-              <Toolbar>
-                <IconButton color="inherit" onClick={this.handleClose}>
-                  <CloseIcon />
-                </IconButton>
-                <Typography type='title' color="inherit" className={classes.flex}>
-                  {_.capitalize(field)}
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            <div className={classes.content}>
-              {
-                _.map(doc[field], (show, index) =>
-                  [
-                    <ContentShow
-                      doc={show}
-                      key={`${field}Show${index}`}
-                      canRemove={false}
-                    />,
-                    <Divider key={`${field}Divider${index}`}/>,
-                  ]
-                )
-              }
-            </div>
-          </Dialog>
-        </React.Fragment>
+        <Dialog
+          fullScreen
+          open={open}
+          onClose={handleClickClose}
+          transition={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton color="inherit" onClick={handleClickClose}>
+                <CloseIcon />
+              </IconButton>
+              <Typography type='title' color="inherit" className={classes.flex}>
+                {_.capitalize(title)}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <div className={classes.content}>
+            {
+              _.map(doc, (show, index) =>
+                [
+                  <ContentShow
+                    doc={show}
+                    key={`${title}Show${index}`}
+                    canRemove={false}
+                  />,
+                  <Divider key={`${title}Divider${index}`}/>,
+                ]
+              )
+            }
+          </div>
+        </Dialog>
       );
     }
   }
 
   TestDialog.propTypes = {
     classes: PropTypes.object.isRequired,
-    doc: PropTypes.object.isRequired,
-    type: PropTypes.string,
+    doc: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired,
+    handleClickClose: PropTypes.func.isRequired,
   };
 
   Templates.DescriptionShow = DescriptionShow;
