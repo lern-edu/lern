@@ -101,7 +101,7 @@ const Test = Class.create({
     time: {
       type: TestTimeSchema,
       default: new TestTimeSchema(),
-      immutable: true,
+      /*immutable: true,*/
     },
     resolution: String,
     help: {

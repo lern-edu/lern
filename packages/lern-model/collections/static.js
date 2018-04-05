@@ -9,7 +9,7 @@ const StaticCollections = {
   UserRoles: ['student', 'teacher', 'admin'],
   ContentTypes: ['text', 'image', 'link', 'video', 'task'],
   Locales: ['pt-BR', 'en-US'],
-  TestTimeoutTypes: ['global', 'none'],
+  TestTimeoutTypes: ['global', 'page', 'none'],
   TestTimeTypes: ['range', 'none'],
   TestResolutions: ['content', 'sudoku'],
   SudokuLevel: ['easy', 'medium', 'hard'],
