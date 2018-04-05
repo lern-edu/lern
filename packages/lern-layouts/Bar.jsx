@@ -4,7 +4,6 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
 
@@ -80,33 +79,42 @@ const getTitle = ({ title, crumbs }) =>
  *  </Tabs>
  * </Layout.Bar>
  */
-const Bar = (props) => {
+class Bar extends React.Component {
 
-  const { crumbs, title, disableActions, classes, children, color='primary' } = props;
+  render() {
+    const { crumbs, title, disableActions, classes, children, color='primary' } = this.props;
 
-  return (
-    <AppBar position='fixed' color={color}>
-      <Toolbar>
+    return (
+      <AppBar position='fixed' color={color}>
+        <Toolbar>
 
-        <IconButton
-          className={classes.menuButton}
-          onClick={disableActions ? () => false : window.nav}
-          aria-label='Menu'
-        >
-          <Icon className={classes[`${color}IconButton`]} >menu</Icon>
-        </IconButton>
+          <IconButton
+            className={classes.menuButton}
+            onClick={disableActions ? () => false : window.nav}
+            aria-label='Menu'
+          >
+            <Icon className={classes[`${color}IconButton`]}>menu</Icon>
+          </IconButton>
 
-        <Typography type='title' color='inherit' className={classes.flex}>
-          {getTitle({ title, crumbs })}
-        </Typography>
+          <Typography type='title' color='inherit' className={classes.flex}>
+            {getTitle({ title, crumbs })}
+          </Typography>
 
-      </Toolbar>
-      {children}
-    </AppBar>
-  );
+          {
+            children
+            ? children
+            : undefined
+          }
+
+        </Toolbar>
+      </AppBar>
+    );
+  }
 };
 
 Bar.propTypes = {
+  title: PropTypes.string,
+  color: PropTypes.string,
   crumbs: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -114,6 +122,8 @@ Bar.propTypes = {
     })
   ),
   classes: PropTypes.object.isRequired,
+  children: PropTypes.element,
+  disableActions: PropTypes.bool,
 };
 
 export default withStyles(styles)(Bar);

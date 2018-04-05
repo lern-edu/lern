@@ -56,6 +56,7 @@ Package.onUse((api) => {
     'collections/tags/templates.jsx',
 
     'collections/tests/schema.js',
+    'collections/tests/templates.jsx',
 
     'collections/questions/validators.js',
     'collections/questions/schema.js',

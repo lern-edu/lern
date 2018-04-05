@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import log from 'loglevel';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import { LinearProgress, CircularProgress, Icon, IconButton, ButtonBase } from 'material-ui';
@@ -125,6 +126,7 @@ class StudentTestAttemptToolbar extends React.Component {
   }
 
   render() {
+    log.info('StudentTestAttemptToolbar.render => ', this.props);
     const { classes, loading, attempt, attempt: { test: { time } }, page } = this.props;
 
     let numPages = attempt.test.pages.length;
@@ -216,6 +218,12 @@ class StudentTestAttemptToolbar extends React.Component {
 
 StudentTestAttemptToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
+  page: PropTypes.number.isRequired,
+  attempt: PropTypes.object.isRequired,
+  handleBack: PropTypes.func,
+  handleNext: PropTypes.func,
+  handleDismiss: PropTypes.func,
+  handleFinish: PropTypes.func,
 };
 
 export default withStyles(styles)(StudentTestAttemptToolbar);
