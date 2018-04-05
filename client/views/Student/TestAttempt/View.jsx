@@ -88,7 +88,7 @@ class StudentTestAttempt extends React.Component {
   handleBack = () => {
     log.info('handleBack=', this.state);
     const { collections: { attempt, attempt: { test: { time } } }, page } = this.state;
-    if (page > 0 && time.timeoutType === 'global') {
+    if (page > 0 && (time.timeoutType === 'global' || time.timeoutType === 'none')) {
       this.setState({
         page: page - 1,
       });
@@ -100,7 +100,7 @@ class StudentTestAttempt extends React.Component {
     const { collections: { attempt, attempt: { test: { time } } }, page } = this.state;
 
     if (page < attempt.test.pages.length - 1) {
-      if (time.timeoutType === 'global') {
+      if (time.timeoutType === 'global' || time.timeoutType == 'none') {
         this.setState({
           page: page + 1,
         });
