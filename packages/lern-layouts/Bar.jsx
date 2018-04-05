@@ -4,11 +4,8 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { MoreVert } from 'material-ui-icons';
 
 const styles = {
   flex: {
@@ -84,25 +81,8 @@ const getTitle = ({ title, crumbs }) =>
  */
 class Bar extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      anchorEl: null,
-    };
-  }
-
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
   render() {
-    const { crumbs, title, disableActions, classes, children, color='primary', menu } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    const { crumbs, title, disableActions, classes, children, color='primary' } = this.props;
 
     return (
       <AppBar position='fixed' color={color}>
@@ -120,42 +100,21 @@ class Bar extends React.Component {
             {getTitle({ title, crumbs })}
           </Typography>
 
-          {menu && !_.isEmpty(menu) ?
-            <div>
-              <IconButton
-                onClick={this.handleMenu}
-                color="inherit"
-              >
-                <MoreVert />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={this.handleClose}
-              >
-                {menu}
-              </Menu>
-            </div>
-            : null
+          {
+            children
+            ? children
+            : undefined
           }
 
         </Toolbar>
-        {children}
       </AppBar>
     );
   }
 };
 
 Bar.propTypes = {
+  title: PropTypes.string,
+  color: PropTypes.string,
   crumbs: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -163,6 +122,8 @@ Bar.propTypes = {
     })
   ),
   classes: PropTypes.object.isRequired,
+  children: PropTypes.element,
+  disableActions: PropTypes.bool,
 };
 
 export default withStyles(styles)(Bar);
