@@ -6,12 +6,15 @@ import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import { Test } from 'meteor/duckdodgerbrasl:lern-model';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+import Divider from 'material-ui/Divider';
 import { LinearProgress, CircularProgress } from 'material-ui/Progress';
 import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
-import { Description, Help, MoreVert } from 'material-ui-icons';
+import { Description, Help, MoreVert, Settings } from 'material-ui-icons';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
+import ListSubheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import Checkbox from 'material-ui/Checkbox';
 
 import StudentTestAttemptContent from './Content.jsx';
 import StudentTestAttemptSudoku from './Sudoku.jsx';
@@ -51,9 +54,8 @@ class StudentTestAttempt extends React.Component {
       page: 0,
       menu: [],
       anchorEl: null,
-      open: false,
-      field: null,
-      dialogData: null,
+      testHelp: { open: false, field: null, dialogData: null },
+      sudokuHighlight: true,
     };
   }
 
@@ -85,7 +87,7 @@ class StudentTestAttempt extends React.Component {
 
   // Handlers
   handleBottom = (event, value) => {
-    log.info('StudentTestAttempt.handleBottom => ', this, value);
+    log.info('StudentTestAttempt.handleBottom => ', value);
     const { bottom, collections: { attempt }, page } = this.state;
 
     let dismiss = null;
@@ -154,12 +156,22 @@ class StudentTestAttempt extends React.Component {
 
   handleClickOpen = field => {
     const { collections: { attempt } } = this.state;
-    console.log(field)
-    this.setState({ field, open: true, dialogData: attempt.test[field], anchorEl: null });
+    this.setState({
+      testHelp: { field, open: true, dialogData: attempt.test[field] },
+      anchorEl: null,
+    });
+  };
+
+  handleClickSudokuSettings = () => {
+    this.setState({ sudokuSettings: true, anchorEl: null });
   };
 
   handleClickClose = () => {
-    this.setState({ field: null, open: false, dialogData: null });
+    this.setState({ testHelp: { field: null, open: false, dialogData: null } });
+  };
+
+  handleClickSudokuHighlight = () => {
+    this.setState({ sudokuHighlight: !this.state.sudokuHighlight });
   };
 
   // Render
@@ -176,9 +188,12 @@ class StudentTestAttempt extends React.Component {
       page,
       menu,
       anchorEl,
-      open,
-      field,
-      dialogData,
+      testHelp: {
+        open,
+        field,
+        dialogData,
+      },
+      sudokuHighlight,
     } = this.state;
 
     return handler
@@ -201,25 +216,41 @@ class StudentTestAttempt extends React.Component {
               open={Boolean(anchorEl)}
               onClose={this.handleToggleMenu}
             >
-            <MenuItem onClick={() => this.handleClickOpen('description')}>
-              <ListItemIcon>{<Description />}</ListItemIcon>
-              <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.description')} />
-            </MenuItem>
-            <MenuItem onClick={() => this.handleClickOpen('help')}>
-              <ListItemIcon>{<Help />}</ListItemIcon>
-              <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.help')} />
-            </MenuItem>
-              
+              <MenuItem onClick={() => this.handleClickOpen('description')}>
+                <ListItemIcon>{<Description />}</ListItemIcon>
+                <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.description')} />
+              </MenuItem>
+              {
+                _.isEmpty(attempt.test.help)
+                ? undefined
+                : (
+                  <MenuItem onClick={() => this.handleClickOpen('help')}>
+                    <ListItemIcon>{<Help />}</ListItemIcon>
+                    <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.help')} />
+                  </MenuItem>
+                )
+              }
               {
                 attempt.test.resolution !== 'sudoku'
                   ? undefined
-                  : (
-                    <StudentTestAttemptSettingsSudoku
-                      key='settings'
-                      parent={this}
-                      settings={this.state.settings}
-                    />
-                  )
+                  : [
+                    <Divider key='dividerSudoku' />,
+                    <ListSubheader key='titleSudoku'>
+                      {i18n.__('StudentTestAttempt.appBarChildren.sudoku.title')}
+                    </ListSubheader>,
+                    <MenuItem key='menuSudoku' onClick={this.handleClickSudokuHighlight}>
+                      <ListItemIcon>
+                        <Checkbox
+                          checked={sudokuHighlight}
+                          onChange={this.handleClickSudokuHighlight}
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        inset
+                        primary={i18n.__('StudentTestAttempt.appBarChildren.sudoku.highlight')}
+                      />
+                    </MenuItem>,
+                  ]
               }
             </Menu>
           </div>
@@ -242,6 +273,7 @@ class StudentTestAttempt extends React.Component {
                       parent={this}
                       attempt={attempt}
                       sudoku={attempt.sudoku}
+                      highlight={sudokuHighlight}
                     />,
                   },
                   attempt.test.resolution

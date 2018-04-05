@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import log from 'loglevel';
 import { withStyles } from 'material-ui/styles';
 import { Toolbar, LinearProgress, CircularProgress, Icon } from 'material-ui';
 import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
@@ -17,6 +18,7 @@ const styles = theme => ({
 class StudentTestAttemptToolbar extends React.Component {
 
   render() {
+    log.info('StudentTestAttemptToolbar.render => ', this.props);
     const { classes, bottom, onChange, numPages, page } = this.props;
 
     return (
@@ -42,19 +44,23 @@ class StudentTestAttemptToolbar extends React.Component {
                 key='dismiss'
                 icon={<Icon>mood_bad</Icon>}
               />,
-              bottom !== 'finish' ?
-                <BottomNavigationAction
-                  label={i18n.__('StudentTestAttempt.next')}
-                  value='next'
-                  key='next'
-                  icon={<Icon>chevron_right</Icon>}
-                /> :
+              ((numPages - 1 === page) || bottom === 'finish')
+              ? (
                 <BottomNavigationAction
                   label={i18n.__('StudentTestAttempt.finish')}
                   value='finish'
                   key='finish'
                   icon={<Icon>check</Icon>}
-                />,
+                />
+              )
+              : (
+                <BottomNavigationAction
+                  label={i18n.__('StudentTestAttempt.next')}
+                  value='next'
+                  key='next'
+                  icon={<Icon>chevron_right</Icon>}
+                />
+              ),
             ]
           }
         </BottomNavigation>
@@ -65,6 +71,10 @@ class StudentTestAttemptToolbar extends React.Component {
 
 StudentTestAttemptToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
+  page: PropTypes.number.isRequired,
+  numPages: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  bottom: PropTypes.string,
 };
 
 export default withStyles(styles)(StudentTestAttemptToolbar);
