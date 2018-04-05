@@ -3,11 +3,8 @@ import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
 import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Icon from 'material-ui/Icon';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
+import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from 'material-ui';
+import { ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 
 const styles = theme => ({
   root: {
@@ -166,7 +163,7 @@ class StudentTestAttemptSudoku extends React.Component {
   // Render
   render() {
     log.info('StudentTestAttemptSudoku.render =>', this.state);
-    const { classes, sudoku } = this.props;
+    const { classes, sudoku, highlight } = this.props;
     const { answer, value, backward, forward, edit, clear } = this.state;
 
     return (
@@ -189,7 +186,7 @@ class StudentTestAttemptSudoku extends React.Component {
                             key={`row${row}-cell${col}`}
                             className={classes.cell}
                             style={{
-                              backgroundColor: (value && value === cell)
+                              backgroundColor: (highlight && value && value === cell)
                                 ? 'yellow'
                                 : (col < 3 || col > 5)
                                 ? (
