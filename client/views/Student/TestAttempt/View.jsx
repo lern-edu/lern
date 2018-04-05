@@ -31,6 +31,7 @@ const styles = theme => ({
     paddingLeft: 6,
     paddingRight: 6,
     paddingBottom: 56,
+    width: '99%',
   },
   primaryIconButton: {
     color: '#FFF',
@@ -84,18 +85,6 @@ class StudentTestAttempt extends React.Component {
   };
 
   // Handlers
-  handleBottom = (event, value) => {
-    log.info('StudentTestAttempt.handleBottom => ', value);
-    const { bottom, collections: { attempt }, page } = this.state;
-
-    let dismiss = null;
-
-    if (value === 'dismiss') {
-      dismiss = confirm(i18n.__(`StudentTestAttempt.warning.dismiss`));
-      if (!dismiss) return;
-    }
-  }
-
   handleBack = () => {
     log.info('handleBack=', this.state);
     const { collections: { attempt, attempt: { test: { time } } }, page } = this.state;
@@ -343,7 +332,6 @@ class StudentTestAttempt extends React.Component {
 
         <StudentTestAttemptToolbar
           loading={loading}
-          onChange={this.handleBottom}
           attempt={attempt}
           page={page}
           handleBack={this.handleBack}

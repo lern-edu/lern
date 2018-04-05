@@ -127,7 +127,6 @@ class StudentTestAttemptToolbar extends React.Component {
 
   render() {
     log.info('StudentTestAttemptToolbar.render => ', this.props);
-    const { classes, bottom, onChange, numPages, page } = this.props;
     const { classes, loading, attempt, attempt: { test: { time } }, page } = this.props;
 
     let numPages = attempt.test.pages.length;
@@ -220,9 +219,11 @@ class StudentTestAttemptToolbar extends React.Component {
 StudentTestAttemptToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
   page: PropTypes.number.isRequired,
-  numPages: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  bottom: PropTypes.string,
+  attempt: PropTypes.object.isRequired,
+  handleBack: PropTypes.func,
+  handleNext: PropTypes.func,
+  handleDismiss: PropTypes.func,
+  handleFinish: PropTypes.func,
 };
 
 export default withStyles(styles)(StudentTestAttemptToolbar);
