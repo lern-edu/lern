@@ -386,7 +386,7 @@ class AdminTest extends React.Component {
                                 <AdminTestTime
                                   doc={doc}
                                   field='time'
-                                  error={errors.time}
+                                  errors={errors}
                                   parent={this}
                                 />
 
