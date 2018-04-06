@@ -24,8 +24,8 @@ const styles = {
 };
 
 const getTitle = ({ title, crumbs }) =>
-  <div>
-    <span>
+  [
+    <span key='crumb'>
       {
         _.flatten(
           _.map(crumbs, (c, i) =>
@@ -44,10 +44,9 @@ const getTitle = ({ title, crumbs }) =>
           )
         )
       }
-
-    </span>
-    <span>{title}</span>
-  </div>;
+    </span>,
+    <span key='title'>{title}</span>,
+  ];
 
 /**
  * React Component for top bar
