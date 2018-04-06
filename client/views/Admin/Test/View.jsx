@@ -206,9 +206,12 @@ class AdminTest extends React.Component {
                                   parent={this}
                                 />
 
-                                {actionButtons()}
                               </Paper>
 
+                            </Grid>
+
+                            <Grid item xs={12}>
+                              {actionButtons()}
                             </Grid>
 
                           </StepContent>
