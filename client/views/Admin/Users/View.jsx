@@ -85,7 +85,7 @@ class AdminUsers extends React.Component {
         }
 
         <Button
-          variant="raised"
+          variant="fab"
           color="primary"
           aria-label="add"
           href={FlowRouter.path('AdminUser')}
