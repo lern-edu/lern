@@ -86,7 +86,7 @@ class PublicLoginForgot extends React.Component{
             <IconButton color="inherit" onClick={handleClose}>
               <CloseIcon />
             </IconButton>
-            <Typography type="title" color="inherit" className={classes.flex}>
+            <Typography variant="title" color="inherit" className={classes.flex}>
               {i18n.__('PublicLogin.forgot_password')}
             </Typography>
           </Toolbar>
@@ -126,7 +126,7 @@ class PublicLoginForgot extends React.Component{
               </Grid>
               <br/>
               <Button
-                raised
+                variant="raised"
                 color='primary'
                 disabled={disabled}
                 onClick={this.handleSubmit}

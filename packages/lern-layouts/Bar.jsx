@@ -96,7 +96,7 @@ class Bar extends React.Component {
             <Icon className={classes[`${color}IconButton`]}>menu</Icon>
           </IconButton>
 
-          <Typography type='title' color='inherit' className={classes.flex}>
+          <Typography variant='title' color='inherit' className={classes.flex}>
             {getTitle({ title, crumbs })}
           </Typography>
 

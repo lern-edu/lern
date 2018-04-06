@@ -152,7 +152,7 @@ if (Meteor.isClient) {
                   <Fullscreen />
                 </IconButton>,
               button:
-                <Button raised
+                <Button variant="raised"
                   onClick={this.handleClickOpen}
                   >
                   Preview
@@ -175,7 +175,7 @@ if (Meteor.isClient) {
                 <IconButton color="inherit" onClick={this.handleClose}>
                   <CloseIcon />
                 </IconButton>
-                <Typography type='title' color="inherit" className={classes.flex}>
+                <Typography variant='title' color="inherit" className={classes.flex}>
                   {doc.name}
                 </Typography>
               </Toolbar>

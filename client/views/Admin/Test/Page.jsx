@@ -55,7 +55,7 @@ class AdminTestPage extends React.Component {
             <IconButton color="inherit" onClick={this.props.handleClose}>
               <CloseIcon />
             </IconButton>
-            <Typography type='title' color="inherit" className={classes.flex}>
+            <Typography variant='title' color="inherit" className={classes.flex}>
               Página {(index + 1)}
             </Typography>
           </Toolbar>

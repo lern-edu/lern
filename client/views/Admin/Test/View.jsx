@@ -60,7 +60,7 @@ class AdminTest extends React.Component {
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 0,
+      activeStep: 5,
     };
   };
 
@@ -112,7 +112,7 @@ class AdminTest extends React.Component {
 
   handleSubmit = () => {
     const { doc } = this.state;
-    log.info('AdminTest.handleSubmit');
+    log.info('AdminTest.handleSubmit=', doc);
 
     doc.validate({ fields: ['name'] }, (err) => {
       if (err) snack({ message: err.reason });
@@ -122,7 +122,7 @@ class AdminTest extends React.Component {
             snack({ message: 'Erro ao salvar test' });
             log.error(err);
           } else {
-            log.debug('Test criada! =>', res);
+            log.info('Test criada! =>', res);
             snack({ message: 'Test salva' });
             this.setState({ doc: res });
             FlowRouter.go('AdminTest', { testId: res._id });
@@ -153,7 +153,7 @@ class AdminTest extends React.Component {
             </Button>
             <Button
               disabled={error}
-              variant='raised'
+              variant="raised"
               color='primary'
               onClick={activeStep === stepsLenght - 1 ? this.handleSubmit : this.handleNext}
               className={classes.button}

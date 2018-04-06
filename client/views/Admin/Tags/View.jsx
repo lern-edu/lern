@@ -90,7 +90,7 @@ class AdminTags extends React.Component {
         }
 
         <Button
-          fab
+          variant="raised"
           color="primary"
           aria-label="add"
           href={FlowRouter.path('AdminTag')}

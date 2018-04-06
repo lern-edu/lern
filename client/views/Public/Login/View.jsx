@@ -143,7 +143,7 @@ class PublicLogin extends React.Component {
             />
             <Card elevation={4}>
               <CardContent>
-                <Typography type='headline' component='h2'>
+                <Typography variant='headline' component='h2'>
                   Login
                 </Typography>
 
@@ -169,7 +169,7 @@ class PublicLogin extends React.Component {
 
                 <br/>
 
-                <Button raised color='primary' onClick={handleLogin}>
+                <Button variant="raised" color='primary' onClick={handleLogin}>
                   {texts.signIn}
                 </Button>
 

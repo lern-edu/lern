@@ -262,7 +262,7 @@ class StudentTestAttemptSudoku extends React.Component {
                       _.map(new Array(3), (a2, col) =>
                         <Grid item xs={4} className={classes.keyboard} key={(row * 3 + col + 1)}>
                           <Button
-                            raised
+                            variant="raised"
                             color={value == (row * 3 + col + 1) ? 'secondary' : 'primary'}
                             onClick={() => this.handleClick((row * 3 + col + 1))}
                           >
@@ -281,7 +281,7 @@ class StudentTestAttemptSudoku extends React.Component {
 
                 <Grid item xs={3} className={classes.options} key='backward'>
                   <Button
-                    raised
+                    variant="raised"
                     color={value == 'backward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleBackward('backward')}
                     className={classes.optionsChild}
@@ -293,7 +293,7 @@ class StudentTestAttemptSudoku extends React.Component {
 
                 <Grid item xs={3} className={classes.options} key='forward'>
                   <Button
-                    raised
+                    variant="raised"
                     color={value == 'forward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleForward('forward')}
                     className={classes.optionsChild}
@@ -305,7 +305,7 @@ class StudentTestAttemptSudoku extends React.Component {
 
                 <Grid item xs={3} className={classes.options} key='clear'>
                   <Button
-                    raised
+                    variant="raised"
                     color={clear ? 'secondary' : 'primary'}
                     onClick={() => this.toggleClear()}
                     className={classes.optionsChild}
@@ -316,7 +316,7 @@ class StudentTestAttemptSudoku extends React.Component {
 
                 <Grid item xs={3} className={classes.options} key='edit'>
                   <Button
-                    raised
+                    variant="raised"
                     color={edit ? 'secondary' : 'primary'}
                     onClick={() => this.toggleEdit()}
                     className={classes.optionsChild}

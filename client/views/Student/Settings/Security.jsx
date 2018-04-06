@@ -81,7 +81,7 @@ class StudentSettingsSecurity extends React.Component {
 
               <Grid container spacing={24}>
                 <Grid item xs={12}>
-                  <Typography type="title" gutterBottom>
+                  <Typography variant="title" gutterBottom>
                     Emails
                   </Typography>
                 </Grid>
@@ -100,7 +100,7 @@ class StudentSettingsSecurity extends React.Component {
 
               <Grid container spacing={24}>
                 <Grid item xs={12}>
-                  <Typography type="title" gutterBottom>
+                  <Typography variant="title" gutterBottom>
                     {hasPassword ?
                       i18n.__('StudentSettings.change_password') :
                       i18n.__('StudentSettings.add_password')}
@@ -153,7 +153,7 @@ class StudentSettingsSecurity extends React.Component {
                   >
                     <Grid item>
                       <Button
-                        raised
+                        variant="raised"
                         href={FlowRouter.path('StudentSettings')}
                       >
                         {i18n.__('StudentSettings.cancel')}
@@ -161,7 +161,7 @@ class StudentSettingsSecurity extends React.Component {
                     </Grid>
                     <Grid item>
                       <Button
-                        raised
+                        variant="raised"
                         onClick={this.handleSubmit.bind(this)}
                         color='primary'
                         disabled={

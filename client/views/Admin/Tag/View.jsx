@@ -214,7 +214,7 @@ class AdminTag extends React.Component {
                           justify='flex-end'
                         >
                           <Grid item>
-                            <Button href={FlowRouter.path('AdminTags')} raised>
+                            <Button href={FlowRouter.path('AdminTags')} variant="raised">
                               Cancel
                             </Button>
                           </Grid>
@@ -224,7 +224,7 @@ class AdminTag extends React.Component {
                           </Grid>
 
                           <Grid item>
-                            <Button onClick={this.handleSubmit} raised color='primary'>
+                            <Button onClick={this.handleSubmit} variant="raised" color='primary'>
                               Save
                             </Button>
                           </Grid>

@@ -59,7 +59,7 @@ class StudentReport extends React.Component {
           </Grid>
 
           <Grid item>
-            <Button href={FlowRouter.path('StudentHome')} raised color='primary'>
+            <Button href={FlowRouter.path('StudentHome')} variant="raised" color='primary'>
               {i18n.__('StudentReport.goTasksButton')}
             </Button>
           </Grid>
