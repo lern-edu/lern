@@ -6,6 +6,7 @@ import { Setup } from 'meteor/duckdodgerbrasl:lern-layouts';
 import PublicLogin from './Login/View.jsx';
 import PublicEnrollment from './Enrollment/View.jsx';
 import PublicComplete from './Complete/View.jsx';
+import PublicConfirm from './Confirm/View.jsx';
 
 const setup = new Setup();
 
@@ -23,6 +24,15 @@ FlowRouter.route('/complete', {
   action(params, query) {
     setup.render({
       main: <PublicComplete {...query}/>,
+    });
+  },
+});
+
+FlowRouter.route('/confirm', {
+  name: 'PublicConfirm',
+  action(params, query) {
+    setup.render({
+      main: <PublicConfirm {...query}/>,
     });
   },
 });

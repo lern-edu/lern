@@ -1,4 +1,5 @@
 import React from 'react';
+import log from 'loglevel';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Dialog, { DialogTitle, DialogActions, DialogContent } from 'material-ui/Dialog';
@@ -23,9 +24,8 @@ class PublicEnrollment extends React.Component{
   handleSubmit() {
     const { token } = this.props;
     const { password } = this.state;
-    console.log(token);
     Accounts.resetPassword(token, password, err => {
-      if (err) console.log(err);
+      if (err) log.error(err);
       else FlowRouter.go('PublicLogin');
     });
   }

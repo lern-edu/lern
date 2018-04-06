@@ -220,6 +220,10 @@ class AdminTag extends React.Component {
                           </Grid>
 
                           <Grid item>
+                            <doc.templates.Dialog doc={doc} type='button' />
+                          </Grid>
+
+                          <Grid item>
                             <Button onClick={this.handleSubmit} raised color='primary'>
                               Save
                             </Button>

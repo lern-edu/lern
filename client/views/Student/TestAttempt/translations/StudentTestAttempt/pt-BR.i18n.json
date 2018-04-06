@@ -16,6 +16,16 @@
     "attempt": "Parabéns!",
     "thankYou": "Obrigado. Tente novamente outra hora..."
   },
+  "appBarChildren": {
+    "description": "Descrição",
+    "help": "Ajuda",
+    "sudoku": {
+      "title": "Sudoku",
+      "highlight": "Highlight"
+    }
+  },
+  "back": "Voltar",
+  "next": "Avançar",
   "finish": "Terminar",
   "dismiss": "Abandonar"
 }

@@ -11,6 +11,7 @@ import { RemoveCircle, ArrowUpward, ArrowDownward } from 'material-ui-icons';
 import PublicContentRichText from './../RichText.jsx';
 import PublicContentShowImage from './Image.jsx';
 import PublicContentShowVideo from './Video.jsx';
+import PublicContentShowTask from './Task.jsx';
 
 const styles = theme => ({
   contentGroup: {
@@ -77,7 +78,7 @@ class ContentShow extends React.Component {
   render() {
     const { doc: { text, link, image, type, video }, canRemove = true } = this.props;
     const { index, form, field='description', classes } = this.props;
-    const docToSave = form.state.doc;
+    const docToSave = _.get(form, 'state.doc');
     const array = _.get(docToSave, field);
 
     return (
@@ -141,9 +142,9 @@ class ContentShow extends React.Component {
 ContentShow.propTypes = {
   classes: PropTypes.object.isRequired,
   doc: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  canRemove: PropTypes.bool.isRequired,
+  form: PropTypes.object,
+  index: PropTypes.number,
+  canRemove: PropTypes.bool,
 };
 
 export default withStyles(styles)(ContentShow);

@@ -12,6 +12,9 @@ import SvgIcon from 'material-ui/SvgIcon';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
+import PublicLoginEnroll from './Enroll.jsx';
+import PublicLoginForgot from './Forgot.jsx';
+
 // Styles
 const styles = {
   background: {
@@ -60,11 +63,11 @@ class PublicLogin extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { password: '', email: '' };
+    this.state = { password: '', email: '', openEnroll: false, openForgot: false };
   }
 
   clear() {
-    this.setState({ password: '', email: '' });
+    this.setState({ password: '', email: '', openEnroll: false, openForgot: false });
   }
 
   // Handlers
@@ -166,15 +169,32 @@ class PublicLogin extends React.Component {
 
                 <br/>
 
-                <Button color='primary' onTouchTap={handleLogin}>
+                <Button raised color='primary' onClick={handleLogin}>
                   {texts.signIn}
                 </Button>
+
+                <div>
+                  <Button size='small' onClick={() => this.setState({ openForgot: true })}>
+                    {i18n.__('PublicLogin.forgot_password')}
+                  </Button>
+                  <PublicLoginForgot
+                    open={this.state.openForgot}
+                    handleClose={() => this.setState({ openForgot: false })}
+                  />
+                  <Button size='small' onClick={() => this.setState({ openEnroll: true })}>
+                    {i18n.__('PublicLogin.sign_on')}
+                  </Button>
+                  <PublicLoginEnroll
+                    open={this.state.openEnroll}
+                    handleClose={() => this.setState({ openEnroll: false })}
+                  />
+                </div>
 
               </CardContent>
               <CardActions>
                 <Button
                   style={{ color: '#3954A1' }}
-                  onTouchTap={handleFacebookLogin}
+                  onClick={handleFacebookLogin}
                 >
                   <FacebookIcon/>
                   Facebook
@@ -182,7 +202,7 @@ class PublicLogin extends React.Component {
 
                 <Button
                   style={{ color: '#DC4A38' }}
-                  onTouchTap={handleGoogleLogin}
+                  onClick={handleGoogleLogin}
                 >
                   <GoogleIcon/>
                   Google

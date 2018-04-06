@@ -3,33 +3,48 @@ import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
 import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Icon from 'material-ui/Icon';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
+import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from 'material-ui';
+import { ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 
 const styles = theme => ({
   root: {
     padding: 0,
   },
   cell: {
-    minHeight: 36,
-    minWidth: 36,
-    maxWidth: 36,
+    minHeight: 32,
+    minWidth: 32,
+    maxWidth: 32,
     border: '1px solid black',
   },
   cellPaper: {
     height: '100%',
     width: '100%',
     textAlign: 'center',
-    lineHeight: '36px',
+    lineHeight: '32px',
   },
   keyboard: {
     textAlign: 'center',
-    minHeight: 36,
-    minWidth: 100,
+    minHeight: 32,
+    minWidth: 96,
     maxWidth: 120,
+  },
+  options: {
+    textAlign: 'center',
+    minHeight: 32,
+    maxWidth: 86,
+  },
+  optionsChild: {
+    minWidth: 70,
+  },
+  editContainer: {
+    lineHeight: 1,
+    fontSize: 12,
+  },
+  buttonEdit: {
+    zIndex: 999,
+    height: 32,
+    width: 32,
+    position: 'absolute',
   },
 });
 
@@ -54,9 +69,34 @@ class StudentTestAttemptSudoku extends React.Component {
 
     const index = row * 9 + col;
     if (sudoku.board[index] === 0) {
-      this.pushBackward({ row, col, value, old: answer[index] });
-      answer[index] = value;
-      parent.setState({ bottom: _.every(answer) ? 'finish' : null });
+
+      const backward = { row, col, value, old: _.clone(answer[index]) };
+
+      if (edit) {
+
+        if (!clear && (_.isArray(answer[index]) || !answer[index])) {
+
+          if (_.isArray(answer[index]))
+            answer[index].push(value);
+
+          else
+            answer[index] = [value];
+
+        } else if (_.isArray(answer[index])) {
+
+          _.pull(answer[index], value);
+
+        }
+
+      } else {
+        if (clear) answer[index] = 0;
+        else answer[index] = value;
+      }
+
+      backward.value = _.clone(answer[index]);
+
+      this.pushBackward(backward);
+      parent.setState({ bottom: (_.every(answer, Number) && _.every(answer)) ? 'finish' : null });
       this.setState({ answer });
       this.keepAttemptUpdated('sudoku.answer');
     }
@@ -103,8 +143,8 @@ class StudentTestAttemptSudoku extends React.Component {
   // Render
   render() {
     log.info('StudentTestAttemptSudoku.render =>', this.state);
-    const { classes, sudoku } = this.props;
-    const { answer, value, backward, forward } = this.state;
+    const { classes, sudoku, highlight } = this.props;
+    const { answer, value, backward, forward, edit, clear } = this.state;
 
     return (
       <Grid container spacing={0} justify='center'>
@@ -117,46 +157,61 @@ class StudentTestAttemptSudoku extends React.Component {
                 (cells, row) =>
                   <Grid className={classes.root} item xs={12} key={row}>
                     <Grid container spacing={0} justify='center'>
-                  
-                    {
-                      _.map(cells, (cell, col) =>
-                        <Grid
-                          item
-                          xs={1}
-                          key={`row${row}-cell${col}`}
-                          className={classes.cell}
-                          style={{
-                            backgroundColor: (col < 3 || col > 5)
+
+                      {
+                        _.map(cells, (cell, col) =>
+                          <Grid
+                            item
+                            xs={1}
+                            key={`row${row}-cell${col}`}
+                            className={classes.cell}
+                            style={{
+                              backgroundColor: (highlight && value && value === cell)
+                                ? 'yellow'
+                                : (col < 3 || col > 5)
+                                ? (
+                                  (row < 3 || row > 5)
+                                  ? 'white'
+                                  : 'rgba(0, 0, 0, 0.12)'
+                                )
+                                : (
+                                  (row < 3 || row > 5)
+                                    ? 'rgba(0, 0, 0, 0.12)'
+                                    : 'white'
+                                ),
+                            }}
+                          >
+                            {
+                              cell && _.isNumber(cell)
                               ? (
                                 (row < 3 || row > 5)
                                 ? 'white'
                                 : 'rgba(0, 0, 0, 0.12)'
                               )
                               : (
-                                (row < 3 || row > 5)
-                                  ? 'rgba(0, 0, 0, 0.12)'
-                                  : 'white'
-                              ),
-                          }}
-                        >
-                          <IconButton
-                            className={classes.cellPaper}
-                            onClick={() => this.handleInsertValue(row, col)}
-                            style={{
-                              fontWeight: cell && sudoku.board[row * 9 + col] === cell
-                                ? 'bold'
-                                : 'regular',
-                              color: cell && sudoku.board[row * 9 + col] === cell
-                                ? 'black'
-                                : undefined,
-                            }}
-                          >
-                            {cell ? cell : null}
-                          </IconButton>
-                        </Grid>
-                      )
-                    }
-                  
+                                <Grid container className={classes.editContainer} spacing={0} justify='center'>
+                                  <Grid item xs={12} className={classes.buttonEdit}>
+                                    <IconButton
+                                      className={classes.cellPaper}
+                                      onClick={() => this.handleInsertValue(row, col)}
+                                    />
+                                  </Grid>
+                                  {
+                                    _.isArray(cell)
+                                    ? _.map(new Array(9), (v, index) =>
+                                      <Grid item xs={4} className={classes.cellEdit} key={index + 1}>
+                                        {_.includes(cell, index + 1) ? index + 1 : ''}
+                                      </Grid>
+                                    )
+                                    : ''
+                                  }
+                                </Grid>
+                              )
+                            }
+                          </Grid>
+                        )
+                      }
+
                     </Grid>
                   </Grid>
               )
@@ -167,7 +222,7 @@ class StudentTestAttemptSudoku extends React.Component {
         <Grid item xs={12} style={{ marginTop: 15 }}>
 
           <Grid container spacing={8} justify='center' direction='row'>
-  
+
             {
               _.map(new Array(3), (a1, row) =>
                 <Grid item xs={12} key={row + 1}>
@@ -189,7 +244,7 @@ class StudentTestAttemptSudoku extends React.Component {
                 </Grid>
               )
             }
-            
+
             <Grid item xs={12} key={4}>
               <Grid container spacing={0} justify='center'>
 
@@ -226,12 +281,12 @@ class StudentTestAttemptSudoku extends React.Component {
                 </Grid>
 
               </Grid>
-            </Grid>    
+            </Grid>
 
           </Grid>
 
         </Grid>
-      
+
       </Grid>
     );
   }

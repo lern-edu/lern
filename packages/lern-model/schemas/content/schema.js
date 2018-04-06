@@ -72,6 +72,12 @@ const Content = Class.create({
       ],
       optional: true,
     },
+
+    task: {
+      type: String,
+      validators: [{ type: 'Reference' }],
+      optional: true,
+    },
   },
 });
 

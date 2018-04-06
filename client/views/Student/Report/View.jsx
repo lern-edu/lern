@@ -40,7 +40,7 @@ class StudentReport extends React.Component {
         _.isEmpty(user.report)
         ? <LinearProgress color='primary' />
         : _.map(
-          _.filter(user.report, { parent: undefined }),
+          _.filter(user.report, r => _.isNil(r.parent)),
           report => <StudentReportCard
             key={report.name}
             report={report}

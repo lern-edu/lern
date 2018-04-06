@@ -17,6 +17,8 @@ Package.onUse(function (api) {
   api.addFiles([
     'helpers.js',
 
+    'server/public.js',
+
     'server/admin/admin.js',
 
     'server/student/tests.js',

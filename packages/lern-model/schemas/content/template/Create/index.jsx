@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField';
 import ContentRichText from './../RichText.jsx';
 import PublicContentCreateImage from './Image.jsx';
 import PublicContentCreateVideo from './Video.jsx';
+import PublicContentCreateTask from './Task.jsx';
 
 class ContentCreate extends React.Component {
 
@@ -129,6 +130,11 @@ class ContentCreate extends React.Component {
                 />,
               video:
                 <PublicContentCreateVideo
+                  parent={this}
+                  clear={clear}
+                />,
+              task:
+                <PublicContentCreateTask
                   parent={this}
                   clear={clear}
                 />,

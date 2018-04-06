@@ -56,6 +56,7 @@ Package.onUse((api) => {
     'collections/tags/templates.jsx',
 
     'collections/tests/schema.js',
+    'collections/tests/templates.jsx',
 
     // Translations
     'collections/users/translations/Templates/en-US.i18n.json',

@@ -1,6 +1,7 @@
 import log from 'loglevel';
 import i18n from 'meteor/universe:i18n';
 import moment from 'moment';
+import _ from 'lodash';
 moment.locale('pt-br');
 i18n.setLocale('pt-BR');
 import { User } from 'meteor/duckdodgerbrasl:lern-model';
@@ -12,8 +13,8 @@ injectTapEventPlugin();
 // setup logs
 Meteor.startup(() => {
   const env = process.env.NODE_ENV;
-  const { logLevel='info' } = Meteor.settings.public;
-  log.setLevel(env === 'production' ? 'info' : logLevel);
+  const { logLevel='error' } = Meteor.settings.public;
+  log.setLevel(env === 'development' ? 'info' : logLevel);
 });
 
 /**
@@ -71,7 +72,7 @@ if (Meteor.isClient) {
    * @private
    */
   Accounts.onEmailVerificationLink((token, done) => {
-    FlowRouter.go('PublicHome', { token });
+    FlowRouter.go('PublicLogin');
     Accounts.verifyEmail(token, (err) => snack(_.isEmpty(err) ?
       'Email verificado' : 'Problemas ao verificar email'));
     done();
@@ -120,9 +121,9 @@ Meteor.startup(() => {
     Accounts.emailTemplates.verifyEmail.subject =
       (user) => `Lern - Verificação de email`;
     Accounts.emailTemplates.verifyEmail.html = (user, url) =>
-      `<h3>Olá ${user.profile.name},<h3><p>Este email contém um link` +
-      ` para verificação de email.</p>` +
-      `<p>Este é o <a href='${url}'>link de verificação</a> para verificação.</p>` +
+      `<h3>Olá ${user.profile.name},<h3>` +
+      `<p>Use o token <b>${_.last(_.split(url, '/'))}</b> ou o` +
+      `<a href='${url}'>link</a> para verificar seu email.</p>` +
       `<p>Equipe Lern - Soluções Educacionais.</p>`;
   }
 });
