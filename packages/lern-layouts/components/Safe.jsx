@@ -99,7 +99,7 @@ class Safe extends React.Component {
               </h3>
               <div>
                 <Button
-                  raised
+                  variant="raised"
                   color='primary'
                   href={FlowRouter.path('PublicLogin')}
                 >

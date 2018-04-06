@@ -101,7 +101,7 @@ if (Meteor.isClient) {
               <IconButton color="inherit" onClick={handleClickClose}>
                 <CloseIcon />
               </IconButton>
-              <Typography type='title' color="inherit" className={classes.flex}>
+              <Typography variant='title' color="inherit" className={classes.flex}>
                 {_.capitalize(title)}
               </Typography>
             </Toolbar>

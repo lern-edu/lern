@@ -133,7 +133,7 @@ class StudentTestAttemptToolbar extends React.Component {
 
     return (
       <div className={classes.bottom}>
-        <LinearProgress mode="determinate" value={(page) * 100 / (numPages - 1)}/>
+        <LinearProgress variant="determinate" value={(page) * 100 / (numPages - 1)}/>
         <div className={classes.parent}>
           {
             loading ?

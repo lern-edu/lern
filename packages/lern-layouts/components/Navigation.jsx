@@ -133,7 +133,7 @@ class Navigation extends React.Component {
                 logging
                 ? <div/>
                 : <div>
-                  <Button raised color='primary' href={FlowRouter.path('PublicLogin')} >
+                  <Button variant="raised" color='primary' href={FlowRouter.path('PublicLogin')} >
                     Entrar
                   </Button>
                 </div>

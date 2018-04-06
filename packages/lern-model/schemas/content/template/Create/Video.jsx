@@ -108,7 +108,7 @@ class PublicContentCreateVideo extends React.Component {
               <CardActions>
                 <div className={classes.right}>
                   <Button
-                    raised
+                    variant="raised"
                     color='secondary'
                     size='medium'
                     onClick={this.handleRemove.bind(this)}

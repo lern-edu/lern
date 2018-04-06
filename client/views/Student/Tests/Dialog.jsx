@@ -74,7 +74,7 @@ class StudentTestsDialog extends React.Component {
               <IconButton color="inherit" onClick={this.handleClose}>
                 <CloseIcon />
               </IconButton>
-              <Typography type='title' color="inherit" className={classes.flex}>
+              <Typography variant='title' color="inherit" className={classes.flex}>
                 {doc.name}
               </Typography>
             </Toolbar>

@@ -115,13 +115,13 @@ class AdminUser extends React.Component {
                             justify='flex-end'
                           >
                             <Grid item>
-                              <Button href={FlowRouter.path('AdminUsers')} raised>
+                              <Button href={FlowRouter.path('AdminUsers')} variant="raised">
                                 Cancel
                               </Button>
                             </Grid>
 
                             <Grid item>
-                              <Button onClick={this.handleSubmit.bind(this)} raised color='primary'>
+                              <Button onClick={this.handleSubmit.bind(this)} variant="raised" color='primary'>
                                 Save
                               </Button>
                             </Grid>

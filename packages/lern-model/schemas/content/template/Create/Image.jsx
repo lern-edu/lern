@@ -263,7 +263,7 @@ class PublicContentCreateImage extends React.Component {
             </div>
             <Button
               className={classes.button}
-              raised
+              variant="raised"
               color='secondary'
               size="medium"
               disabled={!remove}
@@ -281,10 +281,10 @@ class PublicContentCreateImage extends React.Component {
           onClose={this.handleClose.bind(this)}
         >
           <div className={classes.modal}>
-            <Typography type="title">
+            <Typography variant="title">
               {i18n.__('Templates.sorry')}
             </Typography>
-            <Typography type="subheading">
+            <Typography variant="subheading">
               {i18n.__('Templates.instructions.extension')}
             </Typography>
             <Button

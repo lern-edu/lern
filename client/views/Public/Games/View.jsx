@@ -40,7 +40,7 @@ class PublicGames extends React.Component {
               title="Sudoku"
             />
             <CardContent>
-              <Typography type="headline" component="h2">
+              <Typography variant="headline" component="h2">
                 Sudoku
               </Typography>
               <Typography component="p">

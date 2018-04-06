@@ -88,14 +88,14 @@ class Wrapper extends React.Component {
             <MenuItem value={'hard'}>Difícil</MenuItem>
           </Select>
           <Button
-            raised
+            variant="raised"
             className={classes.content}
             onClick={this.handleSudoku.bind(this)}
           >
             Novo
           </Button>
           <Button
-            raised
+            variant="raised"
             className={classes.content}
             onClick={this.reset.bind(this)}
           >

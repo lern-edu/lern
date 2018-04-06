@@ -82,12 +82,12 @@ class StudentSettingsProfile extends React.Component {
                     justify='flex-end'
                   >
                     <Grid item>
-                      <Button href={FlowRouter.path('StudentSettings')} raised>
+                      <Button href={FlowRouter.path('StudentSettings')} variant="raised">
                         {i18n.__('StudentSettings.cancel')}
                       </Button>
                     </Grid>
                     <Grid item>
-                      <Button onClick={this.handleSubmit.bind(this)} raised color='primary'>
+                      <Button onClick={this.handleSubmit.bind(this)} variant="raised" color='primary'>
                         {i18n.__('StudentSettings.save')}
                       </Button>
                     </Grid>

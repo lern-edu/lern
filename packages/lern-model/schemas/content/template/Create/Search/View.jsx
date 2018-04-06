@@ -108,7 +108,7 @@ class PublicContentSearchTask extends React.Component {
               <Grid item xs={12} sm={6}>
                 <Button
                   color='secondary'
-                  raised
+                  variant="raised"
                   fullWidth={true}
                 >
                   Limpar
@@ -117,7 +117,7 @@ class PublicContentSearchTask extends React.Component {
               <Grid item xs={12} sm={6}>
                 <Button
                   color='primary'
-                  raised
+                  variant="raised"
                   fullWidth={true}
                   onClick={this.searchTasks}
                 >

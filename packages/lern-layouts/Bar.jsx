@@ -24,8 +24,8 @@ const styles = {
 };
 
 const getTitle = ({ title, crumbs }) =>
-  <div>
-    <span>
+  [
+    <span key='crumb'>
       {
         _.flatten(
           _.map(crumbs, (c, i) =>
@@ -44,10 +44,9 @@ const getTitle = ({ title, crumbs }) =>
           )
         )
       }
-
-    </span>
-    <span>{title}</span>
-  </div>;
+    </span>,
+    <span key='title'>{title}</span>,
+  ];
 
 /**
  * React Component for top bar
@@ -96,7 +95,7 @@ class Bar extends React.Component {
             <Icon className={classes[`${color}IconButton`]}>menu</Icon>
           </IconButton>
 
-          <Typography type='title' color='inherit' className={classes.flex}>
+          <Typography variant='title' color='inherit' className={classes.flex}>
             {getTitle({ title, crumbs })}
           </Typography>
 
