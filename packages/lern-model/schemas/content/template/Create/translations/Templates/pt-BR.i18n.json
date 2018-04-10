@@ -15,7 +15,9 @@
     "text": "Texto",
     "image": "Imagem",
     "link": "Link",
-    "video": "Vídeo"
+    "video": "Vídeo",
+    "task": "Tarefa",
+    "question": "Questão"
   },
   "save": "Salvar"
 }
