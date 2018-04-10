@@ -7,7 +7,7 @@
  */
 const StaticCollections = {
   UserRoles: ['student', 'teacher', 'admin'],
-  ContentTypes: ['text', 'image', 'link', 'video', 'task'],
+  ContentTypes: ['text', 'image', 'link', 'video', 'task', 'question'],
   Locales: ['pt-BR', 'en-US'],
   TestTimeoutTypes: ['global', 'page', 'none'],
   TestTimeTypes: ['range', 'none'],

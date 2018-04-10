@@ -13,6 +13,7 @@ import ContentRichText from './../RichText.jsx';
 import PublicContentCreateImage from './Image.jsx';
 import PublicContentCreateVideo from './Video.jsx';
 import PublicContentCreateTask from './Task.jsx';
+import PublicContentCreateQuestion from './Question/View.jsx';
 
 class ContentCreate extends React.Component {
 
@@ -24,6 +25,10 @@ class ContentCreate extends React.Component {
       doc: new props.Schema(),
       editorState: EditorState.createEmpty(),
       clear: false,
+      question: {
+        doc: null,
+        open: false,
+      },
     };
   };
 
@@ -78,18 +83,23 @@ class ContentCreate extends React.Component {
   };
 
   handleTypeChange = ({ target: { value: type } }) => {
-    const { doc } = this.state;
+    const { doc, question } = this.state;
     doc[doc.type] = null;
     doc.type = type;
     doc[type] = '';
     this.setState({ doc });
+
+    if (type === 'question') {
+      question.open = true;
+      this.setState({ question });
+    }
   };
 
   // Render
 
   render() {
     const { contentTypes } = this.props;
-    const { editorState, doc, clear } = this.state;
+    const { editorState, doc, clear, question: { open } } = this.state;
     const { type, text, link, image } = doc;
 
     return (
@@ -142,6 +152,12 @@ class ContentCreate extends React.Component {
               task:
                 <PublicContentCreateTask
                   parent={this}
+                  clear={clear}
+                />,
+              question:
+                <PublicContentCreateQuestion
+                  parent={this}
+                  open={open}
                   clear={clear}
                 />,
             }, type)
