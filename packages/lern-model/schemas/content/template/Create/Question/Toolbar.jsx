@@ -96,7 +96,7 @@ class PublicContentCreateQuestionDialogToolbar extends React.Component {
   handleOpenSearch = () => {
     const { parent } = this.props;
     this.setState({ search: true });
-    if (parent.state.query.$text.$search)
+    if (_.get(parent.state, 'query.$text.$search'))
       this.handleSearch({ keyCode: 13 });
   };
 
@@ -108,8 +108,7 @@ class PublicContentCreateQuestionDialogToolbar extends React.Component {
   handleSearch = (event) => {
     const { parent } = this.props;
     if (event.which == 13 || event.keyCode == 13) {
-      parent.getQuestions();
-      parent.setState({ query: { $text: { $search: '' } } });
+      parent.handleSearch();
       this.setState({ search: false });
     }
   };
