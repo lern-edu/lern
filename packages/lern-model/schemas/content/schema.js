@@ -77,6 +77,11 @@ const Content = Class.create({
       validators: [{ type: 'Reference' }],
       optional: true,
     },
+
+    question: {
+      type: Object,
+      optional: true,
+    },
   },
 });
 

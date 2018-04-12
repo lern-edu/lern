@@ -47,9 +47,10 @@ class PublicContentCreateQuestionCards extends React.Component {
           {
             _.map(docs, doc =>
 
-              <Grid key={doc._id} item xs={12} sm={6} lg={4}>
+              <Grid key={doc._id} item xs={12} sm={12} lg={4}>
 
                 <PublicContentCreateQuestionCard
+                  key={doc._id}
                   doc={doc}
                   handleAddQuestion={handleAddQuestion}
                 />

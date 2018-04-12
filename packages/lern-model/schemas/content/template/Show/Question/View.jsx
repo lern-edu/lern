@@ -1,9 +1,4 @@
 // Libs
-
-
-
-
-// Libs
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -18,8 +13,8 @@ import Icon from 'material-ui/Icon';
 import Collapse from 'material-ui/transitions/Collapse';
 import Typography from 'material-ui/Typography';
 
-import ContentShow from '../../Show/index.jsx';
-import PublicContentCreateQuestionSingleAnswer from './SingleAnswer.jsx';
+import ContentShow from '../index.jsx';
+import PublicContentShowQuestionSingleAnswer from './SingleAnswer.jsx';
 
 const styles = theme => {
   return {
@@ -55,7 +50,7 @@ const styles = theme => {
   };
 };
 
-class PublicContentCreateQuestionCard extends React.Component {
+class PublicContentShowQuestion extends React.Component {
 
   // Lifecycle
   constructor(props) {
@@ -72,37 +67,22 @@ class PublicContentCreateQuestionCard extends React.Component {
   // Render
 
   render() {
-    const { classes, doc, handleAddQuestion } = this.props;
+    const { classes, question } = this.props;
 
     return (
       <Card>
         
         <CardHeader
           avatar={
-            <Avatar aria-label='doc.name' className={classes[doc.get('type')]}>
-              {_.capitalize(_.head(doc.get('type')))}
+            <Avatar aria-label='question.name' className={classes[question.get('type')]}>
+              {_.capitalize(_.head(question.get('type')))}
             </Avatar>
           }
-          title={`${doc.get('type')}`}
-          subheader={doc.get('level')}
+          title={`${question.get('type')}`}
+          subheader={question.get('level')}
         />
           
         <CardActions className={classes.actions} disableActionSpacing>
-          {
-            !_.isFunction(handleAddQuestion)
-            ? undefined
-            : (
-              <CardActions>
-                <Button
-                  color="primary"
-                  size="small"
-                  onClick={() => handleAddQuestion(doc)}
-                >
-                  Add
-                </Button>
-              </CardActions>
-            )
-          }
 
           <IconButton
             className={
@@ -123,9 +103,9 @@ class PublicContentCreateQuestionCard extends React.Component {
               Content
             </Typography>
             {
-              doc.get('type') === 'sudoku'
+              question.get('type') === 'sudoku'
               ? (
-                _.map(doc.get('sudoku'), (number, index) => {
+                _.map(question.get('sudoku'), (number, index) => {
                   const numberElement = <span
                     key={'number' + index + number}
                   >
@@ -137,7 +117,7 @@ class PublicContentCreateQuestionCard extends React.Component {
                     : numberElement;
                 })
               )
-              : _.map(doc.description, (description, index) =>
+              : _.map(question.description, (description, index) =>
                   <ContentShow
                     doc={description}
                     canRemove={false}
@@ -151,7 +131,7 @@ class PublicContentCreateQuestionCard extends React.Component {
           
           <CardContent>
             {
-              !doc.get('answer')
+              !question.get('answer')
               ? undefined
               : (
                 <div>
@@ -159,19 +139,19 @@ class PublicContentCreateQuestionCard extends React.Component {
                     Answer
                   </Typography>
                   {
-                    _.isNull(doc.get('answer.open'))
+                    _.isNull(question.get('answer.open'))
                     ? undefined
                     : (
                       <Typography component="p">
-                        {doc.get('answer.open')}
+                        {question.get('answer.open')}
                       </Typography>
                     )
                   }
 
                   {
-                    _.isNull(doc.get('answer.singleAnswer'))
+                    _.isNull(question.get('answer.singleAnswer'))
                     ? undefined
-                    : <PublicContentCreateQuestionSingleAnswer doc={doc} />
+                    : <PublicContentShowQuestionSingleAnswer doc={question} />
                   }
                 </div>
               )
@@ -185,10 +165,9 @@ class PublicContentCreateQuestionCard extends React.Component {
 
 };
 
-PublicContentCreateQuestionCard.propTypes = {
+PublicContentShowQuestion.propTypes = {
   classes: PropTypes.object.isRequired,
-  doc: PropTypes.object.isRequired,
-  handleAddQuestion: PropTypes.func,
+  question: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PublicContentCreateQuestionCard);;
+export default withStyles(styles)(PublicContentShowQuestion);;

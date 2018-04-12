@@ -22,7 +22,7 @@ const styles = theme => ({
   },
 });
 
-const limit = 20;
+const limit = 21;
 
 class PublicContentCreateQuestionDialog extends React.Component {
 
