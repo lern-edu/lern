@@ -33,18 +33,18 @@ const styles = theme => ({
 class PublicContentCreateQuestionCards extends React.Component {
 
   render() {
-    const { docs, handler, theme: { spacing: { unit } }, classes } = this.props;
+    const { docs, handler, classes } = this.props;
 
     return handler
     ? <LinearProgress color='secondary' />
     : (
       <div className={classes.root}>
-        <Grid container spacing={unit * 2}>
+        <Grid container spacing={16}>
 
           {
             _.map(docs, doc =>
 
-              <Grid key={doc._id} item xs={unit * 1.5} sm={unit * 0.75} lg={unit * 0.5}>
+              <Grid key={doc._id} item xs={12} sm={6} lg={4}>
 
                 <Card className={classes.card}>
                   <CardContent>
@@ -101,4 +101,4 @@ PublicContentCreateQuestionCards.propTypes = {
   handler: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(PublicContentCreateQuestionCards);
+export default withStyles(styles)(PublicContentCreateQuestionCards);

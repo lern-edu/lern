@@ -16,7 +16,10 @@ function Transition(props) {
 };
 
 const styles = theme => ({
-  
+  root: {
+    flexGrow: 1,
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 const limit = 20;
@@ -140,15 +143,27 @@ class PublicContentCreateQuestionDialog extends React.Component {
             {...questions}
           />
 
-          <div>
-            <PublicContentCreateQuestionDialogPagination
-              length={_.get(questions, 'docs.length')}
-              size={limit}
-              page={skip}
-              total={count}
-              less={this.handleLess}
-              add={this.handleAdd}
-            />
+          <div className={classes.root}>
+            
+              <Grid
+                container
+                spacing={16}
+                alignItems="center"
+                justify="flex-end"
+              >
+                <Grid item>
+                  <PublicContentCreateQuestionDialogPagination
+                    length={_.get(questions, 'docs.length')}
+                    size={limit}
+                    page={skip}
+                    total={count}
+                    less={this.handleLess}
+                    add={this.handleAdd}
+                  />
+                </Grid>
+
+              </Grid>
+            
           </div>
 
         </Dialog>
