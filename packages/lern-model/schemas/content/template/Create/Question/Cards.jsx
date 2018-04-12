@@ -10,6 +10,7 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
 import ContentShow from '../../Show/index.jsx';
+import PublicContentCreateQuestionCard from './Card.jsx';
 
 const styles = theme => ({
   card: {
@@ -32,8 +33,10 @@ const styles = theme => ({
 
 class PublicContentCreateQuestionCards extends React.Component {
 
+  // Render
+
   render() {
-    const { docs, handler, classes } = this.props;
+    const { docs, handler, classes, handleAddQuestion } = this.props;
 
     return handler
     ? <LinearProgress color='secondary' />
@@ -46,41 +49,10 @@ class PublicContentCreateQuestionCards extends React.Component {
 
               <Grid key={doc._id} item xs={12} sm={6} lg={4}>
 
-                <Card className={classes.card}>
-                  <CardContent>
-                    <Typography className={classes.title} color="textSecondary">
-                      Type: {`${doc.get('type')} ${doc.get('level') ? ('- ' + doc.get('level')) : ''}`}
-                    </Typography>
-                    {
-                      doc.get('type') === 'sudoku'
-                      ? (
-                        _.map(doc.get('sudoku'), (number, index) => {
-                          const numberElement = <span
-                            key={'number' + index + number}
-                          >
-                            {number}
-                          </span>;
-
-                          return (index && index % 9 === 0)
-                            ? [<br key={index}></br>, numberElement]
-                            : numberElement;
-                        })
-                      )
-                      : _.map(doc.description, (description, index) =>
-                          <ContentShow
-                            doc={description}
-                            canRemove={false}
-                            form={this}
-                            index={index}
-                            key={`descriptionShow${index}`}
-                          />
-                      )
-                    }
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
+                <PublicContentCreateQuestionCard
+                  doc={doc}
+                  handleAddQuestion={handleAddQuestion}
+                />
 
               </Grid>
 
@@ -96,9 +68,9 @@ class PublicContentCreateQuestionCards extends React.Component {
 
 PublicContentCreateQuestionCards.propTypes = {
   classes: PropTypes.object.isRequired,
-  parent: PropTypes.object.isRequired,
   docs: PropTypes.arrayOf(PropTypes.object),
   handler: PropTypes.bool.isRequired,
+  handleAddQuestion: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(PublicContentCreateQuestionCards);

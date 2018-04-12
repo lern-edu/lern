@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import { Button, Typography } from 'material-ui';
 
 import PublicContentCreateQuestionDialog from './Dialog.jsx';
+import PublicContentCreateQuestionCard from './Card.jsx';
 
 class PublicContentCreateQuestion extends React.Component {
 
@@ -59,11 +60,13 @@ class PublicContentCreateQuestion extends React.Component {
           handleClose={this.handleToggleModal}
           handleAddQuestion={this.handleAddQuestion}
         />
+
         {
-        // question ?
-        //   <PublicContentShowQuestion question={question._id}/> : null
-        //
+          question
+          ? <PublicContentCreateQuestionCard doc={question}/>
+          : null
         }
+
       </div>
     );
   }

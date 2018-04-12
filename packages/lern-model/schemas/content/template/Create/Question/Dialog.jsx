@@ -30,6 +30,7 @@ class PublicContentCreateQuestionDialog extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       query: { $text: { $search: '' } },
       options: { skip: 0, limit },
@@ -139,7 +140,7 @@ class PublicContentCreateQuestionDialog extends React.Component {
           />
 
           <PublicContentCreateQuestionDialogCards
-            parent={this}
+            handleAddQuestion={handleAddQuestion}
             {...questions}
           />
 
