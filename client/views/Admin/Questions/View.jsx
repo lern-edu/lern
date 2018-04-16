@@ -117,8 +117,12 @@ class AdminQuestions extends React.Component {
   getQuestions = () => {
     log.info('AdminQuestions.getQuestions/start');
     const { query, options } = this.state;
+
+    const queryOpt = _.clone(query);
+    if (!_.get(queryOpt, '$text.$search')) delete queryOpt.$text;
+
     this.setState({ collections: { questions: { handler: true } } });
-    Meteor.call('AdminQuestionsGet', query, options,  (err, docs) => {
+    Meteor.call('AdminQuestionsGet', queryOpt, options,  (err, docs) => {
       if (err) {
         log.info('AdminQuestions.getQuestions/error =>', err);
         snack({ message: 'Erro ao encontrar questões ' });

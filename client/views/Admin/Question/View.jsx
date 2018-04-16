@@ -16,6 +16,7 @@ import Button from 'material-ui/Button';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Divider from 'material-ui/Divider/Divider';
+import Typography from 'material-ui/Typography';
 
 const content = new Content();
 const ContentCreate = _.get(content, 'templates.ContentCreate');
@@ -24,6 +25,7 @@ const ContentShow = _.get(content, 'templates.ContentShow');
 import AdminQuestionSelect from './Select.jsx';
 import AdminQuestionOpen from './Open.jsx';
 import AdminQuestionSingleAnswer from './SingleAnswer.jsx';
+import AdminQuestionScores from './Scores.jsx';
 
 const fieldsToValidate = ['type', 'description'];
 
@@ -35,6 +37,11 @@ const styles = theme => ({
   },
   input: {
     width: '100%',
+  },
+  title: {
+    marginBottom: -24,
+    fontSize: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 3,
   },
 });
 
@@ -53,6 +60,12 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
         question: {
           handler: !_.isEmpty(questionId),
         },
+        tags: {
+          docs: [],
+          handler: true,
+          query: {},
+          options: { skip: 0 },
+        },
       },
       doc: !questionId ? new Question() : null,
     };
@@ -63,35 +76,50 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
   componentWillMount() {
     log.info('AdminQuestion.componentWillMount');
     this.getQuestion(this.props.questionId);
+    this.getTags();
   };
 
   // Data
 
   getQuestion = (questionId) => {
     log.info('AdminQuestion.getQuestion/questionId =>', questionId);
+    const { collections } = this.state;
     if (questionId)
       Meteor.call('AdminQuestionsGet', { _id: questionId }, { limit: 1 }, (err, docs) => {
         if (err) snack({ message: 'Erro ao encontrar questão' });
         else {
           const doc = _.head(docs);
+          collections.question.handler = false;
           this.setState({
             doc,
-            title: doc.name,
-            crumbs: doc.parent
-              ? [{ label: doc.parent.name, path: FlowRouter.path('AdminQuestion', { questionId: doc.parent._id }) }]
-              : [{ label: 'Questions', path: 'AdminQuestions' }],
-            collections: { question: { handler: false } },
+            collections,
+            title: doc.type || 'Create Question',
           });
         };
 
       });
   };
 
+  getTags = () => {
+    log.info('AdminQuestion.getTags');
+    const { collections: { tags: { query, options } }, collections } = this.state;
+
+    Meteor.call('AdminTagsGet', query, options,  (err, docs) => {
+      if (err) snack({ message: 'Erro ao encontrar tags' });
+      collections.tags.handler = false;
+      collections.tags.docs = docs;
+      this.setState({ collections });
+    });
+  };
+
   // Handlers
 
   handleSubmit = () => {
-    const { doc } = this.state;
+    const { doc, collections } = this.state;
     log.info('AdminQuestion.handleSubmit');
+
+    collections.question.handler = true;
+    this.setState({ collections });
 
     doc.validate({ fields: ['name'] }, (err) => {
       if (err) snack({ message: err.reason });
@@ -103,9 +131,12 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
           } else {
             log.debug('Questão criada! =>', res);
             snack({ message: 'Questão salva' });
-            this.setState({ doc: res });
+            this.setState({ doc: res, title: res.type });
             FlowRouter.go('AdminQuestion', { questionId: res._id });
           };
+
+          collections.question.handler = false;
+          this.setState({ collections });
         });
     });
   };
@@ -127,10 +158,10 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
 
     return (
       <div>
-        <Layout.Bar title={title} crumbs={crumbs}/>
+        <Layout.Bar title={title} crumbs={[{ label: 'Questions', path: 'AdminQuestions' }]}/>
 
         {
-          !_.every(collections, c => !c.handler)
+          _.some(collections, c => c.handler)
           ? <LinearProgress color='secondary' />
           : (
             <Grid container className={classes.root} justify='center'>
@@ -161,6 +192,9 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
                       !this.validate(1)
                       ? undefined
                       : [
+                        <Typography className={classes.title} component="h2" key="descriptionTitle">
+                          Description
+                        </Typography>,
                         <Grid item xs={12} key='descriptionCreate'>
                           <Paper className={classes.paper}>
 
@@ -211,15 +245,46 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
                     {
                       !this.validate(2)
                       ? undefined
-                      : _.get({
-                        open: <AdminQuestionOpen parent={this} doc={doc} errors={errors} />,
-                        singleAnswer: <AdminQuestionSingleAnswer parent={this} doc={doc} errors={errors} />,
-                      }, doc.type)
+                      : [
+                        <Typography className={classes.title} component="h2" key="answerTitle">
+                          Answer
+                        </Typography>,
+                        _.get({
+                          open: <AdminQuestionOpen
+                            parent={this}
+                            doc={doc}
+                            errors={errors}
+                            key="answer"
+                          />,
+                          singleAnswer: <AdminQuestionSingleAnswer
+                            parent={this}
+                            doc={doc}
+                            errors={errors}
+                            key="answer"
+                          />,
+                        }, doc.type),
+                      ]
                     }
 
-                    <Grid item xs={12}>
-
-                    </Grid>
+                    {
+                      !this.validate(2)
+                      ? undefined
+                      : [
+                        <Typography className={classes.title} component="h2" key="scoreTitle">
+                          Score
+                        </Typography>,
+                        <Grid item xs={12} key="score">
+                          <Paper className={classes.paper}>
+                            <AdminQuestionScores
+                              doc={doc}
+                              tags={collections.tags.docs}
+                              scores={doc.scores}
+                              parent={this}
+                            />
+                          </Paper>
+                        </Grid>,
+                      ]
+                    }
 
                     <Grid item xs={12}>
 
@@ -240,7 +305,12 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
                         </Grid>
 
                         <Grid item>
-                          <Button onClick={this.handleSubmit} disabled={_.some(errors)} raised color='primary'>
+                          <Button
+                            raised
+                            color='primary'
+                            onClick={this.handleSubmit}
+                            disabled={_.some(errors, 'error')}
+                          >
                             Save
                           </Button>
                         </Grid>
@@ -266,6 +336,7 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
 
 AdminQuestion.propTypes = {
   classes: PropTypes.object.isRequired,
+  questionId: PropTypes.string,
 };
 
 export default withStyles(styles)(AdminQuestion);
