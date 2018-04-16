@@ -42,7 +42,7 @@ const styles = theme => {
       cursor: 'pointer',
       transition: 'width 0.5s cubic-bezier(0.55, 0, 0.1, 1) 0.5s',
     },
-    'holder-active': { width: 200 },
+    'holder-active': { width: 200, transform: 'translate(-0%, -50%)' },
 
     icon: {
       width: theme.spacing.unit * 3,

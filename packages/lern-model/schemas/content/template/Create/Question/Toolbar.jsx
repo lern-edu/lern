@@ -28,7 +28,7 @@ const styles = theme => ({
     position: 'absolute',
     top: '50%',
     right: theme.spacing.unit * 4,
-    transform: 'translate3d(-50%, -50%, 0)',
+    transform: 'translate(-50%, -50%)',
     margin: '-4px 0 0 8px',
     width: 0,
     borderBottom: '2px solid white',
@@ -36,7 +36,7 @@ const styles = theme => ({
     cursor: 'pointer',
     transition: 'width 0.5s cubic-bezier(0.55, 0, 0.1, 1) 0.5s',
   },
-  'holder-active': { width: 200 },
+  'holder-active': { width: 200, transform: 'translate(-0%, -50%)' },
 
   icon: {
     width: theme.spacing.unit * 3,
