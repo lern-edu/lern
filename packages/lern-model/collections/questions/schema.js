@@ -26,7 +26,7 @@ const QuestionRangeSchema = Class.create({
 });
 
 const QuestionScoreSchema = Class.create({
-  name: 'QuestionTags',
+  name: 'QuestionScore',
   fields: {
     author: Object,
     name: {
@@ -136,7 +136,7 @@ const Question = Class.create({
       type: String,
       optional: true,
     },
-    score: {
+    scores: {
       type: [QuestionScoreSchema],
       optional: true,
     },
@@ -255,5 +255,6 @@ Author(Question);
 
 Question.QuestionRangeSchema = QuestionRangeSchema;
 Question.QuestionAnswerSchema = QuestionAnswerSchema;
+Question.QuestionScoreSchema = QuestionScoreSchema;
 
 export default Question;
