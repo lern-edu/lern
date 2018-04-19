@@ -12,10 +12,8 @@ import Input from 'material-ui/Input';
 import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
-import { Question } from 'meteor/duckdodgerbrasl:lern-model';
+import { Test } from 'meteor/duckdodgerbrasl:lern-model';
 import { MenuItem } from 'material-ui/Menu';
-
-import AdminQuestionNumber from './Number.jsx';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -46,7 +44,7 @@ class AdminTestScores extends React.Component {
       this.save(scores);
     }
     else
-      this.setState({ open: true, score: new Question.QuestionScoreSchema({ ...tag, score: 0.1 }) });
+      this.setState({ open: true, score: new Test.TestScoreSchema({ ...tag, score: 0.1 }) });
   };
 
   handleChange = ({ target: { value } }) => {
@@ -55,6 +53,10 @@ class AdminTestScores extends React.Component {
     scores.push(_.clone(score));
     this.setState({ scores, score });
     this.save(scores);
+    this.setState({ open: false });
+  };
+
+  handleClose = () => {
     this.setState({ open: false });
   };
 
