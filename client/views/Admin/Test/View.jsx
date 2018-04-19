@@ -60,7 +60,7 @@ class AdminTest extends React.Component {
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 6,
+      activeStep: 0,
     };
   };
 
