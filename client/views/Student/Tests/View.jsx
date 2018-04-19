@@ -132,7 +132,7 @@ class StudentTests extends React.Component {
                 _.map(docs, test =>
 
                   <GridListTile cols={2} key={test.name}>
-                    <img src={test.img || `/images/tests/${test.resolution}.jpg`} />
+                    <img src={`https://s3-us-west-2.amazonaws.com/lern-repo/${test.image}`} />
                     <GridListTileBar
                       title={test.name}
                       subtitle={

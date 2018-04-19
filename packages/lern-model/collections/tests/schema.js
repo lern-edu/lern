@@ -75,6 +75,10 @@ const Test = Class.create({
       type: String,
       validators: [{ type: 'minLength', param: 1 }],
     },
+    image: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
     description: {
       type: [Content],
       validators: [{ type: 'minLength', param: 1 }],
@@ -106,7 +110,6 @@ const Test = Class.create({
     resolution: String,
     help: {
       type: [Content],
-      validators: [{ type: 'minLength', param: 1 }],
       optional: true,
     },
     score: Number,
