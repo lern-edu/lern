@@ -86,7 +86,7 @@ class ContentShow extends React.Component {
   // Render
 
   render() {
-    const { doc: { text, link, image, type, video, question }, canRemove = true } = this.props;
+    const { doc: { text, link, image, type, video, question, score }, canRemove = true } = this.props;
     const { index, form, field='description', classes } = this.props;
     const docToSave = _.get(form, 'state.doc');
     const array = _.get(docToSave, field);
@@ -114,6 +114,7 @@ class ContentShow extends React.Component {
             question:
               <PublicContentShowQuestion
                 question={question}
+                score={score}
               />,
           }, type)}
         </div>

@@ -60,7 +60,7 @@ class AdminTest extends React.Component {
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 0,
+      activeStep: 6,
     };
   };
 
@@ -469,6 +469,7 @@ class AdminTest extends React.Component {
 
                                 <AdminTestScores
                                   doc={doc}
+                                  scores={doc.scores}
                                   tags={tags.docs}
                                   errors={errors}
                                   parent={this}

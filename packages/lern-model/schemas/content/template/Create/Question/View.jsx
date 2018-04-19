@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { withStyles } from 'material-ui/styles';
 import { Button, Typography } from 'material-ui';
 
@@ -24,6 +25,14 @@ class PublicContentCreateQuestion extends React.Component {
   handleAddQuestion = (question) => {
     this.updateDoc(question);
     this.setState({ question, open: false });
+  };
+
+  handleUpdateScore = ({ target: { value } }) => {
+    const { parent } = this.props;
+    const { doc } = parent.state;
+
+    doc.set('score', _.parseInt(value));
+    parent.setState({ doc });
   };
 
   updateDoc = (question) => {
@@ -63,7 +72,10 @@ class PublicContentCreateQuestion extends React.Component {
 
         {
           question
-          ? <PublicContentCreateQuestionCard doc={question}/>
+          ? <PublicContentCreateQuestionCard
+            doc={question}
+            handleUpdateScore={this.handleUpdateScore}
+          />
           : null
         }
 

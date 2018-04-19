@@ -11,9 +11,9 @@ const StaticCollections = {
   Locales: ['pt-BR', 'en-US'],
   TestTimeoutTypes: ['global', 'page', 'none'],
   TestTimeTypes: ['range', 'none'],
-  TestResolutions: ['content', 'sudoku'],
+  TestResolutions: ['all', 'perPage', 'perQuestion'],
   SudokuLevel: ['easy', 'medium', 'hard'],
-  QuestionTypes: ['sudoku', 'open', 'singleAnswer', 'number', 'unanswered'],
+  QuestionTypes: ['sudoku', 'open', 'singleAnswer'],
 };
 
 export default StaticCollections;

@@ -82,6 +82,11 @@ const Content = Class.create({
       type: Object,
       optional: true,
     },
+
+    score: {
+      type: Number,
+      optional: true,
+    },
   },
 });
 

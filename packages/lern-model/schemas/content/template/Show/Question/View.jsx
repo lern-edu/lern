@@ -67,7 +67,7 @@ class PublicContentShowQuestion extends React.Component {
   // Render
 
   render() {
-    const { classes, question } = this.props;
+    const { classes, question, score } = this.props;
 
     return (
       <Card>
@@ -78,7 +78,7 @@ class PublicContentShowQuestion extends React.Component {
               {_.capitalize(_.head(question.get('type')))}
             </Avatar>
           }
-          title={`${question.get('type')}`}
+          title={`${question.get('type')}${score ? (' - ' + score) : ''}`}
           subheader={question.get('level')}
         />
           
@@ -168,6 +168,7 @@ class PublicContentShowQuestion extends React.Component {
 PublicContentShowQuestion.propTypes = {
   classes: PropTypes.object.isRequired,
   question: PropTypes.object.isRequired,
+  score: PropTypes.number,
 };
 
 export default withStyles(styles)(PublicContentShowQuestion);;

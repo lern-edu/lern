@@ -12,10 +12,10 @@ import Input from 'material-ui/Input';
 import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
-import { Test } from 'meteor/duckdodgerbrasl:lern-model';
+import { Question } from 'meteor/duckdodgerbrasl:lern-model';
 import { MenuItem } from 'material-ui/Menu';
 
-import AdminTestNumber from './Number.jsx';
+import AdminQuestionNumber from './Number.jsx';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -32,7 +32,7 @@ class AdminTestScores extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { open: false, score: null, scores: [] };
+    this.state = { open: false, score: null, scores: props.scores || [] };
   };
 
   handleToggle = (tag) => () => {
@@ -46,7 +46,7 @@ class AdminTestScores extends React.Component {
       this.save(scores);
     }
     else
-      this.setState({ open: true, score: new Test.TestScoreSchema({ ...tag, score: 0.1 }) });
+      this.setState({ open: true, score: new Question.QuestionScoreSchema({ ...tag, score: 0.1 }) });
   };
 
   handleChange = ({ target: { value } }) => {
@@ -83,18 +83,21 @@ class AdminTestScores extends React.Component {
         <List className={classes.root}>
 
           {
-            _.map(tags, tag =>
-              <ListItem button key={tag._id} >
-                <ListItemText primary={tag.name} />
-                <ListItemSecondaryAction>
-                  <Checkbox
-                    onChange={this.handleToggle(tag)}
-                    checked={_.findIndex(scores, { _id: tag._id }) >= 0}
-                  />
-                </ListItemSecondaryAction>
+            _.map(tags, tag => {
+              const score = _.find(scores, { _id: tag._id });
+              return (
+                <ListItem button key={tag._id} >
+                  <ListItemText primary={tag.name} secondary={score && (score.score * 100) + '%'} />
+                  <ListItemSecondaryAction>
+                    <Checkbox
+                      onChange={this.handleToggle(tag)}
+                      checked={!!score}
+                    />
+                  </ListItemSecondaryAction>
 
-              </ListItem>
-            )
+                </ListItem>
+              );
+            })
           }
         </List>
 
@@ -140,6 +143,10 @@ class AdminTestScores extends React.Component {
 
 AdminTestScores.propTypes = {
   classes: PropTypes.object.isRequired,
+  doc: PropTypes.object.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.object),
+  parent: PropTypes.object.isRequired,
+  scores: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default withStyles(styles)(AdminTestScores);

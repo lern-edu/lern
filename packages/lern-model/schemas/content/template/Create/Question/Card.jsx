@@ -1,9 +1,4 @@
 // Libs
-
-
-
-
-// Libs
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -12,6 +7,7 @@ import classnames from 'classnames';
 import Card, { CardActions, CardContent, CardHeader } from 'material-ui/Card';
 import { yellow, red, purple } from 'material-ui/colors';
 import Avatar from 'material-ui/Avatar';
+import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
@@ -72,7 +68,7 @@ class PublicContentCreateQuestionCard extends React.Component {
   // Render
 
   render() {
-    const { classes, doc, handleAddQuestion } = this.props;
+    const { classes, doc, handleAddQuestion, handleUpdateScore } = this.props;
 
     return (
       <Card>
@@ -88,6 +84,7 @@ class PublicContentCreateQuestionCard extends React.Component {
         />
           
         <CardActions className={classes.actions} disableActionSpacing>
+          
           {
             !_.isFunction(handleAddQuestion)
             ? undefined
@@ -102,6 +99,22 @@ class PublicContentCreateQuestionCard extends React.Component {
                 </Button>
               </CardActions>
             )
+          }
+
+          {
+            _.isFunction(handleUpdateScore)
+            && _.get(doc, 'constructor.className') === 'Question'
+            ? (
+              <CardActions>
+              <TextField
+                  id="score"
+                  label="Score"
+                  value={doc.get('score')}
+                  onChange={handleUpdateScore}
+                />
+              </CardActions>
+            )
+            : undefined
           }
 
           <IconButton
@@ -189,6 +202,7 @@ PublicContentCreateQuestionCard.propTypes = {
   classes: PropTypes.object.isRequired,
   doc: PropTypes.object.isRequired,
   handleAddQuestion: PropTypes.func,
+  handleUpdateScore: PropTypes.func,
 };
 
 export default withStyles(styles)(PublicContentCreateQuestionCard);;
