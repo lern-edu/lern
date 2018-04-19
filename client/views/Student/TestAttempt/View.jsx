@@ -99,8 +99,8 @@ class StudentTestAttempt extends React.Component {
     log.info('handleNext=', this.state);
     const { collections: { attempt, attempt: { test: { time } } }, page } = this.state;
 
-    if (page < attempt.test.pages.length - 1) {
-      if (time.timeoutType === 'global') {
+    if (page <= attempt.test.pages.length - 1) {
+      if (time.timeoutType === 'global' || time.timeoutType === 'none') {
         this.setState({
           page: page + 1,
         });
@@ -248,10 +248,17 @@ class StudentTestAttempt extends React.Component {
               open={Boolean(anchorEl)}
               onClose={this.handleToggleMenu}
             >
-              <MenuItem onClick={() => this.handleClickOpen('description')}>
-                <ListItemIcon>{<Description />}</ListItemIcon>
-                <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.description')} />
-              </MenuItem>
+              {
+                _.isEmpty(attempt.test.description)
+                ? undefined
+                : (
+                  <MenuItem onClick={() => this.handleClickOpen('description')}>
+                    <ListItemIcon>{<Description />}</ListItemIcon>
+                    <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.description')} />
+                  </MenuItem>
+                )
+              }
+
               {
                 _.isEmpty(attempt.test.help)
                 ? undefined
@@ -293,24 +300,11 @@ class StudentTestAttempt extends React.Component {
           <Grid item xs={12} md={10} lg={8}>
 
             <Grid container spacing={0}>
-              {
-                _.get(
-                  {
-                    content: <StudentTestAttemptContent
-                      parent={this}
-                      pages={attempt.test.pages}
-                      page={page}
-                    />,
-                    sudoku: <StudentTestAttemptSudoku
-                      parent={this}
-                      attempt={attempt}
-                      sudoku={attempt.sudoku}
-                      highlight={sudokuHighlight}
-                    />,
-                  },
-                  attempt.test.resolution
-                )
-              }
+              <StudentTestAttemptContent
+                parent={this}
+                pages={attempt.test.pages}
+                page={page}
+              />
             </Grid>
 
           </Grid>

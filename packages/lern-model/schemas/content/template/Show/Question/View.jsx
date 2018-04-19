@@ -74,12 +74,12 @@ class PublicContentShowQuestion extends React.Component {
         
         <CardHeader
           avatar={
-            <Avatar aria-label='question.name' className={classes[question.get('type')]}>
-              {_.capitalize(_.head(question.get('type')))}
+            <Avatar aria-label='question.name' className={classes[_.get(question, 'type')]}>
+              {_.capitalize(_.head(_.get(question, 'type')))}
             </Avatar>
           }
-          title={`${question.get('type')}${score ? (' - ' + score) : ''}`}
-          subheader={question.get('level')}
+          title={`${_.get(question, 'type')}${score ? (' - ' + score) : ''}`}
+          subheader={_.get(question, 'level')}
         />
           
         <CardActions className={classes.actions} disableActionSpacing>
@@ -103,9 +103,9 @@ class PublicContentShowQuestion extends React.Component {
               Content
             </Typography>
             {
-              question.get('type') === 'sudoku'
+              _.get(question, 'type') === 'sudoku'
               ? (
-                _.map(question.get('sudoku'), (number, index) => {
+                _.map(_.get(question, 'sudoku'), (number, index) => {
                   const numberElement = <span
                     key={'number' + index + number}
                   >
@@ -131,7 +131,7 @@ class PublicContentShowQuestion extends React.Component {
           
           <CardContent>
             {
-              !question.get('answer')
+              !_.get(question, 'answer')
               ? undefined
               : (
                 <div>
@@ -139,17 +139,17 @@ class PublicContentShowQuestion extends React.Component {
                     Answer
                   </Typography>
                   {
-                    _.isNull(question.get('answer.open'))
+                    _.isNull(_.get(question, 'answer.open'))
                     ? undefined
                     : (
                       <Typography component="p">
-                        {question.get('answer.open')}
+                        {_.get(question, 'answer.open')}
                       </Typography>
                     )
                   }
 
                   {
-                    _.isNull(question.get('answer.singleAnswer'))
+                    _.isNull(_.get(question, 'answer.singleAnswer'))
                     ? undefined
                     : <PublicContentShowQuestionSingleAnswer doc={question} />
                   }
