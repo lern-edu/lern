@@ -16,7 +16,6 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Checkbox from 'material-ui/Checkbox';
 
 import StudentTestAttemptContent from './Content.jsx';
-import StudentTestAttemptSudoku from './Sudoku.jsx';
 import StudentTestAttemptToolbar from './Toolbar.jsx';
 
 const test = new Test();
@@ -88,7 +87,7 @@ class StudentTestAttempt extends React.Component {
   handleBack = () => {
     log.info('handleBack=', this.state);
     const { collections: { attempt, attempt: { test: { time } } }, page } = this.state;
-    if (page > 0 && time.timeoutType === 'global') {
+    if (page > 0 && (time.timeoutType === 'global' || time.timeoutType === 'none')) {
       this.setState({
         page: page - 1,
       });
@@ -143,8 +142,9 @@ class StudentTestAttempt extends React.Component {
       } else {
         log.info('StudentTestAttempt.TestAttemptFinish => finish =>', doc);
         snack({ message: i18n.__('StudentTestAttempt.success.thankYou') });
-        FlowRouter.go('StudentHome');
       };
+
+      FlowRouter.go('StudentHome');
 
     });
   };
@@ -171,6 +171,7 @@ class StudentTestAttempt extends React.Component {
           else
             snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
           this.setState({ loading: false });
+          log.error('handleFinish.error =>', err, doc);
         } else {
           log.info('StudentTestAttempt.TestAttemptFinish => finish =>', doc);
           snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
@@ -254,7 +255,10 @@ class StudentTestAttempt extends React.Component {
                 : (
                   <MenuItem onClick={() => this.handleClickOpen('description')}>
                     <ListItemIcon>{<Description />}</ListItemIcon>
-                    <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.description')} />
+                    <ListItemText
+                      inset
+                      primary={i18n.__('StudentTestAttempt.appBarChildren.description')}
+                    />
                   </MenuItem>
                 )
               }
@@ -265,11 +269,14 @@ class StudentTestAttempt extends React.Component {
                 : (
                   <MenuItem onClick={() => this.handleClickOpen('help')}>
                     <ListItemIcon>{<Help />}</ListItemIcon>
-                    <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.help')} />
+                    <ListItemText
+                      inset
+                      primary={i18n.__('StudentTestAttempt.appBarChildren.help')}
+                    />
                   </MenuItem>
                 )
               }
-              {
+              {/*
                 attempt.test.resolution !== 'sudoku'
                   ? undefined
                   : [
@@ -290,7 +297,7 @@ class StudentTestAttempt extends React.Component {
                       />
                     </MenuItem>,
                   ]
-              }
+                */}
             </Menu>
           </div>
         </Layout.Bar>
@@ -302,6 +309,7 @@ class StudentTestAttempt extends React.Component {
             <Grid container spacing={0}>
               <StudentTestAttemptContent
                 parent={this}
+                attempt={attempt}
                 pages={attempt.test.pages}
                 page={page}
               />
