@@ -141,7 +141,7 @@ class StudentTestAttemptToolbar extends React.Component {
             [
 
               // Back
-              time.timeoutType === 'global' ?
+              (time.timeoutType === 'global' || time.timeoutType === 'none') ?
                 <ButtonBase
                   className={classes.root}
                   key='back'
