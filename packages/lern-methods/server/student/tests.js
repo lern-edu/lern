@@ -71,35 +71,44 @@ Helpers.Methods({ prefix, protect }, {
 
       attempt = new Attempt({
         test: test.raw(),
-        pages: _.map(test.pages, p => ({ finished: false })),
+        pages: _.map(test.pages, p => (
+            {
+              finished: false,
+              answers: _.map(
+                _.filter(p.description, { type: 'question' }),
+                ({ question }) => ({ _id: question._id, answer: null })
+              ),
+            }
+          )
+        ),
         startedAt: new Date(),
       });
 
       attempt.pages[0].startedAt = new Date();
 
-      const future = new Future();
-      let rawSudokuDb = Sudoku.getCollection();
-      rawSudokuDb = rawSudokuDb.rawCollection();
-      rawSudokuDb.aggregate([
-        {
-          $match: {
-            $and: [
-              { level: test.level || 'easy' },
-            ],
-          },
-        },
-        { $sample: { size: 1 } },
-      ])
-      .toArray((err, docs) => {
+      // const future = new Future();
+      // let rawSudokuDb = Sudoku.getCollection();
+      // rawSudokuDb = rawSudokuDb.rawCollection();
+      // rawSudokuDb.aggregate([
+      //   {
+      //     $match: {
+      //       $and: [
+      //         { level: test.level || 'easy' },
+      //       ],
+      //     },
+      //   },
+      //   { $sample: { size: 1 } },
+      // ])
+      // .toArray((err, docs) => {
 
-        if (err && !_.isEmpty(docs))
-          throw new Meteor.Error('Problem to start game');
-        else
-          future.return(_.head(docs));
-      });
+      //   if (err && !_.isEmpty(docs))
+      //     throw new Meteor.Error('Problem to start game');
+      //   else
+      //     future.return(_.head(docs));
+      // });
 
-      attempt.sudoku = future.wait();
-      attempt.sudoku.answer = attempt.sudoku.board;
+      // attempt.sudoku = future.wait();
+      // attempt.sudoku.answer = attempt.sudoku.board;
 
       const attemptId = attempt.save();
       return Attempt.findOne(attemptId);
@@ -162,45 +171,27 @@ Helpers.Methods({ prefix, protect }, {
 
     // DONE THIS ON ATTEMPT SCHEMA
     const lastPage = _.last(attempt.pages);
+    lastPage.set('finished', true);
+    lastPage.set('finishedAt', new Date());
+    attempt.set('finished', true);
+    attempt.set('finishedAt', new Date());
+
     if (dismiss) {
-      lastPage.set('finished', true);
-      lastPage.set('finishedAt', new Date());
-      attempt.set('finished', true);
-      attempt.set('finishedAt', new Date());
-      return attempt.save();
-    };
-
-    if (test.resolution === 'content' && !dismiss) {
-      lastPage.set('finished', true);
-      lastPage.set('finishedAt', new Date());
-      attempt.set('scores', _.map(test.scores, scoreSchema));
-      attempt.set('finished', true);
-      attempt.set('finishedAt', new Date());
-      return attempt.save();
-    };
-
-    if (test.resolution === 'sudoku' && !dismiss) {
-
-      let sudoku = Sudoku.find({ _id: attempt.sudoku._id });
-      Check.Cursor(sudoku).some();
-      sudoku = _.head(sudoku.fetch());
-      const validate = sudoku.validateGame(attempt.sudoku.answer);
-
-      if (!validate)
-        throw new Meteor.Error(501, 'Fails on validate');
-
-      attempt.set('scores',
-        _.map(test.scores, score => new Attempt.AttemptScoreSchema({
-          ...score,
-          score: score.score * test.score,
-        }))
-      );
-      lastPage.set('finished', true);
-      lastPage.set('finishedAt', new Date());
-      attempt.set('finished', true);
-      attempt.set('finishedAt', new Date());
       return attempt.save();
     }
+
+    // 'all', 'perPage', 'perQuestion'
+
+    else if (test.resolution === 'all') {
+      attempt.set('scores', _.map(test.scores, scoreSchema));
+      return attempt.save();
+    }
+    // Pending calc here
+    else if (test.resolution === 'perQuestion') {
+      attempt.set('scores', _.map(test.scores, scoreSchema));
+      return attempt.save();
+    }
+
   },
 
   TestAttemptUpdate: Helpers.DefaultSave,

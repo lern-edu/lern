@@ -97,11 +97,6 @@ const Test = Class.create({
       type: [TestPageSchema],
       optional: true,
     },
-    level: {
-      type: String,
-      validators: [{ type: 'OneOf', param: StaticCollections.SudokuLevel }],
-      optional: true,
-    },
     time: {
       type: TestTimeSchema,
       default: new TestTimeSchema(),
