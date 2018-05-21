@@ -180,17 +180,76 @@ Helpers.Methods({ prefix, protect }, {
       return attempt.save();
     }
 
-    // 'all', 'perPage', 'perQuestion'
-
     else if (test.resolution === 'all') {
       attempt.set('scores', _.map(test.scores, scoreSchema));
-      return attempt.save();
     }
-    // Pending calc here
-    else if (test.resolution === 'perQuestion') {
+    else if (test.resolution === 'perPage') {
       attempt.set('scores', _.map(test.scores, scoreSchema));
-      return attempt.save();
     }
+    else if (test.resolution === 'perQuestion') {
+
+      _.forEach(attempt.test.pages, ({ description }, index) => {
+
+        _.forEach(description, content => {
+
+          if (content.type === 'question') {
+            const question = content.question;
+            const questionAnswer = _.get(_.find(_.get(attempt, `pages[${index}].answers`), { _id: question._id }), 'answer');
+            const isCorrect = question.type == 'singleAnswer'
+              ? question.answer.singleAnswer === questionAnswer
+              : question.type == 'sudoku'
+              ? true
+              : null;
+
+            // console.log(question.type);
+
+            // console.log(isCorrect);
+
+            _.forEach(question.scores, score => {
+              const setScore = score;
+              if (question.type == 'open') {
+                setScore.score = score.score * (content.score || 0);
+              } else if (question.type == 'singleAnswer') {
+                // console.log('singleAnswer', question.answer.singleAnswer, questionAnswer);
+                if (isCorrect)
+                  setScore.score = score.score * (content.score || 0);
+                else setScore.score = 0;
+              } else if (question.type == 'sudoku') {
+                if (isCorrect)
+                  setScore.score = score.score * (content.score || 0);
+                else setScore.score = 0;
+              }
+
+              const attemptScoresIndex = _.findIndex(attempt.scores, { _id: score._id });
+
+              // console.log('attemptScoresIndex', attemptScoresIndex);
+
+              if (attemptScoresIndex >= 0) {
+                const attemptScore = attempt.scores[attemptScoresIndex];
+                // console.log('setScore.score', setScore.score);
+
+                // console.log('sum', attemptScore.score + setScore.score);
+
+                attempt.set(`scores.${attemptScoresIndex}.score`, attemptScore.score + setScore.score);
+
+                // console.log('finally', attempt.scores[attemptScoresIndex].score);
+              } else {
+                // console.log('push new');
+                attempt.scores.push(setScore);
+              }
+
+              // console.log("==============================");
+
+            });
+          }
+
+        });
+
+      });
+
+    }
+
+    return attempt.save();
 
   },
 
