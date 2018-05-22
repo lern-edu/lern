@@ -192,21 +192,35 @@ Helpers.Methods({ prefix, protect }, {
 
         _.forEach(description, content => {
 
+          // For each question, one resolution
           if (content.type === 'question') {
+
+            // Get question
             const question = content.question;
-            const questionAnswer = _.get(_.find(_.get(attempt, `pages[${index}].answers`), { _id: question._id }), 'answer');
+
+            // Get answer
+            const questionAnswer = _.get(
+              _.find(
+                _.get(attempt, `pages[${index}].answers`),
+                { _id: question._id }
+              ), 'answer'
+            );
+
+            // Verify if correct
             const isCorrect = question.type == 'singleAnswer'
               ? question.answer.singleAnswer === questionAnswer
               : question.type == 'sudoku'
-              ? true
+              ? question.validateGame(questionAnswer)
               : null;
 
             // console.log(question.type);
 
             // console.log(isCorrect);
 
+            // Set scores
             _.forEach(question.scores, score => {
               const setScore = score;
+
               if (question.type == 'open') {
                 setScore.score = score.score * (content.score || 0);
               } else if (question.type == 'singleAnswer') {
