@@ -102,7 +102,7 @@ class AdminQuestionScores extends React.Component {
         </List>
 
         <Dialog
-          onClose={this.handleClose}
+          onClose={() => this.setState({ open: false })}
           transition={Transition}
           aria-labelledby='Score a tag'
           open={open}
