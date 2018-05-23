@@ -80,7 +80,7 @@ class StudentReportCard extends React.Component {
               className={classes.button}
               onClick={this.handleExpandClick}
             >
-              {i18n.__('StudentReport.details')}
+              See Details
             </Button>
 
             <IconButton

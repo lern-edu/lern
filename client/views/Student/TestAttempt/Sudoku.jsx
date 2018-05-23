@@ -23,9 +23,6 @@ const styles = theme => ({
     textAlign: 'center',
     lineHeight: '32px',
   },
-  cellEdit: {
-    paddingLeft: 2,
-  },
   keyboard: {
     textAlign: 'center',
     minHeight: 32,
@@ -52,6 +49,7 @@ const styles = theme => ({
   },
 });
 
+// this.state.bottom = [null, 'finish', 'loading'];
 class StudentTestAttemptSudoku extends React.Component {
 
   // Lifecycle
@@ -79,19 +77,9 @@ class StudentTestAttemptSudoku extends React.Component {
     this.setState({ value });
   };
 
-  toggleEdit = () => {
-    const { edit } = this.state;
-    this.setState({ edit: !edit, clear: false });
-  };
-
-  toggleClear = () => {
-    const { clear, edit, value } = this.state;
-    this.setState({ clear: !clear, value: edit ? value : 0 });
-  };
-
   handleInsertValue = (row, col) => {
     const { sudoku, parent } = this.props;
-    const { answer, value, edit, clear } = this.state;
+    const { answer, value } = this.state;
 
     const index = row * 9 + col;
 
@@ -142,7 +130,7 @@ class StudentTestAttemptSudoku extends React.Component {
   handleForward = () => {
     const { backward, forward, answer } = this.state;
     const pulled = _.head(_.pullAt(forward, [forward.length - 1]));
-    const { row, col, value, old } = pulled;
+    const { row, col, value } = pulled;
     backward.push(pulled);
     answer[row * 9 + col] = value;
     this.keepAttemptUpdated('sudoku.answer');
@@ -289,49 +277,35 @@ class StudentTestAttemptSudoku extends React.Component {
             <Grid item xs={12} key={4}>
               <Grid container spacing={0} justify='center'>
 
-                <Grid item xs={3} className={classes.options} key='backward'>
+                <Grid item xs={4} className={classes.keyboard} key='backward'>
                   <Button
                     raised
                     color={value == 'backward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleBackward('backward')}
-                    className={classes.optionsChild}
                     disabled={_.isEmpty(backward) ? true : false}
                   >
                     <Icon>arrow_back</Icon>
                   </Button>
                 </Grid>
 
-                <Grid item xs={3} className={classes.options} key='forward'>
+                <Grid item xs={4} className={classes.keyboard} key='forward'>
                   <Button
                     raised
                     color={value == 'forward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleForward('forward')}
-                    className={classes.optionsChild}
                     disabled={_.isEmpty(forward) ? true : false}
                   >
                     <Icon>arrow_forward</Icon>
                   </Button>
                 </Grid>
 
-                <Grid item xs={3} className={classes.options} key='clear'>
+                <Grid item xs={4} className={classes.keyboard} key='clear'>
                   <Button
                     raised
-                    color={clear ? 'secondary' : 'primary'}
-                    onClick={() => this.toggleClear()}
-                    className={classes.optionsChild}
+                    color={value == 0 ? 'secondary' : 'primary'}
+                    onClick={() => this.handleClick(0)}
                   >
                     <Icon>clear</Icon>
-                  </Button>
-                </Grid>
-
-                <Grid item xs={3} className={classes.options} key='edit'>
-                  <Button
-                    raised
-                    color={edit ? 'secondary' : 'primary'}
-                    onClick={() => this.toggleEdit()}
-                    className={classes.optionsChild}
-                  >
-                    <Icon>edit</Icon>
                   </Button>
                 </Grid>
 
@@ -356,3 +330,4 @@ StudentTestAttemptSudoku.propTypes = {
 };
 
 export default withStyles(styles)(StudentTestAttemptSudoku);
+

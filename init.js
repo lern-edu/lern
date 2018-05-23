@@ -15,6 +15,11 @@ Meteor.startup(() => {
   const env = process.env.NODE_ENV;
   const { logLevel='error' } = Meteor.settings.public;
   log.setLevel(env === 'development' ? 'info' : logLevel);
+
+  if (env === 'production') {
+    process.env.ROOT_URL = 'https://app.lern.com.br';
+  }
+
 });
 
 // Text search
