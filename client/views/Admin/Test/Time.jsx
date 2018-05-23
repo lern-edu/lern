@@ -8,18 +8,18 @@ import AdminTestSelect from './Select.jsx';
 
 class AdminTestTime extends React.Component {
   render() {
-    const { doc, field, error, parent } = this.props;
+    const { doc, field, errors={}, parent } = this.props;
 
     return (
       <div>
-        
+
         <Grid item xs={12}>
-        
+
           <AdminTestSelect
             options={StaticCollections.TestTimeTypes}
             doc={doc}
             field='time.timeType'
-            error={_.get(error, 'timeType')}
+            error={errors['time.timeType']}
             parent={parent}
           />
 
@@ -37,7 +37,7 @@ class AdminTestTime extends React.Component {
             </Grid>
           )
         }
-      
+
       </div>
     );
   }

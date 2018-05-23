@@ -7,7 +7,6 @@ import Button from 'material-ui/Button';
 import { MenuItem } from 'material-ui/Menu';
 import Select from 'material-ui/Select';
 import TextField from 'material-ui/TextField';
-import i18n from 'meteor/universe:i18n';
 
 import ContentRichText from './../RichText.jsx';
 import PublicContentCreateImage from './Image.jsx';
@@ -46,7 +45,8 @@ class ContentCreate extends React.Component {
       const array = _.get(docToSave, field);
       array.push(_.clone(doc));
       docToSave.set(field, array);
-    } else docToSave.set(field, [_.clone(doc)]);
+    }
+    else docToSave.set(field, [_.clone(doc)]);
     form.setState({ doc: docToSave });
     this.setState({
       doc: new Schema({ type, [type]: '' }),
@@ -102,9 +102,7 @@ class ContentCreate extends React.Component {
           >
             {
               _.map(contentTypes, (v, k) =>
-                <MenuItem key={k} value={v}>
-                  {i18n.__(`Templates.content_type.${v}`)}
-                </MenuItem>
+                <MenuItem key={k} value={v}>{v}</MenuItem>
               )
             }
           </Select>
@@ -153,7 +151,7 @@ class ContentCreate extends React.Component {
 
           <Grid item>
             <Button onClick={this.handleSubmit} color='primary'>
-              {i18n.__('Templates.save')}
+              Save
             </Button>
           </Grid>
 
