@@ -1,7 +1,7 @@
 import React from 'react';
 import Bar from '../Bar.jsx';
-import { LinearProgress } from 'material-ui/Progress';
-import Button from 'material-ui/Button';
+import { LinearProgress } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import _ from 'lodash';
 
 /**

@@ -3,18 +3,18 @@ import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import log from 'loglevel';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import i18n from 'meteor/universe:i18n';
-import { LinearProgress } from 'material-ui/Progress';
-import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
-import Icon from 'material-ui/Icon';
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
-import Button from 'material-ui/Button';
-import amber from 'material-ui/colors/amber';
-import blue from 'material-ui/colors/blue';
-import Subheader from 'material-ui/List/ListSubheader';
+import { LinearProgress } from '@material-ui/core';
+import GridList, { GridListTile, GridListTileBar } from '@material-ui/core/GridList';
+import Icon from '@material-ui/core/Icon';
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
+import amber from '@material-ui/core/colors/amber';
+import blue from '@material-ui/core/colors/blue';
+import Subheader from '@material-ui/core/ListSubheader';
 
 import StudentTestsDialog from './Dialog.jsx';
 

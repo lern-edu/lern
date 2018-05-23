@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { Paper, TextField, Grid, Button, Typography } from 'material-ui';
+import { withStyles } from '@material-ui/core/styles';
+import { Paper, TextField, Grid, Button, Typography } from '@material-ui/core';
 import _ from 'lodash';
 import i18n from 'meteor/universe:i18n';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { StaticCollections, Test } from 'meteor/duckdodgerbrasl:lern-model';
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 
 import AdminTestSelect from './Select.jsx';
 

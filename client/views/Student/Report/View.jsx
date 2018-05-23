@@ -4,12 +4,12 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import i18n from 'meteor/universe:i18n';
-import { LinearProgress } from 'material-ui/Progress';
-import Icon from 'material-ui/Icon';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
+import { LinearProgress } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
 import StudentReportCard from './Card.jsx';
 

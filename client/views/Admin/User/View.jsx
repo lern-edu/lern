@@ -5,13 +5,13 @@ import _ from 'lodash';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import { User } from 'meteor/duckdodgerbrasl:lern-model';
 import { Regex } from 'meteor/duckdodgerbrasl:lern-check';
-import { withStyles } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui/Progress';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import { withStyles } from '@material-ui/core/styles';
+import { LinearProgress } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Input, { InputLabel } from '@material-ui/core/Input';
+import { FormControl, FormHelperText } from '@material-ui/core';
 
 // Styles
 const styles = theme => ({

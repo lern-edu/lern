@@ -2,9 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { StaticCollections, Test, Content } from 'meteor/duckdodgerbrasl:lern-model';
-import { Grid, Divider, Paper, Button, IconButton } from 'material-ui';
-import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import { withStyles } from 'material-ui/styles';
+import { Grid, Divider, Paper, Button, IconButton } from '@material-ui/core';
+import Card, { CardHeader, CardContent, CardActions } from '@material-ui/core/Card';
+import { withStyles } from '@material-ui/core/styles';
 import { ChevronLeft, ChevronRight, Edit, RemoveCircle } from 'material-ui-icons';
 
 const content = new Content();

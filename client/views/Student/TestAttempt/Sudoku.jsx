@@ -2,9 +2,9 @@
 import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
-import { withStyles } from 'material-ui/styles';
-import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from 'material-ui';
-import { ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import { withStyles } from '@material-ui/core/styles';
+import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from '@material-ui/core';
+import { ListItemIcon, ListItemText, ListItemSecondaryAction } from '@material-ui/core/List';
 
 const styles = theme => ({
   root: {

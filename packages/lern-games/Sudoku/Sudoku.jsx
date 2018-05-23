@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import log from 'loglevel';
-import { RaisedButton } from 'material-ui';
+import { RaisedButton } from '@material-ui/core';
 import _ from 'lodash';
 
 import SudokuDraw from './SudokuDraw.jsx';

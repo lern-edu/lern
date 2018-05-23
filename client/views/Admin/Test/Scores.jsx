@@ -2,18 +2,18 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
-import Avatar from 'material-ui/Avatar';
-import Paper from 'material-ui/Paper';
-import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
-import Input from 'material-ui/Input';
-import Select from 'material-ui/Select';
-import Button from 'material-ui/Button';
-import Slide from 'material-ui/transitions/Slide';
+import { withStyles } from '@material-ui/core/styles';
+import List, { ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core/List';
+import Checkbox from '@material-ui/core/Checkbox';
+import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
+import Dialog, { DialogTitle, DialogContent, DialogActions } from '@material-ui/core/Dialog';
+import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import Slide from '@material-ui/core/Slide';
 import { Test } from 'meteor/duckdodgerbrasl:lern-model';
-import { MenuItem } from 'material-ui/Menu';
+import { MenuItem } from '@material-ui/core/Menu';
 
 import AdminTestNumber from './Number.jsx';
 

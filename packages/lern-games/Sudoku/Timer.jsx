@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Paper } from 'material-ui';
+import { CircularProgress, Paper } from '@material-ui/core';
 import _ from 'lodash';
 
 export default (WrappedComponent) => class Timer extends React.Component {

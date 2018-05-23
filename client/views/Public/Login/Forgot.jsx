@@ -1,11 +1,11 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Dialog, { DialogTitle, DialogActions, DialogContent } from 'material-ui/Dialog';
+import { withStyles } from '@material-ui/core/styles';
+import Dialog, { DialogTitle, DialogActions, DialogContent } from '@material-ui/core/Dialog';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
-import { Grid, Button, TextField, Paper, Typography, IconButton } from 'material-ui';
-import { Toolbar, AppBar } from 'material-ui';
+import { Grid, Button, TextField, Paper, Typography, IconButton } from '@material-ui/core';
+import { Toolbar, AppBar } from '@material-ui/core';
 import CloseIcon from 'material-ui-icons/Close';
-import Slide from 'material-ui/transitions/Slide';
+import Slide from '@material-ui/core/Slide';
 import i18n from 'meteor/universe:i18n';
 import { Regex } from 'meteor/duckdodgerbrasl:lern-model';
 import _ from 'lodash';

@@ -1,8 +1,8 @@
 // Libs
 import React from 'react';
 import _ from 'lodash';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
+import List, { ListItem, ListItemText } from '@material-ui/core/List';
+import Avatar from '@material-ui/core/Avatar';
 
 class AdminTagChildrensList extends React.Component {
 

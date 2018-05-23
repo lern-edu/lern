@@ -3,7 +3,7 @@ import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import i18n from 'meteor/universe:i18n';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 // Components
 import Navigation from './components/Navigation.jsx';

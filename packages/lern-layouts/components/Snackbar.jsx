@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import SnackbarMaterial from 'material-ui/Snackbar';
-import IconButton from 'material-ui/IconButton';
-import Icon from 'material-ui/Icon';
+import SnackbarMaterial from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 
 /**
  * Snackbar - can subriscribe all material snackbar props

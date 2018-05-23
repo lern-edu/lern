@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
-import { LinearProgress } from 'material-ui';
+import { LinearProgress } from '@material-ui/core';
 import i18n from 'meteor/universe:i18n';
 import _ from 'lodash';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress, Paper } from 'material-ui';
+import { CircularProgress, Paper } from '@material-ui/core';
 
 class SudokuCell extends React.Component {
 

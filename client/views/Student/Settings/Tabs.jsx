@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import { withStyles } from '@material-ui/core/styles';
+import Tabs, { Tab } from '@material-ui/core/Tabs';
 import i18n from 'meteor/universe:i18n';
 import _ from 'lodash';
 

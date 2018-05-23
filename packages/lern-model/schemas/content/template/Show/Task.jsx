@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 import ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   ExpansionPanelActions,
-} from 'material-ui/ExpansionPanel';
+} from '@material-ui/core/ExpansionPanel';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import { Button, Divider, Typography, Grid, CircularProgress } from 'material-ui';
+import { Button, Divider, Typography, Grid, CircularProgress } from '@material-ui/core';
 
 const styles = theme => ({
   panel: {

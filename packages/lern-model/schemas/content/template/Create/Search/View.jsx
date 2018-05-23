@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from 'material-ui/Dialog';
-import { Grid, TextField, Button, Divider } from 'material-ui';
+} from '@material-ui/core/Dialog';
+import { Grid, TextField, Button, Divider } from '@material-ui/core';
 import _ from 'lodash';
 
 import PublicContentSearchTaskFilter from './Filter.jsx';

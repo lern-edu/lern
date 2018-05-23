@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { Button, Select, Input, MenuItem, Toolbar } from 'material-ui';
+import { withStyles } from '@material-ui/core/styles';
+import { Button, Select, Input, MenuItem, Toolbar } from '@material-ui/core';
 import Sudoku from '../Sudoku';
 import Timer from './Timer.jsx';
 import _ from 'lodash';

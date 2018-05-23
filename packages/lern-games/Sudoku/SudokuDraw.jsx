@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Paper } from 'material-ui';
+import { CircularProgress, Paper } from '@material-ui/core';
 import SudokuCell from './Cell.jsx';
 import lodash from 'lodash';
 const _ = lodash;

@@ -4,16 +4,16 @@ import _ from 'lodash';
 import i18n from 'meteor/universe:i18n';
 
 // Material components
-import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
-import Button from 'material-ui/Button';
-import Avatar from 'material-ui/Avatar';
-import Select from 'material-ui/Select';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Input, { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl } from 'material-ui/Form';
-import Icon from 'material-ui/Icon';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import Select from '@material-ui/core/Select';
+import List, { ListItem, ListItemText } from '@material-ui/core/List';
+import Input, { InputLabel } from '@material-ui/core/Input';
+import { MenuItem } from '@material-ui/core/Menu';
+import { FormControl } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
 
 /**
  * Navigation or side Drawer
