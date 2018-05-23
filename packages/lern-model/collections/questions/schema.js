@@ -156,7 +156,7 @@ const Question = Class.create({
           cRow[answer[row * 9 + col] - 1] = true;
         }
 
-        log.info('row: ' + row, cRow, conflictRow, _.every(cRow));
+        // log.info('row: ' + row, cRow, conflictRow, _.every(cRow));
       }
 
       var conflictCol = false;
@@ -167,7 +167,7 @@ const Question = Class.create({
           cCol[answer[row * 9 + col] - 1] = true;
         }
 
-        log.info('col: ' + col, cCol, conflictCol, _.every(cCol));
+        // log.info('col: ' + col, cCol, conflictCol, _.every(cCol));
       }
 
       var conflictGrid = false;
@@ -181,11 +181,11 @@ const Question = Class.create({
             }
           }
 
-          log.info('grid: ' + i + ',' + j, cGrid, conflictGrid, _.every(cGrid));
+          // log.info('grid: ' + i + ',' + j, cGrid, conflictGrid, _.every(cGrid));
         }
       }
 
-      log.info(conflictRow, conflictCol, conflictGrid);
+      // log.info(conflictRow, conflictCol, conflictGrid);
 
       conflict |= conflictRow || conflictCol || conflictGrid;
 
