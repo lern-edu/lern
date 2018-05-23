@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Test, Attempt, Sudoku } from 'meteor/duckdodgerbrasl:lern-model';
+import { Test, Attempt, Question } from 'meteor/duckdodgerbrasl:lern-model';
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import log from 'loglevel';
 import Future from 'fibers/future';
@@ -197,6 +197,7 @@ Helpers.Methods({ prefix, protect }, {
 
             // Get question
             const question = content.question;
+            const originalQuestion = Question.findOne(question._id);
 
             // Get answer
             const questionAnswer = _.get(
@@ -210,7 +211,7 @@ Helpers.Methods({ prefix, protect }, {
             const isCorrect = question.type == 'singleAnswer'
               ? question.answer.singleAnswer === questionAnswer
               : question.type == 'sudoku'
-              ? question.validateGame(questionAnswer)
+              ? originalQuestion.validateGame(questionAnswer)
               : null;
 
             // console.log(question.type);
