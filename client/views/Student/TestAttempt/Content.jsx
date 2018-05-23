@@ -16,10 +16,12 @@ import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 
 // Views
+import StudentTestAttemptSudoku from './Sudoku.jsx';
+import StudentTestAttemptSingleAnswer from './SingleAnswer.jsx';
+import StudentTestAttemptOpen from './Open.jsx';
 const content = new Content();
 const ContentShow = _.get(content, 'templates.ContentShow');
-import StudentTestAttemptSudoku from './Sudoku.jsx';
-import StudentTestAttemptQuestion from './Question.jsx';
+
 
 // Styles
 const styles = theme => ({
@@ -36,6 +38,36 @@ const styles = theme => ({
 });
 
 class StudentTestAttemptContent extends React.Component {
+
+  // Util
+
+  openQuestion({ question }) {
+
+    const { pages, page, attempt } = this.props;
+
+    return [
+      _.map(question.description, (description, index) =>
+        <ContentShow
+          doc={description}
+          canRemove={false}
+          form={this}
+          index={index}
+          key={`descriptionShow${index}`}
+        />
+      ),
+      <div key={question._id}>
+        {
+          question.type === 'open'
+          ? <StudentTestAttemptOpen attempt={attempt} doc={question} page={page} />
+          : question.type === 'singleAnswer'
+          ? <StudentTestAttemptSingleAnswer attempt={attempt} doc={question} page={page} />
+          : question.type === 'sudoku'
+          ? <StudentTestAttemptSudoku attempt={attempt} sudoku={question} parent={this} page={page}/>
+          : undefined
+        }
+      </div>,
+    ];
+  }
 
   // Render
   render() {
@@ -69,15 +101,7 @@ class StudentTestAttemptContent extends React.Component {
 
                 // Render question
                 : description.type === 'question'
-                ? <StudentTestAttemptQuestion
-                  doc={description.question}
-                  page={page}
-                  attempt={attempt}
-                />
-
-                // Render sudoku
-                : description.type === 'sudoku'
-                ? <StudentTestAttemptSudoku />
+                ? this.openQuestion(description)
                 : undefined
               }
 
