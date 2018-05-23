@@ -12,6 +12,7 @@ import PublicContentRichText from './../RichText.jsx';
 import PublicContentShowImage from './Image.jsx';
 import PublicContentShowVideo from './Video.jsx';
 import PublicContentShowTask from './Task.jsx';
+import PublicContentShowQuestion from './Question/View.jsx';
 
 const styles = theme => ({
   contentGroup: {
@@ -45,6 +46,9 @@ class ContentShow extends React.Component {
     _.pullAt(array, [index]);
     docToSave.set(field, array);
     form.setState({ doc: docToSave });
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   handleDown = () => {
@@ -58,6 +62,9 @@ class ContentShow extends React.Component {
       docToSave.set(field, array);
       form.setState({ doc: docToSave });
     }
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   handleUp = () => {
@@ -71,15 +78,18 @@ class ContentShow extends React.Component {
       docToSave.set(field, array);
       form.setState({ doc: docToSave });
     }
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   // Render
 
   render() {
-    const { doc: { text, link, image, type, video }, canRemove = true } = this.props;
+    const { doc: { text, link, image, type, video, question, score }, canRemove = true } = this.props;
     const { index, form, field='description', classes } = this.props;
     const docToSave = _.get(form, 'state.doc');
-    const array = _.get(docToSave, field); 
+    const array = _.get(docToSave, field);
 
     return (
       <div className={classes.contentGroup}>
@@ -100,6 +110,11 @@ class ContentShow extends React.Component {
             video:
               <PublicContentShowVideo
                 video={video}
+              />,
+            question:
+              <PublicContentShowQuestion
+                question={question}
+                score={score}
               />,
           }, type)}
         </div>

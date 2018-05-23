@@ -16,6 +16,14 @@
     "attempt": "Congratulations!",
     "thankYou": "Thank you. Try again another time..."
   },
+  "appBarChildren": {
+    "description": "Description",
+    "help": "Help",
+    "sudoku": {
+      "title": "Sudoku",
+      "highlight": "Highlight"
+    }
+  },
   "back": "Back",
   "next": "Next",
   "finish": "Finish",

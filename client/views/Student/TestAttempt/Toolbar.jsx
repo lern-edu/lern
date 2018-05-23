@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import log from 'loglevel';
+import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
-import { Toolbar, LinearProgress, CircularProgress, Icon } from 'material-ui';
-import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
+import { LinearProgress, CircularProgress, Icon, IconButton, ButtonBase } from 'material-ui';
 
 const styles = theme => ({
   bottom: {
@@ -12,52 +13,204 @@ const styles = theme => ({
     right: 0,
     left: 0,
   },
+  parent: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: 56,
+    backgroundColor: theme.palette.background.paper,
+  },
+  root: {
+    transition: theme.transitions.create(['color', 'padding-top'], {
+      duration: theme.transitions.duration.short,
+    }),
+    paddingTop: theme.spacing.unit,
+    paddingBottom: 10,
+    paddingLeft: 12,
+    paddingRight: 12,
+    minWidth: 80,
+    maxWidth: 168,
+    color: theme.palette.text.secondary,
+    flex: '1',
+    '&:hover': {
+      paddingTop: 6,
+      color: theme.palette.primary.main,
+    },
+  },
+  wrapper: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    flexDirection: 'column',
+  },
+  label: {
+    fontFamily: theme.typography.fontFamily,
+    fontSize: theme.typography.pxToRem(12),
+    '&:hover': {
+      fontSize: theme.typography.pxToRem(14),
+    },
+  },
 });
 
 class StudentTestAttemptToolbar extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.timer = 0;
+    const { attempt, attempt: { test: { time } }, page } = props;
+
+    this.state = {};
+    if (time.timeoutType !== 'none') {
+      let startTime;
+      if (time.timeoutType === 'global') {
+        startTime = attempt.startedAt;
+      } else if (time.timeoutType === 'page') {
+        startTime = attempt.pages[page].startedAt;
+      }
+
+      let timeout = time.timeout;
+      let finishTime = new Date(startTime.getTime() + timeout);
+      let timer = finishTime.getTime() - new Date().getTime();
+
+      this.state = {
+        miliseconds: timer,
+      };
+    }
+  }
+
+  countDown = () => {
+    const { attempt, attempt: { test: { time } }, page } = this.props;
+    const { miliseconds } = this.state;
+    if (miliseconds - 1000 <= 0) {
+      if (time.timeoutType === 'global') {
+        let forced = true;
+        this.props.handleFinish(forced);
+      } else if (time.timeoutType === 'page') {
+        if (page < attempt.test.pages.length - 1) {
+          this.props.handleNext();
+        } else {
+          this.props.handleFinish();
+        }
+      }
+    }
+
+    this.setState({
+      miliseconds: miliseconds - 1000,
+    });
+  };
+
+  componentDidMount() {
+    const { attempt: { test: { time } } } = this.props;
+    if (this.timer === 0 && time.timeoutType !== 'none') {
+      this.timer = setInterval(this.countDown, 1000);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  parseMiliseconds(miliseconds) {
+    if (!miliseconds) {
+      return 'infinity';
+    }
+
+    let hours = Math.floor(miliseconds / (60 * 60 * 1000));
+    miliseconds -= hours * 60 * 60 * 1000;
+    let minutes = Math.floor(miliseconds / (60 * 1000));
+    miliseconds -= minutes * 60 * 1000;
+    let seconds = Math.floor(miliseconds / (1000));
+    return ('0' + hours).slice(-2) + ':'
+      + ('0' + minutes).slice(-2) + ':'
+      + ('0' + seconds).slice(-2);
+  }
+
   render() {
-    const { classes, bottom, onChange, numPages, page } = this.props;
+    log.info('StudentTestAttemptToolbar.render => ', this.props);
+    const { classes, loading, attempt, attempt: { test: { time } }, page } = this.props;
+
+    let numPages = attempt.test.pages.length;
 
     return (
       <div className={classes.bottom}>
         <LinearProgress mode="determinate" value={(page) * 100 / (numPages - 1)}/>
-        <BottomNavigation
-          value={bottom}
-          onChange={onChange}
-          showLabels
-        >
+        <div className={classes.parent}>
           {
-            bottom === 'loading'
-            ? <CircularProgress color='secondary' />
-            : [<BottomNavigationAction
-                label={i18n.__('StudentTestAttempt.back')}
-                value='back'
-                key='back'
-                icon={<Icon>chevron_left</Icon>}
-              />,
-              <BottomNavigationAction
-                label={i18n.__('StudentTestAttempt.dismiss')}
-                value='dismiss'
+            loading ?
+            <CircularProgress color='secondary' /> :
+            [
+
+              // Back
+              (time.timeoutType === 'global' || time.timeoutType === 'none') ?
+                <ButtonBase
+                  className={classes.root}
+                  key='back'
+                  focusRipple
+                  onClick={this.props.handleBack}
+                >
+                  <span className={classes.wrapper}>
+                    <Icon>chevron_left</Icon>
+                    <span className={classes.label}>{i18n.__('StudentTestAttempt.back')}</span>
+                  </span>
+                </ButtonBase>
+                : null,
+
+              //Timer
+              this.state.miliseconds ?
+                <ButtonBase
+                  className={classes.root}
+                  key='timer'
+                  focusRipple
+                >
+                  <span className={classes.wrapper}>
+                    <Icon>timer</Icon>
+                    <span className={classes.label}>
+                      {this.parseMiliseconds(this.state.miliseconds)}
+                    </span>
+                  </span>
+                </ButtonBase>
+                : null,
+
+              //Dismiss
+              <ButtonBase
+                className={classes.root}
                 key='dismiss'
-                icon={<Icon>mood_bad</Icon>}
-              />,
-              bottom !== 'finish' ?
-                <BottomNavigationAction
-                  label={i18n.__('StudentTestAttempt.next')}
-                  value='next'
+                focusRipple
+                onClick={this.props.handleDismiss}
+              >
+                <span className={classes.wrapper}>
+                  <Icon>mood_bad</Icon>
+                  <span className={classes.label}>{i18n.__('StudentTestAttempt.dismiss')}</span>
+                </span>
+              </ButtonBase>,
+
+              // Next or Finish
+              page < numPages - 1 ?
+                <ButtonBase
+                  className={classes.root}
                   key='next'
-                  icon={<Icon>chevron_right</Icon>}
-                /> :
-                <BottomNavigationAction
-                  label={i18n.__('StudentTestAttempt.finish')}
-                  value='finish'
+                  focusRipple
+                  onClick={this.props.handleNext}
+                >
+                  <span className={classes.wrapper}>
+                    <Icon>chevron_right</Icon>
+                    <span className={classes.label}>{i18n.__('StudentTestAttempt.next')}</span>
+                  </span>
+                </ButtonBase> :
+                <ButtonBase
+                  className={classes.root}
                   key='finish'
-                  icon={<Icon>check</Icon>}
-                />,
+                  focusRipple
+                  onClick={this.props.handleFinish}
+                >
+                  <span className={classes.wrapper}>
+                    <Icon>check</Icon>
+                    <span className={classes.label}>{i18n.__('StudentTestAttempt.finish')}</span>
+                  </span>
+                </ButtonBase>,
             ]
           }
-        </BottomNavigation>
+        </div>
       </div>
     );
   }
@@ -65,6 +218,12 @@ class StudentTestAttemptToolbar extends React.Component {
 
 StudentTestAttemptToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
+  page: PropTypes.number.isRequired,
+  attempt: PropTypes.object.isRequired,
+  handleBack: PropTypes.func,
+  handleNext: PropTypes.func,
+  handleDismiss: PropTypes.func,
+  handleFinish: PropTypes.func,
 };
 
 export default withStyles(styles)(StudentTestAttemptToolbar);

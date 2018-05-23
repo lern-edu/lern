@@ -12,8 +12,10 @@ import Input from 'material-ui/Input';
 import Select from 'material-ui/Select';
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
-import { Test } from 'meteor/duckdodgerbrasl:lern-model';
+import { Question } from 'meteor/duckdodgerbrasl:lern-model';
 import { MenuItem } from 'material-ui/Menu';
+
+import AdminQuestionNumber from './Number.jsx';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -26,7 +28,7 @@ const styles = theme => ({
   },
 });
 
-class AdminTestScores extends React.Component {
+class AdminQuestionScores extends React.Component {
 
   constructor(props) {
     super(props);
@@ -44,7 +46,7 @@ class AdminTestScores extends React.Component {
       this.save(scores);
     }
     else
-      this.setState({ open: true, score: new Test.TestScoreSchema({ ...tag, score: 0.1 }) });
+      this.setState({ open: true, score: new Question.QuestionScoreSchema({ ...tag, score: 0.1 }) });
   };
 
   handleChange = ({ target: { value } }) => {
@@ -53,10 +55,6 @@ class AdminTestScores extends React.Component {
     scores.push(_.clone(score));
     this.setState({ scores, score });
     this.save(scores);
-    this.setState({ open: false });
-  };
-
-  handleClose = () => {
     this.setState({ open: false });
   };
 
@@ -104,7 +102,7 @@ class AdminTestScores extends React.Component {
         </List>
 
         <Dialog
-          onClose={this.handleClose}
+          onClose={() => this.setState({ open: false })}
           transition={Transition}
           aria-labelledby='Score a tag'
           open={open}
@@ -143,7 +141,7 @@ class AdminTestScores extends React.Component {
 
 };
 
-AdminTestScores.propTypes = {
+AdminQuestionScores.propTypes = {
   classes: PropTypes.object.isRequired,
   doc: PropTypes.object.isRequired,
   tags: PropTypes.arrayOf(PropTypes.object),
@@ -151,4 +149,4 @@ AdminTestScores.propTypes = {
   scores: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default withStyles(styles)(AdminTestScores);
+export default withStyles(styles)(AdminQuestionScores);

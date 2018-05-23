@@ -12,7 +12,7 @@ const styles = theme => ({
   },
 });
 
-class AdminTestNumber extends React.Component {
+class AdminQuestionNumber extends React.Component {
 
   handleChange = ({ target: { value } }) => {
     const { doc, field, parent } = this.props;
@@ -49,10 +49,10 @@ class AdminTestNumber extends React.Component {
 
 };
 
-AdminTestNumber.propTypes = {
+AdminQuestionNumber.propTypes = {
   classes: PropTypes.object.isRequired,
   doc: PropTypes.object.isRequired,
   field: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(AdminTestNumber);
+export default withStyles(styles)(AdminQuestionNumber);

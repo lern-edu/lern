@@ -9,7 +9,7 @@ import log from 'loglevel';
 
 const Questions = new Mongo.Collection('questions');
 
-const RangeSchema = Class.create({
+const QuestionRangeSchema = Class.create({
   name: 'QuestionRange',
   fields: {
     min: {
@@ -25,57 +25,123 @@ const RangeSchema = Class.create({
   },
 });
 
+const QuestionScoreSchema = Class.create({
+  name: 'QuestionScore',
+  fields: {
+    author: Object,
+    name: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
+    parent: {
+      type: Object,
+      optional: true,
+    },
+    description: {
+      type: [Object],
+      optional: true,
+    },
+    _id: {
+      type: String,
+      validators: [{ type: 'Reference' }],
+    },
+    score: {
+      type: Number,
+    },
+  },
+});
+
+const QuestionAnswerSchema = Class.create({
+  name: 'QuestionAnswer',
+  fields: {
+    open: {
+      type: String,
+      optional: true,
+      validators: [
+        {
+          type: 'or',
+          param: [
+            { type: 'QuestionType' },
+            { type: 'required' },
+          ],
+        },
+      ],
+    },
+    singleAnswer: {
+      type: Number,
+      optional: true,
+    },
+  },
+});
+
 const Question = Class.create({
   name: 'Question',
   collection: Questions,
+  validators: {
+    type: [
+      {
+        type: 'choice',
+        param: StaticCollections.QuestionTypes,
+      },
+    ],
+    range: [{ type: 'QuestionRange' }],
+    sudoku: [
+      {
+        type: 'or',
+        param: [
+          { type: 'QuestionType' },
+          { type: 'required' },
+        ],
+      },
+    ],
+    level: [
+      {
+        type: 'or',
+        param: [
+          { type: 'QuestionType' },
+          { type: 'required' },
+        ],
+      },
+    ],
+  },
   fields: {
     description: {
       type: [Content],
-      validators: [{ type: 'minLength', param: 1 }],
       default: () => [],
     },
     text: {
       type: String,
       optional: true,
     },
-    description: {
-      type: [Content],
-      optional: true,
-    },
     type: {
       type: String,
-      validators: [
-        {
-          type: 'choice',
-          param: StaticCollections.QuestionTypes,
-        },
-      ],
       immutable: true,
     },
     answer: {
-      type: Object,
-      validators: [{ type: 'QuestionAnswer' }],
+      type: QuestionAnswerSchema,
       optional: true,
       immutable: true,
+      default: () => new QuestionAnswerSchema(),
     },
     range: {
-      type: [RangeSchema],
-      validators: [{ type: 'QuestionRange' }],
+      type: [QuestionRangeSchema],
       optional: true,
       immutable: true,
     },
-    sudoku: [Number],
+    sudoku: {
+      type: [Number],
+      optional: true,
+    },
     level: {
       type: String,
       optional: true,
     },
-    score: {
-      type: Number,
+    scores: {
+      type: [QuestionScoreSchema],
       optional: true,
     },
     options: {
       type: [Content],
-      validators: [{ type: 'QuestionOptions' }],
       optional: true,
     },
   },
@@ -90,7 +156,7 @@ const Question = Class.create({
           cRow[answer[row * 9 + col] - 1] = true;
         }
 
-        log.info('row: ' + row, cRow, conflictRow, _.every(cRow));
+        // log.info('row: ' + row, cRow, conflictRow, _.every(cRow));
       }
 
       var conflictCol = false;
@@ -101,7 +167,7 @@ const Question = Class.create({
           cCol[answer[row * 9 + col] - 1] = true;
         }
 
-        log.info('col: ' + col, cCol, conflictCol, _.every(cCol));
+        // log.info('col: ' + col, cCol, conflictCol, _.every(cCol));
       }
 
       var conflictGrid = false;
@@ -115,11 +181,11 @@ const Question = Class.create({
             }
           }
 
-          log.info('grid: ' + i + ',' + j, cGrid, conflictGrid, _.every(cGrid));
+          // log.info('grid: ' + i + ',' + j, cGrid, conflictGrid, _.every(cGrid));
         }
       }
 
-      log.info(conflictRow, conflictCol, conflictGrid);
+      // log.info(conflictRow, conflictCol, conflictGrid);
 
       conflict |= conflictRow || conflictCol || conflictGrid;
 
@@ -163,30 +229,32 @@ Question.extend({
       }
     },
 
-    beforeSave(e) {
+    beforeSave({ currentTarget: question }) {
       const contentText = _.join(
         _.map(
-          _.flatten(_.compact(_.map(this.get('content'), 'text.blocks'))),
+          _.flatten(_.compact(_.map(question.get('description'), 'text.blocks'))),
         'text'),
       ' ') || '';
       const optionsText = _.join(
         _.map(
-          _.flatten(_.compact(_.map(this.get('options'), 'text.blocks'))),
+          _.flatten(_.compact(_.map(question.get('options'), 'text.blocks'))),
         'text'),
       ' ') || '';
 
-      this.set('text', _.join([contentText, optionsText], ' '));
+      question.set('text', _.join([contentText, optionsText], ' '));
 
-      if (this.get('range.min'))
-        this.set('range.min', _.toNumber(this.get('range.min')));
-      if (this.get('range.max'))
-        this.set('range.max', _.toNumber(this.get('range.max')));
+      if (question.get('range.min'))
+        question.set('range.min', _.toNumber(question.get('range.min')));
+      if (question.get('range.max'))
+        question.set('range.max', _.toNumber(question.get('range.max')));
     },
   },
 });
 
 Author(Question);
 
-Question.RangeSchema = RangeSchema;
+Question.QuestionRangeSchema = QuestionRangeSchema;
+Question.QuestionAnswerSchema = QuestionAnswerSchema;
+Question.QuestionScoreSchema = QuestionScoreSchema;
 
 export default Question;

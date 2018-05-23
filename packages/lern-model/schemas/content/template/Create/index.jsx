@@ -13,6 +13,7 @@ import ContentRichText from './../RichText.jsx';
 import PublicContentCreateImage from './Image.jsx';
 import PublicContentCreateVideo from './Video.jsx';
 import PublicContentCreateTask from './Task.jsx';
+import PublicContentCreateQuestion from './Question/View.jsx';
 
 class ContentCreate extends React.Component {
 
@@ -24,6 +25,10 @@ class ContentCreate extends React.Component {
       doc: new props.Schema(),
       editorState: EditorState.createEmpty(),
       clear: false,
+      question: {
+        doc: null,
+        open: false,
+      },
     };
   };
 
@@ -35,24 +40,28 @@ class ContentCreate extends React.Component {
   // Handlers
 
   handleSubmit = () => {
-    if (typeof this.props.handleSubmit === 'function') {
-      this.props.handleSubmit();
-      return;
-    };
-
     const { doc, doc: { type } } = this.state;
     const { form, doc: docToSave, Schema, field='description' } = this.props;
-    if (_.isArray(_.get(docToSave, field))) {
-      const array = _.get(docToSave, field);
-      array.push(_.clone(doc));
-      docToSave.set(field, array);
-    } else docToSave.set(field, [_.clone(doc)]);
-    form.setState({ doc: docToSave });
+
+    if (typeof this.props.handleSubmit === 'function')
+      this.props.handleSubmit(doc);
+    else {
+      if (_.isArray(_.get(docToSave, field))) {
+        const array = _.get(docToSave, field);
+        array.push(_.clone(doc));
+        docToSave.set(field, array);
+      } else docToSave.set(field, [_.clone(doc)]);
+      form.setState({ doc: docToSave });
+    };
+
     this.setState({
       doc: new Schema({ type, [type]: '' }),
       editorState: EditorState.createEmpty(),
       clear: true,
     });
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(doc);
   };
 
   handleEditorChange = (editorState) => {
@@ -74,18 +83,23 @@ class ContentCreate extends React.Component {
   };
 
   handleTypeChange = ({ target: { value: type } }) => {
-    const { doc } = this.state;
+    const { doc, question } = this.state;
     doc[doc.type] = null;
     doc.type = type;
     doc[type] = '';
     this.setState({ doc });
+
+    if (type === 'question') {
+      question.open = true;
+      this.setState({ question });
+    }
   };
 
   // Render
 
   render() {
     const { contentTypes } = this.props;
-    const { editorState, doc, clear } = this.state;
+    const { editorState, doc, clear, question: { open } } = this.state;
     const { type, text, link, image } = doc;
 
     return (
@@ -138,6 +152,12 @@ class ContentCreate extends React.Component {
               task:
                 <PublicContentCreateTask
                   parent={this}
+                  clear={clear}
+                />,
+              question:
+                <PublicContentCreateQuestion
+                  parent={this}
+                  open={open}
                   clear={clear}
                 />,
             }, type)

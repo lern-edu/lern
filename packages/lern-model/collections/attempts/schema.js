@@ -25,6 +25,22 @@ const AttemptScoreSchema = Class.create({
   },
 });
 
+const AttemptPageSchema = Class.create({
+  name: 'AttemptPage',
+  fields: {
+    finished: {
+      type: Boolean,
+      default: false,
+    },
+    answers: {
+      type: [Object],
+      optional: true,
+    },
+  },
+});
+
+TimeTracked(AttemptPageSchema);
+
 const Attempt = Class.create({
   name: 'Attempt',
   collection: Attempts,
@@ -33,13 +49,13 @@ const Attempt = Class.create({
       type: Object,
       immutable: true,
     },
-    sudoku: {
-      type: Object,
-      optional: true,
-    },
     finished: {
       type: Boolean,
       default: false,
+    },
+    pages: {
+      type: [AttemptPageSchema],
+      default: () => [],
     },
     scores: {
       type: [AttemptScoreSchema],
@@ -71,8 +87,7 @@ const Attempt = Class.create({
               report.tests[test._id].push(attempt._id);
             else
               report.tests[test._id] = [attempt._id];
-          }
-          else {
+          } else {
             author.report.push(
               new User.UserReportSchema({
                 ...score.raw(),
@@ -98,8 +113,7 @@ const Attempt = Class.create({
                 const attemptIndex = reportTests[test._id].indexOf(attempt._id);
                 if (attemptIndex < 0)
                   reportTests[test._id].push(attempt._id);
-              }
-              else
+              } else
                 reportTests[test._id] = [attempt._id];
             };
 

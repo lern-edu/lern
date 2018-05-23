@@ -5,6 +5,7 @@ import StaticCollections from '../static.js';
 import Author from '../../behaviors/author.js';
 import TimeTracked from '../../behaviors/timetracked.js';
 import Content from '../../schemas/content/schema.js';
+import Templates from './templates.jsx';
 
 const Tests = new Mongo.Collection('tests');
 
@@ -74,6 +75,10 @@ const Test = Class.create({
       type: String,
       validators: [{ type: 'minLength', param: 1 }],
     },
+    image: {
+      type: String,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
     description: {
       type: [Content],
       validators: [{ type: 'minLength', param: 1 }],
@@ -92,20 +97,14 @@ const Test = Class.create({
       type: [TestPageSchema],
       optional: true,
     },
-    level: {
-      type: String,
-      validators: [{ type: 'OneOf', param: StaticCollections.SudokuLevel }],
-      optional: true,
-    },
     time: {
       type: TestTimeSchema,
       default: new TestTimeSchema(),
-      immutable: true,
+      /*immutable: true,*/
     },
     resolution: String,
     help: {
       type: [Content],
-      validators: [{ type: 'minLength', param: 1 }],
       optional: true,
     },
     score: Number,
@@ -119,6 +118,19 @@ const Test = Class.create({
     },
   },
 });
+
+if (Meteor.isClient)
+Test.extend({
+  fields: {
+    templates: {
+      type: Object,
+      default() {
+        return Templates;
+      },
+    },
+  },
+});
+
 Author(Test);
 
 Test.TestPageSchema = TestPageSchema;
