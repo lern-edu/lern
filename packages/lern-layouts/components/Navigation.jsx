@@ -29,6 +29,7 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       routes: {
         admin: {
           AdminHome: {
@@ -66,31 +67,14 @@ class Navigation extends React.Component {
     };
   }
 
-  /* Methods
-  */
-
-  updateState({ screen }) {
-    const { routes } = this.state;
-
-    this.setState({ routes, open: false });
-  }
-
   /* Lifecycle
   */
 
-  componentWillMount() {
-    const updateState = this.updateState.bind(this);
-    updateState(this.props);
-
+  componentDidMount() {
     if (window) {
       if (window.nav) throw new Meteor.Error('Nav already initialized');
       else window.nav = (open=true) => this.setState({ open });
     }
-  }
-
-  componentWillReceiveProps(props) {
-    const updateState = this.updateState.bind(this);
-    updateState(this.props);
   }
 
   componentWillUnmount() {

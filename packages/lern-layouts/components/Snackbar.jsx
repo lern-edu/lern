@@ -63,7 +63,7 @@ class Snackbar extends React.Component {
     this.state = { open: false, onClose: _.noop, message: '' };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (window) {
       if (window.snack) throw new Meteor.Error('Global snack already defined');
       else window.snack = this.setSnack.bind(this);
