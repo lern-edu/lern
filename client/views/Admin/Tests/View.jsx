@@ -40,7 +40,7 @@ class AdminTests extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getTests();
   }
 

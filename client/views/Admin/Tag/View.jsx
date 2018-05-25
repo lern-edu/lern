@@ -58,7 +58,7 @@ class AdminTag extends React.Component {
     return false;
   };
 
-  componentWillMount() {
+  componentDidMount() {
     log.info('AdminTag.componentWillMount');
     this.getTags(this.props.tagId);
   };

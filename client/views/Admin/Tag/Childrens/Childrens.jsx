@@ -43,7 +43,7 @@ class AdminTagChildrens extends React.Component {
     };
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.getTags(this.props.tagId);
   };
 
@@ -94,7 +94,7 @@ class AdminTagChildrens extends React.Component {
           };
         });
     });
-  }
+  };
 
   render() {
     const { doc, errors, collections, collections: { tags: { docs } } } = this.state;

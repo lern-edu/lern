@@ -11,7 +11,7 @@ const ITEM_PADDING_TOP = 8;
 
 class AdminTestSelect extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     const { doc, field, parent } = this.props;
     doc.validate({ fields: [field] }, (err) => {
       if (err) parent.setState({ errors: { [field]: { message: err.reason, error: true } } });

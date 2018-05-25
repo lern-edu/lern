@@ -64,7 +64,7 @@ class AdminTest extends React.Component {
     };
   };
 
-  componentWillMount() {
+  componentDidMount() {
     log.info('AdminTest.componentWillMount');
     this.getTests(this.props.testId);
     this.getTags();

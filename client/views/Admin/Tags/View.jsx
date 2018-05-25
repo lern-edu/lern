@@ -40,7 +40,7 @@ class AdminTags extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getTags();
   }
 

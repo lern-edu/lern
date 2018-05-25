@@ -39,7 +39,7 @@ class AdminUser extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { userId } = this.props;
 
     if (userId)

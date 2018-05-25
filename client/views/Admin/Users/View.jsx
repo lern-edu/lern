@@ -40,7 +40,7 @@ class AdminUsers extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { query, options } = this.state;
 
     Meteor.call('AdminUsersGet', query, options,  (err, docs) => {

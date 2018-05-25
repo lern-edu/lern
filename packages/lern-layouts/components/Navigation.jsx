@@ -67,6 +67,14 @@ class Navigation extends React.Component {
     };
   }
 
+  /* Methods
+  */
+
+  changePath = (path) => {
+    this.setState({ open: false });
+    FlowRouter.go(path);
+  };
+
   /* Lifecycle
   */
 
@@ -117,7 +125,7 @@ class Navigation extends React.Component {
                 logging
                 ? <div/>
                 : <div>
-                  <Button variant="raised" color='primary' href={FlowRouter.path('PublicLogin')} >
+                  <Button raised color='primary' onClick={() => this.changePath('PublicLogin')} >
                     Entrar
                   </Button>
                 </div>
@@ -172,7 +180,7 @@ class Navigation extends React.Component {
 
               {
                 _.map(routes[user.getRole()], ({ label, icon }, _route) =>
-                  <ListItem button component='a' key={_route} href={FlowRouter.path(_route)}>
+                  <ListItem button key={_route} onClick={() => this.changePath(_route)}>
                     <Icon>{icon}</Icon>
                     <ListItemText primary={i18n.__('Navigation', `${user.getRole()}.${label}`)} />
                   </ListItem>
@@ -189,7 +197,7 @@ class Navigation extends React.Component {
                 <ListItemText primary='Configurações' />
               </ListItem> */}
 
-              <ListItem button onTouchTap={logout}>
+              <ListItem button onClick={logout}>
                 <Icon>exit_to_app</Icon>
                 <ListItemText primary={i18n.__('Navigation.exit')} />
               </ListItem>
