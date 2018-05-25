@@ -59,7 +59,7 @@ class StudentTestAttempt extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     log.info('StudentTestAttempt.componentWillMount');
     this.getData();
   };
@@ -316,7 +316,7 @@ class StudentTestAttempt extends React.Component {
           </Grid>
 
         </Grid>
-        
+
         {
           !open
           ? undefined

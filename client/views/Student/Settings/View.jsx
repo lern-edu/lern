@@ -30,7 +30,7 @@ class StudentSettingsView extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     Meteor.call('UserGet', { limit: 1 },  (err, doc) => {
       if (err) snack({ message: 'Erro ao encontrar usuário' });
       this.setState({

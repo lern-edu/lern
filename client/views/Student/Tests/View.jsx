@@ -1,4 +1,3 @@
-// Libs
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -69,17 +68,12 @@ class StudentTests extends React.Component {
     };
   }
 
-  componentWillMount() {
-    log.info('StudentTests.componentWillMount');
-    const { query, options } = this.state;
-    this.getData();
-  };
-
   componentDidMount() {
     log.info('StudentTests.componentDidMount');
-    const { classes } = this.props;
+    const { classes, query, options } = this.props;
     const body = _.head(document.getElementsByTagName('body'));
     body.className = classes.body;
+    this.getData();
   };
 
   componentWillUnmount() {
