@@ -1,7 +1,7 @@
 // Libs
 import React from 'react';
 import _ from 'lodash';
-import List, { ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core/List';
+import { List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';

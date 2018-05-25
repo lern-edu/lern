@@ -4,7 +4,7 @@ import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { MenuItem } from '@material-ui/core/Menu';
+import { MenuItem } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import i18n from 'meteor/universe:i18n';
@@ -46,8 +46,7 @@ class ContentCreate extends React.Component {
       const array = _.get(docToSave, field);
       array.push(_.clone(doc));
       docToSave.set(field, array);
-    }
-    else docToSave.set(field, [_.clone(doc)]);
+    } else docToSave.set(field, [_.clone(doc)]);
     form.setState({ doc: docToSave });
     this.setState({
       doc: new Schema({ type, [type]: '' }),

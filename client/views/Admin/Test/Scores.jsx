@@ -3,17 +3,17 @@ import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List, { ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core/List';
+import { List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
-import Dialog, { DialogTitle, DialogContent, DialogActions } from '@material-ui/core/Dialog';
+import { Dialog,  DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Slide from '@material-ui/core/Slide';
 import { Test } from 'meteor/duckdodgerbrasl:lern-model';
-import { MenuItem } from '@material-ui/core/Menu';
+import { MenuItem } from '@material-ui/core';
 
 import AdminTestNumber from './Number.jsx';
 
@@ -44,8 +44,7 @@ class AdminTestScores extends React.Component {
       _.pullAt(scores, index);
       this.setState({ scores });
       this.save(scores);
-    }
-    else
+    } else
       this.setState({ open: true, score: new Test.TestScoreSchema({ ...tag, score: 0.1 }) });
   };
 
@@ -91,7 +90,7 @@ class AdminTestScores extends React.Component {
 
     return (
       <div>
-        
+
         <List className={classes.root}>
 
           {
@@ -116,9 +115,9 @@ class AdminTestScores extends React.Component {
           aria-labelledby='Score a tag'
           open={open}
         >
-          
+
           <DialogTitle id='scores-title'>Set score proportion</DialogTitle>
-          
+
           <DialogContent>
 
             <Input
@@ -139,7 +138,7 @@ class AdminTestScores extends React.Component {
             <Button onClick={this.handleClose('cancel')} color="secondary">
               Cancel
             </Button>
-            
+
             <Button onClick={this.handleClose('save')} color="primary">
               Save
             </Button>
@@ -147,7 +146,7 @@ class AdminTestScores extends React.Component {
           </DialogActions>
 
         </Dialog>
-      
+
       </div>
     );
   }

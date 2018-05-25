@@ -9,9 +9,9 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Select from '@material-ui/core/Select';
-import List, { ListItem, ListItemText } from '@material-ui/core/List';
-import Input, { InputLabel } from '@material-ui/core/Input';
-import { MenuItem } from '@material-ui/core/Menu';
+import { List, ListItem, ListItemText } from '@material-ui/core';
+import { Input, InputLabel } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 

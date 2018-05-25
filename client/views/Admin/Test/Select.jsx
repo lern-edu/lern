@@ -1,10 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import Input, { InputLabel } from '@material-ui/core/Input';
+import { Input, InputLabel } from '@material-ui/core';
 import { FormControl, FormHelperText } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
-import { MenuItem } from '@material-ui/core/Menu';
+import { MenuItem } from '@material-ui/core';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

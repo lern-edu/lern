@@ -4,7 +4,7 @@ import _ from 'lodash';
 import log from 'loglevel';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from '@material-ui/core';
-import { ListItemIcon, ListItemText, ListItemSecondaryAction } from '@material-ui/core/List';
+import { ListItemIcon, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -305,4 +305,3 @@ class StudentTestAttemptSudoku extends React.Component {
 };
 
 export default withStyles(styles)(StudentTestAttemptSudoku);
-

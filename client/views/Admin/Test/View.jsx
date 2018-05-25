@@ -11,8 +11,8 @@ import { LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider/Divider';
-import Stepper, { Step, StepLabel, StepContent } from '@material-ui/core/Stepper';
+import Divider from '@material-ui/core/Divider';
+import { Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
 
 const content = new Content();
 const ContentCreate = _.get(content, 'templates.ContentCreate');

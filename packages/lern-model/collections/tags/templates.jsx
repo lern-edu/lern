@@ -14,7 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from 'material-ui-icons/Close';
-import Slide from '@material-ui/core/transitions/Slide';
+import Slide from '@material-ui/core/Slide';
 import Fullscreen from 'material-ui-icons/Fullscreen';
 import Content from '../../schemas/content/schema.js';
 const content = new Content();

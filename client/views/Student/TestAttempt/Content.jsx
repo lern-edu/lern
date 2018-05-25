@@ -3,7 +3,7 @@ import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
 import PropTypes from 'prop-types';
-import List, { ListItem, ListItemText } from '@material-ui/core/List';
+import { List, ListItem, ListItemText } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
