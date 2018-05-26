@@ -75,6 +75,11 @@ class Navigation extends React.Component {
     FlowRouter.go(path);
   };
 
+  logout = () => {
+    Meteor.logout();
+    this.changePath('PublicLogin');
+  };
+
   /* Lifecycle
   */
 
@@ -105,7 +110,6 @@ class Navigation extends React.Component {
   render() {
     const { user, logging, route } = this.props;
     const { routes, open } = this.state;
-    const logout = () => Meteor.logout();
 
     const profilePic = _.get(user, 'profile.profilePic');
     const name = _.get(user, 'profile.name');
@@ -125,7 +129,10 @@ class Navigation extends React.Component {
                 logging
                 ? <div/>
                 : <div>
-                  <Button raised color='primary' onClick={() => this.changePath('PublicLogin')} >
+                  <Button
+                    variant='raised'
+                    color='primary'
+                    onClick={() => this.changePath('PublicLogin')}>
                     Entrar
                   </Button>
                 </div>
@@ -197,7 +204,7 @@ class Navigation extends React.Component {
                 <ListItemText primary='Configurações' />
               </ListItem> */}
 
-              <ListItem button onClick={logout}>
+              <ListItem button onClick={this.logout}>
                 <Icon>exit_to_app</Icon>
                 <ListItemText primary={i18n.__('Navigation.exit')} />
               </ListItem>
