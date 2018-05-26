@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { LinearProgress } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Input, { InputLabel } from '@material-ui/core/Input';
+import { Input, InputLabel } from '@material-ui/core';
 import { FormControl, FormHelperText } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider/Divider';
 

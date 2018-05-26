@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { LinearProgress, CircularProgress } from '@material-ui/core';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import { Description, Help, MoreVert, Settings } from 'material-ui-icons';
+import { Description, Help, MoreVert, Settings } from '@material-ui/icons';
 import { ListItemIcon, ListItemText } from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';

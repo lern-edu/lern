@@ -6,7 +6,7 @@ import ExpansionPanel, {
   ExpansionPanelSummary,
   ExpansionPanelActions,
 } from '@material-ui/core/ExpansionPanel';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import ExpandMoreIcon from '@material-ui/icons//ExpandMore';
 import { Button, Divider, Typography, Grid } from '@material-ui/core';
 
 import PublicContentShowTask from '../../Show/Task.jsx';

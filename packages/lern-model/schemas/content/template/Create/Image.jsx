@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import Card, { CardHeader, CardActions, CardContent } from '@material-ui/core/Card';
+import { Card, CardHeader, CardActions, CardContent } from '@material-ui/core';
 import { Modal, IconButton, Button, TextField, Typography, CircularProgress } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import green from '@material-ui/core/colors/green';
-import { ExpandMore, FileUpload } from 'material-ui-icons';
+import { ExpandMore, FileUpload } from '@material-ui/icons';
 
 const styles = theme => ({
   card: {

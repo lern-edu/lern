@@ -5,7 +5,7 @@ import { List, ListItem, ListItemText, ListItemSecondaryAction } from '@material
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import { Delete } from 'material-ui-icons';
+import { Delete } from '@material-ui/icons';
 
 class AdminTagsList extends React.Component {
 

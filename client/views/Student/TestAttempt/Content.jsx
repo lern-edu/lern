@@ -11,8 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import { Content } from 'meteor/duckdodgerbrasl:lern-model';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import KeyboardArrowLeft from '@material-ui/icons//KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons//KeyboardArrowRight';
 
 const content = new Content();
 const ContentShow = _.get(content, 'templates.ContentShow');

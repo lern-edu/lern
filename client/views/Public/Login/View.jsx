@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Card, { CardActions, CardContent, CardMedia } from '@material-ui/core/Card';
+import { Card, CardActions, CardContent, CardMedia } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import PropTypes from 'prop-types';

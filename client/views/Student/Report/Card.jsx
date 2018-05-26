@@ -7,7 +7,7 @@ import i18n from 'meteor/universe:i18n';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import Typography from '@material-ui/core/Typography';
-import Card, { CardActions, CardContent, CardHeader } from '@material-ui/core/Card';
+import { Card, CardActions, CardContent, CardHeader } from '@material-ui/core';
 import yellow from '@material-ui/core/colors/yellow';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';

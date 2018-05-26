@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import i18n from 'meteor/universe:i18n';
 import { LinearProgress } from '@material-ui/core';
-import GridList, { GridListTile, GridListTileBar } from '@material-ui/core/GridList';
+import { GridList, GridListTile, GridListTileBar } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';

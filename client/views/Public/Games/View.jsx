@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Card, { CardActions, CardContent, CardMedia } from '@material-ui/core/Card';
+import { Card, ardActions, CardContent, CardMedia } from '@material-ui/core';
 import { Typography, Button } from '@material-ui/core';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 
