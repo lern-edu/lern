@@ -90,7 +90,6 @@ class ContentShow extends React.Component {
     const { index, form, field='description', classes } = this.props;
     const docToSave = _.get(form, 'state.doc');
 
-    console.log('ContentShow', field);
     const array = _.get(docToSave, field);
 
     return (
