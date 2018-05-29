@@ -291,7 +291,6 @@ class StudentTestAttemptSudoku extends React.Component {
                     <Icon>edit</Icon>
                   </Button>
                 </Grid>
-
               </Grid>
             </Grid>
 
@@ -305,3 +304,4 @@ class StudentTestAttemptSudoku extends React.Component {
 };
 
 export default withStyles(styles)(StudentTestAttemptSudoku);
+
