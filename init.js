@@ -149,7 +149,9 @@ Meteor.startup(() => {
       const userId = Accounts.createUser(admin);
       const user = User.findOne(userId);
       user.roles = ['admin'];
+      user.emails[0].verified = true;
       user.save();
+      Accounts.addEmail(userId, 'suporte@flows.bhz.br', true);
     };
 
   };
