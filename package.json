@@ -11,7 +11,8 @@
     "prestart": "meteor=$(meteor --version); if [ \"$meteor\" != \"Meteor 1.6\" ]; then meteor update --release METEOR@1.6; fi;",
     "test": "MOCHA_RUN_ORDER=serial meteor test-packages --once --driver-package dispatch:mocha-phantomjs --port 3100",
     "test-watch": "MOCHA_RUN_ORDER=serial meteor test-packages --driver-package practicalmeteor:mocha --port 3100",
-    "jsdoc": "./node_modules/.bin/jsdoc -c jsdoc.json"
+    "jsdoc": "./node_modules/.bin/jsdoc -c jsdoc.json",
+    "deploy-dev": "cd .develop; mup deploy --settings settings.json"
   },
   "repository": {
     "type": "git",
