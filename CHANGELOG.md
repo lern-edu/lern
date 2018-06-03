@@ -9,5 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.1.2] - 17/03/2018
 ### Added
 - Section "CHANGELOG".
+- [#108](https://github.com/lern-edu/lern/issues/108) Create a automate deploy
+
+## [1.1.2] - 17/03/2018
+### Added
+- Section "CHANGELOG".
 ### Fixed
 - [#161](https://github.com/lern-edu/lern/issues/161) Fix content show on student test attempt
