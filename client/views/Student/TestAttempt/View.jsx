@@ -174,7 +174,7 @@ class StudentTestAttempt extends React.Component {
           log.error('handleFinish.error =>', err, doc);
         } else {
           log.info('StudentTestAttempt.TestAttemptFinish => finish =>', doc);
-          snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
+          !forced && snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
           FlowRouter.go('StudentHome');
         };
 
