@@ -77,6 +77,7 @@ const Test = Class.create({
     },
     image: {
       type: String,
+      optional: true,
       validators: [{ type: 'minLength', param: 1 }],
     },
     description: {
