@@ -217,8 +217,8 @@ class AdminTestImage extends React.Component {
     return (
       <Card style={{ padding: '5px' }}>
         <CardHeader
-          title={i18n.__('Templates.image')}
-          subheader={file ? file.name : i18n.__('Templates.no_image')}
+          title={i18n.__('AdminTestImage.image')}
+          subheader={file ? file.name : i18n.__('AdminTestImage.no_image')}
           action={
             <IconButton
               className={classnames(classes.expand, {
@@ -256,7 +256,7 @@ class AdminTestImage extends React.Component {
                 disabled={upload.success}
                 onClick={this.triggerSelectFolder.bind(this)}
               >
-                {i18n.__('Templates.upload')}
+                {i18n.__('AdminTestImage.upload')}
                 <FileUpload className={classes.rightIcon} />
               </Button>
               {upload.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
@@ -269,7 +269,7 @@ class AdminTestImage extends React.Component {
               disabled={!remove}
               onClick={this.handleRemove.bind(this)}
             >
-              {i18n.__('Templates.remove')}
+              {i18n.__('AdminTestImage.remove')}
             </Button>
           </div>
         </CardActions>
@@ -282,10 +282,10 @@ class AdminTestImage extends React.Component {
         >
           <div className={classes.modal}>
             <Typography type="title">
-              {i18n.__('Templates.sorry')}
+              {i18n.__('AdminTestImage.sorry')}
             </Typography>
             <Typography type="subheading">
-              {i18n.__('Templates.instructions.extension')}
+              {i18n.__('AdminTestImage.instructions.extension')}
             </Typography>
             <Button
               color='primary'
