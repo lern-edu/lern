@@ -40,9 +40,9 @@ class AdminTestScores extends React.Component {
       _.pullAt(scores, index);
       this.setState({ scores });
       this.save(scores);
-    }
-    else
+    } else {
       this.setState({ open: true, score: new Test.TestScoreSchema({ ...tag, score: 0.1 }) });
+    }
   };
 
   handleChange = ({ target: { value } }) => {
@@ -66,7 +66,7 @@ class AdminTestScores extends React.Component {
     this.setState({ open: false });
   };
 
-  handleClose = () => {
+  handleCloseDialog = () => {
     this.setState({ open: false });
   };
 
@@ -111,10 +111,11 @@ class AdminTestScores extends React.Component {
               );
             })
           }
+
         </List>
 
         <Dialog
-          onClose={this.handleClose}
+          onClose={this.handleCloseDialog}
           transition={Transition}
           aria-labelledby='Score a tag'
           open={open}
