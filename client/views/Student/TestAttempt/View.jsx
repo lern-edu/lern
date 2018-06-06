@@ -165,11 +165,7 @@ class StudentTestAttempt extends React.Component {
       Meteor.call('StudentTestAttemptFinish', attempt._id, false, (err, doc) => {
 
         if (err || !doc) {
-          log.info('StudentTestAttempt.TestAttemptFinish => error =>', err);
-          if (err && err.error === 501)
-            snack({ message: i18n.__('StudentTestAttempt.error.sudokuInvalid') });
-          else
-            snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
+          snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
           this.setState({ loading: false });
           log.error('handleFinish.error =>', err, doc);
         } else {
