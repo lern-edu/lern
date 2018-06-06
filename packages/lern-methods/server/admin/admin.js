@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { User, Company, Tag, Test } from 'meteor/duckdodgerbrasl:lern-model';
+import { User, Company, Tag, Test, Question } from 'meteor/duckdodgerbrasl:lern-model';
 import log from 'loglevel';
 import Check from 'meteor/duckdodgerbrasl:lern-check';
 import Helpers from '../../helpers.js';
@@ -231,5 +231,60 @@ Helpers.Methods({ prefix, protect }, {
    */
   TestDelete(_id) {
     Test.remove(_id);
+  },
+});
+
+// =================== QUESTIONS METHODS ====================
+
+Helpers.Methods({ prefix, protect }, {
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Retrieve questions from the database
+   * @example
+   * const questions = Meteor.call('AdminQuestionsGet');
+   * @public
+   * @param {Object} [query] - Query to mongo
+   * @param {Object} [options] - Options to mongo
+   * @return {Array} - Array of questions
+   */
+  QuestionsGet(query, options) {
+    return Question.find(query, options).fetch();
+  },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Count questions that match the criteria
+   * @example
+   * const numQuestions = Meteor.call('AdminQuestionsCount');
+   * @public
+   * @param {Object} [query] - Query to mongo
+   * @param {Object} [options] - Options to mongo
+   * @return {Number} - Number of questions
+   */
+  QuestionsCount(query, options) {
+    return Question.find(query, options).count();
+  },
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Save a question in collection
+   * @example
+   * const savedQuestion = Meteor.call('AdminQuestionSave', company);
+   * @public
+   * @param {Object} question - Company to be saved
+   * @return {Object} - Saved company (with _id)
+   */
+  QuestionSave: Helpers.DefaultSave,
+
+  /**
+   * @memberof LernMethods.Admin()
+   * @desc Delete a question from collection
+   * @example
+   * Meteor.call('AdminQuestionDelete', _id);
+   * @public
+   * @param {Object} _id - Question _id to be removed
+   */
+  QuestionsDelete(_id) {
+    Question.remove(_id);
   },
 });

@@ -32,6 +32,10 @@ const AttemptPageSchema = Class.create({
       type: Boolean,
       default: false,
     },
+    answers: {
+      type: [Object],
+      optional: true,
+    },
   },
 });
 
@@ -44,10 +48,6 @@ const Attempt = Class.create({
     test: {
       type: Object,
       immutable: true,
-    },
-    sudoku: {
-      type: Object,
-      optional: true,
     },
     finished: {
       type: Boolean,

@@ -2,6 +2,7 @@
 import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
+import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from 'material-ui';
 import { ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
@@ -55,7 +56,20 @@ class StudentTestAttemptSudoku extends React.Component {
   constructor(props) {
     log.info('StudentTestAttemptSudoku.constructor =>', props);
     super(props);
-    this.state = { answer: props.sudoku.answer, value: null, backward: [], forward: [] };
+    const { attempt, page, sudoku } = props;
+    const answer = _.find(_.get(attempt, `pages.${page}.answers`), { _id: sudoku._id });
+
+    if (!answer.answer)
+      answer.answer = _.clone(sudoku.sudoku);
+
+    this.state = {
+      answer: answer.answer,
+      value: null,
+      backward: [],
+      forward: [],
+      edit: false,
+      clear: false,
+    };
   };
 
   // Handlers
@@ -68,7 +82,8 @@ class StudentTestAttemptSudoku extends React.Component {
     const { answer, value } = this.state;
 
     const index = row * 9 + col;
-    if (sudoku.board[index] === 0) {
+
+    if (sudoku.sudoku[index] === 0) {
 
       const backward = { row, col, value, old: _.clone(answer[index]) };
 
@@ -132,9 +147,12 @@ class StudentTestAttemptSudoku extends React.Component {
   };
 
   keepAttemptUpdated = (field='answer') => {
-    const { attempt } = this.props;
+    const { attempt, sudoku, page } = this.props;
     const { answer } = this.state;
-    attempt.set('sudoku.answer', answer);
+
+    const oldAnswer = _.find(_.get(attempt, `pages.${page}.answers`), { _id: sudoku._id });
+    oldAnswer.answer = answer;
+
     Meteor.call('StudentTestAttemptUpdate', attempt, (err, res) => {
       if (err) log.error(err);
     });
@@ -143,7 +161,7 @@ class StudentTestAttemptSudoku extends React.Component {
   // Render
   render() {
     log.info('StudentTestAttemptSudoku.render =>', this.state);
-    const { classes, sudoku, highlight } = this.props;
+    const { classes, sudoku, highlight=true } = this.props;
     const { answer, value, backward, forward, edit, clear } = this.state;
 
     return (
@@ -184,9 +202,20 @@ class StudentTestAttemptSudoku extends React.Component {
                             {
                               cell && _.isNumber(cell)
                               ? (
-                                (row < 3 || row > 5)
-                                ? 'white'
-                                : 'rgba(0, 0, 0, 0.12)'
+                                <IconButton
+                                  className={classes.cellPaper}
+                                  onClick={() => this.handleInsertValue(row, col)}
+                                  style={{
+                                    fontWeight: cell && (sudoku.sudoku[row * 9 + col] === cell)
+                                      ? 'bold'
+                                      : 'regular',
+                                    color: cell && (sudoku.sudoku[row * 9 + col] === cell)
+                                      ? 'black'
+                                      : undefined,
+                                  }}
+                                >
+                                  {cell}
+                                </IconButton>
                               )
                               : (
                                 <Grid container className={classes.editContainer} spacing={0} justify='center'>
@@ -290,6 +319,14 @@ class StudentTestAttemptSudoku extends React.Component {
       </Grid>
     );
   }
+};
+
+StudentTestAttemptSudoku.propTypes = {
+  sudoku: PropTypes.object.isRequired,
+  attempt: PropTypes.object.isRequired,
+  highlight: PropTypes.bool,
+  page: PropTypes.number.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(StudentTestAttemptSudoku);

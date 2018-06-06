@@ -9,7 +9,6 @@
   },
   "error": {
     "findTest": "Problema ao encontrar teste",
-    "sudokuInvalid": "O jogo do sudoku está incorreto",
     "finishAttempt": "Problema ao finalizar teste"
   },
   "success": {
