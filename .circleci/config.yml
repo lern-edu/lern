@@ -1,0 +1,8 @@
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - run: |
+          npm install
+          npm test
