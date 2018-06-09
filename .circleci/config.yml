@@ -32,6 +32,12 @@ jobs:
           paths:
             - node_modules
       - run:
+          name: 'Mock settings.json'
+          command: echo { "credentials": { "S3": { "accessKeyId": "", "secretAccessKey": "" } } } > settings.json
+      - run:
+          name: 'Check settings.json'
+          command: cat settings.json
+      - run:
           name: Test
           command: 'npm test'
   deploy:
@@ -45,7 +51,7 @@ jobs:
           command: 'meteor --version'
       - run:
           name: Aliasing
-          command: 'alias meteor=/usr/local/bin/meteor'  
+          command: 'alias meteor=/usr/local/bin/meteor'
       - run:
           name: ls
           command: ls
