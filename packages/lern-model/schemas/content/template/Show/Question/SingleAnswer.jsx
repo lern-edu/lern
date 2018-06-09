@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import Radio, { RadioGroup } from '@material-ui/core/Radio';
-import Grid from '@material-ui/core/Grid';
+import Radio, { RadioGroup } from 'material-ui/Radio';
+import Grid from 'material-ui/Grid';
 
 import ContentShow from '../index.jsx';
 

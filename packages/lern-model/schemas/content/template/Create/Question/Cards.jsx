@@ -2,12 +2,12 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { LinearProgress } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Card, { CardActions, CardContent } from '@material-ui/core/Card';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { LinearProgress } from 'material-ui/Progress';
+import { withStyles } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 
 import ContentShow from '../../Show/index.jsx';
 import PublicContentCreateQuestionCard from './Card.jsx';

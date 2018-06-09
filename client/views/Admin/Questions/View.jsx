@@ -4,18 +4,18 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import log from 'loglevel';
 import classNames from 'classnames';
-import TextField from '@material-ui/core/TextField';
-import AppBar from '@material-ui/core/AppBar';
-import Icon from '@material-ui/core/Icon';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import { LinearProgress } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import TextField from 'material-ui/TextField';
+import AppBar from 'material-ui/AppBar';
+import Icon from 'material-ui/Icon';
+import Button from 'material-ui/Button';
+import Toolbar from 'material-ui/Toolbar';
+import { LinearProgress } from 'material-ui/Progress';
+import { withStyles } from 'material-ui/styles';
 
-import IconButton from '@material-ui/core/IconButton';
-import Input, { InputLabel, InputAdornment } from '@material-ui/core/Input';
-import { FormControl, FormHelperText } from '@material-ui/core';
-import Search from '@material-ui/icons/Search';
+import IconButton from 'material-ui/IconButton';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Search from 'material-ui-icons/Search';
 
 import { Layout, Snackbar } from 'meteor/duckdodgerbrasl:lern-layouts';
 

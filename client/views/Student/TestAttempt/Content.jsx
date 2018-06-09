@@ -2,6 +2,7 @@
 import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
+import { Content } from 'meteor/duckdodgerbrasl:lern-model';
 import PropTypes from 'prop-types';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -18,9 +19,9 @@ import KeyboardArrowRight from '@material-ui/icons//KeyboardArrowRight';
 import StudentTestAttemptSudoku from './Sudoku.jsx';
 import StudentTestAttemptSingleAnswer from './SingleAnswer.jsx';
 import StudentTestAttemptOpen from './Open.jsx';
-
 const content = new Content();
 const ContentShow = _.get(content, 'templates.ContentShow');
+
 
 // Styles
 const styles = theme => ({

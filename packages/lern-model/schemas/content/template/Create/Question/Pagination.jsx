@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/Icon';
 
 /** Public pagination for other views
   * @where {client}

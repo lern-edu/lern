@@ -2,13 +2,13 @@ import React from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import { Close, Search } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import Typography from 'material-ui/Typography';
+import TextField from 'material-ui/TextField';
+import { Close, Search } from 'material-ui-icons';
+import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
   appBar: {

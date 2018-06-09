@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import log from 'loglevel';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from 'material-ui/styles';
 import _ from 'lodash';
-import Dialog from '@material-ui/core/Dialog';
-import Slide from '@material-ui/core/Slide';
-import Grid from '@material-ui/core/Grid';
+import Dialog from 'material-ui/Dialog';
+import Slide from 'material-ui/transitions/Slide';
+import Grid from 'material-ui/Grid';
 
 import PublicContentCreateQuestionDialogToolbar from './Toolbar.jsx';
 import PublicContentCreateQuestionDialogCards from './Cards.jsx';
@@ -145,7 +145,7 @@ class PublicContentCreateQuestionDialog extends React.Component {
           />
 
           <div className={classes.root}>
-
+            
               <Grid
                 container
                 spacing={16}
@@ -164,7 +164,7 @@ class PublicContentCreateQuestionDialog extends React.Component {
                 </Grid>
 
               </Grid>
-
+            
           </div>
 
         </Dialog>

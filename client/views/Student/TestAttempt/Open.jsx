@@ -5,10 +5,10 @@ import log from 'loglevel';
 import PropTypes from 'prop-types';
 import { Content } from 'meteor/duckdodgerbrasl:lern-model';
 // Material Components
-import Grid from '@material-ui/core/Grid';
-import Input, { InputLabel } from '@material-ui/core/Input';
-import { FormControl } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Grid from 'material-ui/Grid';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
+import { withStyles } from 'material-ui/styles';
 
 // Styles
 const styles = theme => ({
