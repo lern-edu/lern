@@ -2,18 +2,18 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
-import Avatar from 'material-ui/Avatar';
-import Paper from 'material-ui/Paper';
-import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
-import Input from 'material-ui/Input';
-import Select from 'material-ui/Select';
-import Button from 'material-ui/Button';
-import Slide from 'material-ui/transitions/Slide';
+import { withStyles } from '@material-ui/core/styles';
+import { List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
+import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import Slide from '@material-ui/core/Slide';
 import { Question } from 'meteor/duckdodgerbrasl:lern-model';
-import { MenuItem } from 'material-ui/Menu';
+import { MenuItem } from '@material-ui/core/Menu';
 
 import AdminQuestionNumber from './Number.jsx';
 
@@ -44,8 +44,7 @@ class AdminQuestionScores extends React.Component {
       _.pullAt(scores, index);
       this.setState({ scores });
       this.save(scores);
-    }
-    else
+    } else
       this.setState({ open: true, score: new Question.QuestionScoreSchema({ ...tag, score: 0.1 }) });
   };
 
@@ -79,7 +78,7 @@ class AdminQuestionScores extends React.Component {
 
     return (
       <div>
-        
+
         <List className={classes.root}>
 
           {
@@ -107,9 +106,9 @@ class AdminQuestionScores extends React.Component {
           aria-labelledby='Score a tag'
           open={open}
         >
-          
+
           <DialogTitle id='scores-title'>Set score proportion</DialogTitle>
-          
+
           <DialogContent>
 
             <Select
@@ -134,7 +133,7 @@ class AdminQuestionScores extends React.Component {
           </DialogContent>
 
         </Dialog>
-      
+
       </div>
     );
   }

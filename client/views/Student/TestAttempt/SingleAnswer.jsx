@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import { Content } from 'meteor/duckdodgerbrasl:lern-model';
 
 // Material Components
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import Radio, { RadioGroup } from '@material-ui/core/Radio';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
 // Styles
 const styles = theme => ({});

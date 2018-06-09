@@ -1,12 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormLabel, FormControl, FormControlLabel, FormHelperText } from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
+import Input, { InputLabel } from '@material-ui/core/Input';
+import { FormLabel, FormControl, FormControlLabel, FormHelperText } from '@material-ui/core';
+import Radio, { RadioGroup } from '@material-ui/core/Radio';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 
 // Styles
 const styles = theme => ({
