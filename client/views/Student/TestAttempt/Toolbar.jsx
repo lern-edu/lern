@@ -79,7 +79,7 @@ class StudentTestAttemptToolbar extends React.Component {
   }
 
   countDown = () => {
-    const { attempt, attempt: { test: { time } }, page } = this.props;
+    const { attempt, attempt: { test: { time, pages } }, page } = this.props;
     const { miliseconds } = this.state;
     if (miliseconds - 1000 <= 0) {
       if (time.timeoutType === 'global') {
@@ -89,7 +89,7 @@ class StudentTestAttemptToolbar extends React.Component {
         if (page < attempt.test.pages.length - 1) {
           this.props.handleNext();
         } else {
-          this.props.handleFinish();
+          this.props.handleFinish(page === (pages.length - 1));
         }
       }
     }
@@ -141,7 +141,7 @@ class StudentTestAttemptToolbar extends React.Component {
             [
 
               // Back
-              time.timeoutType === 'global' ?
+              (time.timeoutType === 'global' || time.timeoutType === 'none') ?
                 <ButtonBase
                   className={classes.root}
                   key='back'

@@ -25,6 +25,7 @@ import AdminTestTime from './Time.jsx';
 import AdminTestTimeout from './Timeout.jsx';
 import AdminTestPages from './Pages.jsx';
 import AdminTestScores from './Scores.jsx';
+import AdminTestImage from './Image.jsx';
 
 // Styles
 const styles = theme => ({
@@ -138,7 +139,7 @@ class AdminTest extends React.Component {
     const { classes, testId } = this.props;
 
     const actionButtons = (field) => {
-      const stepsLenght = 9;
+      const stepsLenght = 10;
       let error = _.get(this, `state.errors.${field}.error`);
 
       return (
@@ -196,7 +197,6 @@ class AdminTest extends React.Component {
 
                             <Grid item xs={12}>
 
-
                               <Paper className={classes.paper}>
 
                                 <AdminTestText
@@ -219,6 +219,32 @@ class AdminTest extends React.Component {
                         </Step>
 
                         {/* End doc.name */}
+                        {/* doc.cover */}
+
+                        <Step key='image'>
+                          <StepLabel>Cover Image</StepLabel>
+
+                          <StepContent>
+
+                            <Grid item xs={12}>
+
+                              <Paper className={classes.paper}>
+
+                                <AdminTestImage
+                                  doc={doc}
+                                  parent={this}
+                                />
+
+                                {actionButtons()}
+                              </Paper>
+
+                            </Grid>
+
+                          </StepContent>
+
+                        </Step>
+
+                        {/* End doc.cover */}
                         {/* doc.description */}
 
                         <Step key='description'>
@@ -472,6 +498,7 @@ class AdminTest extends React.Component {
 
                                 <AdminTestScores
                                   doc={doc}
+                                  scores={doc.scores}
                                   tags={tags.docs}
                                   errors={errors}
                                   parent={this}

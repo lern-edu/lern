@@ -4,6 +4,7 @@ import Company from './collections/companies/schema.js';
 import Tag from './collections/tags/schema.js';
 import Test from './collections/tests/schema.js';
 import Attempt from './collections/attempts/schema.js';
+import Question from './collections/questions/schema.js';
 import Sudoku from './collections/sudoku/schema.js';
 import Content from './schemas/content/schema.js';
 import Regex from './regex.js';
@@ -14,4 +15,4 @@ import Regex from './regex.js';
  */
 const LernModel = true;
 
-export { User, Company, Tag, Test, Attempt, Sudoku, Content, StaticCollections, Regex };
+export { User, Company, Tag, Test, Attempt, Sudoku, Question, Content, StaticCollections, Regex };

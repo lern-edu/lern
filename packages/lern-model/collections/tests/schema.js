@@ -75,6 +75,11 @@ const Test = Class.create({
       type: String,
       validators: [{ type: 'minLength', param: 1 }],
     },
+    image: {
+      type: String,
+      optional: true,
+      validators: [{ type: 'minLength', param: 1 }],
+    },
     description: {
       type: [Content],
       validators: [{ type: 'minLength', param: 1 }],
@@ -93,11 +98,6 @@ const Test = Class.create({
       type: [TestPageSchema],
       optional: true,
     },
-    level: {
-      type: String,
-      validators: [{ type: 'OneOf', param: StaticCollections.SudokuLevel }],
-      optional: true,
-    },
     time: {
       type: TestTimeSchema,
       default: new TestTimeSchema(),
@@ -106,7 +106,6 @@ const Test = Class.create({
     resolution: String,
     help: {
       type: [Content],
-      validators: [{ type: 'minLength', param: 1 }],
       optional: true,
     },
     score: Number,

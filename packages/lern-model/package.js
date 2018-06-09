@@ -58,6 +58,9 @@ Package.onUse((api) => {
     'collections/tests/schema.js',
     'collections/tests/templates.jsx',
 
+    'collections/questions/validators.js',
+    'collections/questions/schema.js',
+
     // Translations
     'collections/users/translations/Templates/en-US.i18n.json',
     'collections/users/translations/Templates/pt-BR.i18n.json',

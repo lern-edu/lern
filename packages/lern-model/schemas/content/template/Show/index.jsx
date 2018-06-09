@@ -12,6 +12,7 @@ import PublicContentRichText from './../RichText.jsx';
 import PublicContentShowImage from './Image.jsx';
 import PublicContentShowVideo from './Video.jsx';
 import PublicContentShowTask from './Task.jsx';
+import PublicContentShowQuestion from './Question/View.jsx';
 
 const styles = theme => ({
   contentGroup: {
@@ -45,6 +46,9 @@ class ContentShow extends React.Component {
     _.pullAt(array, [index]);
     docToSave.set(field, array);
     form.setState({ doc: docToSave });
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   handleDown = () => {
@@ -58,6 +62,9 @@ class ContentShow extends React.Component {
       docToSave.set(field, array);
       form.setState({ doc: docToSave });
     }
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   handleUp = () => {
@@ -71,14 +78,18 @@ class ContentShow extends React.Component {
       docToSave.set(field, array);
       form.setState({ doc: docToSave });
     }
+
+    if (typeof this.props.afterUpdate === 'function')
+      this.props.afterUpdate(docToSave);
   };
 
   // Render
 
   render() {
-    const { doc: { text, link, image, type, video }, canRemove = true } = this.props;
+    const { doc: { text, link, image, type, video, question, score }, canRemove = true } = this.props;
     const { index, form, field='description', classes } = this.props;
     const docToSave = _.get(form, 'state.doc');
+
     const array = _.get(docToSave, field);
 
     return (
@@ -101,6 +112,11 @@ class ContentShow extends React.Component {
               <PublicContentShowVideo
                 video={video}
               />,
+            question:
+              <PublicContentShowQuestion
+                question={question}
+                score={score}
+              />,
           }, type)}
         </div>
         {
@@ -109,7 +125,7 @@ class ContentShow extends React.Component {
           :
           <div className={classes.buttonGroup}>
             {
-              array.length > 1 && index > 0 ?
+              array && array.length > 1 && index > 0 ?
                 <IconButton
                   onClick={this.handleUp}
                   className={classes.button}
@@ -124,7 +140,7 @@ class ContentShow extends React.Component {
               <RemoveCircle />
             </IconButton>
             {
-              array.length > 1 && index < array.length - 1 ?
+              array && array.length > 1 && index < array.length - 1 ?
               <IconButton
                 onClick={this.handleDown}
                 className={classes.button}

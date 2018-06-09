@@ -4,7 +4,7 @@ import moment from 'moment';
 import _ from 'lodash';
 moment.locale('pt-br');
 i18n.setLocale('pt-BR');
-import { User } from 'meteor/duckdodgerbrasl:lern-model';
+import { User, Question } from 'meteor/duckdodgerbrasl:lern-model';
 
 // Material events
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -17,9 +17,20 @@ Meteor.startup(() => {
   log.setLevel(env === 'development' ? 'info' : logLevel);
 
   if (env === 'production') {
-    process.env.ROOT_URL = 'https://app.lern.com.br';
+    process.env.ROOT_URL = 'https://dev.flows.bhz.br';
   }
 
+});
+
+// Text search
+Meteor.startup(() => {
+  if (Meteor.isServer) {
+    Question.getCollection()._ensureIndex({
+      text: 'text',
+      type: 'text',
+      level: 'text',
+    });
+  }
 });
 
 /**
@@ -149,7 +160,9 @@ Meteor.startup(() => {
       const userId = Accounts.createUser(admin);
       const user = User.findOne(userId);
       user.roles = ['admin'];
+      user.emails[0].verified = true;
       user.save();
+      Accounts.addEmail(userId, 'suporte@flows.bhz.br', true);
     };
 
   };

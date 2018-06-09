@@ -61,58 +61,45 @@ class AdminTestPage extends React.Component {
           </Toolbar>
         </AppBar>
         <Grid container>
-          {
-            // PENDING CREATE MULTIPLE PAGES
-            doc.get('resolution') === 'content'
-            ? (
+          <Grid item xs={12}>
+
               <Grid item xs={12}>
 
-                  <Grid item xs={12}>
+                <Paper className={classes.paper}>
 
-                    <Paper className={classes.paper}>
+                  <ContentCreate
+                    Schema={Content}
+                    doc={doc}
+                    field={field}
+                    form={parent}
+                    contentTypes={StaticCollections.ContentTypes}
+                  />
 
-                      <ContentCreate
-                        Schema={Content}
-                        doc={doc}
-                        field={field}
-                        form={parent}
-                        contentTypes={StaticCollections.ContentTypes}
-                      />
-
-                    </Paper>
-
-                  </Grid>
-
-                  <Grid item xs={12}>
-                      <Paper className={classes.paper} key={`pages.${index}`}>
-                        {
-                          _.map(_.get(doc, `pages.${index}.description`), (description, idx) =>
-                            [
-                              <ContentShow
-                                doc={description}
-                                form={parent}
-                                index={idx}
-                                field={field}
-                                canRemove={true}
-                                key={`pages.${index}.descriptionShow${idx}`}
-                              />,
-                              <Divider key={`pages.${index}.descriptionDivider${idx}`} />,
-                            ]
-                          )
-                        }
-                    </Paper>
-                  </Grid>
+                </Paper>
 
               </Grid>
-            )
-            : (
+
               <Grid item xs={12}>
-
-                {/* Create SUDOKU insert logic here*/}
-
+                  <Paper className={classes.paper} key={`pages.${index}`}>
+                    {
+                      _.map(_.get(doc, `pages.${index}.description`), (description, idx) =>
+                        [
+                          <ContentShow
+                            doc={description}
+                            form={parent}
+                            index={idx}
+                            field={field}
+                            canRemove={true}
+                            key={`pages.${index}.descriptionShow${idx}`}
+                          />,
+                          <Divider key={`pages.${index}.descriptionDivider${idx}`} />,
+                        ]
+                      )
+                    }
+                </Paper>
               </Grid>
-            )
-          }
+
+          </Grid>
         </Grid>
       </Dialog>
     );

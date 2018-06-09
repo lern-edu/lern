@@ -11,7 +11,8 @@
     "AdminHome": "Home",
     "AdminUsers": "Users",
     "AdminTags": "Tags",
-    "AdminTests": "Tests"
+    "AdminTests": "Tests",
+    "AdminQuestions": "Questions"
   },
   "exit": "Exit"
 }

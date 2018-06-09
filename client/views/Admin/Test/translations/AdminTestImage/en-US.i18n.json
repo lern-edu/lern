@@ -1,0 +1,14 @@
+{
+  "_locale": "en-US",
+  "_namespace": "AdminTestImage",
+  "title": "English",
+  "search": "Search",
+  "remove": "Remove",
+  "upload": "Upload",
+  "sorry": "Sorry!",
+  "image": "Image",
+  "no_image": "No image selected",
+  "instructions": {
+    "extension": "Image is not supported"
+  }
+}

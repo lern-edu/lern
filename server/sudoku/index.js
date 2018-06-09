@@ -1,23 +1,23 @@
-import { Sudoku } from 'meteor/duckdodgerbrasl:lern-model';
+import { Question } from 'meteor/duckdodgerbrasl:lern-model';
 import { easy, medium, hard } from './boards.js';
 
 Meteor.startup(() => {
 
-  if (!Sudoku.findOne()) {
+  if (!Question.findOne({ type: 'sudoku' })) {
 
-    _.forEach(easy, board => {
-      const sudoku = new Sudoku({ board, level: 'easy' });
-      sudoku.save();
+    _.forEach(easy, sudoku => {
+      const game = new Question({ type: 'sudoku', sudoku, level: 'easy' });
+      game.save();
     });
 
-    _.forEach(medium, board => {
-      const sudoku = new Sudoku({ board, level: 'medium' });
-      sudoku.save();
+    _.forEach(medium, sudoku => {
+      const game = new Question({ type: 'sudoku', sudoku, level: 'medium' });
+      game.save();
     });
 
-    _.forEach(hard, board => {
-      const sudoku = new Sudoku({ board, level: 'hard' });
-      sudoku.save();
+    _.forEach(hard, sudoku => {
+      const game = new Question({ type: 'sudoku', sudoku, level: 'hard' });
+      game.save();
     });
 
   };

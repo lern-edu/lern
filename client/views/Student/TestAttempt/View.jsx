@@ -16,7 +16,6 @@ import { Menu, MenuItem } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import StudentTestAttemptContent from './Content.jsx';
-import StudentTestAttemptSudoku from './Sudoku.jsx';
 import StudentTestAttemptToolbar from './Toolbar.jsx';
 
 const test = new Test();
@@ -99,8 +98,8 @@ class StudentTestAttempt extends React.Component {
     log.info('handleNext=', this.state);
     const { collections: { attempt, attempt: { test: { time } } }, page } = this.state;
 
-    if (page < attempt.test.pages.length - 1) {
-      if (time.timeoutType === 'global' || time.timeoutType == 'none') {
+    if (page <= attempt.test.pages.length - 1) {
+      if (time.timeoutType === 'global' || time.timeoutType === 'none') {
         this.setState({
           page: page + 1,
         });
@@ -143,8 +142,9 @@ class StudentTestAttempt extends React.Component {
       } else {
         log.info('StudentTestAttempt.TestAttemptFinish => finish =>', doc);
         snack({ message: i18n.__('StudentTestAttempt.success.thankYou') });
-        FlowRouter.go('StudentHome');
       };
+
+      FlowRouter.go('StudentHome');
 
     });
   };
@@ -165,15 +165,12 @@ class StudentTestAttempt extends React.Component {
       Meteor.call('StudentTestAttemptFinish', attempt._id, false, (err, doc) => {
 
         if (err || !doc) {
-          log.info('StudentTestAttempt.TestAttemptFinish => error =>', err);
-          if (err && err.error === 501)
-            snack({ message: i18n.__('StudentTestAttempt.error.sudokuInvalid') });
-          else
-            snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
+          snack({ message: i18n.__('StudentTestAttempt.error.findTest') });
           this.setState({ loading: false });
+          log.error('handleFinish.error =>', err, doc);
         } else {
           log.info('StudentTestAttempt.TestAttemptFinish => finish =>', doc);
-          snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
+          !forced && snack({ message: i18n.__('StudentTestAttempt.success.attempt') });
           FlowRouter.go('StudentHome');
         };
 
@@ -248,21 +245,34 @@ class StudentTestAttempt extends React.Component {
               open={Boolean(anchorEl)}
               onClose={this.handleToggleMenu}
             >
-              <MenuItem onClick={() => this.handleClickOpen('description')}>
-                <ListItemIcon>{<Description />}</ListItemIcon>
-                <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.description')} />
-              </MenuItem>
+              {
+                _.isEmpty(attempt.test.description)
+                ? undefined
+                : (
+                  <MenuItem onClick={() => this.handleClickOpen('description')}>
+                    <ListItemIcon>{<Description />}</ListItemIcon>
+                    <ListItemText
+                      inset
+                      primary={i18n.__('StudentTestAttempt.appBarChildren.description')}
+                    />
+                  </MenuItem>
+                )
+              }
+
               {
                 _.isEmpty(attempt.test.help)
                 ? undefined
                 : (
                   <MenuItem onClick={() => this.handleClickOpen('help')}>
                     <ListItemIcon>{<Help />}</ListItemIcon>
-                    <ListItemText inset primary={i18n.__('StudentTestAttempt.appBarChildren.help')} />
+                    <ListItemText
+                      inset
+                      primary={i18n.__('StudentTestAttempt.appBarChildren.help')}
+                    />
                   </MenuItem>
                 )
               }
-              {
+              {/*
                 attempt.test.resolution !== 'sudoku'
                   ? undefined
                   : [
@@ -283,7 +293,7 @@ class StudentTestAttempt extends React.Component {
                       />
                     </MenuItem>,
                   ]
-              }
+                */}
             </Menu>
           </div>
         </Layout.Bar>
@@ -293,24 +303,12 @@ class StudentTestAttempt extends React.Component {
           <Grid item xs={12} md={10} lg={8}>
 
             <Grid container spacing={0}>
-              {
-                _.get(
-                  {
-                    content: <StudentTestAttemptContent
-                      parent={this}
-                      pages={attempt.test.pages}
-                      page={page}
-                    />,
-                    sudoku: <StudentTestAttemptSudoku
-                      parent={this}
-                      attempt={attempt}
-                      sudoku={attempt.sudoku}
-                      highlight={sudokuHighlight}
-                    />,
-                  },
-                  attempt.test.resolution
-                )
-              }
+              <StudentTestAttemptContent
+                parent={this}
+                attempt={attempt}
+                pages={attempt.test.pages}
+                page={page}
+              />
             </Grid>
 
           </Grid>
