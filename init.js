@@ -17,7 +17,7 @@ Meteor.startup(() => {
   log.setLevel(env === 'development' ? 'info' : logLevel);
 
   if (env === 'production') {
-    process.env.ROOT_URL = 'https://dev.flows.bhz.br';
+    process.env.ROOT_URL = 'https://lab.flows.bhz.br';
   }
 
 });
