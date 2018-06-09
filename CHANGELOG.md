@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [1.4.1] - 06/06/2018
+## [1.4.2] - 09/06/2018
+### Fixed
+- Fix missing propTypes
+
+## [1.4.1] - 09/06/2018
 ### Added
 - [#187](https://github.com/lern-edu/lern/issues/187) React Version 16.0.0
 - [#177](https://github.com/lern-edu/lern/issues/177) Material ui Version 1.0.0
