@@ -33,10 +33,10 @@ jobs:
             - node_modules
       - run:
           name: 'Mock settings.json'
-          command: echo { "credentials": { "S3": { "accessKeyId": "", "secretAccessKey": "" } } } > settings.json
+          command: 'echo { "credentials": { "S3": { "accessKeyId": "", "secretAccessKey": "" } } } > settings.json'
       - run:
           name: 'Check settings.json'
-          command: cat settings.json
+          command: 'cat settings.json'
       - run:
           name: Test
           command: 'npm test'
