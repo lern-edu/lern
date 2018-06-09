@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/lern
     docker:
       - image: 'circleci/node:8-browsers'
-      - image: 'mongo:3.6-jessie'
+      - image: 'mongo:3.2'
     steps:
       - checkout
       - restore_cache:
@@ -33,7 +33,7 @@ jobs:
             - node_modules
       - run:
           name: 'Mock settings.json'
-          command: 'echo { "credentials": { "S3": { "accessKeyId": "", "secretAccessKey": "" } } } > settings.json'
+          command: 'echo { \"credentials\": { \"S3\": { \"accessKeyId\": \"\", \"secretAccessKey\": \"\" } } } > settings.json'
       - run:
           name: 'Check settings.json'
           command: 'cat settings.json'
@@ -43,7 +43,7 @@ jobs:
   deploy:
     working_directory: ~/lern
     docker:
-      - image: 'mongo:3.6-jessie'
+      - image: 'mongo:3.2'
     steps:
       - checkout
       - run:
