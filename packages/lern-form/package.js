@@ -14,6 +14,6 @@ Package.onUse((api) => {
 Package.onTest((api) => {
   api.use('ecmascript');
   api.use('tinytest');
-  api.use('lern-form');
+  api.use('duckdodgerbrasl:lern-form');
   api.mainModule('lern-form-tests.js');
 });

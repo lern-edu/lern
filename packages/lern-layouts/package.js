@@ -36,9 +36,9 @@ Package.onUse(function (api) {
   api.mainModule('./exporter.js', 'client');
 });
 
-Package.onTest((api) => {
+/*Package.onTest((api) => {
   api.use('ecmascript');
   api.use('tinytest');
   api.use('duckdodgerbrasl:lern-check');
   api.mainModule('lern-check-tests.js');
-});
+});*/
