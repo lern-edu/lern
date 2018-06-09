@@ -1,5 +1,6 @@
 // Libs
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import log from 'loglevel';
 import { withStyles } from '@material-ui/core/styles';
@@ -340,4 +341,3 @@ StudentTestAttemptSudoku.propTypes = {
 };
 
 export default withStyles(styles)(StudentTestAttemptSudoku);
-

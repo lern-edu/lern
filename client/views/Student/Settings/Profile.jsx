@@ -77,6 +77,7 @@ class StudentSettingsProfile extends React.Component {
                 <Grid item xs={12}>
                   <Grid
                     container
+                    spacing={24}
                     alignItems='flex-end'
                     direction='row'
                     justify='flex-end'

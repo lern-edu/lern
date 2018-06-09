@@ -9,8 +9,8 @@
     "startc9": "UNIVERSE_I18N_LOCALES=all meteor run --settings settings.json --port $IP:$PORT",
     "debug": "UNIVERSE_I18N_LOCALES=all VELOCITY_DEBUG=1 VELOCITY_DEBUG_MIRROR=1 METEOR_PROFILE=1 meteor run --settings settings.json --port 3000",
     "prestart": "meteor=$(meteor --version); if [ \"$meteor\" != \"Meteor 1.6\" ]; then meteor update --release METEOR@1.6; fi;",
-    "test": "MOCHA_RUN_ORDER=serial meteor test-packages --once --driver-package dispatch:mocha-phantomjs --port 3100",
-    "test-watch": "MOCHA_RUN_ORDER=serial meteor test-packages --driver-package practicalmeteor:mocha --port 3100",
+    "test": "MOCHA_RUN_ORDER=serial meteor test-packages --once --driver-package dispatch:mocha-phantomjs --settings settings.json --port 3100",
+    "test-watch": "MOCHA_RUN_ORDER=serial meteor test-packages --driver-package practicalmeteor:mocha --settings settings.json --port 3100",
     "jsdoc": "./node_modules/.bin/jsdoc -c jsdoc.json",
     "deploy-dev": "cd .develop; mup deploy --settings settings.json"
   },

@@ -6,5 +6,6 @@
   "profile": "Profile",
   "security": "Security",
   "save": "Save",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "add_password": "Add password"
 }

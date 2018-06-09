@@ -150,6 +150,7 @@ class StudentSettingsSecurity extends React.Component {
                     alignItems='flex-end'
                     direction='row'
                     justify='flex-end'
+                    spacing={24}
                   >
                     <Grid item>
                       <Button

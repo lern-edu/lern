@@ -8,7 +8,7 @@ import _ from 'lodash';
 let admin = { email: 'test@test.com', password: 'password' };
 
 Meteor.methods({
-  'test.createUser': () => {
+  'test.createUserMethod': () => {
     if (Meteor.isServer) {
       resetDatabase();
       admin.profile = {
@@ -43,7 +43,7 @@ describe('Methods', function () {
     if (Meteor.isClient) {
 
       before(function (done) {
-        Meteor.call('test.createUser', () => {
+        Meteor.call('test.createUserMethod', () => {
           Meteor.loginWithPassword(admin.email, admin.password, (err) => {
             done(err);
           });

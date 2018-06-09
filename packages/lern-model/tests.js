@@ -6,10 +6,10 @@ import { resetDatabase } from 'meteor/xolvio:cleaner';
 import chai, { assert, expect } from 'chai';
 import _ from 'lodash';
 
-let admin = { email: 'test@test.com', password: 'password' };
+let admin = { email: 'test@test.model.com', password: 'password' };
 
 Meteor.methods({
-  'test.createUser': () => {
+  'test.model.createUser': () => {
     if (Meteor.isServer) {
       resetDatabase();
       admin.profile = {
@@ -27,12 +27,12 @@ Meteor.methods({
     }
   },
 
-  'test.getId': () => {
+  'test.model.getId': () => {
     let users = User.find();
     return _.first(users.fetch())._id;
   },
 
-  'test.createCompany': () => {
+  'test.model.createCompany': () => {
     if (Meteor.isServer) {
       const userId = Meteor.userId();
       const company = new Company({
@@ -45,7 +45,7 @@ Meteor.methods({
     }
   },
 
-  'test.updateUserCompany': () => {
+  'test.model.updateUserCompany': () => {
     if (Meteor.isServer) {
       const user = User.findOne();
       const company = Company.findOne();
@@ -58,7 +58,7 @@ Meteor.methods({
     }
   },
 
-  'test.updateCompanyName': () => {
+  'test.model.updateCompanyName': () => {
     const company = Company.findOne();
 
     company.name = 'Lern';
@@ -95,7 +95,7 @@ describe('Model Package', function () {
       let user;
 
       before(function (done) {
-        Meteor.call('test.createUser', (err, doc) => {
+        Meteor.call('test.model.createUser', (err, doc) => {
           user = doc;
           done(err);
         });
@@ -140,7 +140,7 @@ describe('Model Package', function () {
       let user;
 
       before(function (done) {
-        Meteor.call('test.createUser', (err, doc) => {
+        Meteor.call('test.model.createUser', (err, doc) => {
           user = doc;
           done(err);
         });
@@ -185,9 +185,9 @@ describe('Model Package', function () {
       if (Meteor.isClient) {
 
         before(function (done) {
-          Meteor.call('test.createUser', () => {
+          Meteor.call('test.model.createUser', () => {
             Meteor.loginWithPassword(admin.email, admin.password, (err) => {
-              Meteor.call('test.createCompany', (err, doc) => {
+              Meteor.call('test.model.createCompany', (err, doc) => {
                 company = doc;
                 done(err);
               });
@@ -218,11 +218,11 @@ describe('Model Package', function () {
         let company;
 
         before(function (done) {
-          Meteor.call('test.createUser', (err, doc) => {
+          Meteor.call('test.model.createUser', (err, doc) => {
             Meteor.loginWithPassword(admin.email, admin.password, (err) => {
-              Meteor.call('test.createCompany', (err, doc1) => {
+              Meteor.call('test.model.createCompany', (err, doc1) => {
                 company = doc1;
-                Meteor.call('test.updateUserCompany', (err, doc2) => {
+                Meteor.call('test.model.updateUserCompany', (err, doc2) => {
                   user = doc2;
                   done(err);
                 });
@@ -247,7 +247,7 @@ describe('Model Package', function () {
 
           before(function (done) {
             Meteor.loginWithPassword(admin.email, admin.password, (err) => {
-              Meteor.call('test.updateCompanyName', (err, docs) => {
+              Meteor.call('test.model.updateCompanyName', (err, docs) => {
                 company = docs.company;
                 user = docs.user;
                 done(err);

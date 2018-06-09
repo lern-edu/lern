@@ -2,7 +2,7 @@
 import { Tinytest } from 'meteor/tinytest';
 
 // Import and rename a variable exported by lern-games.js.
-import { Sudoku } from 'meteor/lern-games';
+import { Sudoku } from 'meteor/duckdodgerbrasl:lern-games';
 
 // Write your tests here!
 // Here is an example.
