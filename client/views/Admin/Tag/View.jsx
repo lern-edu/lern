@@ -6,14 +6,14 @@ import _ from 'lodash';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import { Tag } from 'meteor/duckdodgerbrasl:lern-model';
 import { Regex } from 'meteor/duckdodgerbrasl:lern-check';
-import { withStyles } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui/Progress';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Divider from 'material-ui/Divider/Divider';
+import { withStyles } from '@material-ui/core/styles';
+import { LinearProgress } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import { Input, InputLabel } from '@material-ui/core';
+import { FormControl, FormHelperText } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider/Divider';
 
 import AdminTagChildrens from './Childrens/Childrens.jsx';
 
@@ -58,7 +58,7 @@ class AdminTag extends React.Component {
     return false;
   };
 
-  componentWillMount() {
+  componentDidMount() {
     log.info('AdminTag.componentWillMount');
     this.getTags(this.props.tagId);
   };
@@ -214,7 +214,7 @@ class AdminTag extends React.Component {
                           justify='flex-end'
                         >
                           <Grid item>
-                            <Button href={FlowRouter.path('AdminTags')} raised>
+                            <Button href={FlowRouter.path('AdminTags')} variant="raised">
                               Cancel
                             </Button>
                           </Grid>
@@ -224,7 +224,7 @@ class AdminTag extends React.Component {
                           </Grid>
 
                           <Grid item>
-                            <Button onClick={this.handleSubmit} raised color='primary'>
+                            <Button onClick={this.handleSubmit} variant="raised" color='primary'>
                               Save
                             </Button>
                           </Grid>

@@ -6,13 +6,13 @@ import _ from 'lodash';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import { Test, Content, StaticCollections } from 'meteor/duckdodgerbrasl:lern-model';
 import { Regex } from 'meteor/duckdodgerbrasl:lern-check';
-import { withStyles } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui/Progress';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import Divider from 'material-ui/Divider/Divider';
-import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
+import { withStyles } from '@material-ui/core/styles';
+import { LinearProgress } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import { Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
 
 const content = new Content();
 const ContentCreate = _.get(content, 'templates.ContentCreate');
@@ -61,11 +61,11 @@ class AdminTest extends React.Component {
       },
       doc: !testId ? new Test() : null,
       errors: {},
-      activeStep: 0,
+      activeStep: 5,
     };
   };
 
-  componentWillMount() {
+  componentDidMount() {
     log.info('AdminTest.componentWillMount');
     this.getTests(this.props.testId);
     this.getTags();
@@ -113,7 +113,7 @@ class AdminTest extends React.Component {
 
   handleSubmit = () => {
     const { doc } = this.state;
-    log.info('AdminTest.handleSubmit');
+    log.info('AdminTest.handleSubmit=', doc);
 
     doc.validate({ fields: ['name'] }, (err) => {
       if (err) snack({ message: err.reason });
@@ -123,7 +123,7 @@ class AdminTest extends React.Component {
             snack({ message: 'Erro ao salvar test' });
             log.error(err);
           } else {
-            log.debug('Test criada! =>', res);
+            log.info('Test criada! =>', res);
             snack({ message: 'Test salva' });
             this.setState({ doc: res });
             FlowRouter.go('AdminTest', { testId: res._id });
@@ -154,7 +154,7 @@ class AdminTest extends React.Component {
             </Button>
             <Button
               disabled={error}
-              variant='raised'
+              variant="raised"
               color='primary'
               onClick={activeStep === stepsLenght - 1 ? this.handleSubmit : this.handleNext}
               className={classes.button}
@@ -206,9 +206,12 @@ class AdminTest extends React.Component {
                                   parent={this}
                                 />
 
-                                {actionButtons()}
                               </Paper>
 
+                            </Grid>
+
+                            <Grid item xs={12}>
+                              {actionButtons()}
                             </Grid>
 
                           </StepContent>

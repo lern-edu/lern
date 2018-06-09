@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
-import Button from 'material-ui/Button';
-import Chip from 'material-ui/Chip';
-import Dialog from 'material-ui/Dialog';
-import Divider from 'material-ui/Divider';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
-import CloseIcon from 'material-ui-icons/Close';
-import Slide from 'material-ui/transitions/Slide';
-import Fullscreen from 'material-ui-icons/Fullscreen';
+import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
+import Dialog from '@material-ui/core/Dialog';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons//Close';
+import Slide from '@material-ui/core/Slide';
+import Fullscreen from '@material-ui/icons//Fullscreen';
 import { Content } from 'meteor/duckdodgerbrasl:lern-model';
 const content = new Content();
 const ContentShow = _.get(content, 'templates.ContentShow');
@@ -74,7 +74,7 @@ class StudentTestsDialog extends React.Component {
               <IconButton color="inherit" onClick={this.handleClose}>
                 <CloseIcon />
               </IconButton>
-              <Typography type='title' color="inherit" className={classes.flex}>
+              <Typography variant='title' color="inherit" className={classes.flex}>
                 {doc.name}
               </Typography>
             </Toolbar>

@@ -1,10 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { StaticCollections, Test } from 'meteor/duckdodgerbrasl:lern-model';
-import Grid from 'material-ui/Grid';
-import { TextField, Select, MenuItem, FormControl, InputLabel } from 'material-ui';
+import Grid from '@material-ui/core/Grid';
+import { TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 
 import AdminTestSelect from './Select.jsx';
 import AdminTestNumber from './Number.jsx';

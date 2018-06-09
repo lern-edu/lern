@@ -1,17 +1,17 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Select from 'material-ui/Select';
-import { MenuItem } from 'material-ui/Menu';
+import { Input, InputLabel } from '@material-ui/core';
+import { FormControl, FormHelperText } from '@material-ui/core';
+import Select from '@material-ui/core/Select';
+import { MenuItem } from '@material-ui/core';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
 class AdminTestSelect extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     const { doc, field, parent } = this.props;
     doc.validate({ fields: [field] }, (err) => {
       if (err) parent.setState({ errors: { [field]: { message: err.reason, error: true } } });

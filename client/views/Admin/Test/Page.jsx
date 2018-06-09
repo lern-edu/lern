@@ -2,17 +2,17 @@ import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { StaticCollections, Test, Content } from 'meteor/duckdodgerbrasl:lern-model';
-import Grid from 'material-ui/Grid';
-import Divider from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
-import Dialog from 'material-ui/Dialog';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
-import CloseIcon from 'material-ui-icons/Close';
-import Slide from 'material-ui/transitions/Slide';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
+import Dialog from '@material-ui/core/Dialog';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+import { withStyles } from '@material-ui/core/styles';
 
 const content = new Content();
 const ContentCreate = _.get(content, 'templates.ContentCreate');
@@ -55,7 +55,7 @@ class AdminTestPage extends React.Component {
             <IconButton color="inherit" onClick={this.props.handleClose}>
               <CloseIcon />
             </IconButton>
-            <Typography type='title' color="inherit" className={classes.flex}>
+            <Typography variant='title' color="inherit" className={classes.flex}>
               Página {(index + 1)}
             </Typography>
           </Toolbar>

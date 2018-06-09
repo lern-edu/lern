@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import Card, { CardHeader, CardActions, CardContent } from 'material-ui/Card';
-import { Modal, IconButton, Button, TextField, Typography, CircularProgress } from 'material-ui';
-import Collapse from 'material-ui/transitions/Collapse';
-import green from 'material-ui/colors/green';
-import { ExpandMore, FileUpload } from 'material-ui-icons';
+import { Card, CardHeader, CardActions, CardContent } from '@material-ui/core';
+import { Modal, IconButton, Button, TextField, Typography, CircularProgress } from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
+import green from '@material-ui/core/colors/green';
+import { ExpandMore, FileUpload } from '@material-ui/icons';
 
 const styles = theme => ({
   card: {
@@ -267,7 +267,7 @@ class PublicContentCreateImage extends React.Component {
             </div>
             <Button
               className={classes.button}
-              raised
+              variant="raised"
               color='secondary'
               size="medium"
               disabled={!remove}
@@ -285,11 +285,11 @@ class PublicContentCreateImage extends React.Component {
           onClose={this.handleClose.bind(this)}
         >
           <div className={classes.modal}>
-            <Typography type="title">
-              Desculpe!
+            <Typography variant="title">
+              {i18n.__('Templates.sorry')}
             </Typography>
-            <Typography type="subheading">
-              {instructions.extension}
+            <Typography variant="subheading">
+              {i18n.__('Templates.instructions.extension')}
             </Typography>
             <Button
               color='primary'

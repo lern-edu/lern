@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { TextField, Button, Card, CardHeader, CardActions, CardMedia } from 'material-ui';
+import { withStyles } from '@material-ui/core/styles';
+import { TextField, Button, Card, CardHeader, CardActions, CardMedia } from '@material-ui/core';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -107,7 +107,7 @@ class PublicContentCreateVideo extends React.Component {
               <CardActions>
                 <div className={classes.right}>
                   <Button
-                    raised
+                    variant="raised"
                     color='secondary'
                     size='medium'
                     onClick={this.handleRemove.bind(this)}

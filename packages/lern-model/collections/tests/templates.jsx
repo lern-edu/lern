@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 import StaticCollections from '../static.js';
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Button from 'material-ui/Button';
-import Chip from 'material-ui/Chip';
-import Dialog from 'material-ui/Dialog';
-import Divider from 'material-ui/Divider';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
-import CloseIcon from 'material-ui-icons/Close';
-import Slide from 'material-ui/transitions/Slide';
-import Fullscreen from 'material-ui-icons/Fullscreen';
-import { MenuItem } from 'material-ui/Menu';
-import { ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import { Input, InputLabel, InputAdornment } from '@material-ui/core';
+import { FormControl, FormHelperText } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
+import Dialog from '@material-ui/core/Dialog';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons//Close';
+import Slide from '@material-ui/core/Slide';
+import Fullscreen from '@material-ui/icons//Fullscreen';
+import { MenuItem } from '@material-ui/core';
+import { ListItemIcon, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 import Content from '../../schemas/content/schema.js';
 const content = new Content();
 
@@ -101,7 +101,7 @@ if (Meteor.isClient) {
               <IconButton color="inherit" onClick={handleClickClose}>
                 <CloseIcon />
               </IconButton>
-              <Typography type='title' color="inherit" className={classes.flex}>
+              <Typography variant='title' color="inherit" className={classes.flex}>
                 {_.capitalize(title)}
               </Typography>
             </Toolbar>

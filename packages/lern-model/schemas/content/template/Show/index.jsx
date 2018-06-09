@@ -1,11 +1,11 @@
 // Libs
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Button, IconButton } from 'material-ui';
+import { Button, IconButton } from '@material-ui/core';
 import { Editor, EditorState, convertFromRaw } from 'draft-js';
-import { RemoveCircle, ArrowUpward, ArrowDownward } from 'material-ui-icons';
+import { RemoveCircle, ArrowUpward, ArrowDownward } from '@material-ui/icons';
 
 // Views
 import PublicContentRichText from './../RichText.jsx';

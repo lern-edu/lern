@@ -4,16 +4,16 @@ import log from 'loglevel';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Tag } from 'meteor/duckdodgerbrasl:lern-model';
-import { withStyles } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui/Progress';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Divider from 'material-ui/Divider/Divider';
+import { withStyles } from '@material-ui/core/styles';
+import { LinearProgress } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import { Input, InputLabel } from '@material-ui/core';
+import { FormControl, FormHelperText } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider/Divider';
 
 import AdminTagChildrensList from './List.jsx';
-import Tab from 'material-ui/Tabs/Tab';
+import Tab from '@material-ui/core/Tab';
 
 // Styles
 const styles = theme => ({
@@ -43,7 +43,7 @@ class AdminTagChildrens extends React.Component {
     };
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.getTags(this.props.tagId);
   };
 
@@ -94,7 +94,7 @@ class AdminTagChildrens extends React.Component {
           };
         });
     });
-  }
+  };
 
   render() {
     const { doc, errors, collections, collections: { tags: { docs } } } = this.state;

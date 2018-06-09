@@ -1,5 +1,5 @@
 import React from 'react';
-import { FontIcon, RaisedButton } from 'material-ui';
+import { FontIcon, RaisedButton } from '@material-ui/core';
 
 /**
  * React Component for not found pages

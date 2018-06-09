@@ -3,17 +3,17 @@ import _ from 'lodash';
 import log from 'loglevel';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import { Test } from 'meteor/duckdodgerbrasl:lern-model';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Divider from 'material-ui/Divider';
-import { LinearProgress, CircularProgress } from 'material-ui/Progress';
-import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
-import { Description, Help, MoreVert, Settings } from 'material-ui-icons';
-import { ListItemIcon, ListItemText } from 'material-ui/List';
-import ListSubheader from 'material-ui/List/ListSubheader';
-import IconButton from 'material-ui/IconButton';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import Checkbox from 'material-ui/Checkbox';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import { LinearProgress, CircularProgress } from '@material-ui/core';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import { Description, Help, MoreVert, Settings } from '@material-ui/icons';
+import { ListItemIcon, ListItemText } from '@material-ui/core';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import { Menu, MenuItem } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import StudentTestAttemptContent from './Content.jsx';
 import StudentTestAttemptToolbar from './Toolbar.jsx';
@@ -58,7 +58,7 @@ class StudentTestAttempt extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     log.info('StudentTestAttempt.componentWillMount');
     this.getData();
   };
@@ -314,7 +314,7 @@ class StudentTestAttempt extends React.Component {
           </Grid>
 
         </Grid>
-        
+
         {
           !open
           ? undefined

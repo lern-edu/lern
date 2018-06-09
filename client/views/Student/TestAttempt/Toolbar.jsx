@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import log from 'loglevel';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import { LinearProgress, CircularProgress, Icon, IconButton, ButtonBase } from 'material-ui';
+import { withStyles } from '@material-ui/core/styles';
+import { LinearProgress, CircularProgress, Icon, IconButton, ButtonBase } from '@material-ui/core';
 
 const styles = theme => ({
   bottom: {
@@ -133,7 +133,7 @@ class StudentTestAttemptToolbar extends React.Component {
 
     return (
       <div className={classes.bottom}>
-        <LinearProgress mode="determinate" value={(page) * 100 / (numPages - 1)}/>
+        <LinearProgress variant="determinate" value={(page) * 100 / (numPages - 1)}/>
         <div className={classes.parent}>
           {
             loading ?

@@ -2,15 +2,15 @@
 import React from 'react';
 import _ from 'lodash';
 import i18n from 'meteor/universe:i18n';
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import TextField from 'material-ui/TextField';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
-import SvgIcon from 'material-ui/SvgIcon';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import { Card, CardActions, CardContent, CardMedia } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import PublicLoginEnroll from './Enroll.jsx';
 import PublicLoginForgot from './Forgot.jsx';
@@ -143,7 +143,7 @@ class PublicLogin extends React.Component {
             />
             <Card elevation={4}>
               <CardContent>
-                <Typography type='headline' component='h2'>
+                <Typography variant='headline' component='h2'>
                   Login
                 </Typography>
 
@@ -169,7 +169,7 @@ class PublicLogin extends React.Component {
 
                 <br/>
 
-                <Button raised color='primary' onClick={handleLogin}>
+                <Button variant="raised" color='primary' onClick={handleLogin}>
                   {texts.signIn}
                 </Button>
 

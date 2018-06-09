@@ -1,12 +1,12 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import { Typography } from 'material-ui';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 import Dialog, {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogContentText } from 'material-ui/Dialog';
+  DialogContentText } from '@material-ui/core/Dialog';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import _ from 'lodash';
 
