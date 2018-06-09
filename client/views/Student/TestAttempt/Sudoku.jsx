@@ -2,6 +2,7 @@
 import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from '@material-ui/core';
 import { ListItemIcon, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
