@@ -1,9 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import { withStyles } from 'material-ui/styles';
+import Input, { InputLabel } from '@material-ui/core/Input';
+import { FormControl, FormHelperText } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 // Styles
 const styles = theme => ({

@@ -8,15 +8,15 @@ import { Question, Content, StaticCollections } from 'meteor/duckdodgerbrasl:ler
 import { Regex } from 'meteor/duckdodgerbrasl:lern-check';
 import LernForm from 'meteor/duckdodgerbrasl:lern-form';
 
-import { withStyles } from 'material-ui/styles';
-import { LinearProgress } from 'material-ui/Progress';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Divider from 'material-ui/Divider/Divider';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import { LinearProgress } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import { Input, InputLabel } from '@material-ui/core';
+import { FormControl, FormHelperText } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider/Divider';
+import Typography from '@material-ui/core/Typography';
 
 const content = new Content();
 const ContentCreate = _.get(content, 'templates.ContentCreate');
@@ -173,7 +173,7 @@ class AdminQuestion extends LernForm(Question, 'AdminQuestionSave') {
                   <Grid container spacing={24}>
 
                     <Grid item xs={12}>
-                      
+
                       <Paper className={classes.paper}>
 
                         <AdminQuestionSelect

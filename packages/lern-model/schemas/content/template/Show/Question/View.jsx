@@ -2,16 +2,16 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import Card, { CardActions, CardContent, CardHeader } from 'material-ui/Card';
-import { yellow, red, purple } from 'material-ui/colors';
-import Avatar from 'material-ui/Avatar';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import Icon from 'material-ui/Icon';
-import Collapse from 'material-ui/transitions/Collapse';
-import Typography from 'material-ui/Typography';
+import Card, { CardActions, CardContent, CardHeader } from '@material-ui/core/Card';
+import { yellow, red, purple } from '@material-ui/core/colors';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
+import Collapse from '@material-ui/core/Collapse';
+import Typography from '@material-ui/core/Typography';
 
 import ContentShow from '../index.jsx';
 import PublicContentShowQuestionSingleAnswer from './SingleAnswer.jsx';
@@ -71,7 +71,7 @@ class PublicContentShowQuestion extends React.Component {
 
     return (
       <Card>
-        
+
         <CardHeader
           avatar={
             <Avatar aria-label='question.name' className={classes[_.get(question, 'type')]}>
@@ -81,7 +81,7 @@ class PublicContentShowQuestion extends React.Component {
           title={`${_.get(question, 'type')}${score ? (' - ' + score) : ''}`}
           subheader={_.get(question, 'level')}
         />
-          
+
         <CardActions className={classes.actions} disableActionSpacing>
 
           <IconButton
@@ -128,7 +128,7 @@ class PublicContentShowQuestion extends React.Component {
               )
             }
           </CardContent>
-          
+
           <CardContent>
             {
               !_.get(question, 'answer')

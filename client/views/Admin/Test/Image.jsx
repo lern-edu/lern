@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import Card, { CardHeader, CardActions, CardContent } from 'material-ui/Card';
-import { Modal, IconButton, Button, TextField, Typography, CircularProgress } from 'material-ui';
-import Collapse from 'material-ui/transitions/Collapse';
-import green from 'material-ui/colors/green';
-import { ExpandMore, FileUpload } from 'material-ui-icons';
+import { Card, CardHeader, CardActions, CardContent } from '@material-ui/core';
+import { Modal, IconButton, Button, TextField, Typography, CircularProgress } from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
+import green from '@material-ui/core/colors/green';
+import { ExpandMore, FileUpload } from '@material-ui/icons';
 import i18n from 'meteor/universe:i18n';
 
 const styles = theme => ({

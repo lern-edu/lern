@@ -2,17 +2,17 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-import Card, { CardActions, CardContent, CardHeader } from 'material-ui/Card';
-import { yellow, red, purple } from 'material-ui/colors';
-import Avatar from 'material-ui/Avatar';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import Icon from 'material-ui/Icon';
-import Collapse from 'material-ui/transitions/Collapse';
-import Typography from 'material-ui/Typography';
+import Card, { CardActions, CardContent, CardHeader } from '@material-ui/core/Card';
+import { yellow, red, purple } from '@material-ui/core/colors';
+import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
+import Collapse from '@material-ui/core/Collapse';
+import Typography from '@material-ui/core/Typography';
 
 import ContentShow from '../../Show/index.jsx';
 import PublicContentCreateQuestionSingleAnswer from './SingleAnswer.jsx';
@@ -72,7 +72,7 @@ class PublicContentCreateQuestionCard extends React.Component {
 
     return (
       <Card>
-        
+
         <CardHeader
           avatar={
             <Avatar aria-label='doc.name' className={classes[doc.get('type')]}>
@@ -82,9 +82,9 @@ class PublicContentCreateQuestionCard extends React.Component {
           title={`${doc.get('type')}`}
           subheader={doc.get('level')}
         />
-          
+
         <CardActions className={classes.actions} disableActionSpacing>
-          
+
           {
             !_.isFunction(handleAddQuestion)
             ? undefined
@@ -161,7 +161,7 @@ class PublicContentCreateQuestionCard extends React.Component {
               )
             }
           </CardContent>
-          
+
           <CardContent>
             {
               !doc.get('answer')
