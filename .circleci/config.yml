@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/lern
     docker:
       - image: 'circleci/node:8-browsers'
-      - image: 'mongo:3.2'
+      - image: 'circleci/mongo:3.2'
     steps:
       - checkout
       - restore_cache:
@@ -43,7 +43,7 @@ jobs:
   deploy:
     working_directory: ~/lern
     docker:
-      - image: 'mongo:3.2'
+      - image: 'circleci/mongo:3.2'
     steps:
       - checkout
       - run:
