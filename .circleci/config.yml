@@ -51,8 +51,6 @@ jobs:
             meteor node -v
             echo "Meteor npm version:"
             meteor npm -v
-            echo "Java version:"
-            java -version
       - run: 
           name: install npm packages
           command: meteor npm i
