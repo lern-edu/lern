@@ -1,5 +1,7 @@
 ![Lern Logo](public/images/icons/mipmap-xxxhdpi/ic_launcher.png)
 
+[![CircleCI](https://circleci.com/gh/lern-edu/lern.svg?style=svg)](https://circleci.com/gh/lern-edu/lern)
+
 # Lern
 
 ## Tech Stack:
