@@ -21,6 +21,7 @@ Meteor.methods({
       const userId = Accounts.createUser(admin);
       user = User.findOne(userId);
       user.roles = ['admin'];
+      user.emails = [{ address: 'admin@admin.com', verified: true }];
       user.save();
 
       return user;
@@ -248,9 +249,17 @@ describe('Model Package', function () {
           before(function (done) {
             Meteor.loginWithPassword(admin.email, admin.password, (err) => {
               Meteor.call('test.model.updateCompanyName', (err, docs) => {
-                company = docs.company;
-                user = docs.user;
-                done(err);
+                if (err) {
+                  done(err);
+                } else {
+                  try {
+                    company = docs.company;
+                    user = docs.user;
+                    done();
+                  } catch (error) {
+                    done(error);
+                  }
+                }
               });
             });
           });
