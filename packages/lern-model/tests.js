@@ -16,12 +16,12 @@ Meteor.methods({
         name: 'Steven Gerrard',
         firstName: 'Steven',
         lastName: 'Gerrard',
+        emails: [{ address: 'test@test.com', verified: true }],
       };
 
       const userId = Accounts.createUser(admin);
       user = User.findOne(userId);
       user.roles = ['admin'];
-      user.emails = [{ address: 'admin@admin.com', verified: true }];
       user.save();
 
       return user;
