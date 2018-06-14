@@ -86,7 +86,7 @@ Helpers.Methods({ prefix, protect }, {
    * @param {Object} [options] - Options to mongo
    * @return {Array} - Array of companies
    */
-  CompaniesGet(query, options) {
+  CompaniesGet(query={}, options={}) {
     _.assign(options, { fields: { services: 0 } });
     return Company.find(query, options).fetch();
   },

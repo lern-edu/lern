@@ -51,7 +51,7 @@ jobs:
             meteor node -v
             echo "Meteor npm version:"
             meteor npm -v
-      - run: 
+      - run:
           name: install npm packages
           command: meteor npm i
       - run:
@@ -88,6 +88,13 @@ jobs:
       - store_artifacts:
           path: ./tests/coverage/unit-tests/
           destination: unit-tests
+  deploy:
+    working_directory: ~/lern
+    steps:
+      - checkout
+      - run:
+          name: 'current dir'
+          command: ls
 workflows:
   version: 2
   build_and_test:

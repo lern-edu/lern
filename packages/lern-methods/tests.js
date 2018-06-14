@@ -86,7 +86,7 @@ describe('Methods', function () {
 
       });
 
-      describe('Not empty collection', function () {
+      describe('Create company', function () {
         let company;
 
         before(function (done) {
@@ -98,8 +98,20 @@ describe('Methods', function () {
           });
         });
 
-        it('Create company', function () {
-          Meteor.call('AdminCompanySave', company);
+        it('Create company', function (done) {
+          Meteor.call('AdminCompanySave', company, (err, company) => {
+            if (err) {
+              done(err);
+            } else {
+              try {
+                expect(company).not.to.be.undefined;
+                expect(err).to.be.undefined;
+                done();
+              } catch (error) {
+                done(error);
+              }
+            }
+          });
         });
       });
 
