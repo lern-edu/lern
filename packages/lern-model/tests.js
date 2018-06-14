@@ -6,7 +6,7 @@ import { resetDatabase } from 'meteor/xolvio:cleaner';
 import chai, { assert, expect } from 'chai';
 import _ from 'lodash';
 
-let admin = { email: 'test@test.model.com', password: 'password' };
+let admin = { emails: [{ address: 'test@test.com', verified: true }], password: 'password' };
 
 Meteor.methods({
   'test.model.createUser': () => {
@@ -16,7 +16,6 @@ Meteor.methods({
         name: 'Steven Gerrard',
         firstName: 'Steven',
         lastName: 'Gerrard',
-        emails: [{ address: 'test@test.com', verified: true }],
       };
 
       const userId = Accounts.createUser(admin);
