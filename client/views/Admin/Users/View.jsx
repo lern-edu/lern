@@ -2,13 +2,13 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import AppBar from '@material-ui/core/AppBar';
-import Icon from '@material-ui/core/Icon';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import { LinearProgress } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import TextField from 'material-ui/TextField';
+import AppBar from 'material-ui/AppBar';
+import Icon from 'material-ui/Icon';
+import Button from 'material-ui/Button';
+import Toolbar from 'material-ui/Toolbar';
+import { LinearProgress } from 'material-ui/Progress';
+import { withStyles } from 'material-ui/styles';
 import { Layout, Snackbar } from 'meteor/duckdodgerbrasl:lern-layouts';
 
 import AdminUsersList from './List.jsx';
@@ -40,7 +40,7 @@ class AdminUsers extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { query, options } = this.state;
 
     Meteor.call('AdminUsersGet', query, options,  (err, docs) => {
@@ -85,7 +85,7 @@ class AdminUsers extends React.Component {
         }
 
         <Button
-          variant="fab"
+          fab
           color="primary"
           aria-label="add"
           href={FlowRouter.path('AdminUser')}

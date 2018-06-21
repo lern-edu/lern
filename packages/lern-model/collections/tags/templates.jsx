@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from 'material-ui/styles';
 import _ from 'lodash';
 import StaticCollections from '../static.js';
-import { Input, InputLabel, InputAdornment } from '@material-ui/core';
-import { FormControl, FormHelperText } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Chip from '@material-ui/core/Chip';
-import Dialog from '@material-ui/core/Dialog';
-import Divider from '@material-ui/core/Divider';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons//Close';
-import Slide from '@material-ui/core/Slide';
-import Fullscreen from '@material-ui/icons//Fullscreen';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Button from 'material-ui/Button';
+import Chip from 'material-ui/Chip';
+import Dialog from 'material-ui/Dialog';
+import Divider from 'material-ui/Divider';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import Typography from 'material-ui/Typography';
+import CloseIcon from 'material-ui-icons/Close';
+import Slide from 'material-ui/transitions/Slide';
+import Fullscreen from 'material-ui-icons/Fullscreen';
 import Content from '../../schemas/content/schema.js';
 const content = new Content();
 
@@ -152,7 +152,7 @@ if (Meteor.isClient) {
                   <Fullscreen />
                 </IconButton>,
               button:
-                <Button variant="raised"
+                <Button raised
                   onClick={this.handleClickOpen}
                   >
                   Preview
@@ -175,7 +175,7 @@ if (Meteor.isClient) {
                 <IconButton color="inherit" onClick={this.handleClose}>
                   <CloseIcon />
                 </IconButton>
-                <Typography variant='title' color="inherit" className={classes.flex}>
+                <Typography type='title' color="inherit" className={classes.flex}>
                   {doc.name}
                 </Typography>
               </Toolbar>

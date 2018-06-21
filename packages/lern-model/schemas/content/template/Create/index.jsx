@@ -1,13 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import { MenuItem } from '@material-ui/core';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
-import i18n from 'meteor/universe:i18n';
+import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
+import Button from 'material-ui/Button';
+import { MenuItem } from 'material-ui/Menu';
+import Select from 'material-ui/Select';
+import TextField from 'material-ui/TextField';
 
 import ContentRichText from './../RichText.jsx';
 import PublicContentCreateImage from './Image.jsx';

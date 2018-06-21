@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { Button, Select, Input, MenuItem, Toolbar } from '@material-ui/core';
+import { withStyles } from 'material-ui/styles';
+import { Button, Select, Input, MenuItem, Toolbar } from 'material-ui';
 import SudokuDraw from './SudokuDraw.jsx';
 import Timer from './Timer.jsx';
 import boards from './boards';
@@ -88,14 +88,14 @@ class Wrapper extends React.Component {
             <MenuItem value={'hard'}>Difícil</MenuItem>
           </Select>
           <Button
-            variant="raised"
+            raised
             className={classes.content}
             onClick={this.handleSudoku.bind(this)}
           >
             Novo
           </Button>
           <Button
-            variant="raised"
+            raised
             className={classes.content}
             onClick={this.reset.bind(this)}
           >

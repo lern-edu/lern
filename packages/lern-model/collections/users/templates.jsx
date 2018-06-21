@@ -1,10 +1,10 @@
 import React from 'react';
-import { Input, InputLabel, InputAdornment } from '@material-ui/core';
-import { FormControl, FormHelperText } from '@material-ui/core';
-import Select from '@material-ui/core/Select';
-import { MenuItem } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/Icon';
 import i18n from 'meteor/universe:i18n';
 import _ from 'lodash';
 import Regex from '../../regex.js';

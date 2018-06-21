@@ -3,9 +3,9 @@ import React from 'react';
 import _ from 'lodash';
 import log from 'loglevel';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from '@material-ui/core';
-import { ListItemIcon, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import { withStyles } from 'material-ui/styles';
+import { Grid, Icon, Paper, Divider, IconButton, Button, MenuItem } from 'material-ui';
+import { ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 
 const styles = theme => ({
   root: {
@@ -260,7 +260,7 @@ class StudentTestAttemptSudoku extends React.Component {
                       _.map(new Array(3), (a2, col) =>
                         <Grid item xs={4} className={classes.keyboard} key={(row * 3 + col + 1)}>
                           <Button
-                            variant="raised"
+                            raised
                             color={value == (row * 3 + col + 1) ? 'secondary' : 'primary'}
                             onClick={() => this.handleClick((row * 3 + col + 1))}
                           >
@@ -279,7 +279,7 @@ class StudentTestAttemptSudoku extends React.Component {
 
                 <Grid item xs={4} className={classes.keyboard} key='backward'>
                   <Button
-                    variant="raised"
+                    raised
                     color={value == 'backward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleBackward('backward')}
                     disabled={_.isEmpty(backward) ? true : false}
@@ -290,7 +290,7 @@ class StudentTestAttemptSudoku extends React.Component {
 
                 <Grid item xs={4} className={classes.keyboard} key='forward'>
                   <Button
-                    variant="raised"
+                    raised
                     color={value == 'forward' ? 'secondary' : 'primary'}
                     onClick={() => this.handleForward('forward')}
                     disabled={_.isEmpty(forward) ? true : false}
@@ -301,25 +301,14 @@ class StudentTestAttemptSudoku extends React.Component {
 
                 <Grid item xs={4} className={classes.keyboard} key='clear'>
                   <Button
-                    variant="raised"
-                    color={clear ? 'secondary' : 'primary'}
-                    onClick={() => this.toggleClear()}
-                    className={classes.optionsChild}
+                    raised
+                    color={value == 0 ? 'secondary' : 'primary'}
+                    onClick={() => this.handleClick(0)}
                   >
                     <Icon>clear</Icon>
                   </Button>
                 </Grid>
 
-                <Grid item xs={3} className={classes.options} key='edit'>
-                  <Button
-                    variant="raised"
-                    color={edit ? 'secondary' : 'primary'}
-                    onClick={() => this.toggleEdit()}
-                    className={classes.optionsChild}
-                  >
-                    <Icon>edit</Icon>
-                  </Button>
-                </Grid>
               </Grid>
             </Grid>
 

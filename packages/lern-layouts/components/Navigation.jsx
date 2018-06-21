@@ -4,16 +4,16 @@ import _ from 'lodash';
 import i18n from 'meteor/universe:i18n';
 
 // Material components
-import Drawer from '@material-ui/core/Drawer';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
-import Select from '@material-ui/core/Select';
-import { List, ListItem, ListItemText } from '@material-ui/core';
-import { Input, InputLabel } from '@material-ui/core';
-import { MenuItem } from '@material-ui/core';
-import { FormControl } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
+import Drawer from 'material-ui/Drawer';
+import Divider from 'material-ui/Divider';
+import Button from 'material-ui/Button';
+import Avatar from 'material-ui/Avatar';
+import Select from 'material-ui/Select';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Input, { InputLabel } from 'material-ui/Input';
+import { MenuItem } from 'material-ui/Menu';
+import { FormControl } from 'material-ui/Form';
+import Icon from 'material-ui/Icon';
 
 /**
  * Navigation or side Drawer
@@ -29,7 +29,6 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
       routes: {
         admin: {
           AdminHome: {
@@ -74,24 +73,28 @@ class Navigation extends React.Component {
   /* Methods
   */
 
-  changePath = (path) => {
-    this.setState({ open: false });
-    FlowRouter.go(path);
-  };
+  updateState({ screen }) {
+    const { routes } = this.state;
 
-  logout = () => {
-    Meteor.logout();
-    this.changePath('PublicLogin');
-  };
+    this.setState({ routes, open: false });
+  }
 
   /* Lifecycle
   */
 
-  componentDidMount() {
+  componentWillMount() {
+    const updateState = this.updateState.bind(this);
+    updateState(this.props);
+
     if (window) {
       if (window.nav) throw new Meteor.Error('Nav already initialized');
       else window.nav = (open=true) => this.setState({ open });
     }
+  }
+
+  componentWillReceiveProps(props) {
+    const updateState = this.updateState.bind(this);
+    updateState(this.props);
   }
 
   componentWillUnmount() {
@@ -114,6 +117,7 @@ class Navigation extends React.Component {
   render() {
     const { user, logging, route } = this.props;
     const { routes, open } = this.state;
+    const logout = () => Meteor.logout();
 
     const profilePic = _.get(user, 'profile.profilePic');
     const name = _.get(user, 'profile.name');
@@ -133,10 +137,7 @@ class Navigation extends React.Component {
                 logging
                 ? <div/>
                 : <div>
-                  <Button
-                    variant='raised'
-                    color='primary'
-                    onClick={() => this.changePath('PublicLogin')}>
+                  <Button raised color='primary' href={FlowRouter.path('PublicLogin')} >
                     Entrar
                   </Button>
                 </div>
@@ -191,7 +192,7 @@ class Navigation extends React.Component {
 
               {
                 _.map(routes[user.getRole()], ({ label, icon }, _route) =>
-                  <ListItem button key={_route} onClick={() => this.changePath(_route)}>
+                  <ListItem button component='a' key={_route} href={FlowRouter.path(_route)}>
                     <Icon>{icon}</Icon>
                     <ListItemText primary={i18n.__('Navigation', `${user.getRole()}.${label}`)} />
                   </ListItem>
@@ -208,7 +209,7 @@ class Navigation extends React.Component {
                 <ListItemText primary='Configurações' />
               </ListItem> */}
 
-              <ListItem button onClick={this.logout}>
+              <ListItem button onTouchTap={logout}>
                 <Icon>exit_to_app</Icon>
                 <ListItemText primary={i18n.__('Navigation.exit')} />
               </ListItem>

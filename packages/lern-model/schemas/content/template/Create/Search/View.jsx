@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from 'material-ui/styles';
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from '@material-ui/core/Dialog';
-import { Grid, TextField, Button, Divider } from '@material-ui/core';
+} from 'material-ui/Dialog';
+import { Grid, TextField, Button, Divider } from 'material-ui';
 import _ from 'lodash';
 
 import PublicContentSearchTaskFilter from './Filter.jsx';
@@ -108,7 +108,7 @@ class PublicContentSearchTask extends React.Component {
               <Grid item xs={12} sm={6}>
                 <Button
                   color='secondary'
-                  variant="raised"
+                  raised
                   fullWidth={true}
                 >
                   Limpar
@@ -117,7 +117,7 @@ class PublicContentSearchTask extends React.Component {
               <Grid item xs={12} sm={6}>
                 <Button
                   color='primary'
-                  variant="raised"
+                  raised
                   fullWidth={true}
                   onClick={this.searchTasks}
                 >

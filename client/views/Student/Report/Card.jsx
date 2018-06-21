@@ -4,17 +4,17 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import i18n from 'meteor/universe:i18n';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from 'material-ui/styles';
 import classnames from 'classnames';
-import Typography from '@material-ui/core/Typography';
-import { Card, CardActions, CardContent, CardHeader } from '@material-ui/core';
-import yellow from '@material-ui/core/colors/yellow';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Collapse from '@material-ui/core/Collapse';
-import Divider from '@material-ui/core/Divider';
+import Typography from 'material-ui/Typography';
+import Card, { CardActions, CardContent, CardHeader } from 'material-ui/Card';
+import yellow from 'material-ui/colors/yellow';
+import Avatar from 'material-ui/Avatar';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/Icon';
+import Collapse from 'material-ui/transitions/Collapse';
+import Divider from 'material-ui/Divider';
 
 import StudentReportChart from './Chart.jsx';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { Paper, TextField, Grid, Button, Typography } from '@material-ui/core';
+import { withStyles } from 'material-ui/styles';
+import { Paper, TextField, Grid, Button, Typography } from 'material-ui';
 import _ from 'lodash';
 import i18n from 'meteor/universe:i18n';
 
@@ -81,7 +81,7 @@ class StudentSettingsSecurity extends React.Component {
 
               <Grid container spacing={24}>
                 <Grid item xs={12}>
-                  <Typography variant="title" gutterBottom>
+                  <Typography type="title" gutterBottom>
                     Emails
                   </Typography>
                 </Grid>
@@ -100,10 +100,8 @@ class StudentSettingsSecurity extends React.Component {
 
               <Grid container spacing={24}>
                 <Grid item xs={12}>
-                  <Typography variant="title" gutterBottom>
-                    {hasPassword ?
-                      i18n.__('StudentSettings.change_password') :
-                      i18n.__('StudentSettings.add_password')}
+                  <Typography type="title" gutterBottom>
+                    {hasPassword ? 'Alterar Senha' : 'Adcionar Senha'}
                   </Typography>
                 </Grid>
 
@@ -153,7 +151,7 @@ class StudentSettingsSecurity extends React.Component {
                   >
                     <Grid item>
                       <Button
-                        variant="raised"
+                        raised
                         href={FlowRouter.path('StudentSettings')}
                       >
                         {i18n.__('StudentSettings.cancel')}
@@ -161,7 +159,7 @@ class StudentSettingsSecurity extends React.Component {
                     </Grid>
                     <Grid item>
                       <Button
-                        variant="raised"
+                        raised
                         onClick={this.handleSubmit.bind(this)}
                         color='primary'
                         disabled={

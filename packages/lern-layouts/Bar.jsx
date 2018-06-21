@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
+import { withStyles } from 'material-ui/styles';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/Icon';
 
 const styles = {
   flex: {
@@ -24,8 +24,8 @@ const styles = {
 };
 
 const getTitle = ({ title, crumbs }) =>
-  [
-    <span key='crumb'>
+  <div>
+    <span>
       {
         _.flatten(
           _.map(crumbs, (c, i) =>
@@ -44,9 +44,10 @@ const getTitle = ({ title, crumbs }) =>
           )
         )
       }
-    </span>,
-    <span key='title'>{title}</span>,
-  ];
+
+    </span>
+    <span>{title}</span>
+  </div>;
 
 /**
  * React Component for top bar
@@ -95,7 +96,7 @@ class Bar extends React.Component {
             <Icon className={classes[`${color}IconButton`]}>menu</Icon>
           </IconButton>
 
-          <Typography variant='title' color='inherit' className={classes.flex}>
+          <Typography type='title' color='inherit' className={classes.flex}>
             {getTitle({ title, crumbs })}
           </Typography>
 

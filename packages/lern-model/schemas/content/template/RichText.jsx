@@ -1,6 +1,6 @@
 import React from 'react';
 import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
-import Paper from '@material-ui/core/Paper';
+import Paper from 'material-ui/Paper';
 
 // Custom overrides for "code" style.
 const styleMap = {

@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import SnackbarMaterial from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
+import SnackbarMaterial from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import Icon from 'material-ui/Icon';
 
 /**
  * Snackbar - can subriscribe all material snackbar props
@@ -63,7 +63,7 @@ class Snackbar extends React.Component {
     this.state = { open: false, onClose: _.noop, message: '' };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (window) {
       if (window.snack) throw new Meteor.Error('Global snack already defined');
       else window.snack = this.setSnack.bind(this);

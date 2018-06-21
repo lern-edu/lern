@@ -1,19 +1,20 @@
+// Libs
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import log from 'loglevel';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from 'material-ui/styles';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 import i18n from 'meteor/universe:i18n';
-import { LinearProgress } from '@material-ui/core';
-import { GridList, GridListTile, GridListTileBar } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
-import Button from '@material-ui/core/Button';
-import amber from '@material-ui/core/colors/amber';
-import blue from '@material-ui/core/colors/blue';
-import Subheader from '@material-ui/core/ListSubheader';
+import { LinearProgress } from 'material-ui/Progress';
+import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
+import Icon from 'material-ui/Icon';
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
+import Button from 'material-ui/Button';
+import amber from 'material-ui/colors/amber';
+import blue from 'material-ui/colors/blue';
+import Subheader from 'material-ui/List/ListSubheader';
 
 import StudentTestsDialog from './Dialog.jsx';
 
@@ -68,12 +69,17 @@ class StudentTests extends React.Component {
     };
   }
 
+  componentWillMount() {
+    log.info('StudentTests.componentWillMount');
+    const { query, options } = this.state;
+    this.getData();
+  };
+
   componentDidMount() {
     log.info('StudentTests.componentDidMount');
-    const { classes, query, options } = this.props;
+    const { classes } = this.props;
     const body = _.head(document.getElementsByTagName('body'));
     body.className = classes.body;
-    this.getData();
   };
 
   componentWillUnmount() {
@@ -151,7 +157,7 @@ class StudentTests extends React.Component {
                           href={FlowRouter.path('StudentTestAttempt', { testId: test._id })}
                           className={classes.button}
                           color="secondary"
-                          variant="raised"
+                          raised
                         >
                           {i18n.__('StudentTests.play')}
                           <Icon className={classes.rightIcon}>play_arrow</Icon>

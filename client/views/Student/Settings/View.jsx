@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from 'material-ui/styles';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
-import { LinearProgress } from '@material-ui/core';
+import { LinearProgress } from 'material-ui';
 import i18n from 'meteor/universe:i18n';
 import _ from 'lodash';
 
@@ -30,7 +30,7 @@ class StudentSettingsView extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     Meteor.call('UserGet', { limit: 1 },  (err, doc) => {
       if (err) snack({ message: 'Erro ao encontrar usuário' });
       this.setState({

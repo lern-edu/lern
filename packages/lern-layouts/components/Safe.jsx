@@ -1,7 +1,7 @@
 import React from 'react';
 import Bar from '../Bar.jsx';
-import { LinearProgress } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import { LinearProgress } from 'material-ui/Progress';
+import Button from 'material-ui/Button';
 import _ from 'lodash';
 
 /**
@@ -11,26 +11,11 @@ import _ from 'lodash';
  */
 class Safe extends React.Component {
 
-  /* Lifecycle
+  /* Methods
   */
 
-  constructor(props) {
-    super(props);
-    const { protect, user, logging } = props;
-    this.state = {
-      access: (
-         !protect ? true
-       : logging ? undefined
-       : !user ? null
-       : _.isEmpty(user.roles) ? undefined
-       : user.hasRole(protect)
-     ),
-    };
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { protect, user, logging } = nextProps;
-    return ({
+  updateAccess({ protect, user, logging }) {
+    this.setState({
       access: (
          !protect ? true
        : logging ? undefined
@@ -41,7 +26,25 @@ class Safe extends React.Component {
     });
   }
 
-  componentDidUpdate({ user }, { access }) {
+  /* Lifecycle
+  */
+
+  constructor(props) {
+    super(props);
+    this.state = { access: undefined };
+  }
+
+  componentWillMount() {
+    const updateAccess = this.updateAccess.bind(this);
+    updateAccess(this.props);
+  }
+
+  componentWillReceiveProps(props) {
+    const updateAccess = this.updateAccess.bind(this);
+    updateAccess(props);
+  }
+
+  componentWillUpdate({ user }, { access }) {
     if (access === null) {
       snack('Você deve entrar primeiro');
       FlowRouter.go('PublicLogin');
@@ -96,7 +99,7 @@ class Safe extends React.Component {
               </h3>
               <div>
                 <Button
-                  variant="raised"
+                  raised
                   color='primary'
                   href={FlowRouter.path('PublicLogin')}
                 >

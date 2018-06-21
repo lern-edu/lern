@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { Card, ardActions, CardContent, CardMedia } from '@material-ui/core';
-import { Typography, Button } from '@material-ui/core';
+import { withStyles } from 'material-ui/styles';
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import { Typography, Button } from 'material-ui';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 
 const styles = theme => ({
@@ -40,7 +40,7 @@ class PublicGames extends React.Component {
               title="Sudoku"
             />
             <CardContent>
-              <Typography variant="headline" component="h2">
+              <Typography type="headline" component="h2">
                 Sudoku
               </Typography>
               <Typography component="p">

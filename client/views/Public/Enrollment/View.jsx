@@ -1,8 +1,8 @@
 import React from 'react';
 import log from 'loglevel';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Dialog, { DialogTitle, DialogActions, DialogContent } from '@material-ui/core/Dialog';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import Dialog, { DialogTitle, DialogActions, DialogContent } from 'material-ui/Dialog';
 import { Layout } from 'meteor/duckdodgerbrasl:lern-layouts';
 
 class PublicEnrollment extends React.Component{
