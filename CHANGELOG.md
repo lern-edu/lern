@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.5.0] - 21/06/2018
+### Added
+- [#187](https://github.com/lern-edu/lern/issues/187) REVERT React Version 16.0.0
+- [#177](https://github.com/lern-edu/lern/issues/177) REVERT Material ui Version 1.0.0
+
 ## [1.4.2] - 09/06/2018
 ### Fixed
 - Fix missing propTypes
