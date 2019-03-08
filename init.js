@@ -6,10 +6,6 @@ moment.locale('pt-br');
 i18n.setLocale('pt-BR');
 import { User, Question } from 'meteor/duckdodgerbrasl:lern-model';
 
-// Material events
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
-
 // setup logs
 Meteor.startup(() => {
   const env = process.env.NODE_ENV;

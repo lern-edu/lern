@@ -124,102 +124,119 @@ class Navigation extends React.Component {
     const roles = _.get(user, 'roles');
 
     return (
-      <Drawer
-        {..._.omit(this.state, ['open'])}
-        open={!open ? false : true}
-        onClose={() => this.setState({ open: !open })}
-      >
-
-        {
-          !user
-          ? <div>
-              {
-                logging
-                ? <div/>
-                : <div>
-                  <Button raised color='primary' href={FlowRouter.path('PublicLogin')} >
-                    Entrar
-                  </Button>
+        <Drawer
+            {..._.omit(this.state, ['open'])}
+            open={!open ? false : true}
+            onClose={() => this.setState({ open: !open })}
+        >
+            {!user ? (
+                <div>
+                    {logging ? (
+                        <div />
+                    ) : (
+                        <div>
+                            <Button
+                                raised
+                                color="primary"
+                                href={FlowRouter.path('PublicLogin')}
+                            >
+                                Entrar
+                            </Button>
+                        </div>
+                    )}
                 </div>
-              }
-          </div>
+            ) : (
+                <div>
+                    <div
+                        style={{
+                            background:
+                                '#ffffff url("/backgrounds/material-background.png") no-repeat right top',
+                        }}
+                    >
+                        <List>
+                            <ListItem>
+                                {profilePic ? (
+                                    <Avatar
+                                        key="image"
+                                        size={60}
+                                        src={profilePic}
+                                    />
+                                ) : (
+                                    <Avatar key="image" size={60} size={52}>
+                                        {_.head(name)}
+                                    </Avatar>
+                                )}
+                                <ListItemText primary={name} />
+                            </ListItem>
+                        </List>
+                        {roles && roles.length <= 1 ? (
+                            undefined
+                        ) : (
+                            <FormControl>
+                                <InputLabel htmlFor="age-simple">
+                                    Role
+                                </InputLabel>
+                                <Select
+                                    value={_.get(user, 'profile.role')}
+                                    onChange={this.handleRoleChange}
+                                >
+                                    {_.map(_.uniq(roles), r => (
+                                        <MenuItem key={r} value={r}>
+                                            {i18n.__(`UserRoles.${r}`)}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
+                    </div>
 
-          : <div>
+                    <Divider />
 
-            <div style={
-              {
-                background:
-                  '#ffffff url("/backgrounds/material-background.png") no-repeat right top',
-              }
-            } >
-              <List>
-                <ListItem>
-                  {
-                    profilePic
-                    ? <Avatar key='image' size={60} src={profilePic} />
-                    : <Avatar key='image' size={60} size={52}>
-                      {_.head(name)}
-                    </Avatar>
-                  }
-                  <ListItemText primary={name} />
-                </ListItem>
-              </List>
-              {
-                roles && roles.length <= 1
-                ? undefined
-                : <FormControl>
-                  <InputLabel htmlFor='age-simple'>Role</InputLabel>
-                  <Select
-                    value={_.get(user, 'profile.role')}
-                    onChange={this.handleRoleChange}
-                  >
-                    {
-                      _.map(_.uniq(roles), r =>
-                        <MenuItem key={r} value={r}>
-                          {i18n.__(`UserRoles.${r}`)}
-                        </MenuItem>
-                      )
-                    }
-                  </Select>
-                </FormControl>
-              }
+                    <List>
+                        {_.map(
+                            routes[user.getRole()],
+                            ({ label, icon }, _route) => (
+                                <ListItem
+                                    button
+                                    component="a"
+                                    key={_route}
+                                    href={FlowRouter.path(_route)}
+                                >
+                                    <Icon>{icon}</Icon>
+                                    <ListItemText
+                                        primary={i18n.__(
+                                            'Navigation',
+                                            `${user.getRole()}.${label}`
+                                        )}
+                                    />
+                                </ListItem>
+                            )
+                        )}
+                    </List>
 
-            </div>
+                    <List
+                        style={{
+                            bottom: 0,
+                            position: 'fixed',
+                            width: '100%',
+                        }}
+                    >
+                        <Divider />
 
-            <Divider />
-
-            <List>
-
-              {
-                _.map(routes[user.getRole()], ({ label, icon }, _route) =>
-                  <ListItem button component='a' key={_route} href={FlowRouter.path(_route)}>
-                    <Icon>{icon}</Icon>
-                    <ListItemText primary={i18n.__('Navigation', `${user.getRole()}.${label}`)} />
-                  </ListItem>
-                )
-              }
-
-            </List>
-
-
-            <List  style={{ bottom: 0, position: 'fixed', width: '100%' }}>
-              <Divider/>
-
-              {/* <ListItem button component='a' href={FlowRouter.path(user.getSettingsRoute())} >
+                        {/* <ListItem button component='a' href={FlowRouter.path(user.getSettingsRoute())} >
                 <ListItemText primary='Configurações' />
               </ListItem> */}
 
-              <ListItem button onTouchTap={logout}>
-                <Icon>exit_to_app</Icon>
-                <ListItemText primary={i18n.__('Navigation.exit')} />
-              </ListItem>
-
-            </List>
-
-          </div>
-        }
-
-      </Drawer>
+                        <ListItem button onClick={logout}>
+                            <Icon>exit_to_app</Icon>
+                            <ListItemText
+                                primary={i18n.__('Navigation.exit')}
+                            />
+                        </ListItem>
+                    </List>
+                </div>
+            )}
+        </Drawer>
     );
   }
 };
